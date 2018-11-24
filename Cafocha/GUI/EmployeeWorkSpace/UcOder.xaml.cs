@@ -244,7 +244,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             txtTable.Text = currentTable.TableNumber.ToString();
             wp.Children.Clear();
 
-            chairlistcurrenttable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
+            chairlistcurrenttable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).ToList();
 
             foreach (Entities.Chair ch in chairlistcurrenttable)
             {
