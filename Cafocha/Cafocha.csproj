@@ -1,0 +1,1007 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA90DECE-1A68-478E-A158-18856C871CFE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Cafocha</RootNamespace>
+    <AssemblyName>Cafocha</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.pdfa.5.5.12\lib\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.12\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfRpt, Version=2.9.2.0, Culture=neutral, PublicKeyToken=9aed730b935239dd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PdfReport.2.9.2\lib\net45\PdfRpt.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BusinessContext\MigrationConfiguration.cs" />
+    <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
+    <Compile Include="Entities\CustomEntities\StockGroup.cs" />
+    <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
+    <Compile Include="Entities\CustomEntities\Table.cs" />
+    <Compile Include="GUI\LoginWindow.xaml.cs" />
+    <Compile Include="GUI\AdminNavWindow.xaml.cs">
+      <DependentUpon>AdminNavWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\AddNewAdminDialog.xaml.cs">
+      <DependentUpon>AddNewAdminDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\AdminChangePass.xaml.cs">
+      <DependentUpon>AdminChangePass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\AdminDetailWindow.xaml.cs">
+      <DependentUpon>AdminDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\CustomerAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>CustomerAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\CustomerPage.xaml.cs">
+      <DependentUpon>CustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\EmployeeAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>EmployeeAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\EmployeeListPage.xaml.cs">
+      <DependentUpon>EmployeeListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\IngredientAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>IngredientAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\LiveChartReceiptPage.xaml.cs">
+      <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\OrderNotePage.xaml.cs">
+      <DependentUpon>OrderNotePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ProductCreatorPage.xaml.cs">
+      <DependentUpon>ProductCreatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ProductDetailPage.xaml.cs">
+      <DependentUpon>ProductDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml.cs">
+      <DependentUpon>ProductUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ReceiptNotePage.xaml.cs">
+      <DependentUpon>ReceiptNotePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ReportOptionDialog.xaml.cs">
+      <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\ReportSalaryOptionDialog.xaml.cs">
+      <DependentUpon>ReportSalaryOptionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\SalaryPage.xaml.cs">
+      <DependentUpon>SalaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\statisticsFoodPage.xaml.cs">
+      <DependentUpon>statisticsFoodPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
+      <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AdminWorkSpace\WareHouseStdContainDialog.xaml.cs">
+      <DependentUpon>WareHouseStdContainDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\CafowareWindow.xaml.cs">
+      <DependentUpon>CafowareWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\CreateStockPage.xaml.cs">
+      <DependentUpon>CreateStockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\Helper\UnitBuyTrans.cs" />
+    <Compile Include="GUI\CafowareWorkSpace\StockInPage.xaml.cs">
+      <DependentUpon>StockInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\StockOutPage.xaml.cs">
+      <DependentUpon>StockOutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\ViewStockPage.xaml.cs">
+      <DependentUpon>ViewStockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\BusinessModel\Chair.cs" />
+    <Compile Include="GUI\BusinessModel\ReadWriteData.cs" />
+    <Compile Include="GUI\BusinessModel\Table.cs" />
+    <Compile Include="GUI\DatabaseConfigWindow.xaml.cs">
+      <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\AllEmployeeLogin.xaml.cs">
+      <DependentUpon>AllEmployeeLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\ChangeThemePage.xaml.cs">
+      <DependentUpon>ChangeThemePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\ConfirmMergeDialog.xaml.cs">
+      <DependentUpon>ConfirmMergeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\DashPage.xaml.cs">
+      <DependentUpon>DashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml.cs">
+      <DependentUpon>DeleteConfirmDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\EmployeeChangePass.xaml.cs">
+      <DependentUpon>EmployeeChangePass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs">
+      <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\EntryPage.xaml.cs">
+      <DependentUpon>EntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\InputNote.xaml.cs">
+      <DependentUpon>InputNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\InputTheRestOrderInfoDialog.xaml.cs">
+      <DependentUpon>InputTheRestOrderInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml.cs">
+      <DependentUpon>PermissionRequired.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\SetOrderModeDialog.xaml.cs">
+      <DependentUpon>SetOrderModeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
+      <DependentUpon>SettingFoodPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\SettingTableSize.xaml.cs">
+      <DependentUpon>SettingTableSize.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\SwapOrMergeTable.xaml.cs">
+      <DependentUpon>SwapOrMergeTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\TablePage.xaml.cs">
+      <DependentUpon>TablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\TableSettingDialog.xaml.cs">
+      <DependentUpon>TableSettingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\UcMenu.xaml.cs">
+      <DependentUpon>UcMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmployeeWorkSpace\UcOder.xaml.cs">
+      <DependentUpon>UcOder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Helper\PrintHelper\BarPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\DoPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\EndOfDayPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\FirePrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\IPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\KitchenPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\OrderEntityForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\OrderForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\OrderNoteForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\ReceiptEntityForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\SalaryEntityForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\SalaryNoteForReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\ReceiptPrintHelper.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Report\AppPath.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Report\IListPdfReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Report\OrderNoteReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Report\SalaryNoteReport.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\ShiftPrintHelper.cs" />
+    <Compile Include="GUI\StartupWindows.xaml.cs">
+      <DependentUpon>StartupWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Support\FloatKeyboardControl.xaml.cs">
+      <DependentUpon>FloatKeyboardControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Support\KeyboardControl.xaml.cs">
+      <DependentUpon>KeyboardControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Support\PassKeyboardControl.xaml.cs">
+      <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WareHouseWorkSpace\Helper\UnitBuyTrans.cs" />
+    <Compile Include="GUI\WareHouseWorkSpace\IngredientPage.xaml.cs">
+      <DependentUpon>IngredientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WareHouseWorkSpace\InputNote.xaml.cs">
+      <DependentUpon>InputNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WareHouseWorkSpace\InputReceiptNote.xaml.cs">
+      <DependentUpon>InputReceiptNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WareHouseWorkSpace\LiveChartReceiptPage.xaml.cs">
+      <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WareHouseWorkSpace\WareHouseWindow.xaml.cs">
+      <DependentUpon>WareHouseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WPFMaterialDesign\ButtonsViewModel.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\MyConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\NonPercentConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\NotZeroConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\PercentConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\ArcEndPointConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\ArcSizeConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\LargeArcConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\LocalEx.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformCentreConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\DatePickerCalendar.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WPFMaterialDesign\PaletteSelectorViewModel.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\Transitions\TransitionAssist.cs" />
+    <Compile Include="GUI\WPFMaterialDesign\UcPalette.xaml.cs">
+      <DependentUpon>UcPalette.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\WPFMaterialDesign\UcPaletteSelector.xaml.cs">
+      <DependentUpon>UcPaletteSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DAL\AdminwsOfCloudAPWH.cs" />
+    <Compile Include="Repository\DAL\AdminwsOfCloudPOS.cs" />
+    <Compile Include="Repository\DAL\EmployeewsOfLocalPOS.cs" />
+    <Compile Include="Repository\Generic\GenericRepository.cs" />
+    <Compile Include="Repository\Interfaces\IAdminRepository.cs" />
+    <Compile Include="Repository\Interfaces\ICustomerRepository.cs" />
+    <Compile Include="Repository\Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Repository\Interfaces\IIngredientRepository.cs" />
+    <Compile Include="Repository\Interfaces\IProductRepository.cs" />
+    <Compile Include="Security\AESGCM.cs" />
+    <Compile Include="Security\AESThenHMAC.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\CafochaEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CafochaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Config\CafochaConfig.cs" />
+    <Compile Include="Context\Logging\CafochaInterceptorLogging.cs" />
+    <Compile Include="Context\Logging\ILogger.cs" />
+    <Compile Include="Context\Logging\Logger.cs" />
+    <Compile Include="Entities\CustomEntities\AdminRe.cs" />
+    <Compile Include="Entities\CustomEntities\Employee.cs" />
+    <Compile Include="Entities\CustomEntities\OrderNote.cs" />
+    <Compile Include="Entities\CustomEntities\OrderTemp.cs" />
+    <Compile Include="Entities\CustomEntities\PaymentMethod.cs" />
+    <Compile Include="Entities\CustomEntities\Product.cs" />
+    <Compile Include="Entities\CustomEntities\ProductType.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="GUI\AdminNavWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\AddNewAdminDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\AdminChangePass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\AdminDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\AdminWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\CustomerAddOrUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\CustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\EmployeeAddOrUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\EmployeeListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\IngredientAddOrUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\LiveChartReceiptPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\OrderNotePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ProductCreatorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ProductDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ReceiptNotePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ReportOptionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\ReportSalaryOptionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\SalaryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\statisticsFoodPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\StatisticsWorkingHourPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\AdminWorkSpace\WareHouseStdContainDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\CafowareWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\CreateStockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\StockInPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\StockOutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\ViewStockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\DatabaseConfigWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\AllEmployeeLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\ChangeThemePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\ConfirmMergeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\DashPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\EmployeeChangePass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\EmployeeDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\EntryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\InfoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\InputNote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\InputTheRestOrderInfoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\SetOrderModeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\SettingTableSize.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\SwapOrMergeTable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\TablePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\TableSettingDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\UcMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\UcOder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\StartupWindows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Support\FloatKeyboardControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Support\KeyboardControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Support\PassKeyboardControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WareHouseWorkSpace\IngredientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WareHouseWorkSpace\InputNote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WareHouseWorkSpace\InputReceiptNote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WareHouseWorkSpace\LiveChartReceiptPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WareHouseWorkSpace\WareHouseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WPFMaterialDesign\Home.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WPFMaterialDesign\UcPalette.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\WPFMaterialDesign\UcPaletteSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Entities\EF.Reverse.POCO.Core.ttinclude" />
+    <None Include="Entities\EF.Reverse.POCO.ttinclude" />
+    <None Include="packages.config" />
+    <None Include="GUI\log4net.config" />
+    <None Include="GUI\SerializedData\Order-Report-bc2ea171fd9d4290bd7cf1cc8bba9b6a.pdf" />
+    <None Include="GUI\SerializedData\tableRuntimeHistory.bin" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\CafochaEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CafochaEntities.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\DBCafocha.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DB\DBCafocha_log.ldf">
+      <DependentUpon>DBCafocha.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="GUI\asowell_icon.ico" />
+    <Resource Include="GUI\Icon\Admin_96px.png" />
+    <Resource Include="GUI\Icon\Box_104px.png" />
+    <Resource Include="GUI\Icon\Cake_32px.png" />
+    <Resource Include="GUI\Icon\Edit_52px.png" />
+    <Resource Include="GUI\Icon\FAQ_100px.png" />
+    <Resource Include="GUI\Icon\Folder_30px.png" />
+    <Resource Include="GUI\Icon\icons8_Beer_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Checked_Checkbox_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Cocktail_32px_2.png" />
+    <Resource Include="GUI\Icon\icons8_Employee_50px_2.png" />
+    <Resource Include="GUI\Icon\icons8_French_Fries_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Hashtag_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Info_52px.png" />
+    <Resource Include="GUI\Icon\icons8_Meal_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Pin_32px_9.png" />
+    <Resource Include="GUI\Icon\icons8_Quesadilla_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Resize_Horizontal_32px_1.png" />
+    <Resource Include="GUI\Icon\icons8_Resize_Vertical_32px_3.png" />
+    <Resource Include="GUI\Icon\icons8_Restaurant_32px_4.png" />
+    <Resource Include="GUI\Icon\icons8_Sweet_Potato_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Table_52px.png" />
+    <Resource Include="GUI\Icon\icons8_Unchecked_Checkbox_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Unpin_32px.png" />
+    <Resource Include="GUI\Icon\icons8_Wine_Glass_32px.png" />
+    <Resource Include="GUI\Icon\Move Stock_104px.png" />
+    <Resource Include="GUI\Icon\Pencil Drawing_32px.png" />
+    <Resource Include="GUI\Icon\Report Card_32px.png" />
+    <Resource Include="GUI\Icon\Sunrise_32px.png" />
+    <Resource Include="GUI\Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg" />
+    <Resource Include="GUI\Images\asowell_icon.ico" />
+    <Resource Include="GUI\Images\Edit_52px.png" />
+    <Resource Include="GUI\Images\logo.png" />
+    <Resource Include="GUI\Images\map.png" />
+    <Resource Include="GUI\Images\Number\icons8_100_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_10_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_11_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_12_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_13_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_14_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_15_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_16_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_17_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_18_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_19_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_1_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_20_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_21_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_22_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_23_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_24_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_25_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_26_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_27_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_28_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_29_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_2_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_30_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_31_50px_1.png" />
+    <Resource Include="GUI\Images\Number\icons8_32_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_33_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_34_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_35_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_36_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_37_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_38_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_39_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_3_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_40_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_41_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_42_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_43_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_44_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_45_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_46_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_47_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_48_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_49_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_4_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_50_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_51_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_52_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_53_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_54_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_55_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_56_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_57_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_58_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_59_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_5_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_60_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_61_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_62_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_63_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_64_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_65_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_66_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_67_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_68_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_69_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_6_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_70_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_71_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_72_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_73_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_74_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_75_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_76_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_77_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_78_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_79_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_7_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_80_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_81_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_82_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_83_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_84_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_85_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_86_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_87_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_88_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_89_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_8_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_90_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_91_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_92_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_93_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_94_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_95_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_96_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_97_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_98_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_99_50px.png" />
+    <Resource Include="GUI\Images\Number\icons8_9_50px.png" />
+    <Resource Include="GUI\Images\Pencil Drawing_32px.png" />
+    <Resource Include="GUI\Images\Products\3CheeseBoard.jpg" />
+    <Resource Include="GUI\Images\Products\3DipsBoard.jpg" />
+    <Resource Include="GUI\Images\Products\Americano.jpg" />
+    <Resource Include="GUI\Images\Products\americano.png" />
+    <Resource Include="GUI\Images\Products\apple.jpg" />
+    <Resource Include="GUI\Images\Products\aqua.jpg" />
+    <Resource Include="GUI\Images\Products\BakeEggsWithChorizoandSpinach.jpg" />
+    <Resource Include="GUI\Images\Products\BananaBread.jpg" />
+    <Resource Include="GUI\Images\Products\bananachoco.jpg" />
+    <Resource Include="GUI\Images\Products\bangersandmash.jpg" />
+    <Resource Include="GUI\Images\Products\BlackCoffee.jpg" />
+    <Resource Include="GUI\Images\Products\BlueCheeseMusselPot.jpg" />
+    <Resource Include="GUI\Images\Products\BoconcciniBruschetta.jpg" />
+    <Resource Include="GUI\Images\Products\BraisedMushroomOntoast.jpg" />
+    <Resource Include="GUI\Images\Products\BreadBasket.jpg" />
+    <Resource Include="GUI\Images\Products\CajunChickenSalad.jpg" />
+    <Resource Include="GUI\Images\Products\cappuccino.jpeg" />
+    <Resource Include="GUI\Images\Products\Capuchino.jpg" />
+    <Resource Include="GUI\Images\Products\CaramelCoffee.jpg" />
+    <Resource Include="GUI\Images\Products\carrot.jpg" />
+    <Resource Include="GUI\Images\Products\chamomile.jpg" />
+    <Resource Include="GUI\Images\Products\ChcocolateFruitStack.png" />
+    <Resource Include="GUI\Images\Products\CheeseMeltOnToast.png" />
+    <Resource Include="GUI\Images\Products\ChickenCaesarSalad.jpg" />
+    <Resource Include="GUI\Images\Products\ChickenMelt.jpg" />
+    <Resource Include="GUI\Images\Products\ChocoCoffee.jpg" />
+    <Resource Include="GUI\Images\Products\ChocoLatte.jpg" />
+    <Resource Include="GUI\Images\Products\ChorizoSausageRolls.jpg" />
+    <Resource Include="GUI\Images\Products\CinamonToast.jpg" />
+    <Resource Include="GUI\Images\Products\coconut.jpg" />
+    <Resource Include="GUI\Images\Products\coconutcoffee.jpg" />
+    <Resource Include="GUI\Images\Products\Coffee.jpg" />
+    <Resource Include="GUI\Images\Products\CoffeeLatte.png" />
+    <Resource Include="GUI\Images\Products\coke.jpg" />
+    <Resource Include="GUI\Images\Products\comma_icon.jpg" />
+    <Resource Include="GUI\Images\Products\condensescoffee.jpeg" />
+    <Resource Include="GUI\Images\Products\CreamCoffee.jpg" />
+    <Resource Include="GUI\Images\Products\double-ipa.png" />
+    <Resource Include="GUI\Images\Products\dreamalone.png" />
+    <Resource Include="GUI\Images\Products\Duck_liver_Pate.jpg" />
+    <Resource Include="GUI\Images\Products\earlgray.jpg" />
+    <Resource Include="GUI\Images\Products\englishbreakfast.jpg" />
+    <Resource Include="GUI\Images\Products\espresso.jpg" />
+    <Resource Include="GUI\Images\Products\french-toast.jpg" />
+    <Resource Include="GUI\Images\Products\FrenchToast.jpg" />
+    <Resource Include="GUI\Images\Products\freshlyShuckedOysters.jpg" />
+    <Resource Include="GUI\Images\Products\fried-egg-on-toast.jpg" />
+    <Resource Include="GUI\Images\Products\FriedEggSausageAndFruit.jpg" />
+    <Resource Include="GUI\Images\Products\FruitPlatterWithGreekYoghurt.jpeg" />
+    <Resource Include="GUI\Images\Products\GardenGreenSalad.jpg" />
+    <Resource Include="GUI\Images\Products\gingerale.jpg" />
+    <Resource Include="GUI\Images\Products\greentea.jpg" />
+    <Resource Include="GUI\Images\Products\GrilledSalmonBrochette.jpg" />
+    <Resource Include="GUI\Images\Products\HamCheeseAndAsparagusOmelette.jpg" />
+    <Resource Include="GUI\Images\Products\heineken.jpg" />
+    <Resource Include="GUI\Images\Products\HODSoakDuckBreast.jpg" />
+    <Resource Include="GUI\Images\Products\HoneyButterBread.jpg" />
+    <Resource Include="GUI\Images\Products\HouseBurger.jpg" />
+    <Resource Include="GUI\Images\Products\ItalianMixOlives.jpg" />
+    <Resource Include="GUI\Images\Products\jasimineipa.png" />
+    <Resource Include="GUI\Images\Products\jasmine.jpg" />
+    <Resource Include="GUI\Images\Products\kurtz-insane-ipa.jpg" />
+    <Resource Include="GUI\Images\Products\kurtzinsane.png" />
+    <Resource Include="GUI\Images\Products\latte.jpg" />
+    <Resource Include="GUI\Images\Products\lavie.png" />
+    <Resource Include="GUI\Images\Products\Lemonade.jpg" />
+    <Resource Include="GUI\Images\Products\LemonPancake.jpg" />
+    <Resource Include="GUI\Images\Products\lime.jpg" />
+    <Resource Include="GUI\Images\Products\looserivet.png" />
+    <Resource Include="GUI\Images\Products\matcha.jpg" />
+    <Resource Include="GUI\Images\Products\MatchaLatte.jpg" />
+    <Resource Include="GUI\Images\Products\MilkCoffee.jpg" />
+    <Resource Include="GUI\Images\Products\MilkTea.jpg" />
+    <Resource Include="GUI\Images\Products\MinuteSteakSandwich.jpg" />
+    <Resource Include="GUI\Images\Products\MinuteSteakSandwich1.jpg" />
+    <Resource Include="GUI\Images\Products\myproduct.jpg" />
+    <Resource Include="GUI\Images\Products\orange.jpg" />
+    <Resource Include="GUI\Images\Products\OrangeJuice.jpg" />
+    <Resource Include="GUI\Images\Products\passion.jpg" />
+    <Resource Include="GUI\Images\Products\passionale.png" />
+    <Resource Include="GUI\Images\Products\patient-wilderness-wheat.jpg" />
+    <Resource Include="GUI\Images\Products\PeachTea.png" />
+    <Resource Include="GUI\Images\Products\pepsi.jpg" />
+    <Resource Include="GUI\Images\Products\pineapple.jpg" />
+    <Resource Include="GUI\Images\Products\pitiless-folly-pale-ale.png" />
+    <Resource Include="GUI\Images\Products\PlainCaesarSalad.jpg" />
+    <Resource Include="GUI\Images\Products\PoachedEggsOnToast.jpg" />
+    <Resource Include="GUI\Images\Products\pomelo.jpg" />
+    <Resource Include="GUI\Images\Products\primeval-forest-dilsner.jpg" />
+    <Resource Include="GUI\Images\Products\RibeyeSteak.jpg" />
+    <Resource Include="GUI\Images\Products\RoastedBabyBackRibs.jpg" />
+    <Resource Include="GUI\Images\Products\roastedGarlicBread.jpg" />
+    <Resource Include="GUI\Images\Products\RoastedHalfChicken.jpg" />
+    <Resource Include="GUI\Images\Products\RoastedTomatoesMusselPot.jpg" />
+    <Resource Include="GUI\Images\Products\RoastedVegAndRocketSalad.jpeg" />
+    <Resource Include="GUI\Images\Products\sacred-fire-golden-ale.png" />
+    <Resource Include="GUI\Images\Products\SalmonTagliatelle.jpg" />
+    <Resource Include="GUI\Images\Products\sanpellgrino.jpg" />
+    <Resource Include="GUI\Images\Products\SeafoodMarinara.jpeg" />
+    <Resource Include="GUI\Images\Products\seven.jpg" />
+    <Resource Include="GUI\Images\Products\shutterstock_94349956_090413101908.jpg" />
+    <Resource Include="GUI\Images\Products\SmokeSalmonCaesarSalad.jpg" />
+    <Resource Include="GUI\Images\Products\soda.jpg" />
+    <Resource Include="GUI\Images\Products\SpaghettiBolognese.jpg" />
+    <Resource Include="GUI\Images\Products\SpaghettiChickenPesto.jpg" />
+    <Resource Include="GUI\Images\Products\sprite.jpg" />
+    <Resource Include="GUI\Images\Products\strawbanana.jpg" />
+    <Resource Include="GUI\Images\Products\Sweet_Potatoes_fries.jpg" />
+    <Resource Include="GUI\Images\Products\tiger.jpg" />
+    <Resource Include="GUI\Images\Products\TomYumMusselPot.jpg" />
+    <Resource Include="GUI\Images\Products\tonic.jpg" />
+    <Resource Include="GUI\Images\Products\warm_Edamame.jpg" />
+    <Resource Include="GUI\Images\Products\watermelon.jpg" />
+    <Resource Include="GUI\Images\Products\WholeRackOfLamb.jpg" />
+    <Resource Include="GUI\Images\rand0.png" />
+    <Resource Include="GUI\Images\rand1.png" />
+    <Resource Include="GUI\Images\rand2.png" />
+    <Resource Include="GUI\Images\rand3.png" />
+    <Resource Include="GUI\Images\rand4.png" />
+    <Resource Include="GUI\Images\rand5.png" />
+    <Resource Include="GUI\Images\Search_50px.png" />
+    <Resource Include="GUI\Images\softwarepdate.jpg" />
+    <Resource Include="GUI\SerializedData\dbconfig.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="GUI\SerializedData\printerSetting.txt" />
+    <Resource Include="GUI\SerializedData\tableImagePath.txt" />
+    <Resource Include="GUI\SerializedData\tableSize.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\Helper\ComHelper\" />
+    <Folder Include="GUI\Helper\Security\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
