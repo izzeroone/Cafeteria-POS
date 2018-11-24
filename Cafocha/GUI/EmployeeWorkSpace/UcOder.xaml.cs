@@ -134,12 +134,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
-                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned == currentTable.TableId).First();
+                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value == currentTable.TableId).First();
                 orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
                 // lay ordernotedetails cua ban thu nhat
-                var chairOfTable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
-                var foundChair = chairOfTable.SingleOrDefault(x => x.ChairId.Equals(currentChair.ChairId) && x.TableOwned.Equals(currentChair.TableOwned));
+                var chairOfTable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).ToList();
+                var foundChair = chairOfTable.SingleOrDefault(x => x.ChairId.Equals(currentChair.ChairId) && x.TableOwned.Value.Equals(currentChair.TableOwned));
                 var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(foundChair.ChairId)).ToList();
 
                 // chuyen product_id thanh product name
@@ -358,7 +358,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             foreach (Entities.Chair chair in chairlistcurrenttable)
             {
-                if (chair.ChairNumber == int.Parse(curChair.Content.ToString()) && chair.TableOwned.Equals(currentTable.TableId))
+                if (chair.ChairNumber == int.Parse(curChair.Content.ToString()) && chair.TableOwned.Value.Equals(currentTable.TableId))
                 {
                     ((MainWindow)Window.GetWindow(this)).currentChair = chair;
                     currentChair = chair;
@@ -692,7 +692,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 if (btn.IsChecked == true)
                 {
                     //delete chair order note
-                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
+                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
                     var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
@@ -919,7 +919,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
 
             List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
-            orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+            orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).First();
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
 
@@ -1034,7 +1034,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             bool isHaveDrink = false;
             bool isHaveFood = false;
             int orderCount = 0;
-            var chairQuery = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId));
+            var chairQuery = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId));
             foreach (var chair in chairQuery)
             {
                 var orderDetailsQuery =
@@ -1075,7 +1075,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
 
                 List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
-                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).First();
                 orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
                 foreach (var orderDetails in orderDetailsTempCurrentTableList.ToList())
                 {
@@ -1221,7 +1221,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
 
 
-            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
+            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId))
                 .FirstOrDefault();
             if (currentOrderTemp != null)
             {
@@ -1276,7 +1276,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (currentTable == null)
                 return false;
 
-            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
+            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId))
                 .FirstOrDefault();
             if (currentOrderTemp != null)
             {
@@ -1329,7 +1329,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             isClearingTable = true;
             Entities.Table curTable = currentTable;
-            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
+            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(curTable.TableId)).FirstOrDefault();
             if (orderOfTable != null)
             {
                 var ordernotedetails = orderDetailsTempCurrentTableList
@@ -1395,7 +1395,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             isClearingTalbe_ForDelete = true;
             Entities.Table curTable = currentTable;
-            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
+            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(curTable.TableId)).FirstOrDefault();
             if (orderOfTable != null)
             {
                 var ordernotedetails = orderDetailsTempCurrentTableList
@@ -1538,7 +1538,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 if (btn.IsChecked == true)
                 {
                     //delete chair order note
-                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
+                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
                     var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId == foundchair.ChairId).ToList();

@@ -653,7 +653,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 foreach (var table in _unitofwork.TableRepository.Get())
                 {
-                    var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
+                    var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(table.TableId)).First();
                     orderTemp.EmpId = "";
                     orderTemp.CusId = "CUS0000001";
                     orderTemp.Ordertime = DateTime.Now;

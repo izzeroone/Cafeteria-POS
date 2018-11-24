@@ -102,7 +102,7 @@ public partial class UcMenu : UserControl
                 return;
             }
 
-            orderTempCurrentTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId)).First();
+            orderTempCurrentTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(orderingTable.TableId)).First();
             if (orderTempCurrentTable == null)
             {
                 return;

@@ -179,8 +179,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             loadData();
 
-            var chairOfFirst = _currentChairList.Where(x => x.TableOwned.Equals(first.TableId)).ToList();
-            var chairOfSecond = _currentChairList.Where(x => x.TableOwned.Equals(second.TableId)).ToList();
+            var chairOfFirst = _currentChairList.Where(x => x.TableOwned.Value.Equals(first.TableId)).ToList();
+            var chairOfSecond = _currentChairList.Where(x => x.TableOwned.Value.Equals(second.TableId)).ToList();
 
             first.ChairAmount = chairOfSecond.Count;
             second.ChairAmount = chairOfFirst.Count;
@@ -389,8 +389,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void checkChair(int tab)
         {
-            var chairOfFirst = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(first.TableId)).ToList();
-            var chairOfSecond = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(second.TableId)).ToList();
+            var chairOfFirst = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(first.TableId)).ToList();
+            var chairOfSecond = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(second.TableId)).ToList();
 
             if (tab == 1)
             {
@@ -485,8 +485,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void loadData()
         {
-            orderOfFirst = _orderTempList.Where(x => x.TableOwned.Equals(first.TableId)).First();
-            orderOfSecond = _orderTempList.Where(x => x.TableOwned.Equals(second.TableId)).First();
+            orderOfFirst = _orderTempList.Where(x => x.TableOwned.Value.Equals(first.TableId)).First();
+            orderOfSecond = _orderTempList.Where(x => x.TableOwned.Value.Equals(second.TableId)).First();
 
             orderDetailsOfFirst = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfFirst.OrdertempId)).ToList();
             orderDetailsOfSecond = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfSecond.OrdertempId)).ToList();

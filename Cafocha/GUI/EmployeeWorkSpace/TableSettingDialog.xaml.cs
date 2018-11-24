@@ -69,7 +69,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            var chairOfTable = _uniofwork.ChairRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).ToList();
+            var chairOfTable = _uniofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(curTable.TableId)).ToList();
 
             int orderdChairCount = 0;
             foreach (var chair in chairOfTable)

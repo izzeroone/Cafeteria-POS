@@ -93,8 +93,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void checkCus()
         {
-            orderOfFirst = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(_first.TableId)).First();
-            orderOfSecond = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(_second.TableId)).First();
+            orderOfFirst = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(_first.TableId)).First();
+            orderOfSecond = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(_second.TableId)).First();
 
             if (orderOfFirst.CusId.Equals("CUS0000001") && orderOfSecond.CusId.Equals("CUS0000001"))
             {

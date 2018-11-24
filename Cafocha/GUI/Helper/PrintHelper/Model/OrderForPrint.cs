@@ -87,7 +87,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public OrderForPrint GetAndConverOrderDetails(Entities.Table targetTable, EmployeewsOfLocalPOS unitofwork, int printType)
         {
             // get Chairs data from target Table
-            var targetChairs = unitofwork.ChairRepository.Get(x => x.TableOwned == targetTable.TableId);
+            var targetChairs = unitofwork.ChairRepository.Get(x => x.TableOwned.Value == targetTable.TableId);
 
             // get OrderDetailsTemp data from target Table
             List<OrderDetailsTemp> targetOrderDetails = new List<OrderDetailsTemp>();
