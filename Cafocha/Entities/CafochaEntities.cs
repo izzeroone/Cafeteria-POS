@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "Cafocha\App.config"
 //     Connection String Name: "SqlLocalConnectionString"
-//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=E:\Projects\Cafocha\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=E:\Projects\Cafeteria-POS\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
 // ------------------------------------------------------------------------------------------------
 // Database Edition        : Express Edition (64-bit)
 // Database Engine Edition : Express
@@ -1453,7 +1453,6 @@ namespace Cafocha.Entities
         public decimal Vat { get; set; } // Vat
 
         [Column(@"subEmp_id", Order = 6, TypeName = "varchar")]
-        [Required(AllowEmptyStrings = true)]
         [MaxLength(200)]
         [StringLength(200)]
         [Display(Name = "Sub emp ID")]
@@ -2611,7 +2610,7 @@ namespace Cafocha.Entities
             Property(x => x.TotalPriceNonDisc).HasPrecision(19,4);
             Property(x => x.Svc).HasPrecision(19,4);
             Property(x => x.Vat).HasPrecision(19,4);
-            Property(x => x.SubEmpId).IsUnicode(false);
+            Property(x => x.SubEmpId).IsOptional().IsUnicode(false);
             Property(x => x.CusId).IsOptional().IsUnicode(false);
             Property(x => x.EmpId).IsOptional().IsUnicode(false);
             Property(x => x.TableOwned).IsOptional();

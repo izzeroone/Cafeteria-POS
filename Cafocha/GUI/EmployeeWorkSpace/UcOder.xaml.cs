@@ -72,14 +72,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                 if (currentEmp != null)
                 {
-                    if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
-                    {
-                        this.bntPay.IsEnabled = true;
-                    }
-                    else
-                    {
-                        this.bntPay.IsEnabled = false;
-                    }
+                    //All in one so everything is 
+                    this.bntPay.IsEnabled = true;
+//                    if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
+//                    {
+//                        this.bntPay.IsEnabled = true;
+//                    }
+//                    else
+//                    {
+//                        this.bntPay.IsEnabled = false;
+//                    }
                 }
             }
 
@@ -895,7 +897,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
 
-        //ToDo: NEED TO BE UPDATE TO THE TRANSACT MANIPULATION
+        //ToDo: FIX THE PAYING METHOD
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -938,6 +940,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
+                //TODO: Fix order note Id is missing
+
                 // input the rest data
                 InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
                 if (!inputTheRest.MyShowDialog())
@@ -946,8 +950,17 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
 
 
+
+
                 // save to database
                 _unitofwork.OrderRepository.Insert(newOrder);
+
+                //Set orderdetil id in roder\
+                foreach (var orderNoteDetail in newOrder.OrderNoteDetails)
+                {
+                    orderNoteDetail.OrdernoteId = newOrder.OrdernoteId;
+                }
+
                 _unitofwork.Save();
 
 
@@ -1252,6 +1265,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 {
                     newDetailsList.Add(details.ProductId, new OrderNoteDetail()
                     {
+                        OrdernoteId = newOrder.OrdernoteId,
                         ProductId = details.ProductId,
                         Discount = details.Discount,
                         Quan = details.Quan
@@ -1262,6 +1276,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 newOrder.OrderNoteDetails.Add(newDetails.Value);
             }
+
 
             return true;
         }
