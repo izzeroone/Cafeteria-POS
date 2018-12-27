@@ -389,10 +389,6 @@
     <Compile Include="Repository\Interfaces\IProductRepository.cs" />
     <Compile Include="Security\AESGCM.cs" />
     <Compile Include="Security\AESThenHMAC.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -413,10 +409,6 @@
     <Compile Include="Entities\CustomEntities\PaymentMethod.cs" />
     <Compile Include="Entities\CustomEntities\Product.cs" />
     <Compile Include="Entities\CustomEntities\ProductType.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="GUI\AdminNavWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

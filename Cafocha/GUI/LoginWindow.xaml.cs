@@ -133,7 +133,7 @@ namespace Cafocha.GUI
                     var emp = empList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     if (emp != null)
                     {
-                        POS.App.Current.Properties["EmpLogin"] = emp;
+                        Application.Current.Properties["EmpLogin"] = emp;
                         if (emp.EmpRole == (int)EmployeeRole.Stock)
                         {
                             Dispatcher.Invoke(() =>
@@ -186,8 +186,8 @@ namespace Cafocha.GUI
                                 EmpLoginListData.emploglist.Add(new EmpLoginList
                                 {
                                     Emp = emp,
-                                    EmpSal = POS.App.Current.Properties["EmpSN"] as SalaryNote,
-                                    EmpWH = POS.App.Current.Properties["EmpWH"] as WorkingHistory,
+                                    EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,
+                                    EmpWH = Application.Current.Properties["EmpWH"] as WorkingHistory,
                                     TimePercent = 0
                                 });
 
@@ -202,12 +202,13 @@ namespace Cafocha.GUI
                         List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
 
                         var ad = adList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
-                        var adEmp = empList.FirstOrDefault(x => x.EmpId.Equals("EMP0000009"));
+                        //TODO: fix ad Emp
+                        var adEmp = empList.FirstOrDefault(x => x.EmpId.Equals("EMP0000002"));
                         if (ad != null)
                         {
 
-                            POS.App.Current.Properties["EmpLogin"] = adEmp;
-                            POS.App.Current.Properties["AdLogin"] = ad;
+                            Application.Current.Properties["EmpLogin"] = adEmp;
+                            Application.Current.Properties["AdLogin"] = ad;
 
                             Dispatcher.Invoke(() =>
                             {
@@ -274,7 +275,7 @@ namespace Cafocha.GUI
                     Employee loginEmp = empList.FirstOrDefault(x => x.DecryptedCode.Equals(code));
                     if (loginEmp != null)
                     {
-                        POS.App.Current.Properties["EmpLogin"] = loginEmp;
+                        Application.Current.Properties["EmpLogin"] = loginEmp;
 
                         if (loginEmp.EmpRole == (int)EmployeeRole.Stock)
                         {
@@ -328,8 +329,8 @@ namespace Cafocha.GUI
                                 EmpLoginListData.emploglist.Add(new EmpLoginList
                                 {
                                     Emp = loginEmp,
-                                    EmpSal = POS.App.Current.Properties["EmpSN"] as SalaryNote,
-                                    EmpWH = POS.App.Current.Properties["EmpWH"] as WorkingHistory,
+                                    EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,
+                                    EmpWH = Application.Current.Properties["EmpWH"] as WorkingHistory,
                                     TimePercent = 0
                                 });
 

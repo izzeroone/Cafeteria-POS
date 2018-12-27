@@ -25,7 +25,7 @@ namespace Cafocha.Repository.Generic
                 foreach (var entity in dbSet)
                 {
                     var admin = entity as AdminRe;
-                    string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, "ENCRYPT_PHASE");
+                    string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, ENCRYPT_PHASE);
                     admin.DecryptedPass = decryptPass;
                 }
             }
