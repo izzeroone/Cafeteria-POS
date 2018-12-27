@@ -243,7 +243,7 @@ namespace Cafocha.Repository.Generic
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private TEntity AutoGeneteId_DBAsowell(TEntity entity)
+        public TEntity AutoGeneteId_DBAsowell(TEntity entity)
         {
             string sign = "";
             if (entity is Employee)

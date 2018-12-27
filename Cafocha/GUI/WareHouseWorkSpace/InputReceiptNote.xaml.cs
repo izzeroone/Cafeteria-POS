@@ -295,6 +295,12 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                 }
 
                 CurrentReceipt.Inday = DateTime.Now;
+                CurrentReceipt.RnId = _unitofwork.ReceiptNoteRepository.AutoGeneteId_DBAsowell(CurrentReceipt).RnId;
+                //TODO:Add id after insert cause is will have a ID
+                foreach (var receiptNodeDetails in CurrentReceipt.ReceiptNoteDetails)
+                {
+                    receiptNodeDetails.RnId = CurrentReceipt.RnId;
+                }
                 _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
 
                 //ToDo: Update the contain value in Warehouse database
