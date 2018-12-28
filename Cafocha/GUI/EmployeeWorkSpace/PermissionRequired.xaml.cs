@@ -27,7 +27,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             _isTable = isTable;
             InitializeComponent();
 
-            txtUsername.Focus();
+            //txtUsername.Focus();
 
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;

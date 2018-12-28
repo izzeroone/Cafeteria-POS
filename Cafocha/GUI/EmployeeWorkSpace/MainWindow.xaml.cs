@@ -27,17 +27,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         Employee emp;
         SalaryNote empSln;
-        public ProgressBar proTable;
-        public ProgressBar proChair;
-        public Entities.Table currentTable { get; set; }
-        public Entities.Chair currentChair { get; set; }
-        internal Table b;
-        internal Dash d;
         internal Entry en;
         internal Info info;
         internal LoginWindow LoginWindow;
         internal SettingFoodPage st;
-        internal SettingTableSize stts;
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
 
@@ -49,10 +42,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         public MainWindow()
         {
             InitializeComponent();
-            currentTable = null;
             emp = App.Current.Properties["EmpLogin"] as Employee;
-            proTable = pgbReservedTable as ProgressBar;
-            proChair = pgbReservedChair as ProgressBar;
 
             cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
 
@@ -69,12 +59,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             _unitofwork = new EmployeewsOfLocalPOS();
             {
-                b = new Table(_unitofwork);
-                d = new Dash();
                 en = new Entry();
                 info = new Info();
                 st = new SettingFoodPage(_unitofwork);
-                stts = new SettingTableSize();
 
                 WorkTimer = new DispatcherTimer();
                 WorkTimer.Tick += WorkTime_Tick;
@@ -90,14 +77,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 CheckWorkingTimer.Tick += CheckWorking_Tick;
                 CheckWorkingTimer.Interval = new TimeSpan(0, 5, 0);
 
-                initProgressTableChair();
-
                 this.Loaded += (sender, args) =>
                 {
-                    bntTable.IsEnabled = true;
-                    bntDash.IsEnabled = false;
                     bntEntry.IsEnabled = true;
-                    myFrame.Navigate(d);
+                    myFrame.Navigate(en);
                 };
 
                 this.Closing += (sender, args) =>
@@ -107,59 +90,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 };
 
             }
-        }
-
-        /// <summary>
-        /// Calculate served table and chair in present
-        /// </summary>
-        public void initProgressTableChair()
-        {
-            proTable.Maximum = 0;
-            proTable.Value = 0;
-            proChair.Maximum = 0;
-            proChair.Value = 0;
-
-            foreach (Entities.Table t in _unitofwork.TableRepository.Get().ToList())
-            {
-                if (t.ChairAmount != 0)
-                {
-                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(t.TableId)).ToList();
-                    if (chairoftable.Count != 0)
-                    {
-                        foreach (var ch in chairoftable)
-                        {
-                            var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(ch.ChairId)).ToList();
-                            if (chairorderdetailstemp.Count != 0)
-                            {
-                                proChair.Value += 1;
-                                proChair.Maximum += 1;
-                            }
-                            else
-                            {
-                                proChair.Maximum += 1;
-                            }
-                        }
-                    }
-                }
-
-                if (t.IsOrdered == 1)
-                {
-                    proTable.Value += 1;
-                    proTable.Maximum += 1;
-                }
-                else
-                {
-                    proTable.Maximum += 1;
-                }
-
-                setToolTip(proChair, proTable);
-            }
-        }
-
-        private void setToolTip(ProgressBar proChair, ProgressBar proTable)
-        {
-            proTable.ToolTip = "Reserved table(" + proTable.Value + "/" + proTable.Maximum + ")";
-            proChair.ToolTip = "Reserved chair(" + proChair.Value + "/" + proChair.Maximum + ")";
         }
 
         private void Refresh_Tick(object sender, EventArgs e)
@@ -227,37 +157,15 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             if (bntEntry.IsEnabled == false)
             {
-                myFrame.Navigate(b);
-                bntTable.IsEnabled = false;
-                bntDash.IsEnabled = true;
                 bntEntry.IsEnabled = true;
             }
 
-            currentTable = null;
             CheckWorkingTimer.Stop();
-        }
-
-        private void bntDash_Click(object sender, RoutedEventArgs e)
-        {
-            bntTable.IsEnabled = true;
-            bntDash.IsEnabled = false;
-            bntEntry.IsEnabled = true;
-            myFrame.Navigate(d);
-        }
-
-        private void bntTable_Click(object sender, RoutedEventArgs e)
-        {
-            myFrame.Navigate(b);
-            bntTable.IsEnabled = false;
-            bntDash.IsEnabled = true;
-            bntEntry.IsEnabled = true;
         }
 
         private void bntEntry_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(en);
-            bntTable.IsEnabled = true;
-            bntDash.IsEnabled = true;
             bntEntry.IsEnabled = false;
         }
 
@@ -277,16 +185,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void lbiFoodList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(st);
-            bntTable.IsEnabled = true;
-            bntDash.IsEnabled = true;
-            bntEntry.IsEnabled = true;
-        }
-
-        private void lbiTableSize_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            myFrame.Navigate(stts);
-            bntTable.IsEnabled = true;
-            bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
         }
 
@@ -342,15 +240,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
             }
 
-            if(bntEntry.IsEnabled == false)
-            {
-                myFrame.Navigate(b);
-                bntTable.IsEnabled = false;
-                bntDash.IsEnabled = true;
-                bntEntry.IsEnabled = true;
-            }
-
-            currentTable = null;
             if (CheckWorkingTimer != null)
             {
                 CheckWorkingTimer.Stop();
@@ -389,54 +278,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 3);
             ael.ShowDialog();
 
-            if (App.Current.Properties["CurrentEmpWorking"] == null)
-            {
-                if (en.IsEnabled == false)
-                {
-                    myFrame.Navigate(b);
-                    bntTable.IsEnabled = false;
-                    bntDash.IsEnabled = true;
-                    bntEntry.IsEnabled = true;
-                }
-
-                currentTable = null;
-            }
-
-            //WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
-
-            //wh.EndTime = DateTime.Now;
-            //_unitofwork.WorkingHistoryRepository.Insert(wh);
-            //_unitofwork.Save();
-
-            //empSln = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-            //var workH = wh.EndTime - wh.StartTime;
-            //empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
-            //_unitofwork.SalaryNoteRepository.Update(empSln);
-            //_unitofwork.Save();
-
-            //foreach (var table in _unitofwork.TableRepository.Get())
-            //{
-            //    var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
-            //    orderTemp.CusId = "CUS0000001";
-            //    orderTemp.Ordertime = DateTime.Now;
-            //    orderTemp.TotalPrice = 0;
-            //    orderTemp.CustomerPay = 0;
-            //    orderTemp.PayBack = 0;
-            //    table.IsOrdered = 0;
-            //    var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
-            //    if(orderDetails.Count() != 0)
-            //    {
-            //        foreach(var od in orderDetails)
-            //        {
-            //            _unitofwork.OrderDetailsTempRepository.Delete(od);
-            //            _unitofwork.Save();
-            //        }
-            //    }
-            //}
-
-            //login = new Login();
-            //this.Close();
-            //login.Show();
         }
 
         private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -448,42 +289,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing);
-            printer.DoPrint();
-        }
-
-        private void LbiFireDessert_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (currentTable == null)
-            {
-                MessageBox.Show("There is no table to send fire!");
-                return;
-            }
-                
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Fire_Dessert, currentTable);
-            printer.DoPrint();
-        }
-
-        private void LbiFireStater_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (currentTable == null)
-            {
-                MessageBox.Show("There is no table to send fire!");
-                return;
-            }
-
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Fire_Stater, currentTable);
-            printer.DoPrint();
-        }
-
-        private void LbiFireMain_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (currentTable == null)
-            {
-                MessageBox.Show("There is no table to send fire!");
-                return;
-            }
-
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Fire_Main, currentTable);
             printer.DoPrint();
         }
     }

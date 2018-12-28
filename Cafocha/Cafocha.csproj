@@ -246,12 +246,6 @@
     <Compile Include="GUI\EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\ConfirmMergeDialog.xaml.cs">
-      <DependentUpon>ConfirmMergeDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\DashPage.xaml.cs">
-      <DependentUpon>DashPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml.cs">
       <DependentUpon>DeleteConfirmDialog.xaml</DependentUpon>
     </Compile>
@@ -284,18 +278,6 @@
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
       <DependentUpon>SettingFoodPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\SettingTableSize.xaml.cs">
-      <DependentUpon>SettingTableSize.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\SwapOrMergeTable.xaml.cs">
-      <DependentUpon>SwapOrMergeTable.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\TablePage.xaml.cs">
-      <DependentUpon>TablePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\TableSettingDialog.xaml.cs">
-      <DependentUpon>TableSettingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\UcMenu.xaml.cs">
       <DependentUpon>UcMenu.xaml</DependentUpon>
@@ -537,14 +519,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\EmployeeWorkSpace\ConfirmMergeDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\DashPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -586,22 +560,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\SettingTableSize.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\SwapOrMergeTable.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\TablePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\TableSettingDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

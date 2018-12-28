@@ -50,34 +50,11 @@
                                      FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="LbiEODReport_OnPreviewMouseLeftButtonUp" />
-                        <ListBoxItem x:Name="lbiSettingTableSize"
-                                     Content="Setting"
-                                     FontWeight="Bold"
-                                     Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiChangeTheme"
                                      Content="Theme"
                                      FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
-                        <ListBoxItem x:Name="lbiFireStater"
-                                     Content="Fire Stater"
-                                     Foreground="Red"
-                                     FontWeight="Bold"
-                                     Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="LbiFireStater_OnPreviewMouseLeftButtonUp"/>
-                        <ListBoxItem x:Name="lbiFireMain"
-                                     Content="Fire Main"
-                                     Foreground="Red"
-                                     FontWeight="Bold"
-                                     Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="LbiFireMain_OnPreviewMouseLeftButtonUp" />
-                        <ListBoxItem x:Name="lbiFireDessert"
-                                     Content="Fire Dessert"
-                                     Foreground="Red"
-                                     FontWeight="Bold"
-                                     Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="LbiFireDessert_OnPreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -137,7 +114,7 @@
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="36"
-                                   FontWeight="Bold">ASOWEL POS</TextBlock>
+                                   FontWeight="Bold">Cafocha</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -154,28 +131,6 @@
                                    Width="1014"
                                    Margin="0,-4,-2,-3">
 
-                            <Button x:Name="bntDash"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Foreground="DeepSkyBlue"
-                                    Content="Dash"
-                                    Height="42"
-                                    Width="98"
-                                    Click="bntDash_Click"
-                                    FontSize="18" 
-                                    ToolTip="Application Dash Board"/>
-                            <Button x:Name="bntTable"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Foreground="DeepSkyBlue"
-                                    Height="42"
-                                    Width="98"
-                                    Click="bntTable_Click"
-                                    FontSize="18"
-                                    ToolTip="Table Page">
-
-
-                                Table
-
-                            </Button>
                             <Button x:Name="bntEntry"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
@@ -188,8 +143,6 @@
                                 Entry
 
                             </Button>
-
-
                             <TextBlock Foreground="White"
                                        Text="00:00:00"
                                        x:Name="txtTimeWk"
@@ -200,27 +153,7 @@
                                        DockPanel.Dock="Right"
                                        Margin="0,14,30,14" 
                                        ToolTip="Working Time Counter"/>
-                            <ProgressBar x:Name="pgbReservedTable"
-                                         Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
-                                         Value="5"
-                                         Maximum="10"
-                                         Width="40"
-                                         Height="40"
-                                         IsIndeterminate="True"
-                                         DockPanel.Dock="Right"
-                                         Margin="0,0,5,0"
-                                         ToolTip="Reserved table"/>
-                            <ProgressBar x:Name="pgbReservedChair"
-                                         Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
-                                         Value="5"
-                                         Maximum="10"
-                                         Width="40"
-                                         Height="40"
-                                         IsIndeterminate="True"
-                                         DockPanel.Dock="Right"
-                                         Margin="0,0,20,0"
-                                         ToolTip="Reserved chair"/>
-                            
+
                             <TextBlock Foreground="White"
                                        FontSize="18"
                                        TextAlignment="Right"

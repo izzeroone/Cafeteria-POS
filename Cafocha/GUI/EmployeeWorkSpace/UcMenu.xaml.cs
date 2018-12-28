@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -13,18 +14,22 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// Interaction logic for UcMenu.xaml
     /// </summary>
 public partial class UcMenu : UserControl
-    {
+ {
         private EmployeewsOfLocalPOS _unitofwork;
-        private Entities.Table orderingTable;
-        private Entities.Chair orderingChair;
-        private OrderTemp orderTempCurrentTable;
-        private OrderDetailsTemp orderDetailsTempTable;
+        private OrderTemp orderTemp;
+        private List<OrderDetailsTemp> orderDetails;
 
         public UcMenu()
         {
             InitializeComponent();
 
             this.Loaded += UcMenu_Loaded;
+        }
+
+        public void setOrderData(OrderTemp orderTemp, List<OrderDetailsTemp> orderDetails)
+        {
+            this.orderTemp = orderTemp;
+            this.orderDetails = orderDetails;
         }
 
         internal bool IsRefreshMenu = true;
@@ -91,107 +96,85 @@ public partial class UcMenu : UserControl
             {
                 return;
             }
-
-            orderingTable = ((MainWindow)Window.GetWindow(this)).currentTable;
-            orderingChair = ((MainWindow)Window.GetWindow(this)).currentChair;
             ListBox lbSelected = sender as ListBox;
 
-            if (orderingTable == null || orderingChair == null)
-            {
-                MessageBox.Show("Chair must be choice!");
-                return;
-            }
-
-            orderTempCurrentTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(orderingTable.TableId)).First();
-            if (orderTempCurrentTable == null)
-            {
-                return;
-            }
 
             var item = lbSelected.SelectedItem;
             if (item != null)
             {
-                if (orderingTable.IsOrdered == 0)
-                {
-                    orderTempCurrentTable.Ordertime = DateTime.Now;
-                    orderingTable.IsOrdered = 1;
-                    _unitofwork.TableRepository.Update(orderingTable);
-                }
+
+                orderTemp.Ordertime = DateTime.Now;
+
 
                 OrderDetailsTemp o = new OrderDetailsTemp();
                 Product it = (Product)lbSelected.SelectedItem;
 
                 //order for each chair
 
-                if (orderingChair != null)
+                var orderProductDetailsTemps = orderDetails.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
+
+                // go to warehouse, check and get the ingredient to make product
+                if (!TakeFromWareHouseData(o, it))       
                 {
-                    var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(orderingChair.ChairId)).ToList();
-                    var foundinchairorderdetailstemp = chairorderdetailstemp.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
+                    return;
+                }
 
-                    // go to warehouse, check and get the ingredient to make product
-                    if (!TakeFromWareHouseData(o, it))       
-                    {
-                        return;
-                    }
+                // add a product to order
+                if (orderProductDetailsTemps.Count == 0)
+                {
+                    o.OrdertempId = orderTemp.OrdertempId;
+                    o.ProductId = it.ProductId;
+                    o.SelectedStats = it.StdStats;
+                    o.Note = "";
+                    o.Quan = 1;
+                    o.IsPrinted = 0;
+                    o.Discount = it.Discount;
 
-                    // add a product to order
-                    if (foundinchairorderdetailstemp.Count == 0)
+                    
+                    _unitofwork.OrderDetailsTempRepository.Insert(o);
+                    _unitofwork.Save();
+                }
+                else
+                {
+                    foreach (var order in orderProductDetailsTemps)
                     {
-                        o.ChairId = orderingChair.ChairId;
-                        o.OrdertempId = orderTempCurrentTable.OrdertempId;
-                        o.ProductId = it.ProductId;
-                        o.SelectedStats = it.StdStats;
-                        o.Note = "";
-                        o.Quan = 1;
-                        o.IsPrinted = 0;
-                        o.Discount = it.Discount;
-
-                        
-                        _unitofwork.OrderDetailsTempRepository.Insert(o);
-                        _unitofwork.Save();
-                    }
-                    else
-                    {
-                        foreach (var order in foundinchairorderdetailstemp)
+                        if (!order.SelectedStats.Equals(it.StdStats) || !order.Note.Equals("") || order.IsPrinted != 0)
                         {
-                            if (!order.SelectedStats.Equals(it.StdStats) || !order.Note.Equals("") || order.IsPrinted != 0)
-                            {
-                                o.ChairId = orderingChair.ChairId;
-                                o.OrdertempId = orderTempCurrentTable.OrdertempId;
-                                o.ProductId = it.ProductId;
-                                o.SelectedStats = it.StdStats;
-                                o.Note = "";
-                                o.Quan = 1;
-                                o.IsPrinted = 0;
-                                o.Discount = it.Discount;
+                            o.OrdertempId = orderTemp.OrdertempId;
+                            o.ProductId = it.ProductId;
+                            o.SelectedStats = it.StdStats;
+                            o.Note = "";
+                            o.Quan = 1;
+                            o.IsPrinted = 0;
+                            o.Discount = it.Discount;
 
-                                _unitofwork.OrderDetailsTempRepository.Insert(o);
-                                _unitofwork.Save();
+                            _unitofwork.OrderDetailsTempRepository.Insert(o);
+                            _unitofwork.Save();
 
-                                break;
-                            }
+                            break;
+                        }
 
-                            if (order.SelectedStats.Equals(it.StdStats) && order.Note.Equals("") && order.IsPrinted == 0)
-                            {
-                                order.ProductId = it.ProductId;
-                                order.Quan++;
+                        if (order.SelectedStats.Equals(it.StdStats) && order.Note.Equals("") && order.IsPrinted == 0)
+                        {
+                            order.ProductId = it.ProductId;
+                            order.Quan++;
 
-                                _unitofwork.OrderDetailsTempRepository.Update(order);
-                                _unitofwork.Save();
+                            _unitofwork.OrderDetailsTempRepository.Update(order);
+                            _unitofwork.Save();
 
-                                break;
-                            }
+                            break;
                         }
                     }
                 }
+                
 
 
                 lbSelected.UnselectAll();
 
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempCurrentTable);
-                ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork, orderingTable);
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTempCurrentTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
+                // TODO: uncomment and fix
+//                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork, orderingTable);
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
         }
@@ -375,7 +358,6 @@ public partial class UcMenu : UserControl
 
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
-            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
             {
                 return;
