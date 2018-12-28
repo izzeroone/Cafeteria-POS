@@ -88,7 +88,6 @@ public partial class UcMenu : UserControl
                 lbSelected.UnselectAll();
 
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _orderModule.OrderTemp);
-                // TODO: uncomment and fix
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork);
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = _orderModule.OrderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }

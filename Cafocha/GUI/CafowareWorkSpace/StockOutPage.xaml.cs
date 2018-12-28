@@ -277,6 +277,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 }
 
                 _currentStockOut.OutTime = DateTime.Now;
+                _currentStockOut.StockoutId = _unitofwork.StockOutRepository.AutoGeneteId_DBAsowell(_currentStockOut).StockoutId;
+                foreach (var stockInDetail in _currentStockOut.StockOutDetails)
+                {
+                    stockInDetail.StockoutId = _currentStockOut.StockoutId;
+                }
                 _unitofwork.StockOutRepository.Insert(_currentStockOut);
 
                 //ToDo: Update the contain value in Warehouse database

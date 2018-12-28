@@ -276,6 +276,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 }
 
                 _currentStockIn.Intime = DateTime.Now;
+                _currentStockIn.SiId = _unitofwork.StockInRepository.AutoGeneteId_DBAsowell(_currentStockIn).SiId;
+                foreach (var stockInDetail in _currentStockIn.StockInDetails)
+                {
+                    stockInDetail.SiId = _currentStockIn.SiId;
+                }
                 _unitofwork.StockInRepository.Insert(_currentStockIn);
 
                 //ToDo: Update the contain value in Warehouse database
@@ -299,7 +304,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong when trying to input the new StockOut Receipt! May be you should reload this app or call for support!");
+                MessageBox.Show("Something went wrong when trying to input the new StockIn Receipt! May be you should reload this app or call for support!");
             }
         }
 
