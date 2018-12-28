@@ -658,7 +658,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             // printing
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
-            printer.OrderMode = orderTemp.OrderMode;
             printer.DoPrint();
 
             // clean the old table data
@@ -681,7 +680,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
  
             // printing
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, newOrder );
-            printer.OrderMode = orderTemp.OrderMode;
             printer.DoPrint();
 
 
@@ -754,6 +752,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             var currentOrderTemp = orderTemp;
             if (currentOrderTemp != null)
             {
+                newOrder.OrdernoteId = _unitofwork.OrderRepository.AutoGeneteId_DBAsowell(newOrder).OrdernoteId;
                 newOrder.CusId = currentOrderTemp.CusId;
                 newOrder.EmpId = currentOrderTemp.EmpId;
                 newOrder.Pax = currentOrderTemp.Pax;
@@ -769,7 +768,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             else return false;
 
             Dictionary<string, OrderNoteDetail> newDetailsList = new Dictionary<string, OrderNoteDetail>();
-            foreach (var details in currentOrderTemp.OrderDetailsTemps)
+            foreach (var details in orderTempDetails)
             {
                 if (newDetailsList.ContainsKey(details.ProductId))
                 {
@@ -779,6 +778,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 {
                     newDetailsList.Add(details.ProductId, new OrderNoteDetail()
                     {
+                        OrdernoteId = newOrder.OrdernoteId,
                         ProductId = details.ProductId,
                         Discount = details.Discount,
                         Quan = details.Quan

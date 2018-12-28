@@ -23,7 +23,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
         private IPrintHelper ph;
         private int type;
-        public int OrderMode { get; set; }
+
         private readonly OrderNote curOrder;
         private PrintDialog printDlg;
 
@@ -148,6 +148,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 if (!string.IsNullOrEmpty(_receptionPrinter))
                     printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
 
+                var order = new OrderForPrint().GetAndConvertOrder(curOrder);
+                order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
                 ph = new ReceiptPrintHelper()
                 {
                     Owner = new Owner()
@@ -158,9 +160,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curOrder).GetAndConverOrderDetails(curOrder, _unitofwork),
+                    Order = order,
 
-                    OrderMode = OrderMode
                 };
             }
 
@@ -170,6 +171,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 if(!string.IsNullOrEmpty(_receptionPrinter))
                     printDlg.PrintQueue =new PrintQueue(new PrintServer(), _receptionPrinter);
 
+                var order = new OrderForPrint().GetAndConvertOrder(curOrder);
+                order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
+
                 ph = new ReceiptPrintHelper()
                 {
                     Owner = new Owner()
@@ -180,9 +184,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curOrder).GetAndConverOrderDetails(_unitofwork,TempReceipt_Printing),
-
-                    OrderMode = OrderMode
+                    Order = order
                 };
             }
 
