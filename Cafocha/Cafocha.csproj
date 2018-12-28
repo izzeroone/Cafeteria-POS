@@ -233,9 +233,7 @@
     <Compile Include="GUI\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\BusinessModel\Chair.cs" />
     <Compile Include="GUI\BusinessModel\ReadWriteData.cs" />
-    <Compile Include="GUI\BusinessModel\Table.cs" />
     <Compile Include="GUI\DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -271,9 +269,6 @@
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml.cs">
       <DependentUpon>PermissionRequired.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\SetOrderModeDialog.xaml.cs">
-      <DependentUpon>SetOrderModeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
       <DependentUpon>SettingFoodPage.xaml</DependentUpon>
@@ -548,10 +543,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\SetOrderModeDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

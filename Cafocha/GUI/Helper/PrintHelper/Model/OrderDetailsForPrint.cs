@@ -20,7 +20,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         // Extend data (data for other printing)
         public string ProductId { get; set; }
         public int ProductType { get; set;  }
-        public int ChairNumber { get; set; }
         public string Note { get; set; }
         public string SelectedStats { get; set; }
         public static ObservableCollection<string> StatusItems

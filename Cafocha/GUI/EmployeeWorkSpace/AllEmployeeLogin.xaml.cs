@@ -49,7 +49,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void AllEmployeeLogin_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = 500;
-            spLoginAnother.Visibility = Visibility.Collapsed;
+            spLoginAnother.Visibility = Visibility.Visible;
 
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;

@@ -88,7 +88,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             foreach (var orderDetailsTemp in targetOrderDetails)
             {
                 if (orderDetailsTemp.IsPrinted == 1)
-                { // ignore the printed orderDetails is only available when bar printing and kitchen printing
+                { 
                     continue;
                 }
                 OrderDetails.Add(new OrderDetailsForPrint()
