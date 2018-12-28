@@ -15,10 +15,6 @@ namespace Cafocha.Repository.DAL
         private LocalContext _context;
 
         // business repo
-        private GenericRepository<OrderDetailsTemp> _orderDetailsTempRepository;
-        private GenericRepository<OrderTemp> _orderTempRepository;
-        private GenericRepository<Chair> _chairRepository;
-        private GenericRepository<Table> _tableRepository;
         private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
@@ -235,58 +231,6 @@ namespace Cafocha.Repository.DAL
             this._context = new LocalContext();
         }
 
-        public GenericRepository<Table> TableRepository
-        {
-            get
-            {
-                if (_tableRepository == null)
-                {
-                    _tableRepository = new GenericRepository<Table>(_context);
-                }
-
-                return _tableRepository;
-            }
-        }
-
-        public GenericRepository<Chair> ChairRepository
-        {
-            get
-            {
-                if (_chairRepository == null)
-                {
-                    _chairRepository = new GenericRepository<Chair>(_context);
-                }
-
-                return _chairRepository;
-            }
-        }
-
-        public GenericRepository<OrderTemp> OrderTempRepository
-        {
-            get
-            {
-
-                if (_orderTempRepository == null)
-                {
-                    _orderTempRepository = new GenericRepository<OrderTemp>(_context);
-                }
-
-                return _orderTempRepository;
-            }
-        }
-
-        public GenericRepository<OrderDetailsTemp> OrderDetailsTempRepository
-        {
-            get
-            {
-                if (_orderDetailsTempRepository == null)
-                {
-                    _orderDetailsTempRepository = new GenericRepository<OrderDetailsTemp>(_context);
-                }
-
-                return _orderDetailsTempRepository;
-            }
-        }
     }
 }
 

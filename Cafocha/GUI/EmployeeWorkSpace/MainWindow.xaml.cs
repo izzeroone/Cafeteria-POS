@@ -4,13 +4,14 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System;
+using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 using Cafocha.Repository.DAL;
 using log4net;
-using Table = Cafocha.Entities.Table;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
@@ -33,6 +34,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         internal SettingFoodPage st;
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
+        internal OrderTemp orderTemp;
+        internal List<OrderDetailsTemp> orderDetailsTemp;
+        internal Boolean isOrderPrint;
+        internal Boolean isOrderOrder;
 
         internal static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -46,6 +51,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
 
+            orderTemp = new OrderTemp();
+            orderDetailsTemp = new List<OrderDetailsTemp>();
+            isOrderOrder = false;
+            isOrderPrint = false;
 
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)

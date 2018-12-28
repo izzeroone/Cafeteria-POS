@@ -16,41 +16,30 @@ namespace Cafocha.GUI.Helper.PrintHelper
     public class DoPrintHelper
     {
         public static readonly int TempReceipt_Printing = 1;
-        public static readonly int Kitchen_Printing = 2;
-        public static readonly int Bar_Printing = 3;
-        public static readonly int Eod_Printing = 4;
         public static readonly int Receipt_Printing = 5;
-        public static readonly int Fire_Stater = 6;
-        public static readonly int Fire_Main = 7;
-        public static readonly int Fire_Dessert = 8;
+        public static readonly int Eod_Printing = 3;
 
         private readonly EmployeewsOfLocalPOS _unitofwork;
 
         private IPrintHelper ph;
         private int type;
         public int OrderMode { get; set; }
-        private readonly Entities.Table curTable;
         private readonly OrderNote curOrder;
         private PrintDialog printDlg;
 
-        private string _barPrinter;
         private string _receptionPrinter;
-        private string _kitchentPrinter;
         private bool isShowReview;
 
-        public DoPrintHelper(EmployeewsOfLocalPOS unitofwork, int printType, Entities.Table currentTable = null)
+        public DoPrintHelper(EmployeewsOfLocalPOS unitofwork, int printType)
         {
             _unitofwork = unitofwork;
             type = printType;
-            curTable = currentTable;
             printDlg = new PrintDialog();
 
             string[] result = ReadWriteData.ReadPrinterSetting();
             if (result != null)
             {
                 _receptionPrinter = result[0];
-                _kitchentPrinter = result[1];
-                _barPrinter = result[2];
 
                 if (int.Parse(result[3]) == 1)
                     isShowReview = true;
@@ -60,8 +49,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             else
             {
                 _receptionPrinter = "";
-                _kitchentPrinter = "";
-                _barPrinter = "";
                 isShowReview = true;
             }
         }
@@ -77,8 +64,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             if (result != null)
             {
                 _receptionPrinter = result[0];
-                _kitchentPrinter = result[1];
-                _barPrinter = result[2];
 
                 if (int.Parse(result[3]) == 1)
                     isShowReview = true;
@@ -88,15 +73,13 @@ namespace Cafocha.GUI.Helper.PrintHelper
             else
             {
                 _receptionPrinter = "";
-                _kitchentPrinter = "";
-                _barPrinter = "";
                 isShowReview = true;
             }
         }
 
         public void DoPrint()
         {
-            if (curTable == null && type != Eod_Printing && curOrder == null)
+            if (curOrder == null)
             {
                 return;
             }
@@ -110,10 +93,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 FlowDocument doc = ph.CreateDocument();
                 doc.Name = "FlowDoc";
 
-                // Read the FlowDoucument xaml file
-                //Stream flowDocumentStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TestWPF.PrintWindow.xaml");
-                //FileStream fs = new FileStream(startupProjectPath + "\\FlowDocument1.xaml", FileMode.Open, FileAccess.Read);
-                //FlowDocument flowDocument = (FlowDocument)XamlReader.Load(fs);
 
                 PrintToReal(doc);
             }
@@ -179,7 +158,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork),
+                    Order = new OrderForPrint().GetAndConvertOrder(curOrder).GetAndConverOrderDetails(curOrder, _unitofwork),
 
                     OrderMode = OrderMode
                 };
@@ -201,33 +180,13 @@ namespace Cafocha.GUI.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork,TempReceipt_Printing),
+                    Order = new OrderForPrint().GetAndConvertOrder(curOrder).GetAndConverOrderDetails(_unitofwork,TempReceipt_Printing),
 
                     OrderMode = OrderMode
                 };
             }
 
-            if (type == Bar_Printing)
-            {
-                if (!string.IsNullOrEmpty(_barPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _barPrinter);
-
-                ph = new BarPrintHelper()
-                {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Bar_Printing)
-                };
-            }
-
-            if (type == Kitchen_Printing)
-            {
-                if (!string.IsNullOrEmpty(_kitchentPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
-
-                ph = new KitchenPrintHelper()
-                {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Kitchen_Printing)
-                };
-            }
+        
 
             if (type == Eod_Printing)
             {
@@ -237,41 +196,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 ph = new EndOfDayPrintHelper(_unitofwork);
             }
 
-            if (type == Fire_Stater)
-            {
-                if (!string.IsNullOrEmpty(_kitchentPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
-
-                ph = new FirePrintHelper()
-                {
-                    TableNumer = curTable.TableNumber,
-                    Mess = "STARTER FIRE!"
-                };
-            }
-
-            if (type == Fire_Main)
-            {
-                if (!string.IsNullOrEmpty(_kitchentPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
-
-                ph = new FirePrintHelper()
-                {
-                    TableNumer = curTable.TableNumber,
-                    Mess = "MAIN FIRE!"
-                };
-            }
-
-            if (type == Fire_Dessert)
-            {
-                if (!string.IsNullOrEmpty(_kitchentPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
-
-                ph = new FirePrintHelper()
-                {
-                    TableNumer = curTable.TableNumber,
-                    Mess = "DESSERT FIRE!"
-                };
-            }
         }
     }
 }

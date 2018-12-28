@@ -26,8 +26,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 
         public List<OrderDetailsForPrint> OrderDetails { get; set; }
 
-        public Entities.Table TableOwned { get; set; }
-
         public OrderForPrint()
         {
             OrderDetails = new List<OrderDetailsForPrint>();
@@ -37,15 +35,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         /// Convert data of OrderTemp object to OrderForPrint
         /// </summary>
         /// <param name="table">target table that contain order</param>
-        public OrderForPrint GetAndConvertOrder(Entities.Table targetTable, EmployeewsOfLocalPOS unitofwork)
+        public OrderForPrint GetAndConvertOrder(OrderTemp orderTemp)
         {
-            TableOwned = targetTable;
-
-            var targetOrder = unitofwork.OrderTempRepository.Get(x => x.TableOwned == targetTable.TableId).First();
+            var targetOrder = orderTemp;
             No = targetOrder.OrdertempId.ToString();
             Casher = targetOrder.EmpId;
             Customer = targetOrder.CusId;
-            Table = targetTable.TableNumber;
             Pax = targetOrder.Pax;
             Date = targetOrder.Ordertime;
             TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
@@ -59,7 +54,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             return this;
         }
 
-        public OrderForPrint GetAndConvertOrder(OrderNote targetOrder, EmployeewsOfLocalPOS unitofwork)
+        public OrderForPrint GetAndConvertOrder(OrderNote targetOrder)
         {
             No = targetOrder.OrdernoteId;
             Casher = targetOrder.EmpId;
@@ -84,22 +79,15 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         /// <param name="targetTable"></param>
         /// <param name="unitofwork"></param>
         /// <returns></returns>
-        public OrderForPrint GetAndConverOrderDetails(Entities.Table targetTable, EmployeewsOfLocalPOS unitofwork, int printType)
+        public OrderForPrint GetAndConverOrderDetails(EmployeewsOfLocalPOS unitofwork, int printType)
         {
-            // get Chairs data from target Table
-            var targetChairs = unitofwork.ChairRepository.Get(x => x.TableOwned.Value == targetTable.TableId);
-
             // get OrderDetailsTemp data from target Table
             List<OrderDetailsTemp> targetOrderDetails = new List<OrderDetailsTemp>();
-            foreach (var chair in targetChairs)
-            {
-                targetOrderDetails.AddRange(unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId == chair.ChairId));
-            }
 
             // convert
             foreach (var orderDetailsTemp in targetOrderDetails)
             {
-                if (orderDetailsTemp.IsPrinted == 1 && (DoPrintHelper.Bar_Printing == printType || printType == DoPrintHelper.Kitchen_Printing))
+                if (orderDetailsTemp.IsPrinted == 1)
                 { // ignore the printed orderDetails is only available when bar printing and kitchen printing
                     continue;
                 }
@@ -111,7 +99,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 
                     ProductId = orderDetailsTemp.ProductId,
                     ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
-                    ChairNumber = unitofwork.ChairRepository.Get(c => c.ChairId == orderDetailsTemp.ChairId).First().ChairNumber,
+                  
                     Note = orderDetailsTemp.Note,
                     SelectedStats = orderDetailsTemp.SelectedStats,
                 });
@@ -183,184 +171,182 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         /// Apply the Kitchen Printing to OrderDetails
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>> GetOrderDetailsForKitchen()
-        {
-            var resultList = new Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>>();
-
-            if (TableOwned != null)
-            {
-                //Todo: add BreakFast and KidBreakFast
-                //Starter
-                var BFQuery = OrderDetails.Where(od => od.SelectedStats == "BreakFast").ToList();
-                var BFList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int BFCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairBFQuery = BFQuery.Where(od => od.ChairNumber == i).ToList();
-                    BFCount += chairBFQuery.Count;
-                    BFList.Add(i, chairBFQuery);
-                }
-                if (BFCount != 0)
-                {
-                    resultList.Add("Breakfast", BFList);
-                }
-
-                //Starter
-                var starterQuery = OrderDetails.Where(od => od.SelectedStats == "Starter").ToList();
-                var starterList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int startCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairStartQuery = starterQuery.Where(od => od.ChairNumber == i).ToList();
-                    startCount += chairStartQuery.Count;
-                    starterList.Add(i, chairStartQuery);
-                }
-                if (startCount != 0)
-                {
-                    resultList.Add("Starter", starterList);
-                }
-
-
-                //Main
-                var mainQuery = OrderDetails.Where(od => od.SelectedStats == "Main").ToList();
-                var mainList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int mainCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairMainCostQuery = mainQuery.Where(od => od.ChairNumber == i).ToList();
-                    mainCount += chairMainCostQuery.Count;
-                    mainList.Add(i, chairMainCostQuery);
-                }
-                if (mainCount != 0)
-                {
-                    resultList.Add("Main", mainList);
-                }
-
-
-
-                //Dessert
-                var dessertQuery = OrderDetails.Where(od => od.SelectedStats == "Dessert").ToList();
-                var dessertList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int dessertCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairDessertQuery = dessertQuery.Where(od => od.ChairNumber == i).ToList();
-                    dessertCount += chairDessertQuery.Count;
-                    dessertList.Add(i, chairDessertQuery);
-                }
-                if (dessertCount != 0)
-                {
-                    resultList.Add("Dessert", dessertList);
-                }
-
-            }
-
-
-
-            return resultList;
-        }
+//        public Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>> GetOrderDetailsForKitchen()
+//        {
+//            var resultList = new Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>>();
+//
+//                //Todo: add BreakFast and KidBreakFast
+//                //Starter
+//                var BFQuery = OrderDetails.Where(od => od.SelectedStats == "BreakFast").ToList();
+//                var BFList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int BFCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairBFQuery = BFQuery.Where(od => od.ChairNumber == i).ToList();
+//                    BFCount += chairBFQuery.Count;
+//                    BFList.Add(i, chairBFQuery);
+//                }
+//                if (BFCount != 0)
+//                {
+//                    resultList.Add("Breakfast", BFList);
+//                }
+//
+//                //Starter
+//                var starterQuery = OrderDetails.Where(od => od.SelectedStats == "Starter").ToList();
+//                var starterList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int startCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairStartQuery = starterQuery.Where(od => od.ChairNumber == i).ToList();
+//                    startCount += chairStartQuery.Count;
+//                    starterList.Add(i, chairStartQuery);
+//                }
+//                if (startCount != 0)
+//                {
+//                    resultList.Add("Starter", starterList);
+//                }
+//
+//
+//                //Main
+//                var mainQuery = OrderDetails.Where(od => od.SelectedStats == "Main").ToList();
+//                var mainList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int mainCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairMainCostQuery = mainQuery.Where(od => od.ChairNumber == i).ToList();
+//                    mainCount += chairMainCostQuery.Count;
+//                    mainList.Add(i, chairMainCostQuery);
+//                }
+//                if (mainCount != 0)
+//                {
+//                    resultList.Add("Main", mainList);
+//                }
+//
+//
+//
+//                //Dessert
+//                var dessertQuery = OrderDetails.Where(od => od.SelectedStats == "Dessert").ToList();
+//                var dessertList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int dessertCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairDessertQuery = dessertQuery.Where(od => od.ChairNumber == i).ToList();
+//                    dessertCount += chairDessertQuery.Count;
+//                    dessertList.Add(i, chairDessertQuery);
+//                }
+//                if (dessertCount != 0)
+//                {
+//                    resultList.Add("Dessert", dessertList);
+//                }
+//
+//            }
+//
+//
+//
+//            return resultList;
+//        }
 
         /// <summary>
         /// Apply the Bar Printing to OrderDetails
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>> GetOrderDetailsForBar()
-        {
-            var resultList = new Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>>();
-
-
-            if (TableOwned != null)
-            {
-                //Beverage
-                var drinkQuery = OrderDetails.Where(od => od.SelectedStats == "Drink").ToList();
-
-
-                //Coffee
-                var coffeeQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Coffee).ToList();
-                var coffeeList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int coffCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairCoffeeQuery = coffeeQuery.Where(od => od.ChairNumber == i).ToList();
-                    coffCount += chairCoffeeQuery.Count;
-                    coffeeList.Add(i, chairCoffeeQuery);
-                }
-                if (coffCount != 0)
-                {
-                    resultList.Add(ProductType.Coffee.ToString(), coffeeList);
-                }
-
-
-                //Beverage
-                var beverageQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Beverage).ToList();
-                var beverageList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int bevCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairBeverageQuery = beverageQuery.Where(od => od.ChairNumber == i).ToList();
-                    bevCount += chairBeverageQuery.Count;
-                    beverageList.Add(i, chairBeverageQuery);
-                }
-                if (bevCount != 0)
-                {
-                    resultList.Add(ProductType.Beverage.ToString(), beverageList);
-                }
-
-
-
-                //Cocktall
-                var cocktailQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Cocktail).ToList();
-                var cocktailList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int cockCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairCocktailQuery = cocktailQuery.Where(od => od.ChairNumber == i).ToList();
-                    cockCount += chairCocktailQuery.Count;
-                    cocktailList.Add(i, chairCocktailQuery);
-                }
-                if (cockCount != 0)
-                {
-                    resultList.Add(ProductType.Cocktail.ToString(), cocktailList);
-                }
-
-
-
-                //Wine
-                var wineQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Wine).ToList();
-                var wineList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int wineCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairWineQuery = wineQuery.Where(od => od.ChairNumber == i).ToList();
-                    wineCount += chairWineQuery.Count;
-                    wineList.Add(i, chairWineQuery);
-                }
-                if (wineCount != 0)
-                {
-                    resultList.Add(ProductType.Wine.ToString(), wineList);
-                }
-
-
-
-                //Beer
-                var beerQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Beer).ToList();
-                var beerList = new Dictionary<int, List<OrderDetailsForPrint>>();
-                int beerCount = 0;
-                for (int i = 1; i <= TableOwned.ChairAmount; i++)
-                {
-                    var chairBeerQuery = beerQuery.Where(od => od.ChairNumber == i).ToList();
-                    beerCount += chairBeerQuery.Count;
-                    beerList.Add(i, chairBeerQuery);
-                }
-                if (beerCount != 0)
-                {
-                    resultList.Add(ProductType.Beer.ToString(), beerList);
-                }
-
-            }
-
-            return resultList;
-        }
+//        public Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>> GetOrderDetailsForBar()
+//        {
+//            var resultList = new Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>>();
+//
+//
+//            if (TableOwned != null)
+//            {
+//                //Beverage
+//                var drinkQuery = OrderDetails.Where(od => od.SelectedStats == "Drink").ToList();
+//
+//
+//                //Coffee
+//                var coffeeQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Coffee).ToList();
+//                var coffeeList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int coffCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairCoffeeQuery = coffeeQuery.Where(od => od.ChairNumber == i).ToList();
+//                    coffCount += chairCoffeeQuery.Count;
+//                    coffeeList.Add(i, chairCoffeeQuery);
+//                }
+//                if (coffCount != 0)
+//                {
+//                    resultList.Add(ProductType.Coffee.ToString(), coffeeList);
+//                }
+//
+//
+//                //Beverage
+//                var beverageQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Beverage).ToList();
+//                var beverageList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int bevCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairBeverageQuery = beverageQuery.Where(od => od.ChairNumber == i).ToList();
+//                    bevCount += chairBeverageQuery.Count;
+//                    beverageList.Add(i, chairBeverageQuery);
+//                }
+//                if (bevCount != 0)
+//                {
+//                    resultList.Add(ProductType.Beverage.ToString(), beverageList);
+//                }
+//
+//
+//
+//                //Cocktall
+//                var cocktailQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Cocktail).ToList();
+//                var cocktailList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int cockCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairCocktailQuery = cocktailQuery.Where(od => od.ChairNumber == i).ToList();
+//                    cockCount += chairCocktailQuery.Count;
+//                    cocktailList.Add(i, chairCocktailQuery);
+//                }
+//                if (cockCount != 0)
+//                {
+//                    resultList.Add(ProductType.Cocktail.ToString(), cocktailList);
+//                }
+//
+//
+//
+//                //Wine
+//                var wineQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Wine).ToList();
+//                var wineList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int wineCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairWineQuery = wineQuery.Where(od => od.ChairNumber == i).ToList();
+//                    wineCount += chairWineQuery.Count;
+//                    wineList.Add(i, chairWineQuery);
+//                }
+//                if (wineCount != 0)
+//                {
+//                    resultList.Add(ProductType.Wine.ToString(), wineList);
+//                }
+//
+//
+//
+//                //Beer
+//                var beerQuery = drinkQuery.Where(od => od.ProductType == (int)ProductType.Beer).ToList();
+//                var beerList = new Dictionary<int, List<OrderDetailsForPrint>>();
+//                int beerCount = 0;
+//                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+//                {
+//                    var chairBeerQuery = beerQuery.Where(od => od.ChairNumber == i).ToList();
+//                    beerCount += chairBeerQuery.Count;
+//                    beerList.Add(i, chairBeerQuery);
+//                }
+//                if (beerCount != 0)
+//                {
+//                    resultList.Add(ProductType.Beer.ToString(), beerList);
+//                }
+//
+//            }
+//
+//            return resultList;
+//        }
 
 
 

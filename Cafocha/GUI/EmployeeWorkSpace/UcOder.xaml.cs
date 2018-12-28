@@ -21,7 +21,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     {
         private EmployeewsOfLocalPOS _unitofwork;
         private OrderTemp orderTemp;
-        private List<Entities.OrderDetailsTemp> orderDetails;
+        private List<Entities.OrderDetailsTemp> orderTempDetails;
         private Employee currentEmp;
         private bool isSetOrderMode = false;
 
@@ -33,23 +33,29 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             this.Unloaded += UcOder_Unloaded;
         }
 
-        public void setOrderData(OrderTemp orderTemp, List<OrderDetailsTemp> orderDetails)
-        {
-            this.orderTemp = orderTemp;
-            this.orderDetails = orderDetails;
-        }
+
 
         private bool isUcOrderFormLoading;
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
             isUcOrderFormLoading = true;
+            this.orderTemp = ((MainWindow)Window.GetWindow(this)).orderTemp;
+            this.orderTempDetails = ((MainWindow)Window.GetWindow(this)).orderDetailsTemp;
             _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
             EmpLoginList currentEmpList = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
 
-            InitCus_raiseEvent = false;
-            initStatus_RaiseEvent = false;
-         
 
+            isSetOrderMode = false;
+
+            InitCus_raiseEvent = true;
+            initStatus_RaiseEvent = true;
+            txtDay.Text = "";
+            txtTotal.Text = "";
+            wp.Children.Clear();
+            lvData.ItemsSource = new List<OrderDetails_Product_Joiner>();
+           
+
+         
             if (currentEmpList != null)
             {
                 currentEmp = currentEmpList.Emp;
@@ -58,38 +64,21 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 {
                     //All in one so everything is 
                     this.bntPay.IsEnabled = true;
-//                    if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
-//                    {
-//                        this.bntPay.IsEnabled = true;
-//                    }
-//                    else
-//                    {
-//                        this.bntPay.IsEnabled = false;
-//                    }
+                    //                    if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
+                    //                    {
+                    //                        this.bntPay.IsEnabled = true;
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        this.bntPay.IsEnabled = false;
+                    //                    }
                 }
             }
 
-
-            //TODO: Load data from memory rather than database
-//            orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).First();
-//            orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId)).ToList();
-
-
-            txtCusNum.Text = orderTemp.Pax.ToString();
             LoadCustomerOwner();
             txtTotal.Text = "";
             isSetOrderMode = (orderTemp.OrderMode == 1) ? true : false;
-            if (isSetOrderMode)
-            {
-                btnSetOrder.IsChecked = true;
-                txtTotal.IsEnabled = true;
-            }
-            else
-            {
-                btnSetOrder.IsChecked = false;
-                txtTotal.IsEnabled = false;
-            }
-
+            txtTotal.IsEnabled = true;
             isUcOrderFormLoading = false;
         }
 
@@ -112,9 +101,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 _unitofwork = unitofwork;
 
 
-
                 // chuyen product_id thanh product name
-                var query = from orderdetails in this.orderDetails
+                var query = from orderdetails in orderTempDetails
                             join product in _unitofwork.ProductRepository.Get()
                                     on orderdetails.ProductId equals product.ProductId
 
@@ -142,8 +130,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// </summary>
         public void RefreshControlAllChair()
         {
+
             // chuyen product_id thanh product name
-            var query = from orderdetails in orderDetails
+            var query = from orderdetails in orderTempDetails
                         join product in _unitofwork.ProductRepository.Get()
                         on orderdetails.ProductId equals product.ProductId
 
@@ -155,11 +144,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             // binding
             lvData.ItemsSource = query;
-            loadTotalPrice();
+            if (!isUnCheckChair)
+            {
+                loadTotalPrice();
+            }
         }
-
-
-        ToggleButton curChair;
 
         private void LoadCustomerOwner()
         {
@@ -200,8 +189,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 orderTemp.Discount = _unitofwork.CustomerRepository.Get(x => x.CusId.Equals(orderTemp.CusId))
                     .FirstOrDefault().Discount;
                 loadTotalPrice();
-                _unitofwork.OrderTempRepository.Update(orderTemp);
-                _unitofwork.Save();
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
             }
         }
@@ -214,8 +201,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
         }
 
-  
-       /// <summary>
+
+        bool isUnCheckChair = false;
+       
+
+        /// <summary>
         /// inner class that use to store the joined data from
         /// orderdetails entities and product entities
         /// </summary>
@@ -288,8 +278,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (!isSetOrderMode)
             {
+
                 // chuyen product_id thanh product name
-                var query_item_in_ordertails = from orderdetails in orderDetails
+                var query_item_in_ordertails = from orderdetails in orderTempDetails
                                                join product in _unitofwork.ProductRepository.Get()
                                                on orderdetails.ProductId equals product.ProductId
                                                select new
@@ -351,6 +342,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
+
                 DependencyObject dep = (DependencyObject)e.OriginalSource;
 
                 while ((dep != null) && !(dep is ListViewItem))
@@ -367,31 +359,27 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
-                string olstat = orderDetails[index].OldStat;
+                string olstat = orderTempDetails[index].OldStat;
 
                 OrderDetailsTemp tempdata = new OrderDetailsTemp();
-                tempdata.ChairId = orderDetails[index].ChairId;
-                tempdata.OrdertempId = orderDetails[index].OrdertempId;
-                tempdata.ProductId = orderDetails[index].ProductId;
-                tempdata.StatusItems = orderDetails[index].StatusItems;
-                tempdata.Quan = orderDetails[index].Quan;
-                tempdata.Note = orderDetails[index].Note;
+                tempdata.OrdertempId = orderTempDetails[index].OrdertempId;
+                tempdata.ProductId = orderTempDetails[index].ProductId;
+                tempdata.StatusItems = orderTempDetails[index].StatusItems;
+                tempdata.Quan = orderTempDetails[index].Quan;
+                tempdata.Note = orderTempDetails[index].Note;
                 tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
                 tempdata.IsPrinted = 0;
 
-                foreach (var cho in orderDetails)
+                foreach (var cho in orderTempDetails)
                 {
                     if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                        && cho.ChairId.Equals(tempdata.ChairId)
                         && cho.ProductId.Equals(tempdata.ProductId)
                         && cho.SelectedStats.Equals(tempdata.SelectedStats)
                         && cho.Note.Equals(tempdata.Note)
                         && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                     {
-                        cho.Quan += orderDetails[index].Quan;
+                        cho.Quan += orderTempDetails[index].Quan;
 
-                        _unitofwork.OrderDetailsTempRepository.Delete(orderDetails[index]);
-                        _unitofwork.Save();
 
                         RefreshControl(_unitofwork);
 
@@ -399,11 +387,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         return;
                     }
                 }
-
-                _unitofwork.OrderDetailsTempRepository.Delete(orderDetails[index]);
-                _unitofwork.Save();
-                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                _unitofwork.Save();
 
                 RefreshControl(_unitofwork);
 
@@ -435,7 +418,38 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
 
             bool isDone = false;
-           
+
+            //TODO: check whether printer or not
+            if (true)
+            {
+                MessageBoxResult mess = MessageBox.Show("Invoice of this table is already printed! You can not edit this table! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
+                if (mess == MessageBoxResult.Yes)
+                {
+                    if (App.Current.Properties["AdLogin"] != null)
+                    {
+                        DeleteConfirmDialog dcd = new DeleteConfirmDialog(((MainWindow)Window.GetWindow(this)).cUser, false);
+                        if (dcd.ShowDialog() == false)
+                        {
+                            return;
+                        }
+                        isDone = dcd.done;
+                        // update employee ID that effect to the OrderNote
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
+                    }
+                    else
+                    {
+                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
+                        if (pr.ShowDialog() == false)
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
 
             DependencyObject dep = (DependencyObject)e.OriginalSource;
             OrderDetailsTemp o = new OrderDetailsTemp();
@@ -445,6 +459,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 if (btn.IsChecked == true)
                 {
+                    //delete chair order note
+
                     while ((dep != null) && !(dep is ListViewItem))
                     {
                         dep = VisualTreeHelper.GetParent(dep);
@@ -455,31 +471,25 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                     index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
 
-                    if (orderDetails[index].Quan > 1)
+                    if (orderTempDetails[index].Quan > 1)
                     {
                         if (!isDone)
                         {
-                            GiveBackToWareHouseData(orderDetails[index], 1);
+                            GiveBackToWareHouseData(orderTempDetails[index], 1);
                         }
-                        orderDetails[index].Quan--;
-                        _unitofwork.OrderDetailsTempRepository.Update(orderDetails[index]);
-                        _unitofwork.Save();
+                        orderTempDetails[index].Quan--;
                     }
                     else
                     {
-                        var chairtemp = orderDetails[index];
+                        var chairtemp = orderTempDetails[index];
 
                         if (!isDone)
                         {
-                            GiveBackToWareHouseData(orderDetails[index], 1);
+                            GiveBackToWareHouseData(orderTempDetails[index], 1);
                         }
-                        orderDetails.Remove(orderDetails[index]);
-                        orderDetails.RemoveAt(index);
-                        _unitofwork.OrderDetailsTempRepository.Delete(chairtemp);
-                        _unitofwork.Save();
+                        orderTempDetails.Remove(orderTempDetails[index]);
+                        orderTempDetails.RemoveAt(index);
                     }
-
-
 
                     RefreshControl(_unitofwork);
                     checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
@@ -487,7 +497,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
             }
 
-            if (orderDetails.Count == 0)
+            if (orderTempDetails.Count == 0)
             {
                 ClearTheTable();
             }
@@ -514,98 +524,76 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             int index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
 
             OrderDetailsTemp tempdata = new OrderDetailsTemp();
-            tempdata.ChairId = orderDetails[index].ChairId;
-            tempdata.OrdertempId = orderDetails[index].OrdertempId;
-            tempdata.ProductId = orderDetails[index].ProductId;
-            tempdata.SelectedStats = orderDetails[index].SelectedStats;
-            tempdata.StatusItems = orderDetails[index].StatusItems;
-            tempdata.Quan = orderDetails[index].Quan;
+            tempdata.OrdertempId = orderTempDetails[index].OrdertempId;
+            tempdata.ProductId = orderTempDetails[index].ProductId;
+            tempdata.SelectedStats = orderTempDetails[index].SelectedStats;
+            tempdata.StatusItems = orderTempDetails[index].StatusItems;
+            tempdata.Quan = orderTempDetails[index].Quan;
             tempdata.Note = "";
             tempdata.IsPrinted = 0;
 
-            InputNote inputnote = new InputNote(orderDetails[index].Note);
-            if (orderDetails[index].Note.Equals("") || orderDetails[index].Note.Equals(inputnote.Note))
+            InputNote inputnote = new InputNote(orderTempDetails[index].Note);
+            if (orderTempDetails[index].Note.Equals("") || orderTempDetails[index].Note.Equals(inputnote.Note))
             {
                 if (inputnote.ShowDialog() == true)
                 {
-                    if (orderDetails[index].Note.Equals(inputnote.Note.ToLower()))
+                    if (orderTempDetails[index].Note.Equals(inputnote.Note.ToLower()))
                     {
                         return;
                     }
 
                     tempdata.Note = inputnote.Note.ToLower();
 
-                    if (orderDetails[index].Quan == 1)
+                    if (orderTempDetails[index].Quan == 1)
                     {
-                        foreach (var cho in orderDetails)
+                        foreach (var cho in orderTempDetails)
                         {
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                                && cho.ChairId.Equals(tempdata.ChairId)
                                 && cho.ProductId.Equals(tempdata.ProductId)
                                 && cho.SelectedStats.Equals(tempdata.SelectedStats)
                                 && cho.Note.Equals(tempdata.Note)
                                 && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                             {
                                 cho.Quan++;
-                                _unitofwork.OrderDetailsTempRepository.Delete(orderDetails[index]);
-                                _unitofwork.Save();
-                                _unitofwork.OrderDetailsTempRepository.Update(cho);
-                                _unitofwork.Save();
                                 RefreshControl(_unitofwork);
                                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
                                 return;
                             }
                         }
-
-                        _unitofwork.OrderDetailsTempRepository.Delete(orderDetails[index]);
-                        _unitofwork.Save();
-                        _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                        _unitofwork.Save();
                         RefreshControl(_unitofwork);
                         checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
                         return;
                     }
 
-                    if (orderDetails[index].Quan > 1)
+                    if (orderTempDetails[index].Quan > 1)
                     {
-                        foreach (var cho in orderDetails)
+                        foreach (var cho in orderTempDetails)
                         {
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                                && cho.ChairId.Equals(tempdata.ChairId)
                                 && cho.ProductId.Equals(tempdata.ProductId)
                                 && cho.SelectedStats.Equals(tempdata.SelectedStats)
                                 && cho.Note.Equals(tempdata.Note)
                                 && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                             {
-                                tempdata.Note = orderDetails[index].Note;
+                                tempdata.Note = orderTempDetails[index].Note;
                                 tempdata.Quan--;
                                 cho.Quan++;
-                                _unitofwork.OrderDetailsTempRepository.Update(cho);
-                                _unitofwork.Save();
-                                _unitofwork.OrderDetailsTempRepository.Delete(orderDetails[index]);
-                                _unitofwork.Save();
-                                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                                _unitofwork.Save();
+   
                                 RefreshControl(_unitofwork);
                                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
                                 return;
                             }
                         }
 
-                        foreach (var cho in orderDetails)
+                        foreach (var cho in orderTempDetails)
                         {
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                                && cho.ChairId.Equals(tempdata.ChairId)
                                 && cho.ProductId.Equals(tempdata.ProductId)
                                 && cho.SelectedStats.Equals(tempdata.SelectedStats)
                                 && !cho.Note.Equals(tempdata.Note))
                             {
-                                orderDetails[index].Quan--;
-                                _unitofwork.OrderDetailsTempRepository.Update(orderDetails[index]);
-                                _unitofwork.Save();
+                                orderTempDetails[index].Quan--;
                                 tempdata.Quan = 1;
-                                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                                _unitofwork.Save();
                                 RefreshControl(_unitofwork);
                                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
                                 return;
@@ -623,7 +611,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
 
-        //ToDo: FIX THE PAYING METHOD
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -631,6 +618,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
             }
+
 
             bool isChairChecked = false;
             foreach (var chairUIElement in wp.Children)
@@ -644,87 +632,38 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
 
             List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
-   
-            if (isChairChecked)
+
+
+            // input the rest data
+            OrderNote newOrder = new OrderNote();
+            newOrder.TotalPrice = orderTemp.TotalPrice;
+            InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
+            if (!inputTheRest.MyShowDialog())
             {
-                if (isSetOrderMode)
-                {
-                    MessageBox.Show("Current table is in Set Order Mode, you can not pay per chair!");
-                    return;
-                }
-
-                // devide the chair data to another Order
-                OrderNote newOrder = new OrderNote();
-                if (!SplitChairToOrder(newOrder))
-                {
-                    return;
-                }
-
-                //TODO: Fix order note Id is missing
-
-                // input the rest data
-                InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
-                if (!inputTheRest.MyShowDialog())
-                {
-                    return;
-                }
+                return;
+            }
 
 
 
-
-                // save to database
+            // convert data and save to database
+            if (ConvertTableToOrder(newOrder))
+            {
                 _unitofwork.OrderRepository.Insert(newOrder);
-
-                //Set orderdetil id in roder\
-                foreach (var orderNoteDetail in newOrder.OrderNoteDetails)
-                {
-                    orderNoteDetail.OrdernoteId = newOrder.OrdernoteId;
-                }
-
                 _unitofwork.Save();
-
-
-                // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
-                printer.OrderMode = orderTemp.OrderMode;
-                printer.DoPrint();
-
-                //// clean the old chair order data
-                DeleteChairOrderDetails();
-
             }
             else
             {
-                // input the rest data
-                OrderNote newOrder = new OrderNote();
-                newOrder.TotalPrice = orderTemp.TotalPrice;
-                InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
-                if (!inputTheRest.MyShowDialog())
-                {
-                    return;
-                }
-
-
-
-                // convert data and save to database
-                if (ConvertTableToOrder(newOrder))
-                {
-                    _unitofwork.OrderRepository.Insert(newOrder);
-                    _unitofwork.Save();
-                }
-                else
-                {
-                    return;
-                }
-
-                // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
-                printer.OrderMode = orderTemp.OrderMode;
-                printer.DoPrint();
-
-                // clean the old table data
-                ClearTheTable();
+                return;
             }
+
+            // printing
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+            printer.OrderMode = orderTemp.OrderMode;
+            printer.DoPrint();
+
+            // clean the old table data
+            ClearTheTable();
+            
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
@@ -735,134 +674,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            if (currentTable == null)
-                return;
-
+            // input the rest data
+            OrderNote newOrder = new OrderNote();
+            newOrder.TotalPrice = orderTemp.TotalPrice;
+            ConvertTableToOrder(newOrder);
+ 
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, currentTable);
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, newOrder );
             printer.OrderMode = orderTemp.OrderMode;
             printer.DoPrint();
 
-            // update IsPrinted for Table's Order
-            currentTable.IsPrinted = 1;
-            _unitofwork.TableRepository.Update(currentTable);
-            _unitofwork.Save();
-
-            // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
-        }
-
-        private void BtnGo_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (App.Current.Properties["CurrentEmpWorking"] == null)
-            {
-                MessageBox.Show("No employee on working! Please try again!");
-                return;
-            }
-
-            if (currentTable == null)
-                return;
-
-            // check order
-            bool isHaveDrink = false;
-            bool isHaveFood = false;
-            int orderCount = 0;
-            var chairQuery = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId));
-            foreach (var chair in chairQuery)
-            {
-                var orderDetailsQuery =
-                    _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId) && x.IsPrinted == 0);
-                orderCount += orderDetailsQuery.Count();
-                foreach (var details in orderDetailsQuery)
-                {
-                    if (details.SelectedStats != "Drink" && !isHaveFood)
-                    {
-                        isHaveFood = true;
-                    }
-
-                    if (details.SelectedStats == "Drink" && !isHaveDrink)
-                    {
-                        isHaveDrink = true;
-                    }
-                }
-
-                if (isHaveDrink && isHaveFood)
-                    break;
-            }
-
-            if (orderCount == 0)
-                return;
-
-            try
-            {
-                // printing
-                if (isHaveFood)
-                {
-                    var printer1 = new DoPrintHelper(_unitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
-                    printer1.DoPrint();
-                }
-                if (isHaveDrink)
-                {
-                    var printer2 = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
-                    printer2.DoPrint();
-                }
-
-                List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
-                orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).First();
-                orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId)).ToList();
-                foreach (var orderDetails in orderDetails.ToList())
-                {
-                    if (orderDetails.IsPrinted == 0)
-                    {
-                        newOrderDetails.Add(new OrderDetailsTemp()
-                        {
-                            OrdertempId = orderDetails.OrdertempId,
-                            ProductId = orderDetails.ProductId,
-                            ChairId = orderDetails.ChairId,
-                            SelectedStats = orderDetails.SelectedStats,
-                            Note = orderDetails.Note,
-                            IsPrinted = 1,
-                            Discount = orderDetails.Discount,
-                            Quan = orderDetails.Quan,
-                        });
-                        _unitofwork.OrderDetailsTempRepository.Delete(orderDetails);
-                    }
-                }
-                foreach (var newDetails in newOrderDetails)
-                {
-                    bool isupdate = false;
-                    foreach (var orderDetailsTemp in orderDetails.Where(x => x.IsPrinted == 1))
-                    {
-                        if (newDetails.OrdertempId.Equals(orderDetailsTemp.OrdertempId)
-                            && newDetails.ChairId.Equals(orderDetailsTemp.ChairId)
-                            && newDetails.ProductId.Equals(orderDetailsTemp.ProductId)
-                            && newDetails.SelectedStats.Equals(orderDetailsTemp.SelectedStats)
-                            && newDetails.Note.Equals(orderDetailsTemp.Note))
-                        {
-                            orderDetailsTemp.Quan += newDetails.Quan;
-                            _unitofwork.OrderDetailsTempRepository.Update(orderDetailsTemp);
-                            isupdate = true;
-                            break;
-                        }
-                    }
-
-                    if (!isupdate)
-                        _unitofwork.OrderDetailsTempRepository.Insert(newDetails);
-                }
-                _unitofwork.Save();
-                RefreshControl(_unitofwork, currentTable);
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-            // update IsPrinted for Table's Order
-            currentTable.IsPrinted = 1;
-            _unitofwork.TableRepository.Update(currentTable);
-            _unitofwork.Save();
 
             // update employee ID that effect to the OrderNote
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
@@ -877,8 +698,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            bool pass = false;
-            if (currentTable.IsPrinted == 1)
+            //TODO: FIX whether print or not
+            if (true)
             {
                 if (App.Current.Properties["AdLogin"] == null)
                 {
@@ -924,101 +745,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
         /// <summary>
-        /// Split current selected Chair in current Table to the new stand alone Order
-        /// </summary>
-        /// <param name="newwOrder"></param>
-        private Boolean SplitChairToOrder(OrderNote newOrder)
-        {
-            if (currentTable == null)
-                return false;
-
-
-            // calculate totalPriceNonDisc and TotalPrice
-            decimal Svc = 0;
-            decimal Vat = 0;
-            decimal SaleValue = 0;
-            decimal Total = 0;
-            decimal TotalWithDiscount = 0;
-            foreach (var item in currentChair.OrderDetailsTemps)
-            {
-                var prod = _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
-                if (prod == null)
-                    return false;
-                Total = (decimal)((float)Total + (float)(item.Quan * ((float)prod.Price * ((100 - item.Discount) / 100.0))));
-            }
-            // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
-            SaleValue = Total;
-            Svc = (Total * 5) / 100;
-            Vat = ((Total + (Total * 5) / 100) * 10) / 100;
-            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
-            TotalWithDiscount = (decimal)(((float)Total * (100 - orderTemp.Discount)) / 100.0);
-
-
-            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId))
-                .FirstOrDefault();
-            if (currentOrderTemp != null)
-            {
-                newOrder.CusId = currentOrderTemp.CusId;
-                newOrder.EmpId = currentOrderTemp.EmpId;
-                newOrder.Pax = 1;
-                newOrder.Ordertable = currentTable.TableNumber;
-                newOrder.Ordertime = (DateTime) currentOrderTemp.Ordertime;
-                newOrder.TotalPriceNonDisc = Math.Round(Total, 3);
-                newOrder.TotalPrice = Math.Round(TotalWithDiscount, 3);
-                newOrder.Svc = Math.Round(Svc, 3);
-                newOrder.Vat = Math.Round(Vat, 3);
-                newOrder.SaleValue = Math.Round(SaleValue, 3);
-                newOrder.Discount = (int) currentOrderTemp.Discount;
-                newOrder.SubEmpId = currentOrderTemp.SubEmpId;
-            }
-            else return false;
-
-
-            Dictionary<string, OrderNoteDetail> newDetailsList = new Dictionary<string, OrderNoteDetail>();
-            foreach (var details in currentChair.OrderDetailsTemps)
-            {
-                if (newDetailsList.ContainsKey(details.ProductId))
-                {
-                    newDetailsList[details.ProductId].Quan += details.Quan;
-                }
-                else
-                {
-                    newDetailsList.Add(details.ProductId, new OrderNoteDetail()
-                    {
-                        OrdernoteId = newOrder.OrdernoteId,
-                        ProductId = details.ProductId,
-                        Discount = details.Discount,
-                        Quan = details.Quan
-                    });
-                }
-            }
-            foreach (var newDetails in newDetailsList)
-            {
-                newOrder.OrderNoteDetails.Add(newDetails.Value);
-            }
-
-
-            return true;
-        }
-
-
-        /// <summary>
         /// Migrate all Order info in current Table to OrderNote object that will be insert to Database
         /// </summary>
         /// <param name="newOrder"></param>
         private bool ConvertTableToOrder(OrderNote newOrder)
         {
-            if (currentTable == null)
-                return false;
 
-            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId))
-                .FirstOrDefault();
+            var currentOrderTemp = orderTemp;
             if (currentOrderTemp != null)
             {
                 newOrder.CusId = currentOrderTemp.CusId;
                 newOrder.EmpId = currentOrderTemp.EmpId;
                 newOrder.Pax = currentOrderTemp.Pax;
-                newOrder.Ordertable = currentTable.TableNumber;
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
                 newOrder.TotalPriceNonDisc = currentOrderTemp.TotalPriceNonDisc;
                 newOrder.TotalPrice = currentOrderTemp.TotalPrice;
@@ -1063,29 +801,24 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void ClearTheTable()
         {
             isClearingTable = true;
-            Entities.Table curTable = currentTable;
-            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(curTable.TableId)).FirstOrDefault();
+            var orderOfTable = orderTemp;
             if (orderOfTable != null)
             {
-                var ordernotedetails = orderDetails
+                var ordernotedetails = orderTempDetails
                     .Where(x => x.OrdertempId.Equals(orderOfTable.OrdertempId))
                     .ToList();
                 if (ordernotedetails.Count != 0)
                 {
                     foreach (var ch in ordernotedetails)
                     {
-                        orderDetails.Remove(ch);
-                        _unitofwork.OrderDetailsTempRepository.Delete(ch);
-                        _unitofwork.Save();
+                        orderTempDetails.Remove(ch);
                     }
                 }
             }
-            _unitofwork.Save();
 
             orderTemp.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
             orderTemp.CusId = "CUS0000001";
             orderTemp.Discount = 0;
-            orderTemp.TableOwned = curTable.TableId;
             orderTemp.Ordertime = DateTime.Now;
             orderTemp.TotalPriceNonDisc = 0;
             orderTemp.SaleValue = 0;
@@ -1098,30 +831,22 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             orderTemp.Pax = 0;
             orderTemp.OrderMode = 0;
 
-            curTable.IsOrdered = 0;
-            curTable.IsPrinted = 0;
+//        TODO: Reset is printed or not    
+//            curTable.IsOrdered = 0;
+//            curTable.IsPrinted = 0;
 
-            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
             LoadCustomerOwner();
             RefreshControlAllChair();
-            _unitofwork.OrderTempRepository.Update(orderTemp);
-            _unitofwork.Save();
 
-            //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
-            var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(curTable.TableId)).FirstOrDefault();
-            if (cur != null)
-            {
-                cur.IsOrdered = 0;
-                cur.IsPrinted = 0;
-            }
+           //TODO: clear order or print
+//            if (cur != null)
+//            {
+//                cur.IsOrdered = 0;
+//                cur.IsPrinted = 0;
+//            }
 
             isClearingTable = false;
 
-            ((MainWindow)Window.GetWindow(this)).currentTable = null;
-            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
-            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
-            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
-            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
         }
 
@@ -1129,11 +854,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void ClearTheTable_ForDelete()
         {
             isClearingTalbe_ForDelete = true;
-            Entities.Table curTable = currentTable;
-            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(curTable.TableId)).FirstOrDefault();
-            if (orderOfTable != null)
+            var orderOfTable = orderTemp;
             {
-                var ordernotedetails = orderDetails
+                var ordernotedetails = orderTempDetails
                     .Where(x => x.OrdertempId.Equals(orderOfTable.OrdertempId))
                     .ToList();
                 if (ordernotedetails.Count != 0)
@@ -1141,9 +864,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     foreach (var ch in ordernotedetails)
                     {
                         GiveBackToWareHouseData(ch, ch.Quan);
-                        orderDetails.Remove(ch);
-                        _unitofwork.OrderDetailsTempRepository.Delete(ch);
-                        _unitofwork.Save();
+                        orderTempDetails.Remove(ch);
                     }
                 }
             }
@@ -1152,7 +873,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             orderTemp.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
             orderTemp.CusId = "CUS0000001";
             orderTemp.Discount = 0;
-            orderTemp.TableOwned = curTable.TableId;
             orderTemp.Ordertime = DateTime.Now;
             orderTemp.TotalPriceNonDisc = 0;
             orderTemp.SaleValue = 0;
@@ -1165,30 +885,19 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             orderTemp.Pax = 0;
             orderTemp.OrderMode = 0;
 
-            curTable.IsOrdered = 0;
-            curTable.IsPrinted = 0;
-
-            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
             LoadCustomerOwner();
             RefreshControlAllChair();
-            _unitofwork.OrderTempRepository.Update(orderTemp);
-            _unitofwork.Save();
 
-            //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
-            var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(curTable.TableId)).FirstOrDefault();
-            if (cur != null)
-            {
-                cur.IsOrdered = 0;
-                cur.IsPrinted = 0;
-            }
+            //TODO: clear order or print
+            //            if (cur != null)
+            //            {
+            //                cur.IsOrdered = 0;
+            //                cur.IsPrinted = 0;
+            //            }
 
             isClearingTalbe_ForDelete = false;
 
-            ((MainWindow)Window.GetWindow(this)).currentTable = null;
-            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
-            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
-            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
-            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
         }
 
@@ -1252,85 +961,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         }
 
-        private void DeleteChairOrderDetails()
-        {
-            int i = 0;
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == false)
-                {
-                    i++;
-                }
-            }
-            if (i == 0)
-            {
-                MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
-                return;
-            }
-
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == true)
-                {
-                    //delete chair order note
-                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Value.Equals(currentTable.TableId)).ToList();
-                    var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
-                                            && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderDetails.Where(x => x.ChairId == foundchair.ChairId).ToList();
-
-                    if (chairordernotedetails.Count != 0)
-                    {
-                        foreach (var ch in chairordernotedetails)
-                        {
-                            _unitofwork.OrderDetailsTempRepository.Delete(ch);
-                            _unitofwork.Save();
-                        }
-
-                        currentTable.IsOrdered = 0;
-                    }
-
-                    foreach (Entities.Chair chair in chairoftable)
-                    {
-                        var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId)).ToList();
-                        if (chairorderdetailstemp.Count != 0)
-                        {
-                            currentTable.IsOrdered = 1;
-                        }
-                        break;
-                    }
-
-                    _unitofwork.TableRepository.Update(currentTable);
-                    _unitofwork.Save();
-
-                    ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                    RefreshControl(_unitofwork, currentTable);
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
-                    break;
-                }
-            }
-
-            if (currentTable.IsOrdered == 0)
-            {
-                //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
-                var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(currentTable.TableId)).FirstOrDefault();
-                if (cur != null)
-                {
-                    cur.IsOrdered = 0;
-                    cur.IsPrinted = 0;
-                }
-
-                ((MainWindow)Window.GetWindow(this)).currentTable = null;
-                ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
-                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
-                ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
-                ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
-                ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
-            }
-        }
-
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
-            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
             {
                 return;
@@ -1354,14 +986,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
 
                 ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-                _unitofwork.Save();
                 return;
             }
 
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-            _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-            _unitofwork.Save();
 
         }
 
@@ -1369,7 +997,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         // INPUT PAX
         private void TxtCusNum_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (currentTable == null || isUcOrderFormLoading || isAddInfoInOrderSetMode)
+            if (orderTemp == null || isUcOrderFormLoading || isAddInfoInOrderSetMode)
                 return;
             TextBox txtCusnum = (sender as TextBox);
             if (string.IsNullOrEmpty(txtCusnum.Text))
@@ -1385,7 +1013,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         // INPUT TOTALPRICE
         private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (currentTable == null || isUcOrderFormLoading || isCalculateTotalPrice || isClearingTable || isClearingTalbe_ForDelete)
+            if (orderTemp == null || isUcOrderFormLoading || isCalculateTotalPrice || isClearingTable || isClearingTalbe_ForDelete)
                 return;
             TextBox txtTotal = (sender as TextBox);
             if (string.IsNullOrEmpty(txtTotal.Text))
@@ -1426,43 +1054,5 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         bool isCalculateTotalPrice;
         bool isAddInfoInOrderSetMode = false;
-        private void btnSetOrder_Checked(object sender, RoutedEventArgs e)
-        {
-            if (currentTable == null || isUcOrderFormLoading)
-                return;
-            isSetOrderMode = true;
-            txtTotal.IsEnabled = true;
-            orderTemp.OrderMode = 1;
-            isCalculateTotalPrice = false;
-
-            // add info when order set mode turned on
-            isAddInfoInOrderSetMode = true;
-            SetOrderModeDialog orderModeDialog = new SetOrderModeDialog(orderTemp);
-            orderModeDialog.ShowDialog();
-            txtCusNum.Text = orderTemp.Pax.ToString();
-            isAddInfoInOrderSetMode = false;
-
-            loadTotalPrice();
-
-            // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
-            _unitofwork.Save();
-        }
-
-        private void btnSetOrder_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (currentTable == null || isUcOrderFormLoading)
-                return;
-            isSetOrderMode = false;
-            txtTotal.IsEnabled = false;
-            orderTemp.OrderMode = 0;
-            isCalculateTotalPrice = true;
-            loadTotalPrice();
-
-            // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
-            _unitofwork.Save();
-        }
-
     }
 }

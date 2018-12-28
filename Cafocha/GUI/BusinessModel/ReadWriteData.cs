@@ -149,40 +149,6 @@ namespace Cafocha.GUI.BusinessModel
         //}
 
         //write khi add new
-        public static Entities.Table writeOnAddNew(EmployeewsOfLocalPOS _unitofwork, Rectangle rec, Entities.Employee emp)
-        {
-            Entities.Table newTable = new Entities.Table()
-            {
-                TableId = 0,
-                TableNumber = int.Parse(rec.Name.Substring(5)),
-                ChairAmount = 0,
-                PosX = Convert.ToInt32(rec.Margin.Left),
-                PosY = Convert.ToInt32(rec.Margin.Top),
-                IsPinned = 0,
-                IsOrdered = 0,
-                IsLocked = 0,
-                TableRec = rec
-            };
-
-            _unitofwork.TableRepository.Insert(newTable);
-            _unitofwork.Save();
-
-            Entities.OrderTemp newOrderTemp = new Entities.OrderTemp()
-            {
-                CusId = "CUS0000001",
-                EmpId = emp.EmpId,
-                TableOwned = _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(newTable.TableNumber)).First().TableId,
-                Ordertime = DateTime.Now,
-                TotalPrice = 0,
-                CustomerPay = 0,
-                PayBack = 0
-            };
-
-            _unitofwork.OrderTempRepository.Insert(newOrderTemp);
-            _unitofwork.Save();
-
-            return _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(newTable.TableNumber)).First();
-        }
 
         ////write khi update
         //public static void writeOnUpdateChair(Table table, List<Chair> chList, int chairAmount)

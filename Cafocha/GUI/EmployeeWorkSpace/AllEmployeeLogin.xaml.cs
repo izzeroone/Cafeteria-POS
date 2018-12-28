@@ -552,7 +552,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     {
                         if (EmpLoginListData.emploglist.Count == 1)
                         {
-                            var orderedTable = _unitofwork.TableRepository.Get(x => x.IsOrdered == 1).ToList();
+                            var orderedTable = ((MainWindow) Window.GetWindow(this)).orderDetailsTemp;
                             if (orderedTable.Count != 0)
                             {
                                 MessageBox.Show("You can not logout because still have Tables that in the ordering state out there. Please check again!");
@@ -651,32 +651,22 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (EmpLoginListData.emploglist.Count == 0)
             {
-                foreach (var table in _unitofwork.TableRepository.Get())
-                {
-                    var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Value.Equals(table.TableId)).First();
-                    orderTemp.EmpId = "";
-                    orderTemp.CusId = "CUS0000001";
-                    orderTemp.Ordertime = DateTime.Now;
-                    orderTemp.TotalPriceNonDisc = 0;
-                    orderTemp.TotalPrice = 0;
-                    orderTemp.CustomerPay = 0;
-                    orderTemp.PayBack = 0;
-                    orderTemp.SubEmpId = "";
-                    orderTemp.Pax = 0;
 
-                    table.IsOrdered = 0;
-                    table.IsPrinted = 0;
+                var orderTemp = ((MainWindow)Window.GetWindow(this)).orderTemp;
+                orderTemp.EmpId = "";
+                orderTemp.CusId = "CUS0000001";
+                orderTemp.Ordertime = DateTime.Now;
+                orderTemp.TotalPriceNonDisc = 0;
+                orderTemp.TotalPrice = 0;
+                orderTemp.CustomerPay = 0;
+                orderTemp.PayBack = 0;
+                orderTemp.SubEmpId = "";
+                orderTemp.Pax = 0;
 
-                    var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
-                    if (orderDetails.Count() != 0)
-                    {
-                        foreach (var od in orderDetails)
-                        {
-                            _unitofwork.OrderDetailsTempRepository.Delete(od);
-                            _unitofwork.Save();
-                        }
-                    }
-                }
+                ((MainWindow) Window.GetWindow(this)).isOrderOrder = false;
+                ((MainWindow)Window.GetWindow(this)).isOrderPrint = false;
+
+                
 
                 App.Current.Properties["CurrentEmpWorking"] = null;
                 _main.Close();

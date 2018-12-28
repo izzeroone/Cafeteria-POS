@@ -144,7 +144,6 @@
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
-    <Compile Include="Entities\CustomEntities\Table.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
@@ -285,12 +284,9 @@
     <Compile Include="GUI\EmployeeWorkSpace\UcOder.xaml.cs">
       <DependentUpon>UcOder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Helper\PrintHelper\BarPrintHelper.cs" />
     <Compile Include="GUI\Helper\PrintHelper\DoPrintHelper.cs" />
     <Compile Include="GUI\Helper\PrintHelper\EndOfDayPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\FirePrintHelper.cs" />
     <Compile Include="GUI\Helper\PrintHelper\IPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\KitchenPrintHelper.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\OrderEntityForReport.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\OrderForPrint.cs" />

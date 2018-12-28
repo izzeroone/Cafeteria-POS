@@ -17,7 +17,7 @@ public partial class UcMenu : UserControl
  {
         private EmployeewsOfLocalPOS _unitofwork;
         private OrderTemp orderTemp;
-        private List<OrderDetailsTemp> orderDetails;
+        private List<OrderDetailsTemp> orderTempDetails;
 
         public UcMenu()
         {
@@ -26,15 +26,13 @@ public partial class UcMenu : UserControl
             this.Loaded += UcMenu_Loaded;
         }
 
-        public void setOrderData(OrderTemp orderTemp, List<OrderDetailsTemp> orderDetails)
-        {
-            this.orderTemp = orderTemp;
-            this.orderDetails = orderDetails;
-        }
+
 
         internal bool IsRefreshMenu = true;
         public void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
+            this.orderTemp = ((MainWindow) Window.GetWindow(this)).orderTemp;
+            this.orderTempDetails = ((MainWindow)Window.GetWindow(this)).orderDetailsTemp;
             if (IsRefreshMenu)
             {
                 try
@@ -111,7 +109,7 @@ public partial class UcMenu : UserControl
 
                 //order for each chair
 
-                var orderProductDetailsTemps = orderDetails.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
+                var orderProductDetailsTemps = orderTempDetails.Where(x => it.ProductId.Equals(x.ProductId)).ToList();
 
                 // go to warehouse, check and get the ingredient to make product
                 if (!TakeFromWareHouseData(o, it))       
@@ -130,9 +128,8 @@ public partial class UcMenu : UserControl
                     o.IsPrinted = 0;
                     o.Discount = it.Discount;
 
-                    
-                    _unitofwork.OrderDetailsTempRepository.Insert(o);
-                    _unitofwork.Save();
+                    orderTempDetails.Add(o);
+
                 }
                 else
                 {
@@ -148,8 +145,7 @@ public partial class UcMenu : UserControl
                             o.IsPrinted = 0;
                             o.Discount = it.Discount;
 
-                            _unitofwork.OrderDetailsTempRepository.Insert(o);
-                            _unitofwork.Save();
+                            orderTempDetails.Add(o);
 
                             break;
                         }
@@ -158,22 +154,18 @@ public partial class UcMenu : UserControl
                         {
                             order.ProductId = it.ProductId;
                             order.Quan++;
-
-                            _unitofwork.OrderDetailsTempRepository.Update(order);
-                            _unitofwork.Save();
-
+   
                             break;
                         }
                     }
                 }
-                
-
-
+               
+    
                 lbSelected.UnselectAll();
 
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
                 // TODO: uncomment and fix
-//                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork, orderingTable);
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork);
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
@@ -381,14 +373,10 @@ public partial class UcMenu : UserControl
                 }
 
                 ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-                _unitofwork.Save();
                 return;
             }
 
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-            _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-            _unitofwork.Save();
 
         }
 

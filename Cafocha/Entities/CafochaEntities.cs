@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "Cafocha\App.config"
 //     Connection String Name: "SqlLocalConnectionString"
-//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=E:\Projects\Cafeteria-POS\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=D:\Projects\Cafeteria-POS\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
 // ------------------------------------------------------------------------------------------------
 // Database Edition        : Express Edition (64-bit)
 // Database Engine Edition : Express
@@ -42,14 +42,11 @@ namespace Cafocha.Entities
         System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
         System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; } // APWareHouse
-        System.Data.Entity.DbSet<Chair> Chairs { get; set; } // Chair
         System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
         System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
-        System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp
         System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
-        System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; } // OrderTemp
         System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
         System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
@@ -60,7 +57,6 @@ namespace Cafocha.Entities
         System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; } // StockInDetails
         System.Data.Entity.DbSet<StockOut> StockOuts { get; set; } // StockOut
         System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; } // StockOutDetails
-        System.Data.Entity.DbSet<Table> Tables { get; set; } // Table
         System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
@@ -88,14 +84,11 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
         public System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; } // APWareHouse
-        public System.Data.Entity.DbSet<Chair> Chairs { get; set; } // Chair
         public System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         public System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
         public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
-        public System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
-        public System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; } // OrderTemp
         public System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
         public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
@@ -106,7 +99,6 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; } // StockInDetails
         public System.Data.Entity.DbSet<StockOut> StockOuts { get; set; } // StockOut
         public System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; } // StockOutDetails
-        public System.Data.Entity.DbSet<Table> Tables { get; set; } // Table
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
@@ -167,14 +159,11 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new AdminReMapping());
             modelBuilder.Configurations.Add(new ApplicationLogMapping());
             modelBuilder.Configurations.Add(new ApWareHouseMapping());
-            modelBuilder.Configurations.Add(new ChairMapping());
             modelBuilder.Configurations.Add(new CustomerMapping());
             modelBuilder.Configurations.Add(new EmployeeMapping());
             modelBuilder.Configurations.Add(new IngredientMapping());
-            modelBuilder.Configurations.Add(new OrderDetailsTempMapping());
             modelBuilder.Configurations.Add(new OrderNoteMapping());
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping());
-            modelBuilder.Configurations.Add(new OrderTempMapping());
             modelBuilder.Configurations.Add(new ProductMapping());
             modelBuilder.Configurations.Add(new ProductDetailMapping());
             modelBuilder.Configurations.Add(new ReceiptNoteMapping());
@@ -185,7 +174,6 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new StockInDetailMapping());
             modelBuilder.Configurations.Add(new StockOutMapping());
             modelBuilder.Configurations.Add(new StockOutDetailMapping());
-            modelBuilder.Configurations.Add(new TableMapping());
             modelBuilder.Configurations.Add(new WareHouseMapping());
             modelBuilder.Configurations.Add(new WorkingHistoryMapping());
 
@@ -197,14 +185,11 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new AdminReMapping(schema));
             modelBuilder.Configurations.Add(new ApplicationLogMapping(schema));
             modelBuilder.Configurations.Add(new ApWareHouseMapping(schema));
-            modelBuilder.Configurations.Add(new ChairMapping(schema));
             modelBuilder.Configurations.Add(new CustomerMapping(schema));
             modelBuilder.Configurations.Add(new EmployeeMapping(schema));
             modelBuilder.Configurations.Add(new IngredientMapping(schema));
-            modelBuilder.Configurations.Add(new OrderDetailsTempMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping(schema));
-            modelBuilder.Configurations.Add(new OrderTempMapping(schema));
             modelBuilder.Configurations.Add(new ProductMapping(schema));
             modelBuilder.Configurations.Add(new ProductDetailMapping(schema));
             modelBuilder.Configurations.Add(new ReceiptNoteMapping(schema));
@@ -215,7 +200,6 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new StockInDetailMapping(schema));
             modelBuilder.Configurations.Add(new StockOutMapping(schema));
             modelBuilder.Configurations.Add(new StockOutDetailMapping(schema));
-            modelBuilder.Configurations.Add(new TableMapping(schema));
             modelBuilder.Configurations.Add(new WareHouseMapping(schema));
             modelBuilder.Configurations.Add(new WorkingHistoryMapping(schema));
             OnCreateModelPartial(modelBuilder, schema);
@@ -249,14 +233,11 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; }
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; }
         public System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; }
-        public System.Data.Entity.DbSet<Chair> Chairs { get; set; }
         public System.Data.Entity.DbSet<Customer> Customers { get; set; }
         public System.Data.Entity.DbSet<Employee> Employees { get; set; }
         public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; }
-        public System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; }
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; }
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; }
-        public System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; }
         public System.Data.Entity.DbSet<Product> Products { get; set; }
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; }
         public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; }
@@ -267,7 +248,6 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; }
         public System.Data.Entity.DbSet<StockOut> StockOuts { get; set; }
         public System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; }
-        public System.Data.Entity.DbSet<Table> Tables { get; set; }
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; }
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; }
 
@@ -280,14 +260,11 @@ namespace Cafocha.Entities
             AdminRes = new FakeDbSet<AdminRe>("AdId");
             ApplicationLogs = new FakeDbSet<ApplicationLog>("Id");
             ApWareHouses = new FakeDbSet<ApWareHouse>("ApwarehouseId");
-            Chairs = new FakeDbSet<Chair>("ChairId");
             Customers = new FakeDbSet<Customer>("CusId");
             Employees = new FakeDbSet<Employee>("EmpId");
             Ingredients = new FakeDbSet<Ingredient>("IgdId");
-            OrderDetailsTemps = new FakeDbSet<OrderDetailsTemp>("OrdertempId", "ProductId", "ChairId", "SelectedStats", "Note", "IsPrinted");
             OrderNotes = new FakeDbSet<OrderNote>("OrdernoteId");
             OrderNoteDetails = new FakeDbSet<OrderNoteDetail>("OrdernoteId", "ProductId");
-            OrderTemps = new FakeDbSet<OrderTemp>("OrdertempId");
             Products = new FakeDbSet<Product>("ProductId");
             ProductDetails = new FakeDbSet<ProductDetail>("PdetailId");
             ReceiptNotes = new FakeDbSet<ReceiptNote>("RnId");
@@ -298,7 +275,6 @@ namespace Cafocha.Entities
             StockInDetails = new FakeDbSet<StockInDetail>("SiId", "StoId");
             StockOuts = new FakeDbSet<StockOut>("StockoutId");
             StockOutDetails = new FakeDbSet<StockOutDetail>("StockoutId", "StockId");
-            Tables = new FakeDbSet<Table>("TableId");
             WareHouses = new FakeDbSet<WareHouse>("WarehouseId");
             WorkingHistories = new FakeDbSet<WorkingHistory>("WhId");
 
@@ -802,52 +778,6 @@ namespace Cafocha.Entities
         partial void InitializePartial();
     }
 
-    // Chair
-    [Table("Chair", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class Chair
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(@"chair_id", Order = 1, TypeName = "int")]
-        [Index(@"PK_dbo.Chair", 1, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Chair ID")]
-        public int ChairId { get; set; } // chair_id (Primary key)
-
-        [Column(@"chair_number", Order = 2, TypeName = "int")]
-        [Required]
-        [Display(Name = "Chair number")]
-        public int ChairNumber { get; set; } // chair_number
-
-        [Column(@"table_owned", Order = 3, TypeName = "int")]
-        [Index(@"IX_table_owned", 1, IsUnique = false, IsClustered = false)]
-        [Display(Name = "Table owned")]
-        public int? TableOwned { get; set; } // table_owned
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child OrderDetailsTemps where [OrderDetailsTemp].[chair_id] point to this entity (FK_dbo.OrderDetailsTemp_dbo.Chair_chair_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp.FK_dbo.OrderDetailsTemp_dbo.Chair_chair_id
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Table pointed by [Chair].([TableOwned]) (FK_dbo.Chair_dbo.Table_table_owned)
-        /// </summary>
-        [ForeignKey("TableOwned")] public virtual Table Table { get; set; } // FK_dbo.Chair_dbo.Table_table_owned
-
-        public Chair()
-        {
-            OrderDetailsTemps = new System.Collections.Generic.List<OrderDetailsTemp>();
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
     // Customer
     [Table("Customer", Schema = "dbo")]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
@@ -1136,97 +1066,6 @@ namespace Cafocha.Entities
         partial void InitializePartial();
     }
 
-    // OrderDetailsTemp
-    [Table("OrderDetailsTemp", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class OrderDetailsTemp
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"ordertemp_id", Order = 1, TypeName = "int")]
-        [Index(@"IX_ordertemp_id", 1, IsUnique = false, IsClustered = false)]
-        [Index(@"PK_dbo.OrderDetailsTemp", 1, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Ordertemp ID")]
-        public int OrdertempId { get; set; } // ordertemp_id (Primary key)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"product_id", Order = 2, TypeName = "varchar")]
-        [Index(@"PK_dbo.OrderDetailsTemp", 2, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Key]
-        [Display(Name = "Product ID")]
-        public string ProductId { get; set; } // product_id (Primary key) (length: 10)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"chair_id", Order = 3, TypeName = "int")]
-        [Index(@"IX_chair_id", 1, IsUnique = false, IsClustered = false)]
-        [Index(@"PK_dbo.OrderDetailsTemp", 3, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Chair ID")]
-        public int ChairId { get; set; } // chair_id (Primary key)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"SelectedStats", Order = 4, TypeName = "nvarchar")]
-        [Index(@"PK_dbo.OrderDetailsTemp", 4, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(50)]
-        [StringLength(50)]
-        [Key]
-        [Display(Name = "Selected stats")]
-        public string SelectedStats { get; set; } // SelectedStats (Primary key) (length: 50)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"note", Order = 5, TypeName = "varchar")]
-        [Index(@"PK_dbo.OrderDetailsTemp", 5, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(500)]
-        [StringLength(500)]
-        [Key]
-        [Display(Name = "Note")]
-        public string Note { get; set; } // note (Primary key) (length: 500)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"is_printed", Order = 6, TypeName = "int")]
-        [Index(@"PK_dbo.OrderDetailsTemp", 6, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Is printed")]
-        public int IsPrinted { get; set; } // is_printed (Primary key)
-
-        [Column(@"discount", Order = 7, TypeName = "int")]
-        [Required]
-        [Display(Name = "Discount")]
-        public int Discount { get; set; } // discount
-
-        [Column(@"quan", Order = 8, TypeName = "int")]
-        [Required]
-        [Display(Name = "Quan")]
-        public int Quan { get; set; } // quan
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Chair pointed by [OrderDetailsTemp].([ChairId]) (FK_dbo.OrderDetailsTemp_dbo.Chair_chair_id)
-        /// </summary>
-        [ForeignKey("ChairId"), Required] public virtual Chair Chair { get; set; } // FK_dbo.OrderDetailsTemp_dbo.Chair_chair_id
-
-        /// <summary>
-        /// Parent OrderTemp pointed by [OrderDetailsTemp].([OrdertempId]) (FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id)
-        /// </summary>
-        [ForeignKey("OrdertempId"), Required] public virtual OrderTemp OrderTemp { get; set; } // FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id
-
-        public OrderDetailsTemp()
-        {
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
     // OrderNote
     [Table("OrderNote", Schema = "dbo")]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
@@ -1409,123 +1248,6 @@ namespace Cafocha.Entities
 
         public OrderNoteDetail()
         {
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
-    // OrderTemp
-    [Table("OrderTemp", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class OrderTemp
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(@"ordertemp_id", Order = 1, TypeName = "int")]
-        [Index(@"PK_dbo.OrderTemp", 1, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Ordertemp ID")]
-        public int OrdertempId { get; set; } // ordertemp_id (Primary key)
-
-        [Column(@"sale_value", Order = 2, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Sale value")]
-        public decimal SaleValue { get; set; } // sale_value
-
-        [Column(@"totalPrice_nonDisc", Order = 3, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Total price non disc")]
-        public decimal TotalPriceNonDisc { get; set; } // totalPrice_nonDisc
-
-        [Column(@"Svc", Order = 4, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Svc")]
-        public decimal Svc { get; set; } // Svc
-
-        [Column(@"Vat", Order = 5, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Vat")]
-        public decimal Vat { get; set; } // Vat
-
-        [Column(@"subEmp_id", Order = 6, TypeName = "varchar")]
-        [MaxLength(200)]
-        [StringLength(200)]
-        [Display(Name = "Sub emp ID")]
-        public string SubEmpId { get; set; } // subEmp_id (length: 200)
-
-        [Column(@"discount", Order = 7, TypeName = "int")]
-        [Required]
-        [Display(Name = "Discount")]
-        public int Discount { get; set; } // discount
-
-        [Column(@"Pax", Order = 8, TypeName = "int")]
-        [Required]
-        [Display(Name = "Pax")]
-        public int Pax { get; set; } // Pax
-
-        [Column(@"cus_id", Order = 9, TypeName = "varchar")]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Display(Name = "Cus ID")]
-        public string CusId { get; set; } // cus_id (length: 10)
-
-        [Column(@"emp_id", Order = 10, TypeName = "varchar")]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Display(Name = "Emp ID")]
-        public string EmpId { get; set; } // emp_id (length: 10)
-
-        [Column(@"table_owned", Order = 11, TypeName = "int")]
-        [Index(@"IX_table_owned", 1, IsUnique = false, IsClustered = false)]
-        [Display(Name = "Table owned")]
-        public int? TableOwned { get; set; } // table_owned
-
-        [Column(@"ordertime", Order = 12, TypeName = "datetime")]
-        [Required]
-        [DataType(DataType.DateTime)]
-        [Display(Name = "Ordertime")]
-        public System.DateTime Ordertime { get; set; } // ordertime
-
-        [Column(@"total_price", Order = 13, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Total price")]
-        public decimal TotalPrice { get; set; } // total_price
-
-        [Column(@"customer_pay", Order = 14, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Customer pay")]
-        public decimal CustomerPay { get; set; } // customer_pay
-
-        [Column(@"pay_back", Order = 15, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Pay back")]
-        public decimal PayBack { get; set; } // pay_back
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child OrderDetailsTemps where [OrderDetailsTemp].[ordertemp_id] point to this entity (FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp.FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Table pointed by [OrderTemp].([TableOwned]) (FK_dbo.OrderTemp_dbo.Table_table_owned)
-        /// </summary>
-        [ForeignKey("TableOwned")] public virtual Table Table { get; set; } // FK_dbo.OrderTemp_dbo.Table_table_owned
-
-        public OrderTemp()
-        {
-            OrderDetailsTemps = new System.Collections.Generic.List<OrderDetailsTemp>();
             InitializePartial();
         }
 
@@ -2230,80 +1952,6 @@ namespace Cafocha.Entities
         partial void InitializePartial();
     }
 
-    // Table
-    [Table("Table", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class Table
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(@"table_id", Order = 1, TypeName = "int")]
-        [Index(@"PK_dbo.Table", 1, IsUnique = true, IsClustered = true)]
-        [Required]
-        [Key]
-        [Display(Name = "Table ID")]
-        public int TableId { get; set; } // table_id (Primary key)
-
-        [Column(@"is_Printed", Order = 2, TypeName = "int")]
-        [Required]
-        [Display(Name = "Is printed")]
-        public int IsPrinted { get; set; } // is_Printed
-
-        [Column(@"table_number", Order = 3, TypeName = "int")]
-        [Required]
-        [Display(Name = "Table number")]
-        public int TableNumber { get; set; } // table_number
-
-        [Column(@"chair_amount", Order = 4, TypeName = "int")]
-        [Required]
-        [Display(Name = "Chair amount")]
-        public int ChairAmount { get; set; } // chair_amount
-
-        [Column(@"pos_X", Order = 5, TypeName = "int")]
-        [Required]
-        [Display(Name = "Pos x")]
-        public int PosX { get; set; } // pos_X
-
-        [Column(@"pos_Y", Order = 6, TypeName = "int")]
-        [Required]
-        [Display(Name = "Pos y")]
-        public int PosY { get; set; } // pos_Y
-
-        [Column(@"is_Pinned", Order = 7, TypeName = "int")]
-        [Required]
-        [Display(Name = "Is pinned")]
-        public int IsPinned { get; set; } // is_Pinned
-
-        [Column(@"is_Ordered", Order = 8, TypeName = "int")]
-        [Required]
-        [Display(Name = "Is ordered")]
-        public int IsOrdered { get; set; } // is_Ordered
-
-        [Column(@"is_Locked", Order = 9, TypeName = "int")]
-        [Required]
-        [Display(Name = "Is locked")]
-        public int IsLocked { get; set; } // is_Locked
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child Chairs where [Chair].[table_owned] point to this entity (FK_dbo.Chair_dbo.Table_table_owned)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<Chair> Chairs { get; set; } // Chair.FK_dbo.Chair_dbo.Table_table_owned
-        /// <summary>
-        /// Child OrderTemps where [OrderTemp].[table_owned] point to this entity (FK_dbo.OrderTemp_dbo.Table_table_owned)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderTemp> OrderTemps { get; set; } // OrderTemp.FK_dbo.OrderTemp_dbo.Table_table_owned
-
-        public Table()
-        {
-            Chairs = new System.Collections.Generic.List<Chair>();
-            OrderTemps = new System.Collections.Generic.List<OrderTemp>();
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
     // WareHouse
     [Table("WareHouse", Schema = "dbo")]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
@@ -2460,22 +2108,6 @@ namespace Cafocha.Entities
         }
     }
 
-    // Chair
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class ChairMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Chair>
-    {
-        public ChairMapping()
-            : this("dbo")
-        {
-        }
-
-        public ChairMapping(string schema)
-        {
-            Property(x => x.TableOwned).IsOptional();
-
-        }
-    }
-
     // Customer
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
     public class CustomerMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Customer>
@@ -2535,23 +2167,6 @@ namespace Cafocha.Entities
         }
     }
 
-    // OrderDetailsTemp
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class OrderDetailsTempMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderDetailsTemp>
-    {
-        public OrderDetailsTempMapping()
-            : this("dbo")
-        {
-        }
-
-        public OrderDetailsTempMapping(string schema)
-        {
-            Property(x => x.ProductId).IsUnicode(false);
-            Property(x => x.Note).IsUnicode(false);
-
-        }
-    }
-
     // OrderNote
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
     public class OrderNoteMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderNote>
@@ -2591,32 +2206,6 @@ namespace Cafocha.Entities
         {
             Property(x => x.OrdernoteId).IsUnicode(false);
             Property(x => x.ProductId).IsUnicode(false);
-
-        }
-    }
-
-    // OrderTemp
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class OrderTempMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderTemp>
-    {
-        public OrderTempMapping()
-            : this("dbo")
-        {
-        }
-
-        public OrderTempMapping(string schema)
-        {
-            Property(x => x.SaleValue).HasPrecision(19,4);
-            Property(x => x.TotalPriceNonDisc).HasPrecision(19,4);
-            Property(x => x.Svc).HasPrecision(19,4);
-            Property(x => x.Vat).HasPrecision(19,4);
-            Property(x => x.SubEmpId).IsOptional().IsUnicode(false);
-            Property(x => x.CusId).IsOptional().IsUnicode(false);
-            Property(x => x.EmpId).IsOptional().IsUnicode(false);
-            Property(x => x.TableOwned).IsOptional();
-            Property(x => x.TotalPrice).HasPrecision(19,4);
-            Property(x => x.CustomerPay).HasPrecision(19,4);
-            Property(x => x.PayBack).HasPrecision(19,4);
 
         }
     }
@@ -2805,20 +2394,6 @@ namespace Cafocha.Entities
             Property(x => x.StockoutId).IsUnicode(false);
             Property(x => x.StockId).IsUnicode(false);
 
-        }
-    }
-
-    // Table
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class TableMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Table>
-    {
-        public TableMapping()
-            : this("dbo")
-        {
-        }
-
-        public TableMapping(string schema)
-        {
         }
     }
 
