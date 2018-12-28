@@ -72,7 +72,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
-//            Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.GetOrderDetailsForReceipt());
+            Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.GetOrderDetailsForReceipt());
 
             // Summary Text
             BlockUIContainer blkSummaryText = new BlockUIContainer()
@@ -356,191 +356,191 @@ namespace Cafocha.GUI.Helper.PrintHelper
             blkSummaryText.Child = stpSummary;
         }
 
-//        /// <summary>
-//        /// Create the table section of Receipt
-//        /// </summary>
-//        /// <param name="blkTableText"></param>
-//        /// <param name="gridMeta">The meta header of the table</param>
-//        /// <param name="listData">The data source for table</param>
-//        private void Generate_TableText(BlockUIContainer blkTableText, string[] gridMeta, List<OrderDetailsForPrint> listData)
-//        {
-//            Grid dgDataTable = new Grid();
-//            dgDataTable.Width = 300;
-//            // set Columns
-//            for (int i = 0; i < 4; i++)
-//            {
-//                if (i == 0)
-//                {
-//                    ColumnDefinition firstCol = new ColumnDefinition();
-//                    firstCol.Width = new GridLength(120);
-//                    dgDataTable.ColumnDefinitions.Add(firstCol);
-//                    continue;
-//                }
-//                if (i == 1)
-//                {
-//                    ColumnDefinition secondCol = new ColumnDefinition();
-//                    secondCol.Width = new GridLength(30);
-//                    dgDataTable.ColumnDefinitions.Add(secondCol);
-//                    continue;
-//                }
-//                if (i == 2)
-//                {
-//                    ColumnDefinition otherCol = new ColumnDefinition();
-//                    otherCol.Width = new GridLength(55);
-//                    dgDataTable.ColumnDefinitions.Add(otherCol);
-//                    continue;
-//                }
-//                else
-//                {
-//                    ColumnDefinition otherCol = new ColumnDefinition();
-//                    otherCol.Width = new GridLength(65);
-//                    dgDataTable.ColumnDefinitions.Add(otherCol);
-//                    continue;
-//                }
-//            }
-//            // set Rows
-//            for (int i = 0; i < listData.Count + 2; i++)
-//            {
-//                dgDataTable.RowDefinitions.Add(new RowDefinition());
-//            }
-//
-//
-//            // add Meta
-//            for (int i = 0; i < 4; i++)
-//            {
-//                TextBlock txtMeta = new TextBlock();
-//                if (i == 2 || i == 3)
-//                {
-//                    txtMeta.Text = gridMeta[i];
-//                    txtMeta.FontSize = 11;
-//                    txtMeta.FontWeight = FontWeights.Bold;
-//                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
-//                    txtMeta.TextAlignment = TextAlignment.Right;
-//                    Grid.SetRow(txtMeta, 0);
-//                    Grid.SetColumn(txtMeta, i);
-//                }
-//                else
-//                {
-//                    txtMeta.Text = gridMeta[i];
-//                    txtMeta.FontSize = 11;
-//                    txtMeta.FontWeight = FontWeights.Bold;
-//                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
-//                    Grid.SetRow(txtMeta, 0);
-//                    Grid.SetColumn(txtMeta, i);
-//                }
-//
-//                dgDataTable.Children.Add(txtMeta);
-//            }
-//
-//            int rowIndex = 1;
-//            if (OrderMode == SETORDER)
-//            {
-//                TextBlock txtProductName = new TextBlock();
-//                txtProductName.Width = 115;
-//                txtProductName.Text = "SET";
-//                txtProductName.FontSize = 11;
-//                txtProductName.VerticalAlignment = VerticalAlignment.Top;
-//                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
-//                txtProductName.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtProductName, rowIndex);
-//                Grid.SetColumn(txtProductName, 0);
-//                dgDataTable.Children.Add(txtProductName);
-//
-//                TextBlock txtQuan = new TextBlock();
-//                txtQuan.Text = Order.Pax.ToString();
-//                txtQuan.FontSize = 11;
-//                txtQuan.VerticalAlignment = VerticalAlignment.Top;
-//                txtQuan.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtQuan, rowIndex);
-//                Grid.SetColumn(txtQuan, 1);
-//                dgDataTable.Children.Add(txtQuan);
-//
-//                TextBlock txtPrice = new TextBlock();
-//                txtPrice.Text = String.Format("{0:0.000}", Order.SaleValue/Order.Pax);
-//                txtPrice.FontSize = 11;
-//                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
-//                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
-//                txtPrice.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtPrice, rowIndex);
-//                Grid.SetColumn(txtPrice, 2);
-//                dgDataTable.Children.Add(txtPrice);
-//
-//                TextBlock txtAmt = new TextBlock();
-//                txtAmt.Text = String.Format("{0:0.000}", Order.SaleValue);
-//                txtAmt.FontSize = 11;
-//                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
-//                txtAmt.TextAlignment = TextAlignment.Right;
-//                txtAmt.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtAmt, rowIndex);
-//                Grid.SetColumn(txtAmt, 3);
-//                dgDataTable.Children.Add(txtAmt);
-//
-//                rowIndex++;
-//            }
-//
-//            foreach (var orderItem in listData)
-//            {
-//                TextBlock txtProductName = new TextBlock();
-//                txtProductName.Width = 115;
-//                txtProductName.Text = seperateLongProductName(orderItem.ProductName);
-//                txtProductName.FontSize = 11;
-//                txtProductName.VerticalAlignment = VerticalAlignment.Top;
-//                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
-//                txtProductName.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtProductName, rowIndex);
-//                Grid.SetColumn(txtProductName, 0);
-//                dgDataTable.Children.Add(txtProductName);
-//
-//                TextBlock txtQuan = new TextBlock();
-//                txtQuan.Text = orderItem.Quan.ToString();
-//                txtQuan.FontSize = 11;
-//                txtQuan.VerticalAlignment = VerticalAlignment.Top;
-//                txtQuan.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtQuan, rowIndex);
-//                Grid.SetColumn(txtQuan, 1);
-//                dgDataTable.Children.Add(txtQuan);
-//
-//                TextBlock txtPrice = new TextBlock();
-//                if (OrderMode == SETORDER)
-//                {
-//                    txtPrice.Text = "";
-//                }
-//                else
-//                {
-//                    txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
-//                }
-//
-//                txtPrice.FontSize = 11;
-//                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
-//                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
-//                txtPrice.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtPrice, rowIndex);
-//                Grid.SetColumn(txtPrice, 2);
-//                dgDataTable.Children.Add(txtPrice);
-//
-//                TextBlock txtAmt = new TextBlock();
-//                if (OrderMode == SETORDER)
-//                {
-//                    txtAmt.Text = "";
-//                }
-//                else
-//                {
-//                    txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
-//                }
-//                txtAmt.FontSize = 11;
-//                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
-//                txtAmt.TextAlignment = TextAlignment.Right;
-//                txtAmt.Margin = new Thickness(0, 0, 0, 5);
-//                Grid.SetRow(txtAmt, rowIndex);
-//                Grid.SetColumn(txtAmt, 3);
-//                dgDataTable.Children.Add(txtAmt);
-//
-//                rowIndex++;
-//            }
-//
-//
-//            blkTableText.Child = dgDataTable;
-//        }
+        /// <summary>
+        /// Create the table section of Receipt
+        /// </summary>
+        /// <param name="blkTableText"></param>
+        /// <param name="gridMeta">The meta header of the table</param>
+        /// <param name="listData">The data source for table</param>
+        private void Generate_TableText(BlockUIContainer blkTableText, string[] gridMeta, List<OrderDetailsForPrint> listData)
+        {
+            Grid dgDataTable = new Grid();
+            dgDataTable.Width = 300;
+            // set Columns
+            for (int i = 0; i < 4; i++)
+            {
+                if (i == 0)
+                {
+                    ColumnDefinition firstCol = new ColumnDefinition();
+                    firstCol.Width = new GridLength(120);
+                    dgDataTable.ColumnDefinitions.Add(firstCol);
+                    continue;
+                }
+                if (i == 1)
+                {
+                    ColumnDefinition secondCol = new ColumnDefinition();
+                    secondCol.Width = new GridLength(30);
+                    dgDataTable.ColumnDefinitions.Add(secondCol);
+                    continue;
+                }
+                if (i == 2)
+                {
+                    ColumnDefinition otherCol = new ColumnDefinition();
+                    otherCol.Width = new GridLength(55);
+                    dgDataTable.ColumnDefinitions.Add(otherCol);
+                    continue;
+                }
+                else
+                {
+                    ColumnDefinition otherCol = new ColumnDefinition();
+                    otherCol.Width = new GridLength(65);
+                    dgDataTable.ColumnDefinitions.Add(otherCol);
+                    continue;
+                }
+            }
+            // set Rows
+            for (int i = 0; i < listData.Count + 2; i++)
+            {
+                dgDataTable.RowDefinitions.Add(new RowDefinition());
+            }
+
+
+            // add Meta
+            for (int i = 0; i < 4; i++)
+            {
+                TextBlock txtMeta = new TextBlock();
+                if (i == 2 || i == 3)
+                {
+                    txtMeta.Text = gridMeta[i];
+                    txtMeta.FontSize = 11;
+                    txtMeta.FontWeight = FontWeights.Bold;
+                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
+                    txtMeta.TextAlignment = TextAlignment.Right;
+                    Grid.SetRow(txtMeta, 0);
+                    Grid.SetColumn(txtMeta, i);
+                }
+                else
+                {
+                    txtMeta.Text = gridMeta[i];
+                    txtMeta.FontSize = 11;
+                    txtMeta.FontWeight = FontWeights.Bold;
+                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
+                    Grid.SetRow(txtMeta, 0);
+                    Grid.SetColumn(txtMeta, i);
+                }
+
+                dgDataTable.Children.Add(txtMeta);
+            }
+
+            int rowIndex = 1;
+            if (OrderMode == SETORDER)
+            {
+                TextBlock txtProductName = new TextBlock();
+                txtProductName.Width = 115;
+                txtProductName.Text = "SET";
+                txtProductName.FontSize = 11;
+                txtProductName.VerticalAlignment = VerticalAlignment.Top;
+                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
+                txtProductName.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtProductName, rowIndex);
+                Grid.SetColumn(txtProductName, 0);
+                dgDataTable.Children.Add(txtProductName);
+
+                TextBlock txtQuan = new TextBlock();
+                txtQuan.Text = Order.Pax.ToString();
+                txtQuan.FontSize = 11;
+                txtQuan.VerticalAlignment = VerticalAlignment.Top;
+                txtQuan.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtQuan, rowIndex);
+                Grid.SetColumn(txtQuan, 1);
+                dgDataTable.Children.Add(txtQuan);
+
+                TextBlock txtPrice = new TextBlock();
+                txtPrice.Text = String.Format("{0:0.000}", Order.SaleValue/Order.Pax);
+                txtPrice.FontSize = 11;
+                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
+                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
+                txtPrice.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtPrice, rowIndex);
+                Grid.SetColumn(txtPrice, 2);
+                dgDataTable.Children.Add(txtPrice);
+
+                TextBlock txtAmt = new TextBlock();
+                txtAmt.Text = String.Format("{0:0.000}", Order.SaleValue);
+                txtAmt.FontSize = 11;
+                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
+                txtAmt.TextAlignment = TextAlignment.Right;
+                txtAmt.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtAmt, rowIndex);
+                Grid.SetColumn(txtAmt, 3);
+                dgDataTable.Children.Add(txtAmt);
+
+                rowIndex++;
+            }
+
+            foreach (var orderItem in listData)
+            {
+                TextBlock txtProductName = new TextBlock();
+                txtProductName.Width = 115;
+                txtProductName.Text = seperateLongProductName(orderItem.ProductName);
+                txtProductName.FontSize = 11;
+                txtProductName.VerticalAlignment = VerticalAlignment.Top;
+                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
+                txtProductName.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtProductName, rowIndex);
+                Grid.SetColumn(txtProductName, 0);
+                dgDataTable.Children.Add(txtProductName);
+
+                TextBlock txtQuan = new TextBlock();
+                txtQuan.Text = orderItem.Quan.ToString();
+                txtQuan.FontSize = 11;
+                txtQuan.VerticalAlignment = VerticalAlignment.Top;
+                txtQuan.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtQuan, rowIndex);
+                Grid.SetColumn(txtQuan, 1);
+                dgDataTable.Children.Add(txtQuan);
+
+                TextBlock txtPrice = new TextBlock();
+                if (OrderMode == SETORDER)
+                {
+                    txtPrice.Text = "";
+                }
+                else
+                {
+                    txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
+                }
+
+                txtPrice.FontSize = 11;
+                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
+                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
+                txtPrice.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtPrice, rowIndex);
+                Grid.SetColumn(txtPrice, 2);
+                dgDataTable.Children.Add(txtPrice);
+
+                TextBlock txtAmt = new TextBlock();
+                if (OrderMode == SETORDER)
+                {
+                    txtAmt.Text = "";
+                }
+                else
+                {
+                    txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
+                }
+                txtAmt.FontSize = 11;
+                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
+                txtAmt.TextAlignment = TextAlignment.Right;
+                txtAmt.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtAmt, rowIndex);
+                Grid.SetColumn(txtAmt, 3);
+                dgDataTable.Children.Add(txtAmt);
+
+                rowIndex++;
+            }
+
+
+            blkTableText.Child = dgDataTable;
+        }
 
         /// <summary>
         /// Create the Info section of Receipt

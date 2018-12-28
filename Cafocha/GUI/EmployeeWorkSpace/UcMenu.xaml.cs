@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -16,9 +17,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 public partial class UcMenu : UserControl
  {
         private EmployeewsOfLocalPOS _unitofwork;
-        private OrderTemp orderTemp;
-        private List<OrderDetailsTemp> orderTempDetails;
-
+        private ProductModule _productModule;
+        private OrderModule _orderModule;
         public UcMenu()
         {
             InitializeComponent();
@@ -31,43 +31,33 @@ public partial class UcMenu : UserControl
         internal bool IsRefreshMenu = true;
         public void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            this.orderTemp = ((MainWindow) Window.GetWindow(this)).orderTemp;
-            this.orderTempDetails = ((MainWindow)Window.GetWindow(this)).orderDetailsTemp;
+            this._productModule = ((MainWindow)Window.GetWindow(this))._productModule;
+            this._orderModule = ((MainWindow)Window.GetWindow(this))._orderModule;
             if (IsRefreshMenu)
             {
                 try
                 {
-                    _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
                     lvCategoryBreakFast.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("BreakFast"));
+                        _productModule.Get(p => p.StdStats.Equals("BreakFast"));
                     lvCategoryStarter.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Starter"));
+                        _productModule.Get(p => p.StdStats.Equals("Starter"));
                     lvCategoryMain.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Main"));
+                        _productModule.Get(p => p.StdStats.Equals("Main"));
                     lvCategoryDessert.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Dessert"));
+                        _productModule.Get(p => p.StdStats.Equals("Dessert"));
                     lvCategoryBeverages.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => (p.Type == (int)ProductType.Beverage || p.Type == (int)ProductType.Coffee));
+                        _productModule.Get(p => (p.Type == (int)ProductType.Beverage || p.Type == (int)ProductType.Coffee));
                     lvCategoryBeer.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
+                        _productModule.Get(p => p.Type == (int)ProductType.Beer);
                     lvCategoryWine.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
+                        _productModule.Get(p => p.Type == (int)ProductType.Wine);
                     lvCategoryOther.ItemsSource =
-                        _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
+                        _productModule.Get(p => p.Type == (int)ProductType.Other);
 
 
                     IsRefreshMenu = false;
 
 
-                    //orderingTable = ((MainWindow) Window.GetWindow(this)).currentTable;
-                    //orderingChair = ((MainWindow) Window.GetWindow(this)).currentChair;
-
-                    //if (orderingTable == null)
-                    //{
-                    //    return;
-                    //}
-
-                    //((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
                 }
                 catch (Exception ex)
                 {
@@ -76,15 +66,7 @@ public partial class UcMenu : UserControl
             }
         }
 
-        public override void OnApplyTemplate()
-        {
-            DependencyObject ButtonControlInTemplate = GetTemplateChild("searchbutton");// set the name as the x:Name for the controls in your xaml.
-            Button SearchButton = (Button)ButtonControlInTemplate;
-            DependencyObject TextBoxInTemplate = GetTemplateChild("searchinputfield"); // set the name as the x:Name for the controls in your xaml.
-            TextBox InputTextBox = (TextBox)TextBoxInTemplate;
-            base.OnApplyTemplate();
-        }
-
+  
 
 
         //ToDo: Need to update the contain in Warehouse database when new order occur
@@ -98,145 +80,22 @@ public partial class UcMenu : UserControl
 
 
             var item = lbSelected.SelectedItem;
+            Product it = (Product)lbSelected.SelectedItem;
             if (item != null)
             {
 
-                orderTemp.Ordertime = DateTime.Now;
-
-
-                OrderDetailsTemp o = new OrderDetailsTemp();
-                Product it = (Product)lbSelected.SelectedItem;
-
-                //order for each chair
-
-                var orderProductDetailsTemps = orderTempDetails.Where(x => it.ProductId.Equals(x.ProductId)).ToList();
-
-                // go to warehouse, check and get the ingredient to make product
-                if (!TakeFromWareHouseData(o, it))       
-                {
-                    return;
-                }
-
-                // add a product to order
-                if (orderProductDetailsTemps.Count == 0)
-                {
-                    o.OrdertempId = orderTemp.OrdertempId;
-                    o.ProductId = it.ProductId;
-                    o.SelectedStats = it.StdStats;
-                    o.Note = "";
-                    o.Quan = 1;
-                    o.IsPrinted = 0;
-                    o.Discount = it.Discount;
-
-                    orderTempDetails.Add(o);
-
-                }
-                else
-                {
-                    foreach (var order in orderProductDetailsTemps)
-                    {
-                        if (!order.SelectedStats.Equals(it.StdStats) || !order.Note.Equals("") || order.IsPrinted != 0)
-                        {
-                            o.OrdertempId = orderTemp.OrdertempId;
-                            o.ProductId = it.ProductId;
-                            o.SelectedStats = it.StdStats;
-                            o.Note = "";
-                            o.Quan = 1;
-                            o.IsPrinted = 0;
-                            o.Discount = it.Discount;
-
-                            orderTempDetails.Add(o);
-
-                            break;
-                        }
-
-                        if (order.SelectedStats.Equals(it.StdStats) && order.Note.Equals("") && order.IsPrinted == 0)
-                        {
-                            order.ProductId = it.ProductId;
-                            order.Quan++;
-   
-                            break;
-                        }
-                    }
-                }
-               
-    
+                _orderModule.addProductToOrder(it);
                 lbSelected.UnselectAll();
 
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTemp);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _orderModule.OrderTemp);
                 // TODO: uncomment and fix
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork);
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = _orderModule.OrderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
         }
 
-        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails, Product orderingProduct)
-        {
-            var prodOfOrderDetails =
-                _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderingProduct.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
-            if (prodOfOrderDetails != null)
-            {
-                // if product have no product details
-                if (prodOfOrderDetails.ProductDetails.Count == 0)
-                {
-                    // still allow to order but no ingredient relate to this product for tracking
-                    return true;
-                }
 
-
-                var wareHouseDict = new Dictionary<WareHouse, double?>();
-                // going to warehouse and take the contain of each ingredient
-                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
-                {
-                    var quan = prodDetails.Quan;
-                    var ingd =
-                        _unitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId))
-                            .FirstOrDefault();
-                    if (ingd == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
-                        return false;
-                    }
-                    var wareHouse =
-                        _unitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId))
-                            .FirstOrDefault();
-                    if (wareHouse == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
-                        return false;
-                    }
-
-                    var temple_Contain = wareHouse.Contain;
-
-                    if (temple_Contain < quan)
-                    {
-                        MessageBox.Show("This Product can not order now. Please check to WareHouse for Ingredient's stock!");
-                        return false;
-                    }
-                    else
-                    {
-                        temple_Contain -= quan;
-                    }
-
-                    wareHouseDict.Add(wareHouse, temple_Contain);
-                }
-
-                // when all ingredient are enough to make product
-                foreach (var item in wareHouseDict)
-                {
-                    item.Key.Contain = item.Value;
-                }
-                _unitofwork.Save();
-            }
-            else
-            {
-                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
-                return false;
-            }
-
-            return true;
-        }
 
         private void Search_OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -254,14 +113,14 @@ public partial class UcMenu : UserControl
 
             if (filter.Length == 0)
             {
-                lvCategoryBreakFast.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("BreakFast"));
-                lvCategoryStarter.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Starter"));
-                lvCategoryMain.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Main"));
-                lvCategoryDessert.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Dessert"));
-                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
-                lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
-                lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
-                lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
+                lvCategoryBreakFast.ItemsSource = _productModule.Get(p => p.StdStats.Equals("BreakFast"));
+                lvCategoryStarter.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Starter"));
+                lvCategoryMain.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Main"));
+                lvCategoryDessert.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Dessert"));
+                lvCategoryBeverages.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Beverage);
+                lvCategoryBeer.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Beer);
+                lvCategoryWine.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Wine);
+                lvCategoryOther.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Other);
                 return;
             }
 
@@ -273,65 +132,61 @@ public partial class UcMenu : UserControl
         {
             if (ItemBreakFast.IsSelected == true)
             {
-                lvCategoryBreakFast.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("BreakFast") && p.Name.Contains(filter));
+                lvCategoryBreakFast.ItemsSource = _productModule.Get(p => p.StdStats.Equals("BreakFast") && p.Name.Contains(filter));
                 lvCategoryBreakFast.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBreakFast;
             }
 
             if (ItemStarter.IsSelected == true)
             {
-                lvCategoryStarter.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Starter") && p.Name.Contains(filter));
+                lvCategoryStarter.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Starter") && p.Name.Contains(filter));
                 lvCategoryStarter.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemStarter;
             }
 
             if (ItemMain.IsSelected == true)
             {
-                lvCategoryMain.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Main") && p.Name.Contains(filter));
+                lvCategoryMain.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Main") && p.Name.Contains(filter));
                 lvCategoryMain.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemMain;
             }
 
             if (ItemDessert.IsSelected == true)
             {
-                lvCategoryDessert.ItemsSource = _unitofwork.ProductRepository.Get(p => p.StdStats.Equals("Dessert") && p.Name.Contains(filter));
+                lvCategoryDessert.ItemsSource = _productModule.Get(p => p.StdStats.Equals("Dessert") && p.Name.Contains(filter));
                 lvCategoryDessert.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemDessert;
             }
 
             if (ItemBeverages.IsSelected == true)
             {
-                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
+                lvCategoryBeverages.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
                 lvCategoryBeverages.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeverages;
             }
 
             if (ItemBeer.IsSelected == true)
             {
-                lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer && p.Name.Contains(filter));
+                lvCategoryBeer.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Beer && p.Name.Contains(filter));
                 lvCategoryBeer.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeer;
             }
 
             if (ItemWine.IsSelected == true)
             {
-                lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine && p.Name.Contains(filter));
+                lvCategoryWine.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Wine && p.Name.Contains(filter));
                 lvCategoryWine.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemWine;
             }
 
             if (ItemOther.IsSelected == true)
             {
-                lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other && p.Name.Contains(filter));
+                lvCategoryOther.ItemsSource = _productModule.Get(p => p.Type == (int)ProductType.Other && p.Name.Contains(filter));
                 lvCategoryOther.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemOther;
             }
         }
 
-        //private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {

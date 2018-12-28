@@ -8,7 +8,36 @@ using Cafocha.Security;
 
 namespace Cafocha.Repository.Generic
 {
-    public partial class GenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
+    {
+        /// <summary>
+        /// Get data
+        /// </summary>
+        /// <param name="filter">Lambda expression to filtering data</param>
+        /// <param name="orderBy">Lambda expression to ordering data</param>
+        /// <param name="includeProperties">the properties represent the relationship with other entities (use ',' to seperate these properties)</param>
+        /// <returns></returns>
+        IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "");
+
+        TEntity GetById(object id);
+        void Insert(TEntity entity);
+        void Delete(object id);
+        void Delete(TEntity entityTODelete);
+        void Update(TEntity entityToUpdate);
+
+        /// <summary>
+        /// auto generate id for all entities in Asowell Database
+        /// all id type is 10 character and the sign is depend on the type of entity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        TEntity AutoGeneteId_DBAsowell(TEntity entity);
+    }
+
+    public partial class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private const string ENCRYPT_PHASE = "oma_zio_decade";
         internal ILocalContext context;

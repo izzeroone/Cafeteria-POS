@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 using Cafocha.Repository.DAL;
@@ -25,6 +26,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// in Employee WorkSpace
         /// </summary>
         internal EmployeewsOfLocalPOS _unitofwork;
+        internal ProductModule _productModule;
+        internal OrderModule _orderModule;
 
         Employee emp;
         SalaryNote empSln;
@@ -67,6 +70,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //}
 
             _unitofwork = new EmployeewsOfLocalPOS();
+            _productModule = new ProductModule(_unitofwork);
+            _orderModule =new OrderModule(_unitofwork);
             {
                 en = new Entry();
                 info = new Info();

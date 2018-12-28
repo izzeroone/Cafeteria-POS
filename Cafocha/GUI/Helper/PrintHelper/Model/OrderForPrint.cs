@@ -358,7 +358,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             return new Dictionary<string, string>()
             {
                 { "No", No},
-                { "Table", Table.ToString()},
                 { "Date", Date.ToString() },
                 { "Casher", Casher},
                 { "Customer", Customer}

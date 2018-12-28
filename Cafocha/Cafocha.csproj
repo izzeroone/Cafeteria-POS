@@ -140,6 +140,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BusinessContext\EmployeeWorkspace\OrderModule.cs" />
+    <Compile Include="BusinessContext\EmployeeWorkspace\ProductModule.cs" />
+    <Compile Include="BusinessContext\LoginModule.cs" />
     <Compile Include="BusinessContext\MigrationConfiguration.cs" />
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />

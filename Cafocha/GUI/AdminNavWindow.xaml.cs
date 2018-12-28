@@ -22,7 +22,7 @@ namespace Cafocha.GUI
             // Control layout depend on logging Admin
             if (curAd.AdRole == (int) AdminReRole.CafochaAd)
             {
-                stpAdpress.Visibility = Visibility.Collapsed;
+//                stpAdpress.Visibility = Visibility.Collapsed;
             }
             else
             {
