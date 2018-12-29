@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using log4net;
@@ -16,14 +17,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
     public partial class CafowareWindow : Window
     {
         AdminwsOfCloudAPWH _unitofwork;
+        internal WarehouseModule _warehouseModule;
         private CreateStockPage _createStockPage;
         private StockInPage _stockInPage;
         private StockOutPage _stockOutPage;
         private ViewStockPage _viewStockPage;
         private LoginWindow _loginWindow;
         private AdminRe curAdmin;
-
-        private List<Stock> StockList;
 
         private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -34,10 +34,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
             try
             {
                 _unitofwork = new AdminwsOfCloudAPWH();
-                StockList = _unitofwork.StockRepository
-                    .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
-
-                _viewStockPage = new ViewStockPage(_unitofwork, StockList);
+                _warehouseModule = new WarehouseModule();
+                _warehouseModule.loadStock();
+                _viewStockPage = new ViewStockPage(_unitofwork, _warehouseModule.StockList);
 
 
 
@@ -48,9 +47,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     curAdmin = adList.FirstOrDefault(x =>
                         x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                     CUserChip.Content = curAdmin.Name;
-                    _createStockPage = new CreateStockPage(_unitofwork, StockList);
-                    _stockInPage = new StockInPage(_unitofwork, StockList);
-                    _stockOutPage = new StockOutPage(_unitofwork, StockList);
+                    _createStockPage = new CreateStockPage(_unitofwork, _warehouseModule.StockList);
+                    _stockInPage = new StockInPage(_unitofwork, _warehouseModule.StockList);
+                    _stockOutPage = new StockOutPage(_unitofwork, _warehouseModule.StockList);
                 }
 
 
@@ -68,35 +67,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         public void Refresh_Tick(object sender, EventArgs e)
         {
-            foreach (var stock in _unitofwork.StockRepository.Get(includeProperties: "APWareHouse"))
-            {
-                if (stock.Deleted == 1)
-                {
-                    var deletedIngd = StockList.FirstOrDefault(x => x.StoId.Equals(stock.StoId));
-                    if (deletedIngd != null)
-                    {
-                        StockList.Remove(deletedIngd);
-                    }
-                    continue;
-                }
+           _warehouseModule.loadStock();
 
-                var curStock = StockList.FirstOrDefault(x => x.StoId.Equals(stock.StoId));
-                if (curStock == null)
-                {
-                    StockList.Add(stock);
-                }
-                else
-                {
-                    curStock.Name = stock.Name;
-                    curStock.Info = stock.Info;
-                    curStock.UnitIn = stock.UnitIn;
-                    curStock.UnitOut = stock.UnitOut;
-                    curStock.StandardPrice = stock.StandardPrice;
-
-                    curStock.ApWareHouse.Contain = stock.ApWareHouse.Contain;
-                    curStock.ApWareHouse.StdContain = stock.ApWareHouse.StdContain;
-                }
-            }
             if (isCreateStockRun)
             {
                 _createStockPage.lvStock.Items.Refresh();

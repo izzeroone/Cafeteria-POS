@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -16,6 +17,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
     {
         private AdminwsOfCloudAPWH _unitofwork;
         private List<Stock> _stockList;
+        private WarehouseModule _warehouseModule;
 
         Stock _currentNewStock = new Stock();
 
@@ -170,11 +172,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 MessageBoxResult delMess = MessageBox.Show("This action will delete all following stock details! Do you want to delete " + delStock.Name + "(" + delStock.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
-                    delStock.Deleted = 1;
-
-
-                    _unitofwork.StockRepository.Update(delStock);
-                    _unitofwork.Save();
+                    _warehouseModule.deleteStock(delStock);
 
                     // refesh data
                     ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
@@ -324,8 +322,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     StdContain = 100
                 };
 
-                _unitofwork.ApWareHouseRepository.Insert(newWareHouse);
-                _unitofwork.Save();
+                _warehouseModule.insertWarehouse(newWareHouse);
 
 
 
@@ -340,8 +337,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _currentNewStock.Supplier = supplier;
                 _currentNewStock.StandardPrice = price;
 
-                _unitofwork.StockRepository.Insert(_currentNewStock);
-                _unitofwork.Save();
+                _warehouseModule.insertStock(_currentNewStock);
 
 
                 MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId + ") successful!");
@@ -417,8 +413,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _selectedStock.Supplier = supplier;
             _selectedStock.StandardPrice = price;
 
-            _unitofwork.StockRepository.Update(_selectedStock);
-            _unitofwork.Save();
+            _warehouseModule.updateStock(_selectedStock);
 
 
             MessageBox.Show("Update stock " + _selectedStock.Name + "(" + _selectedStock.StoId + ") successful!");
@@ -428,6 +423,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _selectedStock = null;
             // refesh data
             ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _warehouseModule = ((CafowareWindow) Window.GetWindow(this))._warehouseModule;
         }
     }
 }
