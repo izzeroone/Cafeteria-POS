@@ -356,6 +356,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     MessageBox.Show(ex.Message);
                 }
 
+                _currentProduct.ProductId = _unitofwork.ProductRepository.AutoGeneteId_DBAsowell(_currentProduct).ProductId;
                 _unitofwork.ProductRepository.Insert(_currentProduct);
                 _unitofwork.Save();
 
@@ -374,7 +375,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add new product. Please check again!");
+                MessageBox.Show(ex.Message);
             }
         }
 
