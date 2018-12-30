@@ -17,7 +17,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class StockInPage : Page
     {
-        private AdminwsOfCloudAPWH _unitofwork;
         private List<Stock> _stockList;
 
         internal WarehouseModule _warehouseModule;
@@ -25,11 +24,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
         internal List<StockInDetail> _stockInDetailsList;
 
 
-        public StockInPage(AdminwsOfCloudAPWH unitofwork, List<Stock> stockList)
+        public StockInPage(WarehouseModule warehouseModule, List<Stock> stockList)
         {
-            _unitofwork = unitofwork;
             InitializeComponent();
-
+            _warehouseModule = warehouseModule;
             _stockList = stockList;
             lvDataStock.ItemsSource = _stockList;
 
@@ -244,22 +242,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
          * Form Manipulate
          *********************************/
 
-        private void UpdateAPWareHouseContain()
-        {
-            foreach (var details in _currentStockIn.StockInDetails)
-            {
-                var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
-                if (stock != null)
-                {
-                    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
-                    if (wareHouse != null)
-                    {
-                        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
-                        _unitofwork.ApWareHouseRepository.Update(wareHouse);
-                    }
-                }
-            }
-        }
+
 
         private List<int> ErrorDetailsItem = new List<int>();
         private void bntAdd_Click(object sender, RoutedEventArgs e)
@@ -278,18 +261,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     return;
                 }
 
-                _currentStockIn.Intime = DateTime.Now;
-                _currentStockIn.SiId = _unitofwork.StockInRepository.AutoGeneteId_DBAsowell(_currentStockIn).SiId;
-                foreach (var stockInDetail in _currentStockIn.StockInDetails)
-                {
-                    stockInDetail.SiId = _currentStockIn.SiId;
-                }
-                _unitofwork.StockInRepository.Insert(_currentStockIn);
-
-                //ToDo: Update the contain value in Warehouse database
-                UpdateAPWareHouseContain();
-
-                _unitofwork.Save();
+                _warehouseModule.addStockIn(_currentStockIn);
 
 
                 _stockInDetailsList = new List<StockInDetail>();

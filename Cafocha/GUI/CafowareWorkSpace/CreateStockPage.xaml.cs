@@ -15,17 +15,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class CreateStockPage : Page
     {
-        private AdminwsOfCloudAPWH _unitofwork;
         private List<Stock> _stockList;
         private WarehouseModule _warehouseModule;
 
         Stock _currentNewStock = new Stock();
 
-        public CreateStockPage(AdminwsOfCloudAPWH unitofwork, List<Stock> stockList)
+        public CreateStockPage(WarehouseModule warehouseModule, List<Stock> stockList)
         {
-            _unitofwork = unitofwork;
             InitializeComponent();
-
+            _warehouseModule = warehouseModule;
             _stockList = stockList;
             lvStock.ItemsSource = _stockList;
 

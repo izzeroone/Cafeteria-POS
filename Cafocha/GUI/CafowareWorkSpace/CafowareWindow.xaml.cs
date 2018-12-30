@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Cafocha.BusinessContext.User;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
@@ -16,8 +17,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class CafowareWindow : Window
     {
-        AdminwsOfCloudAPWH _unitofwork;
         internal WarehouseModule _warehouseModule;
+        internal AdminModule _adminModule;
         private CreateStockPage _createStockPage;
         private StockInPage _stockInPage;
         private StockOutPage _stockOutPage;
@@ -33,23 +34,23 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             try
             {
-                _unitofwork = new AdminwsOfCloudAPWH();
                 _warehouseModule = new WarehouseModule();
                 _warehouseModule.loadStock();
-                _viewStockPage = new ViewStockPage(_unitofwork, _warehouseModule.StockList);
+                _adminModule = new AdminModule();
+                _viewStockPage = new ViewStockPage(_warehouseModule, _warehouseModule.StockList);
 
 
 
                 if (App.Current.Properties["AdLogin"] != null)
                 {
                     AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                    List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
+                    List<AdminRe> adList = _adminModule.getAdmins().ToList();
                     curAdmin = adList.FirstOrDefault(x =>
                         x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                     CUserChip.Content = curAdmin.Name;
-                    _createStockPage = new CreateStockPage(_unitofwork, _warehouseModule.StockList);
-                    _stockInPage = new StockInPage(_unitofwork, _warehouseModule.StockList);
-                    _stockOutPage = new StockOutPage(_unitofwork, _warehouseModule.StockList);
+                    _createStockPage = new CreateStockPage(_warehouseModule, _warehouseModule.StockList);
+                    _stockInPage = new StockInPage(_warehouseModule, _warehouseModule.StockList);
+                    _stockOutPage = new StockOutPage(_warehouseModule, _warehouseModule.StockList);
                 }
 
 
@@ -110,6 +111,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         }
 
         bool isViewStockRun = false;
+
         private void ViewStock_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_viewStockPage);

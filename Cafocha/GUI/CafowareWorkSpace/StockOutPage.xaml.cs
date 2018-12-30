@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
 using Cafocha.Repository.DAL;
@@ -15,15 +16,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class StockOutPage : Page
     {
-        private AdminwsOfCloudAPWH _unitofwork;
+        private WarehouseModule _warehouseModule;
         private List<Stock> _stockList;
         internal StockOut _currentStockOut;
         internal List<StockOutDetail> _stockOutDetailsList;
 
 
-        public StockOutPage(AdminwsOfCloudAPWH unitofwork, List<Stock> stockList)
+        public StockOutPage(WarehouseModule warehouseModule, List<Stock> stockList)
         {
-            _unitofwork = unitofwork;
+            _warehouseModule = warehouseModule;
             InitializeComponent();
 
             _stockList = stockList;
@@ -89,7 +90,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
 
             var details = _currentStockOut.StockOutDetails.FirstOrDefault(x => x.StockId.Equals(stock.StoId));
-            ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+            ApWareHouse wareHouse = _warehouseModule.getApWareHouse(stock.ApwarehouseId);
             if (details != null)
             {
                 if (wareHouse != null)
@@ -242,22 +243,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
          * Form Manipulate
          *********************************/
 
-        private void UpdateAPWareHouseContain()
-        {
-            foreach (var details in _currentStockOut.StockOutDetails)
-            {
-                var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StockId));
-                if (stock != null)
-                {
-                    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
-                    if (wareHouse != null)
-                    {
-                        wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.UnitOut);
-                        _unitofwork.ApWareHouseRepository.Update(wareHouse);
-                    }
-                }
-            }
-        }
+
 
         private List<int> ErrorDetailsItem = new List<int>();
         private void bntAdd_Click(object sender, RoutedEventArgs e)
@@ -276,19 +262,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     return;
                 }
 
-                _currentStockOut.OutTime = DateTime.Now;
-                _currentStockOut.StockoutId = _unitofwork.StockOutRepository.AutoGeneteId_DBAsowell(_currentStockOut).StockoutId;
-                foreach (var stockInDetail in _currentStockOut.StockOutDetails)
-                {
-                    stockInDetail.StockoutId = _currentStockOut.StockoutId;
-                }
-                _unitofwork.StockOutRepository.Insert(_currentStockOut);
-
-                //ToDo: Update the contain value in Warehouse database
-                UpdateAPWareHouseContain();
-
-                _unitofwork.Save();
-
+                _warehouseModule.addStockOut(_currentStockOut);
 
                 _stockOutDetailsList = new List<StockOutDetail>();
                 lvDataStockOut.ItemsSource = _stockOutDetailsList;

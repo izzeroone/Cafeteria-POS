@@ -15,7 +15,7 @@ using Cafocha.Repository.DAL;
 namespace Cafocha.BusinessContext.EmployeeWorkspace
 {
     //A class to help manaing order
-    class OrderModule
+    public class OrderModule
     {
         private EmployeewsOfLocalPOS _unitofwork;
         private OrderTemp _orderTemp;
