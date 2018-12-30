@@ -58,5 +58,11 @@ namespace Cafocha.GUI
         {
 
         }
+
+        private void GotoWareHouseIGButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            WareHouseWindow whWindow = new WareHouseWindow();
+            whWindow.Show();
+        }
     }
 }
