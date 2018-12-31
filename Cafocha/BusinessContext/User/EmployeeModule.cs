@@ -15,7 +15,7 @@ namespace Cafocha.BusinessContext.User
     public class EmployeeModule
     {
         private RepositoryLocator _unitofwork;
-        private List<EmpLoginList> _emploglist;
+        private static List<EmpLoginList> _emploglist = new List<EmpLoginList>();
         private List<Employee> _employee;
 
         public List<EmpLoginList> Emploglist
@@ -26,13 +26,11 @@ namespace Cafocha.BusinessContext.User
 
         public EmployeeModule()
         {
-            _emploglist = new List<EmpLoginList>();
             _employee = getEmployees().ToList();
         }
 
         public EmployeeModule(RepositoryLocator unitofwork)
         {
-            _emploglist = new List<EmpLoginList>();
             _unitofwork = unitofwork;
         }
 

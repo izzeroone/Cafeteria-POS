@@ -89,7 +89,7 @@ namespace Cafocha.BusinessContext
                                     EmpWH = Application.Current.Properties["EmpWH"] as WorkingHistory,
                                     TimePercent = 0
                                 });
-
+                                var t = _loginWindow._businessModuleLocator.EmployeeModule.Emploglist;
                                 Cafocha.GUI.EmployeeWorkSpace.MainWindow main = new Cafocha.GUI.EmployeeWorkSpace.MainWindow();
                                 main.Show();
                             });

@@ -50,7 +50,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             emp = App.Current.Properties["EmpLogin"] as Employee;
             _businessModuleLocator = new BusinessModuleLocator();
             cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-
+            var t = _businessModuleLocator.EmployeeModule.Emploglist;
             isOrderOrder = false;
             isOrderPrint = false;
 
