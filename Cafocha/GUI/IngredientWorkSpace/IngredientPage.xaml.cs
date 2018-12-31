@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -10,12 +11,12 @@ namespace Cafocha.GUI.WareHouseWorkSpace
     /// </summary>
     public partial class IngredientPage : Page
     {
-        private RepositoryLocator _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         
 
-        public IngredientPage(RepositoryLocator unitofwork, List<Ingredient> IngdList)
+        public IngredientPage(BusinessModuleLocator businessModuleLocator, List<Ingredient> IngdList)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             lvItem.ItemsSource = IngdList;

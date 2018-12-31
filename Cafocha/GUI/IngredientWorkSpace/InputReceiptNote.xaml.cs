@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.GUI.WareHouseWorkSpace.Helper;
 using Cafocha.Repository.DAL;
@@ -16,17 +17,17 @@ namespace Cafocha.GUI.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private RepositoryLocator _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private List<Ingredient> IngdList;
         internal ReceiptNote CurrentReceipt;
         internal List<ReceiptNoteDetail> ReceiptDetailsList;
 
-        private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
+        private static readonly string OTHER_PURCHASE_ID = "IGD0000047";
 
 
-        public InputReceiptNote(RepositoryLocator unitofwork, List<Ingredient> ingdList)
+        public InputReceiptNote(BusinessModuleLocator businessModuleLocator, List<Ingredient> ingdList)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             this.IngdList = ingdList;
@@ -80,7 +81,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
             }
             else
             {
-                if (ingredient.IgdId.Equals(ORTHER_PERCHAGSE_ID))   // only allow input the Orther Perchagse once per Receipt Note
+                if (ingredient.IgdId.Equals(OTHER_PURCHASE_ID))   // only allow input the Orther Perchagse once per Receipt Note
                     return;
                 foundIteminReceipt.Quan++;
             }
@@ -249,19 +250,14 @@ namespace Cafocha.GUI.WareHouseWorkSpace
         {
             foreach (var details in CurrentReceipt.ReceiptNoteDetails)
             {
-                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID))
+                if (details.IgdId.Equals(OTHER_PURCHASE_ID))
                     continue;
 
 
                 var ingd = IngdList.FirstOrDefault(x => x.IgdId.Equals(details.IgdId));
                 if (ingd != null)
                 {
-                    WareHouse wareHouse = _unitofwork.WareHouseRepository.GetById(ingd.WarehouseId);
-                    if (wareHouse != null)
-                    {
-                        wareHouse.Contain += details.Quan * UnitBuyTrans.ToUnitContain(ingd.UnitBuy);
-                        _unitofwork.WareHouseRepository.Update(wareHouse);
-                    }
+                    _businessModuleLocator.WarehouseModule.updateIngerdientStock(ingd, details.Quan);
                 }
             }
         }
@@ -286,7 +282,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                 // check if the Receipt Note have input Other Perchagse, must require the Note
                 foreach (var details in CurrentReceipt.ReceiptNoteDetails.ToList())
                 {
-                    if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
+                    if (details.IgdId.Equals(OTHER_PURCHASE_ID) && string.IsNullOrEmpty(details.Note))
                     {
                         MessageBox.Show(
                             "You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
@@ -294,21 +290,12 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                     }
                 }
 
-                CurrentReceipt.Inday = DateTime.Now;
-                CurrentReceipt.RnId = _unitofwork.ReceiptNoteRepository.AutoGeneteId_DBAsowell(CurrentReceipt).RnId;
-                //TODO:Add id after insert cause is will have a ID
-                foreach (var receiptNodeDetails in CurrentReceipt.ReceiptNoteDetails)
-                {
-                    receiptNodeDetails.RnId = CurrentReceipt.RnId;
-                }
-                _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
+                _businessModuleLocator.WarehouseModule.inputReceivedNoteDetails(CurrentReceipt);
 
                 //ToDo: Update the contain value in Warehouse database
                 UpdateWareHouseContain();
 
-                _unitofwork.Save();
-
-
+               
                 ReceiptDetailsList = new List<ReceiptNoteDetail>();
                 lvDataReceipt.ItemsSource = ReceiptDetailsList;
                 lvDataReceipt.Items.Refresh();

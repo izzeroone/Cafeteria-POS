@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
+using Cafocha.GUI.WareHouseWorkSpace;
+using Cafocha.GUI.WareHouseWorkSpace.Helper;
 using Cafocha.Repository.DAL;
 
 namespace Cafocha.BusinessContext.WarehouseWorkspace
 {
     public class WarehouseModule
     {
+        private static readonly string OTHER_PURCHASE_ID = "IGD0000047";
+
         private List<Stock> _stockList;
         RepositoryLocator _unitofworkWH;
 
@@ -130,6 +134,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             }
         }
 
+
         public void addStockIn(StockIn stockIn)
         {
             stockIn.Intime = DateTime.Now;
@@ -160,6 +165,29 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             UpdateAPWareHouseContain(stockOut);
 
             _unitofworkWH.Save();
+        }
+
+        public void inputReceivedNoteDetails(ReceiptNote receipt)
+        {
+            receipt.Inday = DateTime.Now;
+            receipt.RnId = _unitofworkWH.ReceiptNoteRepository.AutoGeneteId_DBAsowell(receipt).RnId;
+           
+            foreach (var receiptNodeDetails in receipt.ReceiptNoteDetails)
+            {
+                receiptNodeDetails.RnId = receipt.RnId;
+            }
+            _unitofworkWH.ReceiptNoteRepository.Insert(receipt);
+            _unitofworkWH.Save();
+
+        }
+        public void updateIngerdientStock(Ingredient ingredient, double addNum)
+        {
+            WareHouse wareHouse = _unitofworkWH.WareHouseRepository.GetById(ingredient.WarehouseId);
+            if (wareHouse != null)
+            {
+                wareHouse.Contain += addNum * UnitBuyTrans.ToUnitContain(ingredient.UnitBuy);
+                _unitofworkWH.WareHouseRepository.Update(wareHouse);
+            }
         }
         public ApWareHouse getApWareHouse(string id)
         {
