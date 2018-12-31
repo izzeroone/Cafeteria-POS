@@ -15,12 +15,12 @@ namespace Cafocha.GUI.Helper.PrintHelper
 {
     public class EndOfDayPrintHelper : IPrintHelper
     {
-        private EmployeewsOfLocalPOS _cloudPosUnitofwork;
+        private RepositoryLocator _cloudPosUnitofwork;
         private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         public DateTime From { get; set; }
         public DateTime To { get; set; }
 
-        public EndOfDayPrintHelper(EmployeewsOfLocalPOS cloudPosUnitofwork)
+        public EndOfDayPrintHelper(RepositoryLocator cloudPosUnitofwork)
         {
             _cloudPosUnitofwork = cloudPosUnitofwork;
             From = DateTime.Now.Date;

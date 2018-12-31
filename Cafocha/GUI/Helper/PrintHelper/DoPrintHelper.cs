@@ -19,7 +19,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
         public static readonly int Receipt_Printing = 5;
         public static readonly int Eod_Printing = 3;
 
-        private readonly EmployeewsOfLocalPOS _unitofwork;
+        private readonly RepositoryLocator _unitofwork;
 
         private IPrintHelper ph;
         private int type;
@@ -30,7 +30,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
         private string _receptionPrinter;
         private bool isShowReview;
 
-        public DoPrintHelper(EmployeewsOfLocalPOS unitofwork, int printType)
+        public DoPrintHelper(RepositoryLocator unitofwork, int printType)
         {
             _unitofwork = unitofwork;
             type = printType;
@@ -53,7 +53,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             }
         }
 
-        public DoPrintHelper(EmployeewsOfLocalPOS unitofwork, int printType, OrderNote currentOrder)
+        public DoPrintHelper(RepositoryLocator unitofwork, int printType, OrderNote currentOrder)
         {
             _unitofwork = unitofwork;
             type = printType;

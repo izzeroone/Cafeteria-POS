@@ -10,10 +10,10 @@ namespace Cafocha.GUI.WareHouseWorkSpace
     /// </summary>
     public partial class IngredientPage : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private RepositoryLocator _unitofwork;
         
 
-        public IngredientPage(AdminwsOfCloudPOS unitofwork, List<Ingredient> IngdList)
+        public IngredientPage(RepositoryLocator unitofwork, List<Ingredient> IngdList)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

@@ -140,11 +140,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessContext\EmployeeWorkspace\OrderModule.cs" />
-    <Compile Include="BusinessContext\EmployeeWorkspace\ProductModule.cs" />
+    <Compile Include="BusinessContext\BusinessModuleLocator.cs" />
+    <Compile Include="BusinessContext\EmployeeWorkspace\TakingOrderModule.cs" />
+    <Compile Include="BusinessContext\User\ProductModule.cs" />
     <Compile Include="BusinessContext\LoginModule.cs" />
     <Compile Include="BusinessContext\MigrationConfiguration.cs" />
     <Compile Include="BusinessContext\User\AdminModule.cs" />
+    <Compile Include="BusinessContext\User\CustomerModule.cs" />
+    <Compile Include="BusinessContext\User\EmployeeModule.cs" />
+    <Compile Include="BusinessContext\User\ReceiptNoteModule.cs" />
+    <Compile Include="BusinessContext\WarehouseWorkspace\IngredientModule.cs" />
+    <Compile Include="BusinessContext\WarehouseWorkspace\OrderModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModule.cs" />
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
@@ -356,9 +362,7 @@
     <Compile Include="GUI\WPFMaterialDesign\UcPaletteSelector.xaml.cs">
       <DependentUpon>UcPaletteSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Repository\DAL\AdminwsOfCloudAPWH.cs" />
-    <Compile Include="Repository\DAL\AdminwsOfCloudPOS.cs" />
-    <Compile Include="Repository\DAL\EmployeewsOfLocalPOS.cs" />
+    <Compile Include="Repository\DAL\RepositoryLocator.cs" />
     <Compile Include="Repository\Generic\GenericRepository.cs" />
     <Compile Include="Repository\Interfaces\IAdminRepository.cs" />
     <Compile Include="Repository\Interfaces\ICustomerRepository.cs" />

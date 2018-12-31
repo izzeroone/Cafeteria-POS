@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper.Report;
 using Cafocha.Repository.DAL;
@@ -15,19 +18,16 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class OrderNotePage : Page
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         List<Product> _proList;
         List<OrderNote> _ordernotelist;
         List<OrderNoteDetail> _ordernotedetailslist;
-        public OrderNotePage(AdminwsOfCloudPOS unitofwork, AdminRe admin)
+        public OrderNotePage(BusinessModuleLocator businessModuleLocator, AdminRe admin)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            _ordernotelist = _unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer").ToList();
-            _ordernotelist = _ordernotelist.Where(x => x.Employee.Manager.Equals(admin.AdId)).ToList();
-            lvOrderNote.ItemsSource = _ordernotelist;
-            _ordernotedetailslist = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product").ToList();
-            List<OrderNoteDetail> _orderdetailsTempList = new List<OrderNoteDetail>();
+            _ordernotelist = _businessModuleLocator.OrderModule.getOrdernoteList().ToList();
+            List<OrderNoteDetail> orderdetailsTempList = new List<OrderNoteDetail>();
             foreach (var orderdetails in _ordernotedetailslist)
             {
                 bool found = false;
@@ -42,10 +42,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 if (found)
                 {
-                    _orderdetailsTempList.Add(orderdetails);
+                    orderdetailsTempList.Add(orderdetails);
                 }
             }
-            _ordernotedetailslist = _orderdetailsTempList;
+            _ordernotedetailslist = orderdetailsTempList;
             lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
 
             this.Loaded += OrderNotePage_Loaded;
@@ -53,7 +53,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void OrderNotePage_Loaded(object sender, RoutedEventArgs e)
         {
-            _proList = _unitofwork.ProductRepository.Get(x => x.Deleted == 0).ToList();
+            _proList = _businessModuleLocator.ProductModule.getAllProduct().ToList();
             initData();
         }
 
@@ -79,7 +79,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             OrderNote odn = lvOrderNote.SelectedItem as OrderNote;
             if(odn != null)
             {
-                lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId)).ToList();
+                lvOrderNoteDetails.ItemsSource = _businessModuleLocator.OrderModule.getOrderNoteDetail(odn.OrdernoteId);
             }
             else
             {
@@ -205,7 +205,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
+            var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _businessModuleLocator);
             optionDialog.Show();
         }
 

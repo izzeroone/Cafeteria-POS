@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -18,8 +20,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class AllEmployeeLogin : Window
     {
-        private EmployeewsOfLocalPOS _unitofwork;
-        private List<Employee> _employee;
+        internal EmployeeModule _employeeModule;
+        
         private EmpLoginList _emplog;
         MaterialDesignThemes.Wpf.Chip _cUser;
         private DispatcherTimer LoadForm;
@@ -27,10 +29,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private int _typeshow = 0; //1: login, 2: details, 3: logout, 4: start working
         private Window _main;
 
-        public AllEmployeeLogin(Window main, EmployeewsOfLocalPOS unitofwork, MaterialDesignThemes.Wpf.Chip cUser, int typeshow)
+        public AllEmployeeLogin(Window main, EmployeeModule employeeModule, MaterialDesignThemes.Wpf.Chip cUser, int typeshow)
         {
-            _unitofwork = unitofwork;
-            _employee = _unitofwork.EmployeeRepository.Get(x => x.Deleted == 0).ToList();
+            _employeeModule = employeeModule;
             _main = main;
 
             _cUser = cUser;
@@ -90,7 +91,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             btnAcceptStart.Visibility = Visibility.Collapsed;
             btnAcceptCancel.Visibility = Visibility.Collapsed;
 
-            foreach (var e in EmpLoginListData.emploglist)
+            foreach (var e in _employeeModule.Emploglist)
             {
                 e.EmpWH.EndTime = DateTime.Now;
                 int h = (e.EmpWH.EndTime - e.EmpWH.StartTime).Hours;
@@ -100,7 +101,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 e.TimePercent = (int)((((double)h) + (double)m / 60.0 + (double)s / 3600.0) / 24.0 * 100);
             }
 
-            lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+            lvLoginList.ItemsSource = _employeeModule.Emploglist;
 
             if(_typeshow == 1)//login
             {
@@ -165,7 +166,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                 int index = lvLoginList.ItemContainerGenerator.IndexFromContainer(dep);
 
-                EmpLoginList emp = EmpLoginListData.emploglist[index];
+                EmpLoginList emp = _employeeModule.Emploglist[index];
                 if (emp == null)
                 {
                     MessageBox.Show("Please choose employee to continue!");
@@ -212,7 +213,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
                 else if (_typeshow == 2)//view
                 {
-                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _unitofwork);
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _employeeModule);
                     ed.ShowDialog();
                     setControl(true);
                 }
@@ -357,7 +358,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         btnAcceptLogin.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
 
-                        lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                        lvLoginList.ItemsSource = _employeeModule.Emploglist;
                         lvLoginList.Items.Refresh();
 
                         setControl(true);
@@ -380,7 +381,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         return;
                     }
 
-                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _unitofwork);
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _employeeModule);
                     ed.ShowDialog();
 
                     setControl(true);
@@ -402,7 +403,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         btnAcceptLogout.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
 
-                        lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                        lvLoginList.ItemsSource = _employeeModule.Emploglist;
                         lvLoginList.Items.Refresh();
 
                         setControl(true);
@@ -447,7 +448,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 btnAcceptLogin.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
                 
-                lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                lvLoginList.ItemsSource = _employeeModule.Emploglist;
                 lvLoginList.Items.Refresh();
 
                 setControl(true);
@@ -483,7 +484,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 btnAcceptLogout.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
                 
-                lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                lvLoginList.ItemsSource = _employeeModule.Emploglist;
                 lvLoginList.Items.Refresh();
 
                 setControl(true);
@@ -521,7 +522,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _unitofwork);
+            EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _employeeModule);
             ed.ShowDialog();
 
             setControl(true);
@@ -546,11 +547,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             try
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     if (empout != null)
                     {
-                        if (EmpLoginListData.emploglist.Count == 1)
+                        if (_employeeModule.Emploglist.Count == 1)
                         {
                             var orderedTable = ((MainWindow) Window.GetWindow(this)).orderDetailsTemp;
                             if (orderedTable.Count != 0)
@@ -562,18 +563,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                         if ((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
                         {
-                            empout.EmpWH.EndTime = DateTime.Now;
-                            _unitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
-                            _unitofwork.Save();
 
-                            var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
-                            empout.EmpSal = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-                            empout.EmpSal.WorkHour += workH.Hours + (workH.Minutes / 60.0) + (workH.Seconds / 3600.0);
-                            empout.EmpSal.SalaryValue = (decimal) (empout.EmpSal.WorkHour * empout.Emp.HourWage);
-                            _unitofwork.SalaryNoteRepository.Update(empout.EmpSal);
-                            _unitofwork.Save();
+                            _employeeModule.insertWorkingHistory(empout);
 
-                            EmpLoginListData.emploglist.Remove(empout);
 
                             Dispatcher.Invoke(() =>
                             {
@@ -589,56 +581,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         }
                     }
 
-                    bool isFound = false;
-                    foreach (Employee emp in _employee)
-                    {
-                        if ((emp.Username.Equals(username) && (emp.DecryptedPass.Equals(pass)) || emp.DecryptedCode.Equals(code)))
-                        {
-                            var chemp = EmpLoginListData.emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
-                            if(chemp.Count != 0)
-                            {
-                                MessageBox.Show("This employee is already login!");
-                                return;
-                            }
+                    bool isFound = await _employeeModule.login(username, pass, code);
 
-                            try
-                            {
-                                SalaryNote empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-
-                                App.Current.Properties["EmpSN"] = empSalaryNote;
-                                WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
-                                App.Current.Properties["EmpWH"] = empWorkHistory;
-                            }
-                            catch (Exception ex)
-                            {
-                                SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
-                                _unitofwork.SalaryNoteRepository.Insert(empSalary);
-                                _unitofwork.Save();
-                                WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
-                                App.Current.Properties["EmpWH"] = empWorkHistory;
-                                App.Current.Properties["EmpSN"] = empSalary;
-                            }
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                EmpLoginListData.emploglist.Add(new EmpLoginList { Emp = emp, EmpSal = App.Current.Properties["EmpSN"] as SalaryNote, EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0 });
-                                checkEmployeeCount();
-                                setControl(true);
-                            });
-                            isFound = true;
-
-                            //end create
-
-                            break;
-                        }
-
-                    }
+     
+                    checkEmployeeCount();
 
                     if (!isFound)
                     {
                         MessageBox.Show("incorrect username or password");
                         return;
                     }
+
+                    setControl(true);
                 });
             }
             catch (Exception ex)
@@ -649,7 +603,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void checkEmployeeCount()
         {
-            if (EmpLoginListData.emploglist.Count == 0)
+            if (_employeeModule.Emploglist.Count == 0)
             {
 
                 var orderTemp = ((MainWindow)Window.GetWindow(this)).orderTemp;
@@ -677,14 +631,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
             else
             {
-                _cUser.Content = EmpLoginListData.emploglist.Count + " employee(s) available";
+                _cUser.Content = _employeeModule.Emploglist.Count + " employee(s) available";
                 if(App.Current.Properties["CurrentEmpWorking"] != null)
                 {
                     _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
                 }
             }
             
-            lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+            lvLoginList.ItemsSource = _employeeModule.Emploglist;
             lvLoginList.Items.Refresh();
         }
 
@@ -744,9 +698,5 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         }
     }
 
-    public class EmpLoginListData
-    {
-        public static List<EmpLoginList> emploglist = new List<EmpLoginList>();
-    }
 
 }

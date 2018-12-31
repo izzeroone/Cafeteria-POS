@@ -14,7 +14,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
     /// </summary>
     public class SalaryNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfCloudPOS unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreatePdfReport(RepositoryLocator unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -255,7 +255,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateDetailsPdfReport(AdminwsOfCloudPOS unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreateDetailsPdfReport(RepositoryLocator unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -429,7 +429,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateEntityPdfReport(AdminwsOfCloudPOS unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreateEntityPdfReport(RepositoryLocator unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -626,7 +626,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateMonthPdfReport(AdminwsOfCloudPOS unitofwork, string folderName)
+        public IPdfReportData CreateMonthPdfReport(RepositoryLocator unitofwork, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -859,13 +859,13 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateDayPdfReport(AdminwsOfCloudPOS unitofwork, string folderName)
+        public IPdfReportData CreateDayPdfReport(RepositoryLocator unitofwork, string folderName)
         {
             throw new NotImplementedException();
         }
 
 
-        public IPdfReportData CreateYearPdfReport(AdminwsOfCloudPOS unitofwork, string folderName)
+        public IPdfReportData CreateYearPdfReport(RepositoryLocator unitofwork, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {

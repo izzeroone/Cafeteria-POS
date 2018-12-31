@@ -17,7 +17,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
 
     public partial class WareHouseWindow : Window
     {
-        AdminwsOfCloudPOS _unitofwork;
+        RepositoryLocator _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private InputReceiptNote _inputReceipt;

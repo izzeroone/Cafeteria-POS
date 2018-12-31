@@ -79,7 +79,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         /// <param name="targetTable"></param>
         /// <param name="unitofwork"></param>
         /// <returns></returns>
-        public OrderForPrint GetAndConverOrderDetails(EmployeewsOfLocalPOS unitofwork, int printType)
+        public OrderForPrint GetAndConverOrderDetails(RepositoryLocator unitofwork, int printType)
         {
             // get OrderDetailsTemp data from target Table
             List<OrderDetailsTemp> targetOrderDetails = new List<OrderDetailsTemp>();
@@ -110,7 +110,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             return this;
         }
 
-        public OrderForPrint GetAndConverOrderDetails(OrderNote targetOrder, EmployeewsOfLocalPOS unitofwork)
+        public OrderForPrint GetAndConverOrderDetails(OrderNote targetOrder, RepositoryLocator unitofwork)
         {
 
             // convert

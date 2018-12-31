@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -12,12 +13,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeDetail : Window
     {
-        private EmployeewsOfLocalPOS _cloudPosUnitofwork;
+        internal EmployeeModule _employeeModule;
         Employee em;
 
-        public EmployeeDetail(string UserName, EmployeewsOfLocalPOS cloudPosUnitofwork)
+        public EmployeeDetail(string UserName, EmployeeModule employeeModule)
         {
-            _cloudPosUnitofwork = cloudPosUnitofwork;
+            _employeeModule = employeeModule;
             InitializeComponent();
             loadData(UserName);
             InitlsWh();
@@ -25,7 +26,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void loadData(string UserName)
         {
-            em = _cloudPosUnitofwork.EmployeeRepository.Get(e => e.Username.Equals(UserName)).First();
+            em = _employeeModule.getEmployee(UserName);
 
             this.EmployeeInfo.DataContext = em;
         }
@@ -33,7 +34,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void InitlsWh()
         {
             ShowWHData.showWHList.Clear();
-            var whListAll = _cloudPosUnitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year)).ToList();
+            var whListAll = _employeeModule.getWorkingHistoryOfEmployee(em, DateTime.Now.Month, DateTime.Now.Year);
             foreach (var i in whListAll)
             {
                 ShowWH newWH = new ShowWH();
@@ -77,7 +78,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeChangePass empPass = new EmployeeChangePass(_cloudPosUnitofwork, em);
+            EmployeeChangePass empPass = new EmployeeChangePass(_employeeModule, em);
             empPass.ShowDialog();
         }
     }

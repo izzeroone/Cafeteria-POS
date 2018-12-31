@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -12,15 +14,15 @@ namespace Cafocha.GUI.AdminWorkSpace
     
     public partial class AdminDetailWindow : Window
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        internal BusinessModuleLocator _businessModuleLocator;
         private AdminRe admin;
         private List<Employee> empwithad;
-        public AdminDetailWindow(AdminwsOfCloudPOS unitofwork, AdminRe ad)
+        public AdminDetailWindow(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
-            _unitofwork = unitofwork;
             InitializeComponent();
+            _businessModuleLocator = businessModuleLocator;
             admin = ad;
-            empwithad = _unitofwork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+            empwithad = _businessModuleLocator.EmployeeModule.getEmployeeWithAd(admin.AdId).ToList();
             lvDataEmployee.ItemsSource = empwithad;
             loadAdData();
         }
@@ -44,13 +46,12 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             admin.Name = namee;
             //admin.Employees.Clear();
-            _unitofwork.AdminreRepository.Update(admin);
-            _unitofwork.Save();
+            _businessModuleLocator.AdminModule.updateAdmin(admin);
         }
 
         private void btnChangePass_Click(object sender, RoutedEventArgs e)
         {
-            AdminChangePass adPass = new AdminChangePass(_unitofwork, admin);
+            AdminChangePass adPass = new AdminChangePass(_businessModuleLocator, admin);
             adPass.ShowDialog();
         }
     }

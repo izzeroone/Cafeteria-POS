@@ -16,9 +16,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
 public partial class UcMenu : UserControl
  {
-        private EmployeewsOfLocalPOS _unitofwork;
+        private RepositoryLocator _unitofwork;
         private ProductModule _productModule;
-        private OrderModule _orderModule;
+        private TakingOrderModule _takingOrderModule;
         public UcMenu()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ public partial class UcMenu : UserControl
         public void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
             this._productModule = ((MainWindow)Window.GetWindow(this))._productModule;
-            this._orderModule = ((MainWindow)Window.GetWindow(this))._orderModule;
+            this._takingOrderModule = ((MainWindow)Window.GetWindow(this)).takingOrderModule;
             if (IsRefreshMenu)
             {
                 try
@@ -84,12 +84,12 @@ public partial class UcMenu : UserControl
             if (item != null)
             {
 
-                _orderModule.addProductToOrder(it);
+                _takingOrderModule.addProductToOrder(it);
                 lbSelected.UnselectAll();
 
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _orderModule.OrderTemp);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork);
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = _orderModule.OrderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = _takingOrderModule.OrderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
         }

@@ -21,7 +21,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private static int FILL_BY_MONTH = 2;
 
 
-        private AdminwsOfCloudPOS _unitofwork;
+        private RepositoryLocator _unitofwork;
 
         public Func<ChartPoint, string> PointLabel { get; set; }
         public List<decimal> PriceList;
@@ -42,7 +42,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
 
-        public HomePage(AdminwsOfCloudPOS unitofwork)
+        public HomePage(RepositoryLocator unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;

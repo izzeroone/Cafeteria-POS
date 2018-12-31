@@ -7,6 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -17,24 +20,26 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class ProductUpdatePage : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         List<Ingredient> _igreList;
         List<ProductDetail> _proDe;
+        private List<ProductModule.PDTemp> _pdtList;
 
         string browseImagePath = "";
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
         Product _currentProduct = new Product();
-        public ProductUpdatePage(AdminwsOfCloudPOS unitofwork, Product pro)
+        public ProductUpdatePage(BusinessModuleLocator businessModuleLocator, Product pro)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _currentProduct = pro;
-            _proDe = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(_currentProduct.ProductId)).ToList();
+            _proDe = _businessModuleLocator.ProductModule.getAllProductDetails(_currentProduct.ProductId).ToList();
+            _pdtList = _businessModuleLocator.ProductModule.PdtList;
             InitializeComponent();
 
             this.Loaded += ProductCreatorPage_Loaded;
 
-            PDTempData.pdtList.Clear();
+            _pdtList.Clear();
 
             initComboBox();
             initDataCurrentProduct();
@@ -51,25 +56,25 @@ namespace Cafocha.GUI.AdminWorkSpace
             txtSusggestPrice.Text = String.Format("{0:0.000}", 0);
             txtPrice.Text = String.Format("{0:0.000}", _currentProduct.Price);
 
-            var ing = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            var ing = _businessModuleLocator.IngredientModule.getAllIngredients();
 
             foreach (var pd in _proDe)
             {
-                var curing = ing.Where(x => x.IgdId.Equals(pd.IgdId)).FirstOrDefault();
+                var curing = ing.FirstOrDefault(x => x.IgdId.Equals(pd.IgdId));
                 if (curing != null)
                 {
-                    PDTempData.pdtList.Add(new PDTemp { ProDe = pd, Ingre = curing });
+                    _pdtList.Add(new ProductModule.PDTemp { ProDe = pd, Ingre = curing });
                 }
             }
 
-            lvDetails.ItemsSource = PDTempData.pdtList;
+            lvDetails.ItemsSource = _pdtList;
             CalSuggestPrice();
         }
 
         public bool isRaiseIngreShowEvent = false;
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _igreList = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            _igreList = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
             lvAvaibleIngredient.ItemsSource = _igreList;
         }
 
@@ -104,9 +109,9 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            if (PDTempData.pdtList.Count != 0)
+            if (_pdtList.Count != 0)
             {
-                var igre = PDTempData.pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
+                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
                 if (igre != null)
                 {
                     MessageBox.Show("This Ingredient is already exist in Product Details List! Please choose another!");
@@ -125,8 +130,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Add(newPD);
-            PDTempData.pdtList.Add(new PDTemp { ProDe = newPD, Ingre = ingre });
-            lvDetails.ItemsSource = PDTempData.pdtList;
+            _pdtList.Add(new ProductModule.PDTemp { ProDe = newPD, Ingre = ingre });
+            lvDetails.ItemsSource = _pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
         }
@@ -148,10 +153,10 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
 
             isRaiseEvent = true;
-            //_currentProduct.ProductDetails.Remove(PDTempData.pdtList[index].ProDe);
-            PDTempData.pdtList.RemoveAt(index);
+            //_currentProduct.ProductDetails.Remove(_pdtList[index].ProDe);
+            _pdtList.RemoveAt(index);
             CalSuggestPrice();
-            lvDetails.ItemsSource = PDTempData.pdtList;
+            lvDetails.ItemsSource = _pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
         }
@@ -186,11 +191,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 if (cboStatus.SelectedItem.Equals("Time"))
                 {
                     _currentProduct.ProductDetails.ToList()[index].Quan = 1;
-                    PDTempData.pdtList[index].ProDe.Quan = 1;
+                    _pdtList[index].ProDe.Quan = 1;
                 }
 
                 //_currentProduct.ProductDetails.ToList()[index].UnitUse = cbo.SelectedItem.ToString();
-                PDTempData.pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
+                _pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
                 CalSuggestPrice();
                 isRaiseEvent = false;
             }
@@ -222,7 +227,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 isRaiseEvent = true;
                 //_currentProduct.ProductDetails.ToList()[index].Quan = int.Parse((sender as TextBox).Text.Trim());
-                PDTempData.pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
+                _pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
                 CalSuggestPrice();
                 isRaiseEvent = false;
             }
@@ -280,9 +285,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             try
             {
-                if (PDTempData.pdtList.Count() != 0)
+                if (_pdtList.Count() != 0)
                 {
-                    foreach (var pd in PDTempData.pdtList)
+                    foreach (var pd in _pdtList)
                     {
                         if (pd.ProDe.UnitUse.Equals("") || pd.ProDe.UnitUse == null || pd.ProDe.Quan < 1)
                         {
@@ -355,25 +360,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     MessageBox.Show(ex.Message);
                 }
 
-                _unitofwork.ProductRepository.Update(_currentProduct);
-                _unitofwork.Save();
-
-                if (PDTempData.pdtList.Count() != 0)
-                {
-                    foreach (var pd in _proDe)
-                    {
-                        _unitofwork.ProductDetailsRepository.Delete(pd);
-                    }
-                    _unitofwork.Save();
-
-                    foreach (var pd in PDTempData.pdtList)
-                    {
-                        pd.ProDe.ProductId = _currentProduct.ProductId;
-                        pd.ProDe.IgdId = pd.Ingre.IgdId;
-                        _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
-                        _unitofwork.Save();
-                    }
-                }
+                _businessModuleLocator.ProductModule.updateProduct(_currentProduct, _proDe, _pdtList);
 
                 MessageBox.Show("Update product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
                 ClearAllData();
@@ -420,14 +407,14 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvDetails.Items.Refresh();
             lvAvaibleIngredient.UnselectAll();
             lvAvaibleIngredient.Items.Refresh();
-            PDTempData.pdtList.Clear();
+            _pdtList.Clear();
             isRaiseEvent = false;
         }
 
         private void CalSuggestPrice()
         {
             decimal sugprice = 0;
-            foreach (var pd in PDTempData.pdtList)
+            foreach (var pd in _pdtList)
             {
                 sugprice += ((decimal)(pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice);
             }

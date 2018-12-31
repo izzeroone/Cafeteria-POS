@@ -16,7 +16,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private RepositoryLocator _unitofwork;
         private List<Ingredient> IngdList;
         internal ReceiptNote CurrentReceipt;
         internal List<ReceiptNoteDetail> ReceiptDetailsList;
@@ -24,7 +24,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
         private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
 
 
-        public InputReceiptNote(AdminwsOfCloudPOS unitofwork, List<Ingredient> ingdList)
+        public InputReceiptNote(RepositoryLocator unitofwork, List<Ingredient> ingdList)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

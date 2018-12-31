@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Cafocha.BusinessContext;
 using Cafocha.GUI.Helper.PrintHelper.Report;
 using Cafocha.Repository.DAL;
 
@@ -13,14 +14,14 @@ namespace Cafocha.GUI.AdminWorkSpace
         private DateTime startTime;
         private DateTime endTime;
         private IListPdfReport _reportHelper;
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private static string folderPath = AppPath.ApplicationPath + "\\SerializedData";
 
-        public ReportOptionDialog(IListPdfReport reportHelper, AdminwsOfCloudPOS unitofwork)
+        public ReportOptionDialog(IListPdfReport reportHelper, BusinessModuleLocator businessModuleLocator)
         {
             InitializeComponent();
 
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _reportHelper = reportHelper;
 
             DpFrom.SelectedDate = DateTime.Now;
@@ -41,17 +42,17 @@ namespace Cafocha.GUI.AdminWorkSpace
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
                     {
-                        _reportHelper.CreatePdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreatePdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
                     }
                     else if (ChbDetailsReport.IsChecked == true)
                     {
-                        _reportHelper.CreateDetailsPdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreateDetailsPdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
                     }
                     else
                     {
-                        _reportHelper.CreateEntityPdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreateEntityPdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
                     }
 
@@ -79,7 +80,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
                     {
-                        _reportHelper.CreateMonthPdfReport(_unitofwork, folderPath);
+                        _reportHelper.CreateMonthPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
                     }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
@@ -106,7 +107,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
                     {
-                        _reportHelper.CreateDayPdfReport(_unitofwork, folderPath);
+                        _reportHelper.CreateDayPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
                     }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
@@ -133,7 +134,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
                     {
-                        _reportHelper.CreateYearPdfReport(_unitofwork, folderPath);
+                        _reportHelper.CreateYearPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
                     }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);

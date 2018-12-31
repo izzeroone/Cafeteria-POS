@@ -10,7 +10,7 @@ namespace Cafocha.Repository.DAL
     /// All that the class needs is a Save method and a property for each repository. 
     /// Each repository property returns a repository instance that has been instantiated using the same database context instance as the other repository instances.
     /// </summary>
-    public class EmployeewsOfLocalPOS : IDisposable
+    public class RepositoryLocator : IDisposable
     {
         private LocalContext _context;
 
@@ -21,20 +21,29 @@ namespace Cafocha.Repository.DAL
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
+        private GenericRepository<ProductDetail> _productdetailsRepository;
         private GenericRepository<SalaryNote> _salarynoteRepository;
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<OrderNote> _orderRepository;
         private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
         private GenericRepository<ReceiptNote> _receiptNoteRepository;
+        private GenericRepository<ReceiptNoteDetail> _receiptnotedetailsRepository;
         private GenericRepository<WareHouse> _wareHouseRepository;
+        private GenericRepository<ApWareHouse> _apwareHouseRepository;
+        private GenericRepository<Stock> _stockRepository;
+        private GenericRepository<StockIn> _stockInRepository;
+        private GenericRepository<StockInDetail> _stockInDetailsRepository;
+        private GenericRepository<StockOut> _stockOutRepository;
+        private GenericRepository<StockOutDetail> _stockOutDetailsRepository;
 
 
-        public EmployeewsOfLocalPOS()
+
+        public RepositoryLocator()
         {
             _context = new LocalContext();
         }
 
-        public EmployeewsOfLocalPOS(string connectionString)
+        public RepositoryLocator(string connectionString)
         {
             _context = new LocalContext(connectionString);
         }
@@ -77,6 +86,19 @@ namespace Cafocha.Repository.DAL
                 }
 
                 return _receiptNoteRepository;
+            }
+        }
+
+        public GenericRepository<ReceiptNoteDetail> ReceiptNoteDsetailsRepository
+        {
+            get
+            {
+                if (_receiptnotedetailsRepository == null)
+                {
+                    _receiptnotedetailsRepository = new GenericRepository<ReceiptNoteDetail>(_context);
+                }
+
+                return _receiptnotedetailsRepository;
             }
         }
 
@@ -159,6 +181,19 @@ namespace Cafocha.Repository.DAL
             }
         }
 
+        public GenericRepository<ProductDetail> ProductDetailsRepository
+        {
+            get
+            {
+                if (_productdetailsRepository == null)
+                {
+                    _productdetailsRepository = new GenericRepository<ProductDetail>(_context);
+                }
+
+                return _productdetailsRepository;
+            }
+        }
+
         public GenericRepository<OrderNote> OrderRepository
         {
             get
@@ -198,6 +233,72 @@ namespace Cafocha.Repository.DAL
             }
         }
 
+        public GenericRepository<ApWareHouse> ApWareHouseRepository
+        {
+            get
+            {
+                if (_apwareHouseRepository == null)
+                {
+                    _apwareHouseRepository = new GenericRepository<ApWareHouse>(_context);
+                }
+                return _apwareHouseRepository;
+            }
+        }
+        public GenericRepository<Stock> StockRepository
+        {
+            get
+            {
+                if (_stockRepository == null)
+                {
+                    _stockRepository = new GenericRepository<Stock>(_context);
+                }
+                return _stockRepository;
+            }
+        }
+        public GenericRepository<StockIn> StockInRepository
+        {
+            get
+            {
+                if (_stockInRepository == null)
+                {
+                    _stockInRepository = new GenericRepository<StockIn>(_context);
+                }
+                return _stockInRepository;
+            }
+        }
+        public GenericRepository<StockInDetail> StockInDetailsRepository
+        {
+            get
+            {
+                if (_stockInDetailsRepository == null)
+                {
+                    _stockInDetailsRepository = new GenericRepository<StockInDetail>(_context);
+                }
+                return _stockInDetailsRepository;
+            }
+        }
+        public GenericRepository<StockOut> StockOutRepository
+        {
+            get
+            {
+                if (_stockOutRepository == null)
+                {
+                    _stockOutRepository = new GenericRepository<StockOut>(_context);
+                }
+                return _stockOutRepository;
+            }
+        }
+        public GenericRepository<StockOutDetail> StockOutDetailsRepository
+        {
+            get
+            {
+                if (_stockOutDetailsRepository == null)
+                {
+                    _stockOutDetailsRepository = new GenericRepository<StockOutDetail>(_context);
+                }
+                return _stockOutDetailsRepository;
+            }
+        }
         public void Save()
         {
             _context.SaveChanges();

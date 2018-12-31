@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using LiveCharts;
@@ -14,7 +15,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class statisticsFoodPage : Page
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
 
         private ChartValues<int> Values;
         public SeriesCollection SeriesCollection { get; set; }
@@ -25,10 +26,10 @@ namespace Cafocha.GUI.AdminWorkSpace
        
 
         
-        public statisticsFoodPage(AdminwsOfCloudPOS unitofwork)
+        public statisticsFoodPage(BusinessModuleLocator businessModuleLocator)
         {
             // init data
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             Values = new ChartValues<int>();
             SeriesCollection = new SeriesCollection
             {
@@ -56,19 +57,19 @@ namespace Cafocha.GUI.AdminWorkSpace
             List<OrderNoteDetail> orderDetailsWithTime = new List<OrderNoteDetail>();
             if (isfilter)
             {
-                orderDetailsWithTime = _unitofwork.OrderNoteDetailsRepository.Get(x =>
+                orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get(x =>
                     x.OrderNote.Ordertime.Year == DpTimeFilter.SelectedDate.Value.Year
                     && x.OrderNote.Ordertime.Month == DpTimeFilter.SelectedDate.Value.Month).ToList();
             }
             else
             {
-                orderDetailsWithTime = _unitofwork.OrderNoteDetailsRepository.Get().ToList();
+                orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get().ToList();
             }
             
 
             // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
             int count = 0;
-            foreach (var item in _unitofwork.ProductRepository.Get())
+            foreach (var item in _businessModuleLocator.RepositoryLocator.ProductRepository.Get())
             {
                 foreach (var item2 in orderDetailsWithTime.Where(o => o.ProductId.Equals(item.ProductId)))
                 {

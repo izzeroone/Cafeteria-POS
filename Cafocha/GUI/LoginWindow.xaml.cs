@@ -13,7 +13,7 @@ namespace Cafocha.GUI
     /// </summary>
     public partial class LoginWindow : Window
     {
-        internal EmployeewsOfLocalPOS _unitofwork;
+        internal RepositoryLocator _unitofwork;
         private DispatcherTimer LoadCodeLogin;
 
         private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -23,14 +23,14 @@ namespace Cafocha.GUI
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)
             //{
-            //    _unitofwork = new EmployeewsOfLocalPOS(config[0], config[1], config[2], config[3]);
+            //    _unitofwork = new RepositoryLocator(config[0], config[1], config[2], config[3]);
             //}
             //else
             //{
-            //    _unitofwork = new EmployeewsOfLocalPOS();
+            //    _unitofwork = new RepositoryLocator();
             //}
 
-            _unitofwork = new EmployeewsOfLocalPOS();
+            _unitofwork = new RepositoryLocator();
             InitializeComponent();
 
 //            txtUsername.Focus();

@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -9,13 +11,13 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class AdminChangePass : Window
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private AdminRe _admin;
 
-        public AdminChangePass(AdminwsOfCloudPOS unitofwork, AdminRe admin)
+        public AdminChangePass(BusinessModuleLocator businessModuleLocator, AdminRe admin)
         {
-            _unitofwork = unitofwork;
             InitializeComponent();
+            _businessModuleLocator = businessModuleLocator;
             _admin = admin;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;
@@ -48,8 +50,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             _admin.Pass = newPass;
-            _unitofwork.AdminreRepository.Update(_admin);
-            _unitofwork.Save();
+            _businessModuleLocator.AdminModule.updateAdmin(_admin);
             MessageBox.Show("Your password was changed!");
             this.Close();
         }

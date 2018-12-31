@@ -12,16 +12,17 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
     public class WarehouseModule
     {
         private List<Stock> _stockList;
-        AdminwsOfCloudAPWH _unitofwork;
+        RepositoryLocator _unitofworkWH;
+
 
         public WarehouseModule()
         {
-            _unitofwork = new AdminwsOfCloudAPWH();
+            _unitofworkWH = new RepositoryLocator();
         }
 
-        public WarehouseModule(AdminwsOfCloudAPWH unitofwork)
+        public WarehouseModule(RepositoryLocator unitofworkWh)
         {
-            _unitofwork = unitofwork;
+            _unitofworkWH = unitofworkWh;
         }
 
         public List<Stock>StockList
@@ -32,13 +33,13 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 
         public void loadStock()
         {
-            _unitofwork.StockRepository
+            _unitofworkWH.StockRepository
                 .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
         }
 
         public void updateStock()
         {
-            foreach (var stock in _unitofwork.StockRepository.Get(includeProperties: "APWareHouse"))
+            foreach (var stock in _unitofworkWH.StockRepository.Get(includeProperties: "APWareHouse"))
             {
                 if (stock.Deleted == 1)
                 {
@@ -72,26 +73,27 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         public void deleteStock(Stock stock)
         {
             stock.Deleted = 1;
-            _unitofwork.StockRepository.Update(stock);
-            _unitofwork.Save();
+            _unitofworkWH.StockRepository.Update(stock);
+            _unitofworkWH.Save();
         }
 
         public void insertWarehouse(ApWareHouse apWareHouse)
         {
-            _unitofwork.ApWareHouseRepository.Insert(apWareHouse);
-            _unitofwork.Save();
+            _unitofworkWH.ApWareHouseRepository.Insert(apWareHouse);
+            _unitofworkWH.Save();
         }
+
 
         public void insertStock(Stock stock)
         {
-            _unitofwork.StockRepository.Insert(stock);
-            _unitofwork.Save();
+            _unitofworkWH.StockRepository.Insert(stock);
+            _unitofworkWH.Save();
         }
 
         public void updateStock(Stock stock)
         {
-            _unitofwork.StockRepository.Update(stock);
-            _unitofwork.Save();
+            _unitofworkWH.StockRepository.Update(stock);
+            _unitofworkWH.Save();
         }
 
         private void UpdateAPWareHouseContain(StockIn stockIn)
@@ -101,11 +103,11 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
                 if (stock != null)
                 {
-                    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+                    ApWareHouse wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
                         wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
-                        _unitofwork.ApWareHouseRepository.Update(wareHouse);
+                        _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }
             }
@@ -118,11 +120,11 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StockId));
                 if (stock != null)
                 {
-                    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+                    ApWareHouse wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
                         wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.UnitOut);
-                        _unitofwork.ApWareHouseRepository.Update(wareHouse);
+                        _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }
             }
@@ -131,37 +133,37 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         public void addStockIn(StockIn stockIn)
         {
             stockIn.Intime = DateTime.Now;
-            stockIn.SiId = _unitofwork.StockInRepository.AutoGeneteId_DBAsowell(stockIn).SiId;
+            stockIn.SiId = _unitofworkWH.StockInRepository.AutoGeneteId_DBAsowell(stockIn).SiId;
             foreach (var stockInDetail in stockIn.StockInDetails)
             {
                 stockInDetail.SiId = stockIn.SiId;
             }
-            _unitofwork.StockInRepository.Insert(stockIn);
+            _unitofworkWH.StockInRepository.Insert(stockIn);
 
             //ToDo: Update the contain value in Warehouse database
             UpdateAPWareHouseContain(stockIn);
 
-            _unitofwork.Save();
+            _unitofworkWH.Save();
         }
 
         public void addStockOut(StockOut stockOut)
         {
             stockOut.OutTime = DateTime.Now;
-            stockOut.StockoutId = _unitofwork.StockOutRepository.AutoGeneteId_DBAsowell(stockOut).StockoutId;
+            stockOut.StockoutId = _unitofworkWH.StockOutRepository.AutoGeneteId_DBAsowell(stockOut).StockoutId;
             foreach (var stockInDetail in stockOut.StockOutDetails)
             {
                 stockInDetail.StockoutId = stockOut.StockoutId;
             }
-            _unitofwork.StockOutRepository.Insert(stockOut);
+            _unitofworkWH.StockOutRepository.Insert(stockOut);
 
             //ToDo: Update the contain value in Warehouse database
-            UpdateAPWareHouseContain(stockOut)();
+            UpdateAPWareHouseContain(stockOut);
 
-            _unitofwork.Save();
+            _unitofworkWH.Save();
         }
         public ApWareHouse getApWareHouse(string id)
         {
-           return _unitofwork.ApWareHouseRepository.GetById(id);
+           return _unitofworkWH.ApWareHouseRepository.GetById(id);
         }
     }
 }

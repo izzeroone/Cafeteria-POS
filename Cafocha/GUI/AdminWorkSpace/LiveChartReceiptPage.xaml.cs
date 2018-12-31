@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using LiveCharts;
@@ -15,14 +16,14 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class LiveChartReceiptPage : Page
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private ChartValues<decimal> Average1;
         private ChartValues<decimal> Average2;
         private ChartValues<decimal> ValueExpense;
         private ChartValues<decimal> ValueRevenue;
-        public LiveChartReceiptPage(AdminwsOfCloudPOS unitofwork)
+        public LiveChartReceiptPage(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             Loaded += LiveChartReceiptPage_Load;
 
@@ -67,7 +68,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             Average2.Clear();
             decimal totalReceipt = 0;
             decimal totalOrder = 0;
-            var receiptList = _unitofwork.ReceiptNoteRepository.Get();
+            var receiptList = _businessModuleLocator.RepositoryLocator.ReceiptNoteRepository.Get();
             decimal AverageReceipt = 0;
             if (receiptList != null && receiptList.Any())
             {
@@ -78,7 +79,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 AverageReceipt = totalReceipt / (receiptList.Count());
             }
 
-            var OrderList = _unitofwork.OrderRepository.Get();
+            var OrderList = _businessModuleLocator.RepositoryLocator.OrderRepository.Get();
             decimal AveragOrder = 0;
             if (OrderList != null && OrderList.Any())
             {
@@ -118,11 +119,11 @@ namespace Cafocha.GUI.AdminWorkSpace
             Average2.Add(AveragOrder);
 
 
-            loadDataExpense(_unitofwork, ValueExpense);
-            loadDataRevenue(_unitofwork, ValueRevenue);
+            loadDataExpense(_businessModuleLocator.RepositoryLocator, ValueExpense);
+            loadDataRevenue(_businessModuleLocator.RepositoryLocator, ValueRevenue);
         }
 
-        private void loadDataExpense(AdminwsOfCloudPOS unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataExpense(RepositoryLocator unitofwork, ChartValues<decimal> ValueExpense)
         {
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;
@@ -151,7 +152,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var valueM12 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 12);
             FindValueInMonthReceiptNote(ValueExpense, valueM1, totalMonthAmount1, valueM2, totalMonthAmount2, valueM3, totalMonthAmount3, valueM4, totalMonthAmount4, valueM5, totalMonthAmount5, valueM6, totalMonthAmount6, valueM7, totalMonthAmount7, valueM8, totalMonthAmount8, valueM9, totalMonthAmount9, valueM10, totalMonthAmount10, valueM11, totalMonthAmount11, valueM12, totalMonthAmount12);
         }
-        private void loadDataRevenue(AdminwsOfCloudPOS unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataRevenue(RepositoryLocator unitofwork, ChartValues<decimal> ValueExpense)
         {
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;

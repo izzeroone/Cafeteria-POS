@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper.Report;
 using Cafocha.Repository.DAL;
@@ -17,15 +18,15 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class SalaryPage : Page
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         IEnumerable<SalaryNote> SalList;
         IEnumerable<WorkingHistory> WhList;
         private AdminRe admin;
 
-        public SalaryPage(AdminwsOfCloudPOS unitofwork, AdminRe curAdmin)
+        public SalaryPage(BusinessModuleLocator businessModuleLocator, AdminRe curAdmin)
         {
             InitializeComponent();
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             admin = curAdmin;
 
             Loaded += SalaryPage_Loaded;
@@ -33,8 +34,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SalaryPage_Loaded(object sender, RoutedEventArgs args)
         {
-            SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
-            WhList = _unitofwork.WorkingHistoryRepository.Get(includeProperties: "Employee").Where(x => x.Employee.Manager.Equals(admin.AdId));
+            SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
+            WhList = _businessModuleLocator.RepositoryLocator.WorkingHistoryRepository.Get(includeProperties: "Employee").Where(x => x.Employee.Manager.Equals(admin.AdId));
             lvSalary.ItemsSource = SalList;
             lvWokingHistory.ItemsSource = WhList;
             initMonthYear();
@@ -48,7 +49,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboYear.Items.Add("--");
             cboYear.Items.Add(year);
 
-            var SalList = _unitofwork.SalaryNoteRepository.Get();
+            var SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get();
             foreach (var s in SalList)
             {
                 if (s.ForYear != year)
@@ -93,7 +94,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             else
             {
-                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
+                SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
         }
@@ -109,7 +110,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             else
             {
-                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
+                SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
         }
@@ -229,7 +230,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            var optionDialog = new ReportSalaryOptionDialog(new SalaryNoteReport(), _unitofwork);
+            var optionDialog = new ReportSalaryOptionDialog(new SalaryNoteReport(), _businessModuleLocator);
             optionDialog.Show();
         }
     }

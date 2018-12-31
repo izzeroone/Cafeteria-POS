@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -10,12 +11,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeChangePass : Window
     {
-        private EmployeewsOfLocalPOS _cloudPosUnitofwork;
+        private EmployeeModule _employeeModule;
         private Employee _emp;
 
-        public EmployeeChangePass(EmployeewsOfLocalPOS cloudPosUnitofwork, Employee emp)
+        public EmployeeChangePass(EmployeeModule employeeModule, Employee emp)
         {
-            _cloudPosUnitofwork = cloudPosUnitofwork;
+            _employeeModule = employeeModule;
             InitializeComponent();
             _emp = emp;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -48,15 +49,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            _emp.Pass = newPass;
-            _cloudPosUnitofwork.EmployeeRepository.Update(_emp);
-            _cloudPosUnitofwork.Save();
-
-            var emplog = EmpLoginListData.emploglist.Where(x => x.Emp.Username.Equals(_emp.Username)).First();
-            if(emplog != null)
-            {
-                emplog.Emp.Pass = newPass;
-            }
+            _employeeModule.updateEmployeePassword(_emp, newPass);
 
             MessageBox.Show("Your password was changed!");
             this.Close();

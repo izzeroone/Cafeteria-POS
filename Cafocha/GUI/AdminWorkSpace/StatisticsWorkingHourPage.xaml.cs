@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using LiveCharts;
@@ -18,16 +19,16 @@ namespace Cafocha.GUI.AdminWorkSpace
         
         public SeriesCollection SeriesCollection { get; set; }
         private ChartValues<double> Values;
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         public Func<double, string> Formatter { get; set; }
         public Dictionary<string, double> WHList;
         public List<string> Labels { get; set; }
         private AdminRe curAdmin;
 
 
-        public StatisticsWorkingHourPage(AdminwsOfCloudPOS unitofwork)
+        public StatisticsWorkingHourPage(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork =unitofwork ;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             curAdmin = POS.App.Current.Properties["AdLogin"] as AdminRe;
@@ -56,19 +57,19 @@ namespace Cafocha.GUI.AdminWorkSpace
             List<SalaryNote> SalaryDetailsWithTime = new List<SalaryNote>();
             if (isfilter)
             {
-                SalaryDetailsWithTime = _unitofwork.SalaryNoteRepository.Get(x =>
+                SalaryDetailsWithTime = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(x =>
                     x.ForYear == DpTimeFilter.SelectedDate.Value.Year
                     && x.ForMonth == DpTimeFilter.SelectedDate.Value.Month).ToList();
             }
             else
             {
-                SalaryDetailsWithTime = _unitofwork.SalaryNoteRepository.Get().ToList();
+                SalaryDetailsWithTime = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get().ToList();
             }
 
 
             // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
             double count = 0;
-            foreach (var item in _unitofwork.EmployeeRepository.Get(x => x.Deleted == 0 && x.Manager.Equals(curAdmin.AdId)))
+            foreach (var item in _businessModuleLocator.RepositoryLocator.EmployeeRepository.Get(x => x.Deleted == 0 && x.Manager.Equals(curAdmin.AdId)))
             {
                 foreach (var item2 in SalaryDetailsWithTime.Where(o => o.EmpId.Equals(item.EmpId)))
                 {

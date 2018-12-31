@@ -6,6 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.IO;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using Microsoft.Win32;
@@ -17,16 +20,18 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         List<Ingredient> _igreList;
+        private List<ProductModule.PDTemp> _pdtList;
 
         string browseImagePath = "";
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
         Product _currentProduct = new Product();
-        public ProductCreatorPage(AdminwsOfCloudPOS unitofwork)
+        public ProductCreatorPage(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
+            _pdtList = _businessModuleLocator.ProductModule.PdtList;
             InitializeComponent();
 
             this.Loaded += ProductCreatorPage_Loaded;
@@ -39,10 +44,10 @@ namespace Cafocha.GUI.AdminWorkSpace
         public bool isRaiseIngreShowEvent = false;
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _igreList = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            _igreList = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
             lvAvaibleIngredient.ItemsSource = _igreList;
 
-            PDTempData.pdtList.Clear();
+            _pdtList.Clear();
         }
 
         private void initComboBox()
@@ -76,9 +81,9 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            if (PDTempData.pdtList.Count != 0)
+            if (_pdtList.Count != 0)
             {
-                var igre = PDTempData.pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
+                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
                 if (igre != null)
                 {
                     MessageBox.Show("This Ingredient is already exist in Product Details List! Please choose another!");
@@ -97,8 +102,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Add(newPD);
-            PDTempData.pdtList.Add(new PDTemp { ProDe = newPD, Ingre = ingre });
-            lvDetails.ItemsSource = PDTempData.pdtList;
+            _pdtList.Add(new ProductModule.PDTemp { ProDe = newPD, Ingre = ingre });
+            lvDetails.ItemsSource = _pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
         }
@@ -121,9 +126,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Remove(PDTempData.pdtList[index].ProDe);
-            PDTempData.pdtList.RemoveAt(index);
+            _pdtList.RemoveAt(index);
             CalSuggestPrice();
-            lvDetails.ItemsSource = PDTempData.pdtList;
+            lvDetails.ItemsSource = _pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
         }
@@ -158,11 +163,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 if (cboStatus.SelectedItem.Equals("Time"))
                 {
                     _currentProduct.ProductDetails.ToList()[index].Quan = 1;
-                    PDTempData.pdtList[index].ProDe.Quan = 1;
+                    _pdtList[index].ProDe.Quan = 1;
                 }
 
                 //_currentProduct.ProductDetails.ToList()[index].UnitUse = cbo.SelectedItem.ToString();
-                PDTempData.pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
+                _pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
                 CalSuggestPrice();
                 isRaiseEvent = false;
             }
@@ -194,7 +199,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 isRaiseEvent = true;
                 //_currentProduct.ProductDetails.ToList()[index].Quan = int.Parse((sender as TextBox).Text.Trim());
-                PDTempData.pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
+                _pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
                 CalSuggestPrice();
                 isRaiseEvent = false;
             }
@@ -252,9 +257,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             try
             {
-                if (PDTempData.pdtList.Count() != 0)
+                if (_pdtList.Count() != 0)
                 {
-                    foreach (var pd in PDTempData.pdtList)
+                    foreach (var pd in _pdtList)
                     {
                         if (pd.ProDe.UnitUse.Equals("") || pd.ProDe.UnitUse == null || pd.ProDe.Quan < 1)
                         {
@@ -356,19 +361,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     MessageBox.Show(ex.Message);
                 }
 
-                _currentProduct.ProductId = _unitofwork.ProductRepository.AutoGeneteId_DBAsowell(_currentProduct).ProductId;
-                _unitofwork.ProductRepository.Insert(_currentProduct);
-                _unitofwork.Save();
-
-                if (PDTempData.pdtList.Count() != 0)
-                {
-                    foreach (var pd in PDTempData.pdtList)
-                    {
-                        pd.ProDe.ProductId = _currentProduct.ProductId;
-                        _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
-                        _unitofwork.Save();
-                    }
-                }
+                _businessModuleLocator.ProductModule.insertProduct(_currentProduct, _pdtList);
 
                 MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
                 ClearAllData();
@@ -415,14 +408,14 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvDetails.Items.Refresh();
             lvAvaibleIngredient.UnselectAll();
             lvAvaibleIngredient.Items.Refresh();
-            PDTempData.pdtList.Clear();
+            _pdtList.Clear();
             isRaiseEvent = false;
         }
 
         private void CalSuggestPrice()
         {
             decimal sugprice = 0;
-            foreach (var pd in PDTempData.pdtList)
+            foreach (var pd in _pdtList)
             {
                 sugprice += ((decimal)(pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice);
             }
@@ -431,42 +424,4 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
     }
-
-    public class PDTemp
-    {
-        private ProductDetail _pd;
-        private Ingredient _ingre;
-
-        public ProductDetail ProDe
-        {
-            get { return _pd; }
-            set
-            {
-                _pd = value;
-            }
-        }
-
-        public Ingredient Ingre
-        {
-            get { return _ingre; }
-            set
-            {
-                _ingre = value;
-            }
-        }
-
-        public List<string> UnitUseT
-        {
-            get
-            {
-                return new List<string> { "", "g", "ml" };
-            }
-        }
-    }
-
-    public class PDTempData
-    {
-        public static List<PDTemp> pdtList = new List<PDTemp>();
-    }
-
 }

@@ -10,20 +10,36 @@ namespace Cafocha.BusinessContext.User
 {
     public class AdminModule
     {
-        AdminwsOfCloudAPWH _unitofwork;
-
+        RepositoryLocator _unitofwork;
+        
         public AdminModule()
         {
         }
 
-        public AdminModule(AdminwsOfCloudAPWH unitofwork)
+        public AdminModule(RepositoryLocator unitofwork)
         {
             _unitofwork = unitofwork;
         }
 
+        public AdminRe getCurrentAdmin(string adId)
+        {
+            return _unitofwork.AdminreRepository.Get(x => x.AdId.Equals(adId)).FirstOrDefault();
+        }
         public IEnumerable<AdminRe> getAdmins()
         {
             return _unitofwork.AdminreRepository.Get();
+        }
+
+        public void addAdmin(AdminRe admin)
+        {
+            _unitofwork.AdminreRepository.Insert(admin);
+            _unitofwork.Save();
+        }
+
+        public void updateAdmin(AdminRe admin)
+        {
+            _unitofwork.AdminreRepository.Update(admin);
+            _unitofwork.Save();
         }
     }
 }

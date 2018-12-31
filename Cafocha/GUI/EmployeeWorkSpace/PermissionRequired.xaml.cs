@@ -14,12 +14,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class PermissionRequired : Window
     {
-        private EmployeewsOfLocalPOS _cloudPosUnitofwork;
+        private RepositoryLocator _cloudPosUnitofwork;
         MaterialDesignThemes.Wpf.Chip _cUser;
         bool _isPrinted;
         bool _isTable;
 
-        public PermissionRequired(EmployeewsOfLocalPOS cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
+        public PermissionRequired(RepositoryLocator cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
         {
             _cloudPosUnitofwork = cloudPosUnitofwork;
             _cUser = cUser;

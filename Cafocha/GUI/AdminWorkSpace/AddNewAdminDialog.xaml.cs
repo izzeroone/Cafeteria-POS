@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -12,16 +14,16 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class AddNewAdminDialog : Window
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        internal BusinessModuleLocator _businessModuleLocator;
         private AdminRe _admin;
 
 
 
-        public AddNewAdminDialog(AdminwsOfCloudPOS unitofwork)
+        public AddNewAdminDialog(BusinessModuleLocator businessModuleLocator)
         {
             InitializeComponent();
 
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _admin = new AdminRe();
             initControlAdd();
             this.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -60,9 +62,10 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+//                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+                var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
 
-                if (newemp.Count != 0)
+                if (newemp != null)
                 {
                     MessageBox.Show("Username is already exist! Please try again!");
                     txtUsername.Focus();
@@ -125,8 +128,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     AdRole = role
                 };
 
-                _unitofwork.AdminreRepository.Insert(newAd);
-                _unitofwork.Save();
+                _businessModuleLocator.AdminModule.addAdmin(newAd);
 
                 MessageBox.Show("Insert " + newAd.Name + "(" + newAd.AdId + ") successful!");
                 this.Close();

@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using POS.AdminWorkSpace;
@@ -13,13 +15,13 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class IngredientAddOrUpdateDialog : Window
     {
-        private readonly AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private Ingredient _ingre;
         private WareHouse _wah;
 
-        public IngredientAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork, Ingredient ingre)
+        public IngredientAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Ingredient ingre)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _ingre = ingre;
             InitializeComponent();
 
@@ -155,20 +157,9 @@ namespace Cafocha.GUI.AdminWorkSpace
                         return;
                     }
 
-                    WareHouse newWare = new WareHouse
-                    {
-                        WarehouseId = "",
-                        Contain = 0,
-                        StdContain = (int)App.Current.Properties["StdContain"]
-                    };
-
-                    _unitofwork.WareHouseRepository.Insert(newWare);
-                    _unitofwork.Save();
-
                     Ingredient newingre = new Ingredient
                     {
                         IgdId = "",
-                        WarehouseId = newWare.WarehouseId,
                         Name = namee,
                         Info = info,
                         Usefor = byte.Parse(usefor + ""),
@@ -178,8 +169,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                         Deleted = 0
                     };
 
-                    _unitofwork.IngredientRepository.Insert(newingre);
-                    _unitofwork.Save();
+                    _businessModuleLocator.IngredientModule.insertIngredient(newingre);
+
 
                     MessageBox.Show("Insert " + newingre.Name + "(" + newingre.IgdId + ") successful!");
                 }
@@ -192,9 +183,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     _ingre.UnitBuy = unitbuy;
                     _ingre.StandardPrice = price;
 
-                    _unitofwork.IngredientRepository.Update(_ingre);
-                    _unitofwork.Save();
-
+                    _businessModuleLocator.IngredientModule.updateIngredient(_ingre);
                     MessageBox.Show("Update " + _ingre.Name + "(" + _ingre.IgdId + ") successful!");
                 }
 

@@ -15,18 +15,18 @@ using Cafocha.Repository.DAL;
 namespace Cafocha.BusinessContext.EmployeeWorkspace
 {
     //A class to help manaing order
-    public class OrderModule
+    public class TakingOrderModule
     {
-        private EmployeewsOfLocalPOS _unitofwork;
+        private RepositoryLocator _unitofwork;
         private OrderTemp _orderTemp;
 
-        public OrderModule()
+        public TakingOrderModule()
         {
             _orderTemp = new OrderTemp();
             this.clearOrder();
         }
 
-        public OrderModule(EmployeewsOfLocalPOS unitofwork)
+        public TakingOrderModule(RepositoryLocator unitofwork)
         {
             _orderTemp = new OrderTemp();
             this.clearOrder();

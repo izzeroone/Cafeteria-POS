@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -12,18 +14,18 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class CustomerAddOrUpdateDialog : Window
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         Customer _cus;
 
-        public CustomerAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork, Customer cus)
+        public CustomerAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Customer cus)
         {
-            _unitofwork = unitofwork;
+
+            InitializeComponent();
+            _businessModuleLocator = businessModuleLocator;
             if (cus != null)
             {
                 _cus = cus;
             }
-            InitializeComponent();
-
             initData();
         }
 
@@ -88,8 +90,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     Deleted = 0
                 };
 
-                _unitofwork.CustomerRepository.Insert(checkcus);
-                _unitofwork.Save();
+                _businessModuleLocator.CustomerModule.insertCustomer(checkcus);
 
                 MessageBox.Show("Insert " + checkcus.Name + "(" + checkcus.CusId + ") successful!");
                 this.Close();
@@ -102,8 +103,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _cus.Discount = discount;
                 _cus.Deleted = 0;
 
-                _unitofwork.CustomerRepository.Update(_cus);
-                _unitofwork.Save();
+                _businessModuleLocator.CustomerModule.updateCustomer(_cus);
 
                 MessageBox.Show("Update " + _cus.Name + "(" + _cus.CusId + ") successful!");
                 this.Close();

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper.Report;
 using Cafocha.Repository.DAL;
@@ -16,18 +19,18 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class ReceiptNotePage : Page
     {
-        AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         List<Ingredient> _ingrelist;
         List<ReceiptNote> _relist;
         List<ReceiptNoteDetail> _rnlist;
-        public ReceiptNotePage(AdminwsOfCloudPOS unitofwork, AdminRe admin)
+        public ReceiptNotePage(BusinessModuleLocator businessModuleLocator, AdminRe admin)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            _relist = _unitofwork.ReceiptNoteRepository.Get(includeProperties: "Employee").ToList();
+            _relist = _businessModuleLocator.ReceiptNoteModule.getAllReceiveNotes().ToList();
             _relist = _relist.Where(x => x.Employee.Manager.Equals(admin.AdId)).ToList();
             lvReceptNote.ItemsSource = _relist;
-            _rnlist = _unitofwork.ReceiptNoteDsetailsRepository.Get(includeProperties: "Ingredient").ToList();
+            _rnlist = _businessModuleLocator.ReceiptNoteModule.getAllReceiveNoteDetails().ToList();
             List<ReceiptNoteDetail> _rnTempList = new List<ReceiptNoteDetail>();
             foreach (var receiptdetails in _rnlist)
             {
@@ -51,7 +54,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void ReceiptNotePage_Loaded(object sender, RoutedEventArgs e)
         {
-            _ingrelist = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            _ingrelist = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
             initData();
         }
 
@@ -77,7 +80,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             ReceiptNote rn = lvReceptNote.SelectedItem as ReceiptNote;
             if (rn != null)
             {
-                lvReceiptNoteDetail.ItemsSource = _unitofwork.ReceiptNoteDsetailsRepository.Get(c => c.RnId.Equals(rn.RnId));
+                lvReceiptNoteDetail.ItemsSource = _businessModuleLocator.ReceiptNoteModule.getReceiptNoteDetails(rn.RnId);
             }
             else
             {
@@ -198,7 +201,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            var optionDialog = new ReportOptionDialog(new ReceiptNoteReport(), _unitofwork);
+            var optionDialog = new ReportOptionDialog(new ReceiptNoteReport(), _businessModuleLocator);
             optionDialog.Show();
         }
 

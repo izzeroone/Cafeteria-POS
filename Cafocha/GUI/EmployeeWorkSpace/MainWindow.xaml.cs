@@ -25,9 +25,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// the object that store all repository you want to get data DBAsowell
         /// in Employee WorkSpace
         /// </summary>
-        internal EmployeewsOfLocalPOS _unitofwork;
+        internal RepositoryLocator _unitofwork;
         internal ProductModule _productModule;
-        internal OrderModule _orderModule;
+        internal TakingOrderModule takingOrderModule;
 
         Employee emp;
         SalaryNote empSln;
@@ -62,16 +62,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)
             //{
-            //    _unitofwork = new EmployeewsOfLocalPOS(config[0], config[1], config[2], config[3]);
+            //    _unitofwork = new RepositoryLocator(config[0], config[1], config[2], config[3]);
             //}
             //else
             //{
-            //    _unitofwork = new EmployeewsOfLocalPOS();
+            //    _unitofwork = new RepositoryLocator();
             //}
 
-            _unitofwork = new EmployeewsOfLocalPOS();
+            _unitofwork = new RepositoryLocator();
             _productModule = new ProductModule(_unitofwork);
-            _orderModule =new OrderModule(_unitofwork);
+            takingOrderModule =new TakingOrderModule(_unitofwork);
             {
                 en = new Entry();
                 info = new Info();

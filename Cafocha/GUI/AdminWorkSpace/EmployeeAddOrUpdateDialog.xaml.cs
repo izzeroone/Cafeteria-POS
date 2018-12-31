@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -15,12 +17,12 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class EmployeeAddOrUpdateDialog : Window
     {
-        private readonly AdminwsOfCloudPOS _unitofwork;
         private Employee _emp;
+        private BusinessModuleLocator _businessModuleLocator;
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork)
+        public EmployeeAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _emp = new Employee();
             InitializeComponent();
             initControlAdd();
@@ -28,9 +30,9 @@ namespace Cafocha.GUI.AdminWorkSpace
             this.ResizeMode = ResizeMode.NoResize;
         }
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork, Employee emp)
+        public EmployeeAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Employee emp)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             _emp = emp;
             InitializeComponent();
             initUptData();
@@ -93,9 +95,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 if (_emp == null)
                 {
-                    var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+                    var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
 
-                    if (newemp.Count != 0)
+                    if (newemp != null)
                     {
                         MessageBox.Show("Username is already exist! Please try again!");
                         txtUsername.Focus();
@@ -232,8 +234,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                         Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
                     };
 
-                    _unitofwork.EmployeeRepository.Insert(checkemp);
-                    _unitofwork.Save();
+                    _businessModuleLocator.EmployeeModule.insertEmployee(checkemp);
 
                     MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
                     this.Close();
@@ -252,8 +253,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     _emp.HourWage = hourwage;
                     _emp.EmpCode = code;
 
-                    _unitofwork.EmployeeRepository.Update(_emp);
-                    _unitofwork.Save();
+                    _businessModuleLocator.EmployeeModule.updateemployee(_emp);
 
                     MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
                     this.Close();

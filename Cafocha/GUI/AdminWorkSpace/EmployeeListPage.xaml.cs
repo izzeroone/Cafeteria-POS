@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -14,16 +16,17 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class EmployeeListPage : Page
     {
-        private AdminwsOfCloudPOS _unitofork;
+        private BusinessModuleLocator _businessModuleLocator;
         private AdminRe admin;
         private Employee emp;
         private List<Employee> empwithad;
         internal EmployeeAddOrUpdateDialog empAddUptDialog;
 
-        public EmployeeListPage(AdminwsOfCloudPOS unitofork, AdminRe ad)
+        public EmployeeListPage(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
-            _unitofork = unitofork;
+            
             InitializeComponent();
+            _businessModuleLocator = businessModuleLocator;
             admin = ad;
 
             this.Loaded += EmployeeListPage_Loaded;
@@ -31,9 +34,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void EmployeeListPage_Loaded(object sender, RoutedEventArgs e)
         {
-//            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
-            empwithad = _unitofork.EmployeeRepository.Get(x => x.Deleted.Equals(0)).ToList();
-            lvDataEmployee.ItemsSource = empwithad;
+            //            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+            refreshData();
 
             txtBirth.DisplayDateEnd = new DateTime((DateTime.Now.Year - 16), 12, 31);
             txtStart.DisplayDateStart = DateTime.Now;
@@ -93,13 +95,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)
         {
-            empAddUptDialog = new EmployeeAddOrUpdateDialog(_unitofork);
+            empAddUptDialog = new EmployeeAddOrUpdateDialog(_businessModuleLocator);
             empAddUptDialog.ShowDialog();
 
-            empwithad = _unitofork.EmployeeRepository.Get(x => x.Deleted.Equals(0)).ToList();
-            lvDataEmployee.ItemsSource = empwithad;
-            lvDataEmployee.UnselectAll();
-            lvDataEmployee.Items.Refresh();
+            refreshData();
         }
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
@@ -110,7 +109,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            empAddUptDialog = new EmployeeAddOrUpdateDialog(_unitofork, emp);
+            empAddUptDialog = new EmployeeAddOrUpdateDialog(_businessModuleLocator, emp);
             empAddUptDialog.ShowDialog();
             lvDataEmployee.UnselectAll();
             lvDataEmployee.Items.Refresh();
@@ -130,19 +129,22 @@ namespace Cafocha.GUI.AdminWorkSpace
                 MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delEmp.Name + "(" + delEmp.Username + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if(delMess == MessageBoxResult.Yes)
                 {
-                    delEmp.Deleted = 1;
-                    _unitofork.EmployeeRepository.Update(delEmp);
-                    _unitofork.Save();
-                    empwithad = _unitofork.EmployeeRepository.Get(x => x.Deleted.Equals(0)).ToList();
-                    lvDataEmployee.ItemsSource = empwithad;
-                    lvDataEmployee.UnselectAll();
-                    lvDataEmployee.Items.Refresh();
+                    _businessModuleLocator.EmployeeModule.deleteEmployee(delEmp);
+                    refreshData();
                 }
             }
             else
             {
                 MessageBox.Show("Please choose employee you want to delete and try again!");
             }
+        }
+
+        private void refreshData()
+        {
+            empwithad = _businessModuleLocator.EmployeeModule.getEmployees().ToList();
+            lvDataEmployee.ItemsSource = empwithad;
+            lvDataEmployee.UnselectAll();
+            lvDataEmployee.Items.Refresh();
         }
     }
 }

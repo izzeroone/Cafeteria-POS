@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -13,15 +15,15 @@ namespace Cafocha.GUI.AdminWorkSpace
     
     public partial class CustomerPage : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         Customer ctm;
         List<Customer> allcus;
         CustomerAddOrUpdateDialog _cusAddOrUpdate;
-        public CustomerPage(AdminwsOfCloudPOS unitofwork)
+        public CustomerPage(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            allcus = _businessModuleLocator.CustomerModule.getAllCustomer().ToList();
             lvDataCustomer.ItemsSource = allcus;
             for (int i = 0; i <= 100; i++)
             {
@@ -50,10 +52,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)
         {
-            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_unitofwork, null);
+            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_businessModuleLocator, null);
             _cusAddOrUpdate.ShowDialog();
 
-            allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            allcus = _businessModuleLocator.CustomerModule.getAllCustomer().ToList();
             lvDataCustomer.ItemsSource = allcus;
             lvDataCustomer.UnselectAll();
             lvDataCustomer.Items.Refresh();
@@ -67,7 +69,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_unitofwork, ctm);
+            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_businessModuleLocator, ctm);
             _cusAddOrUpdate.ShowDialog();
             lvDataCustomer.UnselectAll();
             lvDataCustomer.Items.Refresh();
@@ -87,10 +89,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                 MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delCus.Name + "(" + delCus.CusId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
-                    delCus.Deleted = 1;
-                    _unitofwork.CustomerRepository.Update(delCus);
-                    _unitofwork.Save();
-                    allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+                    _businessModuleLocator.CustomerModule.deleteCustomer(delCus);
+                    allcus = _businessModuleLocator.CustomerModule.getAllCustomer().ToList();
                     lvDataCustomer.ItemsSource = allcus;
                     lvDataCustomer.UnselectAll();
                     lvDataCustomer.Items.Refresh();

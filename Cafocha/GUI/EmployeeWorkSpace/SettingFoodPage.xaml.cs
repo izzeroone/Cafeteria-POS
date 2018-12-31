@@ -12,9 +12,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class SettingFoodPage : Page
     {
-        private EmployeewsOfLocalPOS _cloudPosUnitofwork;
+        private RepositoryLocator _cloudPosUnitofwork;
 
-        public SettingFoodPage(EmployeewsOfLocalPOS cloudPosUnitofwork)
+        public SettingFoodPage(RepositoryLocator cloudPosUnitofwork)
         {
             _cloudPosUnitofwork = cloudPosUnitofwork;
             InitializeComponent();

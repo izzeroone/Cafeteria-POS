@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using POS.AdminWorkSpace;
@@ -15,17 +18,17 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// </summary>
     public partial class ProductDetailPage : Page
     {
-        private AdminwsOfCloudPOS _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private List<Product> allProduct;
         private List<ProductDetail> allProductDetails;
         private List<Ingredient> allIngre;
         private Ingredient _ingre;
         private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
 
-        public ProductDetailPage(AdminwsOfCloudPOS unitofwork)
+        public ProductDetailPage(BusinessModuleLocator businessModuleLocator)
         {
             InitializeComponent();
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             this.Loaded += ProductDetailPage_Loaded;
         }
@@ -37,11 +40,11 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void initPageData()
         {
-            allProduct = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0)).ToList();
+            allProduct = _businessModuleLocator.ProductModule.getAllProduct().ToList();
             lvProduct.ItemsSource = allProduct;
-            allProductDetails = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product").ToList();
+            allProductDetails = _businessModuleLocator.ProductModule.getAllProductDetails().ToList();
             lvDetails.ItemsSource = allProductDetails;
-            allIngre = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0)).ToList();
+            allIngre = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
             lvIngredient.ItemsSource = allIngre;
 
             cboType.Items.Add(ProductType.All);
@@ -72,7 +75,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(pro.ProductId));
+            lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails(pro.ProductId);
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -84,25 +87,30 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             string filter = SearchBox.Text.Trim();
 
+            refreshData(filter);
+        }
+
+        private void refreshData(string filter)
+        {
             try
             {
                 if (filter.Length == 0)
                 {
-                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type.Equals((int)cboType.SelectedItem) && p.Deleted.Equals(0));
+                    lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem);
                     return;
                 }
 
-                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type.Equals((int)cboType.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem, filter);
             }
             catch (Exception ex)
             {
                 if (filter.Length == 0)
                 {
-                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0));
+                    lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct().ToList();
                     return;
                 }
 
-                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct(filter);
             }
         }
 
@@ -110,26 +118,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             string filter = SearchBox.Text.Trim();
 
-            try
-            {
-                if (filter.Length == 0)
-                {
-                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type.Equals((int)cboType.SelectedItem) && p.Deleted.Equals(0));
-                    return;
-                }
-
-                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type.Equals((int)cboType.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
-            catch (Exception ex)
-            {
-                if (filter.Length == 0)
-                {
-                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0));
-                    return;
-                }
-
-                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
+            refreshData(filter);
         }
 
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -180,7 +169,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            ProductUpdatePage pup = new ProductUpdatePage(_unitofwork, curPro);
+            ProductUpdatePage pup = new ProductUpdatePage(_businessModuleLocator, curPro);
             ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
         }
 
@@ -196,28 +185,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delPro.Name + "(" + delPro.ProductId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
             if (delMess == MessageBoxResult.Yes)
             {
-                delPro.Deleted = 1;
-                var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(delPro.ProductId)).ToList();
-                if (pdofingre.Count != 0)
-                {
-                    foreach (var pd in pdofingre)
-                    {
-                        _unitofwork.ProductDetailsRepository.Delete(pd);
-                    }
-                    _unitofwork.Save();
-                }
-
-                _unitofwork.ProductRepository.Update(delPro);
-                _unitofwork.Save();
-                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0));
-                lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
-                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
-                lvProduct.UnselectAll();
-                lvProduct.Items.Refresh();
-                lvDetails.UnselectAll();
-                lvDetails.Items.Refresh();
-                lvIngredient.UnselectAll();
-                lvIngredient.Items.Refresh();
+                _businessModuleLocator.ProductModule.deleteProduct(delPro);
+                refreshListData();
             }
         }
 
@@ -315,10 +284,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
-            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, null);
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_businessModuleLocator, null);
             _ingreAddOrUpdate.ShowDialog();
 
-            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            lvIngredient.ItemsSource = _businessModuleLocator.IngredientModule.getAllIngredients();
             lvIngredient.UnselectAll();
             lvIngredient.Items.Refresh();
         }
@@ -333,7 +302,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, _ingre);
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_businessModuleLocator, _ingre);
             _ingreAddOrUpdate.ShowDialog();
 
             lvProduct.UnselectAll();
@@ -358,28 +327,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                 MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
-                    delIngre.Deleted = 1;
-                    var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.IgdId.Equals(delIngre.IgdId)).ToList();
-                    if (pdofingre.Count != 0)
-                    {
-                        foreach (var pd in pdofingre)
-                        {
-                            _unitofwork.ProductDetailsRepository.Delete(pd);
-                        }
-                        _unitofwork.Save();
-                    }
-
-                    _unitofwork.IngredientRepository.Update(delIngre);
-                    _unitofwork.Save();
-                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0));
-                    lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
-                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
-                    lvProduct.UnselectAll();
-                    lvProduct.Items.Refresh();
-                    lvDetails.UnselectAll();
-                    lvDetails.Items.Refresh();
-                    lvIngredient.UnselectAll();
-                    lvIngredient.Items.Refresh();
+                    _businessModuleLocator.IngredientModule.deleteIngredient(delIngre);
+                    refreshListData();
                 }
             }
             else
@@ -388,5 +337,17 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
         }
 
+        private void refreshListData()
+        {
+            lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct();
+            lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails();
+            lvIngredient.ItemsSource = _businessModuleLocator.IngredientModule.getAllIngredients();
+            lvProduct.UnselectAll();
+            lvProduct.Items.Refresh();
+            lvDetails.UnselectAll();
+            lvDetails.Items.Refresh();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
+        }
     }
 }
