@@ -41,42 +41,42 @@ namespace Cafocha.BusinessContext
 
         public WarehouseModule WarehouseModule
         {
-            get { return _warehouseModule ?? (_warehouseModule = new WarehouseModule()); }
+            get { return _warehouseModule ?? (_warehouseModule = new WarehouseModule(_repositoryLocator)); }
         }
         public OrderModule OrderModule
         {
-            get { return _orderModule ?? (_orderModule = new OrderModule()); }
+            get { return _orderModule ?? (_orderModule = new OrderModule(_repositoryLocator)); }
         }
         public IngredientModule IngredientModule
         {
-            get { return _ingredientModule ?? (_ingredientModule = new IngredientModule()); }
+            get { return _ingredientModule ?? (_ingredientModule = new IngredientModule(_repositoryLocator)); }
         }
         public ReceiptNoteModule ReceiptNoteModule
         {
-            get { return _receiptNoteModule ?? (_receiptNoteModule = new ReceiptNoteModule()); }
+            get { return _receiptNoteModule ?? (_receiptNoteModule = new ReceiptNoteModule(_repositoryLocator)); }
         }
         public ProductModule ProductModule
         {
-            get { return _productModule ?? (_productModule = new ProductModule()); }
+            get { return _productModule ?? (_productModule = new ProductModule(_repositoryLocator)); }
         }
         public EmployeeModule EmployeeModule
         {
-            get { return _employeeModule ?? (_employeeModule = new EmployeeModule()); }
+            get { return _employeeModule ?? (_employeeModule = new EmployeeModule(_repositoryLocator)); }
         }
 
         public TakingOrderModule TakingOrderModule
         {
-            get { return _takingOrderModule ?? (_takingOrderModule = new TakingOrderModule()); }
+            get { return _takingOrderModule ?? (_takingOrderModule = new TakingOrderModule(_repositoryLocator)); }
         }
 
         public AdminModule AdminModule      
         {
-            get { return _adminModule ?? (_adminModule = new AdminModule()); }
+            get { return _adminModule ?? (_adminModule = new AdminModule(_repositoryLocator)); }
         }
 
         public CustomerModule CustomerModule
         {
-            get { return _customerModule ?? (_customerModule = new CustomerModule()); }
+            get { return _customerModule ?? (_customerModule = new CustomerModule(_repositoryLocator)); }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
@@ -17,8 +18,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class CafowareWindow : Window
     {
-        internal WarehouseModule _warehouseModule;
-        internal AdminModule _adminModule;
+        private BusinessModuleLocator _businessModuleLocator;
         private CreateStockPage _createStockPage;
         private StockInPage _stockInPage;
         private StockOutPage _stockOutPage;
@@ -34,23 +34,22 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             try
             {
-                _warehouseModule = new WarehouseModule();
-                _warehouseModule.loadStock();
-                _adminModule = new AdminModule();
-                _viewStockPage = new ViewStockPage(_warehouseModule, _warehouseModule.StockList);
+                _businessModuleLocator = new BusinessModuleLocator();
+                _businessModuleLocator.WarehouseModule.loadStock();
+                _viewStockPage = new ViewStockPage(_businessModuleLocator, _businessModuleLocator.WarehouseModule.StockList);
 
 
 
                 if (App.Current.Properties["AdLogin"] != null)
                 {
                     AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                    List<AdminRe> adList = _adminModule.getAdmins().ToList();
+                    List<AdminRe> adList = _businessModuleLocator.AdminModule.getAdmins().ToList();
                     curAdmin = adList.FirstOrDefault(x =>
                         x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                     CUserChip.Content = curAdmin.Name;
-                    _createStockPage = new CreateStockPage(_warehouseModule, _warehouseModule.StockList);
-                    _stockInPage = new StockInPage(_warehouseModule, _warehouseModule.StockList);
-                    _stockOutPage = new StockOutPage(_warehouseModule, _warehouseModule.StockList);
+                    _createStockPage = new CreateStockPage(_businessModuleLocator, _businessModuleLocator.WarehouseModule.StockList);
+                    _stockInPage = new StockInPage(_businessModuleLocator, _businessModuleLocator.WarehouseModule.StockList);
+                    _stockOutPage = new StockOutPage(_businessModuleLocator, _businessModuleLocator.WarehouseModule.StockList);
                 }
 
 
@@ -68,7 +67,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         public void Refresh_Tick(object sender, EventArgs e)
         {
-           _warehouseModule.loadStock();
+           _businessModuleLocator.WarehouseModule.loadStock();
 
             if (isCreateStockRun)
             {

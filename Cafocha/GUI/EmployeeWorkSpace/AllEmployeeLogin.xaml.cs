@@ -554,7 +554,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     {
                         if (_businessModuleLocator.EmployeeModule.Emploglist.Count == 1)
                         {
-                            var orderedTable = ((MainWindow) Window.GetWindow(this)).orderDetailsTemp;
+                            var orderedTable = _businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps;
                             if (orderedTable.Count != 0)
                             {
                                 MessageBox.Show("You can not logout because still have Tables that in the ordering state out there. Please check again!");
@@ -607,7 +607,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (_businessModuleLocator.EmployeeModule.Emploglist.Count == 0)
             {
 
-                var orderTemp = ((MainWindow)Window.GetWindow(this)).orderTemp;
+                var orderTemp = new OrderTemp();
                 orderTemp.EmpId = "";
                 orderTemp.CusId = "CUS0000001";
                 orderTemp.Ordertime = DateTime.Now;
@@ -617,6 +617,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 orderTemp.PayBack = 0;
                 orderTemp.SubEmpId = "";
                 orderTemp.Pax = 0;
+                _businessModuleLocator.TakingOrderModule.OrderTemp = orderTemp;
 
                 ((MainWindow) Window.GetWindow(this)).isOrderOrder = false;
                 ((MainWindow)Window.GetWindow(this)).isOrderPrint = false;

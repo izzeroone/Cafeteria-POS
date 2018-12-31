@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
@@ -19,15 +20,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
     {
         private List<Stock> _stockList;
 
-        internal WarehouseModule _warehouseModule;
+        private BusinessModuleLocator _businessModuleLocator;
         internal StockIn _currentStockIn;
         internal List<StockInDetail> _stockInDetailsList;
 
 
-        public StockInPage(WarehouseModule warehouseModule, List<Stock> stockList)
+        public StockInPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
             InitializeComponent();
-            _warehouseModule = warehouseModule;
+            _businessModuleLocator = businessModuleLocator;
             _stockList = stockList;
             lvDataStock.ItemsSource = _stockList;
 
@@ -261,7 +262,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     return;
                 }
 
-                _warehouseModule.addStockIn(_currentStockIn);
+                _businessModuleLocator.WarehouseModule.addStockIn(_currentStockIn);
 
 
                 _stockInDetailsList = new List<StockInDetail>();
@@ -289,11 +290,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList.Clear();
             lvDataStockIn.Items.Refresh();
             LoadStockInData();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            _warehouseModule = ((CafowareWindow)Window.GetWindow(this))._warehouseModule;
         }
     }
 }

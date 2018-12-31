@@ -36,8 +36,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         internal SettingFoodPage st;
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
-        internal OrderTemp orderTemp;
-        internal List<OrderDetailsTemp> orderDetailsTemp;
         internal Boolean isOrderPrint;
         internal Boolean isOrderOrder;
 
@@ -53,8 +51,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             _businessModuleLocator = new BusinessModuleLocator();
             cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
 
-            orderTemp = new OrderTemp();
-            orderDetailsTemp = new List<OrderDetailsTemp>();
             isOrderOrder = false;
             isOrderPrint = false;
 

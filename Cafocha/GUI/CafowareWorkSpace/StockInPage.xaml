@@ -9,7 +9,7 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="StockIn Page"
       Height="630"
-      Width="1366" Loaded="Page_Loaded">
+      Width="1366">
 
     <Grid>
         <Grid.ColumnDefinitions>

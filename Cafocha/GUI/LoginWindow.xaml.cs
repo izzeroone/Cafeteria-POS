@@ -13,7 +13,7 @@ namespace Cafocha.GUI
     /// </summary>
     public partial class LoginWindow : Window
     {
-        internal RepositoryLocator _unitofwork;
+        internal BusinessModuleLocator _businessModuleLocator;
         private DispatcherTimer LoadCodeLogin;
 
         private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -30,7 +30,7 @@ namespace Cafocha.GUI
             //    _unitofwork = new RepositoryLocator();
             //}
 
-            _unitofwork = new RepositoryLocator();
+            _businessModuleLocator = new BusinessModuleLocator();
             InitializeComponent();
 
 //            txtUsername.Focus();
@@ -155,7 +155,7 @@ namespace Cafocha.GUI
 
         private void Closing_LoginWindos(object sender, EventArgs args)
         {
-            _unitofwork.Dispose();
+            _businessModuleLocator.RepositoryLocator.Dispose();
         }
 
         private void ButtonChangeLoginType_Click(object sender, RoutedEventArgs e)

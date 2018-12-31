@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
@@ -11,11 +12,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class ViewStockPage : Page
     {
-        private WarehouseModule _warehouseModule;
+        private BusinessModuleLocator _businessModuleLocator;
 
-        public ViewStockPage(WarehouseModule warehouseModule, List<Stock> stockList)
+        public ViewStockPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
-            _warehouseModule = warehouseModule;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             lvItem.ItemsSource = stockList;

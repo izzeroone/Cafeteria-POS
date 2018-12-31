@@ -313,7 +313,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
 
                 List<OrderNoteDetailsForReport> orderDetailsReportList = new List<OrderNoteDetailsForReport>();
-                foreach (var details in OrderDetailsRepository)
+                foreach (var details in orderDetailsWithTimeList)
                 {
                     var detailsRpt = new OrderNoteDetailsForReport()
                     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using LiveCharts;
@@ -21,7 +22,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private static int FILL_BY_MONTH = 2;
 
 
-        private RepositoryLocator _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
 
         public Func<ChartPoint, string> PointLabel { get; set; }
         public List<decimal> PriceList;
@@ -42,10 +43,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
 
-        public HomePage(RepositoryLocator unitofwork)
+        public HomePage(BusinessModuleLocator businessModuleLocator)
         {
             InitializeComponent();
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             // init datasource for Time PieChart
             SeriesCollectionTime = new SeriesCollection();
             PriceList = new List<decimal>();
@@ -69,7 +70,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             // init datasource for Employee PieChart
             SeriesCollection = new SeriesCollection();
             EmpPieSeries = new List<PieSeries>();
-            foreach (var item in _unitofwork.EmployeeRepository.Get(x => x.Deleted.Equals(0)))
+            foreach (var item in _businessModuleLocator.EmployeeModule.getEmployees())
             {
                 EmpPieSeries.Add(new PieSeries() { Title = item.EmpId + ": " + item.Name });
             }
@@ -113,16 +114,16 @@ namespace Cafocha.GUI.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
                     .ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             decimal count = 0;
             Values.Clear();
@@ -157,15 +158,15 @@ namespace Cafocha.GUI.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
 
 
@@ -215,16 +216,16 @@ namespace Cafocha.GUI.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month==DateTime.Now.Month &&c.Ordertime.Year==DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month==DateTime.Now.Month &&c.Ordertime.Year==DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
                     .ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
 
 

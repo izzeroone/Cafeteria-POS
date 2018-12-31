@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
@@ -16,14 +17,14 @@ namespace Cafocha.GUI.CafowareWorkSpace
     public partial class CreateStockPage : Page
     {
         private List<Stock> _stockList;
-        private WarehouseModule _warehouseModule;
+        private BusinessModuleLocator _businessModuleLocator;
 
         Stock _currentNewStock = new Stock();
 
-        public CreateStockPage(WarehouseModule warehouseModule, List<Stock> stockList)
+        public CreateStockPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
             InitializeComponent();
-            _warehouseModule = warehouseModule;
+            _businessModuleLocator = businessModuleLocator;
             _stockList = stockList;
             lvStock.ItemsSource = _stockList;
 
@@ -170,7 +171,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 MessageBoxResult delMess = MessageBox.Show("This action will delete all following stock details! Do you want to delete " + delStock.Name + "(" + delStock.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
-                    _warehouseModule.deleteStock(delStock);
+                    _businessModuleLocator.WarehouseModule.deleteStock(delStock);
 
                     // refesh data
                     ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
@@ -320,7 +321,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     StdContain = 100
                 };
 
-                _warehouseModule.insertWarehouse(newWareHouse);
+                _businessModuleLocator.WarehouseModule.insertWarehouse(newWareHouse);
 
 
 
@@ -335,7 +336,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _currentNewStock.Supplier = supplier;
                 _currentNewStock.StandardPrice = price;
 
-                _warehouseModule.insertStock(_currentNewStock);
+                _businessModuleLocator.WarehouseModule.insertStock(_currentNewStock);
 
 
                 MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId + ") successful!");
@@ -411,7 +412,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _selectedStock.Supplier = supplier;
             _selectedStock.StandardPrice = price;
 
-            _warehouseModule.updateStock(_selectedStock);
+            _businessModuleLocator.WarehouseModule.updateStock(_selectedStock);
 
 
             MessageBox.Show("Update stock " + _selectedStock.Name + "(" + _selectedStock.StoId + ") successful!");
@@ -421,11 +422,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _selectedStock = null;
             // refesh data
             ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            _warehouseModule = ((CafowareWindow) Window.GetWindow(this))._warehouseModule;
         }
     }
 }

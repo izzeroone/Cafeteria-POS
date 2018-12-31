@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
@@ -16,15 +17,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
     /// </summary>
     public partial class StockOutPage : Page
     {
-        private WarehouseModule _warehouseModule;
+        private BusinessModuleLocator _businessModuleLocator;
         private List<Stock> _stockList;
         internal StockOut _currentStockOut;
         internal List<StockOutDetail> _stockOutDetailsList;
 
 
-        public StockOutPage(WarehouseModule warehouseModule, List<Stock> stockList)
+        public StockOutPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
-            _warehouseModule = warehouseModule;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             _stockList = stockList;
@@ -90,7 +91,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
 
             var details = _currentStockOut.StockOutDetails.FirstOrDefault(x => x.StockId.Equals(stock.StoId));
-            ApWareHouse wareHouse = _warehouseModule.getApWareHouse(stock.ApwarehouseId);
+            ApWareHouse wareHouse = _businessModuleLocator.WarehouseModule.getApWareHouse(stock.ApwarehouseId);
             if (details != null)
             {
                 if (wareHouse != null)
@@ -262,7 +263,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     return;
                 }
 
-                _warehouseModule.addStockOut(_currentStockOut);
+                _businessModuleLocator.WarehouseModule.addStockOut(_currentStockOut);
 
                 _stockOutDetailsList = new List<StockOutDetail>();
                 lvDataStockOut.ItemsSource = _stockOutDetailsList;

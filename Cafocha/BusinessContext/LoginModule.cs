@@ -27,7 +27,7 @@ namespace Cafocha.BusinessContext
             {
                 await Task.Run(() =>
                 {
-                    List<Employee> empList = _loginWindow._unitofwork.EmployeeRepository.Get().ToList();
+                    List<Employee> empList = _loginWindow._businessModuleLocator.RepositoryLocator.EmployeeRepository.Get().ToList();
 
                     var emp = empList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     if (emp != null)
@@ -45,7 +45,7 @@ namespace Cafocha.BusinessContext
                         {
                             try
                             {
-                                SalaryNote empSalaryNote = _loginWindow._unitofwork.SalaryNoteRepository.Get(sle =>
+                                SalaryNote empSalaryNote = _loginWindow._businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(sle =>
                                     sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
                                     sle.ForYear.Equals(DateTime.Now.Year)).First();
 
@@ -68,8 +68,8 @@ namespace Cafocha.BusinessContext
                                     ForYear = DateTime.Now.Year,
                                     IsPaid = 0
                                 };
-                                _loginWindow._unitofwork.SalaryNoteRepository.Insert(empSalary);
-                                _loginWindow._unitofwork.Save();
+                                _loginWindow._businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Insert(empSalary);
+                                _loginWindow._businessModuleLocator.RepositoryLocator.Save();
                                 WorkingHistory empWorkHistory = new WorkingHistory
                                 {
                                     ResultSalary = empSalary.SnId,
@@ -81,8 +81,8 @@ namespace Cafocha.BusinessContext
 
                             _loginWindow.Dispatcher.Invoke(() =>
                             {
-                                EmpLoginListData.emploglist.Clear();
-                                EmpLoginListData.emploglist.Add(new EmpLoginList
+                                _loginWindow._businessModuleLocator.EmployeeModule.Emploglist.Clear();
+                                _loginWindow._businessModuleLocator.EmployeeModule.Emploglist.Add(new EmpLoginList
                                 {
                                     Emp = emp,
                                     EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,
@@ -98,7 +98,7 @@ namespace Cafocha.BusinessContext
                     else    
                     {
                         //Get Admin
-                        List<AdminRe> adList = _loginWindow._unitofwork.AdminreRepository.Get().ToList();
+                        List<AdminRe> adList = _loginWindow._businessModuleLocator.RepositoryLocator.AdminreRepository.Get().ToList();
 
                         var ad = adList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                         //TODO: fix ad Emp
@@ -145,7 +145,7 @@ namespace Cafocha.BusinessContext
             {
                 await Task.Run(() =>
                 {
-                    List<Employee> empList = _loginWindow._unitofwork.EmployeeRepository.Get().ToList();
+                    List<Employee> empList = _loginWindow._businessModuleLocator.RepositoryLocator.EmployeeRepository.Get().ToList();
                     Employee loginEmp = empList.FirstOrDefault(x => x.DecryptedCode.Equals(code));
                     if (loginEmp != null)
                     {
@@ -163,7 +163,7 @@ namespace Cafocha.BusinessContext
                         {
                             try
                             {
-                                SalaryNote empSalaryNote = _loginWindow._unitofwork.SalaryNoteRepository.Get(sle =>
+                                SalaryNote empSalaryNote = _loginWindow._businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get(sle =>
                                     sle.EmpId.Equals(loginEmp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
                                     sle.ForYear.Equals(DateTime.Now.Year)).First();
 
@@ -186,8 +186,8 @@ namespace Cafocha.BusinessContext
                                     ForYear = DateTime.Now.Year,
                                     IsPaid = 0
                                 };
-                                _loginWindow._unitofwork.SalaryNoteRepository.Insert(empSalary);
-                                _loginWindow._unitofwork.Save();
+                                _loginWindow._businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Insert(empSalary);
+                                _loginWindow._businessModuleLocator.RepositoryLocator.Save();
                                 WorkingHistory empWorkHistory = new WorkingHistory
                                 {
                                     ResultSalary = empSalary.SnId,
@@ -199,8 +199,8 @@ namespace Cafocha.BusinessContext
 
                             _loginWindow.Dispatcher.Invoke(() =>
                             {
-                                EmpLoginListData.emploglist.Clear();
-                                EmpLoginListData.emploglist.Add(new EmpLoginList
+                                _loginWindow._businessModuleLocator.EmployeeModule.Emploglist.Clear();
+                                _loginWindow._businessModuleLocator.EmployeeModule.Emploglist.Add(new EmpLoginList
                                 {
                                     Emp = loginEmp,
                                     EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,

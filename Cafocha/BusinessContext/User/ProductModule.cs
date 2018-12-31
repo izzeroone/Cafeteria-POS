@@ -54,7 +54,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public IEnumerable<ProductDetail> getAllProductDetails(string productId)
         {
-            return _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(productId);
+            return _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(productId));
         }
 
         public IEnumerable<Product> getAllProduct()

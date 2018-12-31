@@ -14,7 +14,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 
         public OrderModule()
         {
-            _unitofwork = new AdminwsOfCloudPOS();
+            _unitofwork = new RepositoryLocator();
         }
 
         public OrderModule(RepositoryLocator unitofwork)

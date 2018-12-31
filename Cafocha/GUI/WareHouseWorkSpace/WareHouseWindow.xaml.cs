@@ -36,7 +36,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
 
             try
             {
-                _unitofwork = new AdminwsOfCloudPOS();
+                _unitofwork = new RepositoryLocator();
                 IngdList = _unitofwork.IngredientRepository
                     .Get(c => c.Deleted.Equals(0), includeProperties: "WareHouse").ToList();
 
