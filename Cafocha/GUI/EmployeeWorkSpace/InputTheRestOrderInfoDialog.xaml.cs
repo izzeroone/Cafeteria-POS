@@ -14,7 +14,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private Entities.OrderNote currentOrder;
         private string _payMethod;
         public bool IsSuccess { get; set; }
-
+ 
         public InputTheRestOrderInfoDialog(OrderNote currentOrder)
         {
             InitializeComponent();

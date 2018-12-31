@@ -21,7 +21,7 @@ namespace Cafocha.BusinessContext.User
             _unitofwork = unitofwork;
         }
 
-        public AdminRe getCurrentAdmin(string adId)
+        public AdminRe getAdmin(string adId)
         {
             return _unitofwork.AdminreRepository.Get(x => x.AdId.Equals(adId)).FirstOrDefault();
         }

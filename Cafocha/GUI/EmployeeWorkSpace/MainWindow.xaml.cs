@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
@@ -25,9 +26,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// the object that store all repository you want to get data DBAsowell
         /// in Employee WorkSpace
         /// </summary>
-        internal RepositoryLocator _unitofwork;
-        internal ProductModule _productModule;
-        internal TakingOrderModule takingOrderModule;
+        internal BusinessModuleLocator _businessModuleLocator;
 
         Employee emp;
         SalaryNote empSln;
@@ -51,8 +50,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             InitializeComponent();
             emp = App.Current.Properties["EmpLogin"] as Employee;
-
-            cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+            _businessModuleLocator = new BusinessModuleLocator();
+            cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
 
             orderTemp = new OrderTemp();
             orderDetailsTemp = new List<OrderDetailsTemp>();
@@ -69,13 +68,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //    _unitofwork = new RepositoryLocator();
             //}
 
-            _unitofwork = new RepositoryLocator();
-            _productModule = new ProductModule(_unitofwork);
-            takingOrderModule =new TakingOrderModule(_unitofwork);
             {
                 en = new Entry();
                 info = new Info();
-                st = new SettingFoodPage(_unitofwork);
+                st = new SettingFoodPage(_businessModuleLocator);
 
                 WorkTimer = new DispatcherTimer();
                 WorkTimer.Tick += WorkTime_Tick;
@@ -100,7 +96,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 this.Closing += (sender, args) =>
                 {
                     WorkTimer.Stop();
-                    _unitofwork.Dispose();
+                    _businessModuleLocator.RepositoryLocator.Dispose();
                 };
 
             }
@@ -151,7 +147,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
                 else if (App.Current.Properties["CurrentEmpWorking"] == null)
                 {
-                    cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                    cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
                 }
 
                 CheckWorkingTimer.Stop();
@@ -161,12 +157,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //check employee
             if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
-                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
             else if (App.Current.Properties["CurrentEmpWorking"] != null)
             {
                 App.Current.Properties["CurrentEmpWorking"] = null;
-                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
 
             if (bntEntry.IsEnabled == false)
@@ -215,7 +211,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 4);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _businessModuleLocator, cUser, 4);
             ael.ShowDialog();
 
             if (CheckWorkingTimer != null)
@@ -237,7 +233,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
                 else if (App.Current.Properties["CurrentEmpWorking"] == null)
                 {
-                    cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                    cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
                 }
 
                 return;
@@ -246,12 +242,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //check employee
             if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
-                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
             else if (App.Current.Properties["CurrentEmpWorking"] != null)
             {
                 App.Current.Properties["CurrentEmpWorking"] = null;
-                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
 
             if (CheckWorkingTimer != null)
@@ -267,7 +263,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork,  cUser, 1);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _businessModuleLocator,  cUser, 1);
             ael.ShowDialog();
         }
 
@@ -278,7 +274,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork,  cUser, 2);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _businessModuleLocator,  cUser, 2);
             ael.ShowDialog();
         }
 
@@ -289,7 +285,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 3);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _businessModuleLocator, cUser, 3);
             ael.ShowDialog();
 
         }
@@ -302,7 +298,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
     }

@@ -21,6 +21,10 @@ namespace Cafocha.BusinessContext.User
             _unitofwork = unitofwork;
         }
 
+        public Customer getCustomer(string customerID)
+        {
+            return _unitofwork.CustomerRepository.GetById(customerID);
+        }
         public IEnumerable<Customer> getAllCustomer()
         {
             return _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0));

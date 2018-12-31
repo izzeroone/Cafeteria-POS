@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -12,13 +13,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class SettingFoodPage : Page
     {
-        private RepositoryLocator _cloudPosUnitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
 
-        public SettingFoodPage(RepositoryLocator cloudPosUnitofwork)
+        public SettingFoodPage(BusinessModuleLocator businessModuleLocator)
         {
-            _cloudPosUnitofwork = cloudPosUnitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            lvData.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(c=>c.Deleted.Equals(0));
+            lvData.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct();
             for(int i = 0; i <= 100; i++)
             {
                 cbopromotion.Items.Add(i.ToString());
@@ -48,10 +49,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 bntUpdate.Content = "Save";
             }else if (bntUpdate.Content.Equals("Save"))
             {
-                Product p = _cloudPosUnitofwork.ProductRepository.GetById(txtID.Text);
+                var p = _businessModuleLocator.ProductModule.getProduct(txtID.Text);
                 p.Discount= int.Parse(cbopromotion.SelectedValue.ToString());
-                _cloudPosUnitofwork.ProductRepository.Update(p);
-                _cloudPosUnitofwork.Save();
+                _businessModuleLocator.ProductModule.updateProduct(p);
+
 
 
                 txtName.IsEnabled = false;

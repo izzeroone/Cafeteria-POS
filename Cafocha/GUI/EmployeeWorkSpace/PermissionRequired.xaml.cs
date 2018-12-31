@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -14,14 +15,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class PermissionRequired : Window
     {
-        private RepositoryLocator _cloudPosUnitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         MaterialDesignThemes.Wpf.Chip _cUser;
         bool _isPrinted;
         bool _isTable;
 
-        public PermissionRequired(RepositoryLocator cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
+        public PermissionRequired(BusinessModuleLocator BusinessModuleLocator, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
         {
-            _cloudPosUnitofwork = cloudPosUnitofwork;
+            _businessModuleLocator = BusinessModuleLocator;
             _cUser = cUser;
             _isPrinted = isPrinted;
             _isTable = isTable;
@@ -58,7 +59,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 await Task.Run(() =>
                 {
-                    List<AdminRe> AdList = _cloudPosUnitofwork.AdminreRepository.Get().ToList();
+                    List<AdminRe> AdList = _businessModuleLocator.AdminModule.getAdmins().ToList();
 
                     var ad = AdList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     //Get Admin

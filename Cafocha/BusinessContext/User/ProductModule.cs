@@ -47,6 +47,11 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             return _unitofwork.ProductRepository.Get(filter, orderBy, includeProperties);
         }
 
+        public Product getProduct(string productID)
+        {
+            return _unitofwork.ProductRepository.GetById(productID);
+        }
+
         public IEnumerable<ProductDetail> getAllProductDetails(string productId)
         {
             return _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(productId);
@@ -95,10 +100,15 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             }
         }
 
-        public void updateProduct(Product product, List<ProductDetail> productDetails ,List<ProductModule.PDTemp> pdTempData)
+        public void updateProduct(Product product)
         {
             _unitofwork.ProductRepository.Update(product);
             _unitofwork.Save();
+        }
+
+        public void updateProduct(Product product, List<ProductDetail> productDetails ,List<ProductModule.PDTemp> pdTempData)
+        {
+            updateProduct(product);
 
             if (_pdtList.Count() != 0)
             {

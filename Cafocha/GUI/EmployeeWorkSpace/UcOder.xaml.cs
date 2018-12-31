@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
@@ -20,8 +21,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class UcOder : UserControl
     {
-        private RepositoryLocator _unitofwork;
-        private TakingOrderModule _takingOrderModule;
+        private BusinessModuleLocator _businessModuleLocator;
         private Employee currentEmp;
 
 
@@ -39,8 +39,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
             isUcOrderFormLoading = true;
-            _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
-            _takingOrderModule = ((MainWindow)Window.GetWindow(this)).takingOrderModule;
+            _businessModuleLocator = ((MainWindow)Window.GetWindow(this))._businessModuleLocator;
             EmpLoginList currentEmpList = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
 
 
@@ -90,13 +89,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// show all orderdetails in the current checked chair.
         /// allow to modify these orderdetails
         /// </summary>
-        public void RefreshControl(RepositoryLocator unitofwork)
+        public void RefreshControl()
         {
             try
             {
                 initStatus_RaiseEvent = true;
                 // binding
-                lvData.ItemsSource = _takingOrderModule.getOrderDetailsDisplay(); ;
+                lvData.ItemsSource = _businessModuleLocator.TakingOrderModule.getOrderDetailsDisplay(); ;
                 loadTotalPrice();
 
                 initStatus_RaiseEvent = false;
@@ -114,7 +113,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         public void RefreshControlAllChair()
         {
             // binding
-            lvData.ItemsSource = _takingOrderModule.getOrderDetailsDisplay();
+            lvData.ItemsSource = _businessModuleLocator.TakingOrderModule.getOrderDetailsDisplay();
             if (!isUnCheckChair)
             {
                 loadTotalPrice();
@@ -123,7 +122,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void LoadCustomerOwner()
         {
-            cboCustomers.ItemsSource = _unitofwork.CustomerRepository.Get();
+            cboCustomers.ItemsSource = _businessModuleLocator.CustomerModule.getAllCustomer();
             cboCustomers.SelectedValuePath = "CusId";
             cboCustomers.DisplayMemberPath = "Name";
             cboCustomers.MouseEnter += (sender, args) =>
@@ -135,10 +134,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 cboCustomers.Background.Opacity = 0;
             };
 
-            if (_takingOrderModule.OrderTemp.CusId != null)
+            if (_businessModuleLocator.TakingOrderModule.OrderTemp.CusId != null)
             {
                 InitCus_raiseEvent = true;
-                cboCustomers.SelectedValue = _takingOrderModule.OrderTemp.CusId;
+                cboCustomers.SelectedValue = _businessModuleLocator.TakingOrderModule.OrderTemp.CusId;
             }
             InitCus_raiseEvent = false;
         }
@@ -154,13 +153,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
-                //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
-                _takingOrderModule.OrderTemp.CusId =
+
+                _businessModuleLocator.TakingOrderModule.OrderTemp.CusId =
                     (string)(sender as ComboBox).SelectedValue;
-                _takingOrderModule.OrderTemp.Discount = _unitofwork.CustomerRepository.Get(x => x.CusId.Equals(_takingOrderModule.OrderTemp.CusId))
-                    .FirstOrDefault().Discount;
+                _businessModuleLocator.TakingOrderModule.OrderTemp.Discount = _businessModuleLocator.CustomerModule.getCustomer(_businessModuleLocator.TakingOrderModule.OrderTemp.CusId).Discount;
                 loadTotalPrice();
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
             }
         }
 
@@ -184,8 +182,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         public void loadTotalPrice()
         {
-            _takingOrderModule.loadTotalPrice();
-             txtTotal.Text = string.Format("{0:0.000}", _takingOrderModule.OrderTemp.TotalPrice);
+            _businessModuleLocator.TakingOrderModule.loadTotalPrice();
+             txtTotal.Text = string.Format("{0:0.000}", _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice);
         }
 
 
@@ -217,10 +215,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
-                _takingOrderModule.updateOrderDetail(index, (e.OriginalSource as ComboBox).SelectedItem.ToString());
-                RefreshControl(_unitofwork);
+                _businessModuleLocator.TakingOrderModule.updateOrderDetail(index, (e.OriginalSource as ComboBox).SelectedItem.ToString());
+                RefreshControl();
 
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
             }
         }
 
@@ -264,11 +262,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         }
                         isDone = dcd.done;
                         // update employee ID that effect to the OrderNote
-                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
                     }
                     else
                     {
-                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
+                        PermissionRequired pr = new PermissionRequired(_businessModuleLocator, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
                         if (pr.ShowDialog() == false)
                         {
                             return;
@@ -301,10 +299,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                     index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
 
-                    _takingOrderModule.deleteOrderDetail(index, isDone);
+                    _businessModuleLocator.TakingOrderModule.deleteOrderDetail(index, isDone);
 
-                    RefreshControl(_unitofwork);
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                    RefreshControl();
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
                     break;
                 }
             }
@@ -338,16 +336,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
 
-            InputNote inputnote = new InputNote(_takingOrderModule.OrderTemp.OrderDetailsTemps.ElementAt(index).Note);
+            InputNote inputnote = new InputNote(_businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps.ElementAt(index).Note);
 
             if (inputnote.ShowDialog() == true)
             {
-                _takingOrderModule.updateOrderNote(index, inputnote.Note.ToLower());
+                _businessModuleLocator.TakingOrderModule.updateOrderNote(index, inputnote.Note.ToLower());
             }
 
 
-            RefreshControl(_unitofwork);
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+            RefreshControl();
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
         }
 
 
@@ -366,7 +364,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             // input the rest data
             OrderNote newOrder = new OrderNote();
-            newOrder.TotalPrice = _takingOrderModule.OrderTemp.TotalPrice;
+            newOrder.TotalPrice = _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice;
             InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
             if (!inputTheRest.MyShowDialog())
             {
@@ -376,9 +374,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
             // convert data and save to database
-            if (_takingOrderModule.ConvertTableToOrder(newOrder))
+            if (_businessModuleLocator.TakingOrderModule.ConvertTableToOrder(newOrder))
             {
-                _takingOrderModule.saveOrderToDB(newOrder);
+                _businessModuleLocator.TakingOrderModule.saveOrderToDB(newOrder);
             }
             else
             {
@@ -386,7 +384,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
 
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+            var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Receipt_Printing, newOrder);
             printer.DoPrint();
 
             // clean the old table data
@@ -404,16 +402,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             // input the rest data
             OrderNote newOrder = new OrderNote();
-            newOrder.TotalPrice = _takingOrderModule.OrderTemp.TotalPrice;
-            _takingOrderModule.ConvertTableToOrder(newOrder);
+            newOrder.TotalPrice = _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice;
+            _businessModuleLocator.TakingOrderModule.ConvertTableToOrder(newOrder);
  
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, newOrder );
+            var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.TempReceipt_Printing, newOrder );
             printer.DoPrint();
 
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
         }
 
         //ToDo: Set the contain back when the order didn't call any more
@@ -433,7 +431,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("This table is already printed! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
+                        PermissionRequired pr = new PermissionRequired(_businessModuleLocator, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -441,7 +439,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                             ClearTheTable_ForDelete();
 
                             // update employee ID that effect to the OrderNote
-                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
                         }
                         else
                         {
@@ -458,7 +456,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     ClearTheTable_ForDelete();
 
                     // update employee ID that effect to the OrderNote
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
                 }
             }
             else
@@ -466,7 +464,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 ClearTheTable_ForDelete();
 
                 // update employee ID that effect to the OrderNote
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
             }
         }
 
@@ -485,7 +483,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void ClearTheTable()
         {
             isClearingTable = true;
-            _takingOrderModule.clearOrder();
+            _businessModuleLocator.TakingOrderModule.clearOrder();
 
 //        TODO: Reset is printed or not    
 //            curTable.IsOrdered = 0;
@@ -510,7 +508,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void ClearTheTable_ForDelete()
         {
             isClearingTalbe_ForDelete = true;
-            _takingOrderModule.clearOrder();
+            _businessModuleLocator.TakingOrderModule.clearOrder();
 
             LoadCustomerOwner();
             RefreshControlAllChair();
@@ -536,16 +534,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// <param name="productQuan">give back product quantity</param>
 
 
-        private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
+        private void checkWorkingAction(EmpLoginList currentEmp)
         {
-            if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
+            if (currentEmp.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId))
             {
                 return;
             }
 
-            if (ordertempcurrenttable.SubEmpId != null)
+            if (_businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId != null)
             {
-                string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
+                string[] subemplist = _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId.Split(',');
 
                 for (int i = 0; i < subemplist.Count(); i++)
                 {
@@ -560,11 +558,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     }
                 }
 
-                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+                _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId += currentEmp.Emp.EmpId + ",";
                 return;
             }
 
-            ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+            _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId += currentEmp.Emp.EmpId + ",";
 
         }
 
@@ -574,19 +572,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         // INPUT TOTALPRICE
         private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (_takingOrderModule == null || _takingOrderModule.OrderTemp == null || isUcOrderFormLoading || isClearingTable || isClearingTalbe_ForDelete)
+            if (_businessModuleLocator == null || _businessModuleLocator.TakingOrderModule.OrderTemp == null || isUcOrderFormLoading || isClearingTable || isClearingTalbe_ForDelete)
                 return;
             TextBox txtTotal = (sender as TextBox);
             if (string.IsNullOrEmpty(txtTotal.Text))
-                _takingOrderModule.OrderTemp.TotalPrice = 0;
+                _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = 0;
             else
             {
-                _takingOrderModule.OrderTemp.TotalPrice = decimal.Parse(txtTotal.Text);
+                _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = decimal.Parse(txtTotal.Text);
             }
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, _takingOrderModule.OrderTemp);
-            _unitofwork.Save();
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
         }
 
         // FORMAT TOTALPRICE TEXTBOX
@@ -595,19 +592,19 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             // When user leave the Total Price textbox, it will format their input value
             TextBox txtTotal = (sender as TextBox);
 
-            decimal Total = _takingOrderModule.OrderTemp.TotalPrice;
+            decimal Total = _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice;
             decimal SaleValue = Total;
             decimal Svc = (Total * 5) / 100;
             decimal Vat = ((Total + (Total * 5) / 100) * 10) / 100;
             Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
 
-            _takingOrderModule.OrderTemp.TotalPrice = Total;
-            _takingOrderModule.OrderTemp.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
-            _takingOrderModule.OrderTemp.Svc = Math.Round(Svc, 3);
-            _takingOrderModule.OrderTemp.Vat = Math.Round(Vat, 3);
-            _takingOrderModule.OrderTemp.SaleValue = Math.Round(SaleValue, 3);
+            _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = Total;
+            _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
+            _businessModuleLocator.TakingOrderModule.OrderTemp.Svc = Math.Round(Svc, 3);
+            _businessModuleLocator.TakingOrderModule.OrderTemp.Vat = Math.Round(Vat, 3);
+            _businessModuleLocator.TakingOrderModule.OrderTemp.SaleValue = Math.Round(SaleValue, 3);
 
-            txtTotal.Text = string.Format("{0:0.000}", _takingOrderModule.OrderTemp.TotalPrice);
+            txtTotal.Text = string.Format("{0:0.000}", _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice);
         }
     }
 }

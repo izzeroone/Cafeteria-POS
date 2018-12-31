@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
@@ -13,12 +14,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeDetail : Window
     {
-        internal EmployeeModule _employeeModule;
+        private BusinessModuleLocator _businessModuleLocator;
         Employee em;
 
-        public EmployeeDetail(string UserName, EmployeeModule employeeModule)
+        public EmployeeDetail(string UserName, BusinessModuleLocator businessModuleLocator)
         {
-            _employeeModule = employeeModule;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             loadData(UserName);
             InitlsWh();
@@ -26,7 +27,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void loadData(string UserName)
         {
-            em = _employeeModule.getEmployee(UserName);
+            em = _businessModuleLocator.EmployeeModule.getEmployee(UserName);
 
             this.EmployeeInfo.DataContext = em;
         }
@@ -34,7 +35,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void InitlsWh()
         {
             ShowWHData.showWHList.Clear();
-            var whListAll = _employeeModule.getWorkingHistoryOfEmployee(em, DateTime.Now.Month, DateTime.Now.Year);
+            var whListAll = _businessModuleLocator.EmployeeModule.getWorkingHistoryOfEmployee(em, DateTime.Now.Month, DateTime.Now.Year);
             foreach (var i in whListAll)
             {
                 ShowWH newWH = new ShowWH();
@@ -78,7 +79,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeChangePass empPass = new EmployeeChangePass(_employeeModule, em);
+            EmployeeChangePass empPass = new EmployeeChangePass(_businessModuleLocator, em);
             empPass.ShowDialog();
         }
     }

@@ -45,7 +45,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             try
             {
                 var getLoginAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                curAdmin = _businessModuleLocator.AdminModule.getCurrentAdmin(getLoginAdmin.AdId);
+                curAdmin = _businessModuleLocator.AdminModule.getAdmin(getLoginAdmin.AdId);
                 if (curAdmin == null)
                 {
                     this.Close();
