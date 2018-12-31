@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using log4net;
@@ -17,7 +18,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
 
     public partial class WareHouseWindow : Window
     {
-        RepositoryLocator _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private InputReceiptNote _inputReceipt;
@@ -36,12 +37,11 @@ namespace Cafocha.GUI.WareHouseWorkSpace
 
             try
             {
-                _unitofwork = new RepositoryLocator();
-                IngdList = _unitofwork.IngredientRepository
-                    .Get(c => c.Deleted.Equals(0), includeProperties: "WareHouse").ToList();
+                _businessModuleLocator = new BusinessModuleLocator();
+                IngdList = _businessModuleLocator.IngredientModule.getAllIngredientsWithWarehouse().ToList();
 
-                _innIngredientPage = new IngredientPage(_unitofwork, IngdList);
-                _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
+                _innIngredientPage = new IngredientPage(_businessModuleLocator, IngdList);
+                _lvChartReceiptPage = new LiveChartReceiptPage(_businessModuleLocator);
 
 
 
@@ -55,12 +55,12 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                 //}
                 //else
                 //{
-                    Employee getEmp = POS.App.Current.Properties["EmpLogin"] as Employee;
-                    List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
+                    Employee getEmp = Application.Current.Properties["EmpLogin"] as Employee;
+                    List<Employee> empList = _businessModuleLocator.EmployeeModule.getEmployees().ToList();
                     curEmp = empList.FirstOrDefault(x =>
                         x.Username.Equals(getEmp.Username) && x.DecryptedPass.Equals(getEmp.DecryptedPass));
                     CUserChip.Content = curEmp.Name;
-                    _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
+                    _inputReceipt = new InputReceiptNote(_businessModuleLocator, IngdList);
                 //}
 
 
@@ -80,7 +80,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
 
         private void Refresh_Tick(object sender, EventArgs e)
         {
-            foreach (var ingd in _unitofwork.IngredientRepository.Get(includeProperties: "WareHouse"))
+            foreach (var ingd in _businessModuleLocator.IngredientModule.getAllIngredientsWithWarehouseWithDeleteOne())
             {
                 if (ingd.Deleted == 1)
                 {

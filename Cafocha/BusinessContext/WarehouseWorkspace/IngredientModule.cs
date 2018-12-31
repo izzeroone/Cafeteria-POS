@@ -25,6 +25,16 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             return _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
         }
+
+        public IEnumerable<Ingredient> getAllIngredientsWithWarehouse()
+        {
+            return _unitofwork.IngredientRepository.Get(x => x.Deleted == 0, includeProperties: "WareHouse").ToList();
+        }
+
+        public IEnumerable<Ingredient> getAllIngredientsWithWarehouseWithDeleteOne()
+        {
+            return _unitofwork.IngredientRepository.Get(includeProperties: "WareHouse").ToList();
+        }
         public void insertIngredient(Ingredient ingredient)
         {
             WareHouse newWare = new WareHouse

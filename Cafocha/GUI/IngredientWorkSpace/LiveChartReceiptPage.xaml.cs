@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 using LiveCharts;
@@ -16,14 +17,14 @@ namespace Cafocha.GUI.WareHouseWorkSpace
     /// </summary>
     public partial class LiveChartReceiptPage : Page
     {
-        RepositoryLocator _unitofwork;
+        private BusinessModuleLocator _businessModuleLocator;
         private ChartValues<decimal> Average1;
         private ChartValues<decimal> Average2;
         private ChartValues<decimal> ValueExpense;
         private ChartValues<decimal> ValueRevenue;
-        public LiveChartReceiptPage(RepositoryLocator unitofwork)
+        public LiveChartReceiptPage(BusinessModuleLocator businessModuleLocator)
         {
-            _unitofwork = unitofwork;
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             DispatcherTimer RefreshTimer = new DispatcherTimer();
@@ -58,7 +59,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
         {
             decimal totalReceipt = 0;
             decimal totalOrder = 0;
-            var receiptList = _unitofwork.ReceiptNoteRepository.Get();
+            var receiptList = _businessModuleLocator.ReceiptNoteModule.getAllReceiveNotes();
             decimal AverageReceipt = 0;
             if (receiptList != null && receiptList.Any())
             {
@@ -69,7 +70,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                 AverageReceipt = totalReceipt / (receiptList.Count());
             }
 
-            var OrderList = _unitofwork.OrderRepository.Get();
+            var OrderList = _businessModuleLocator.OrderModule.getOrdernoteList();
             decimal AveragOrder = 0;
             if (OrderList != null && OrderList.Any())
             {
@@ -112,15 +113,15 @@ namespace Cafocha.GUI.WareHouseWorkSpace
             Average2.Add(AveragOrder);
 
 
-            loadDataExpense(_unitofwork, ValueExpense);
-            loadDataRevenue(_unitofwork, ValueRevenue);
+            loadDataExpense(_businessModuleLocator, ValueExpense);
+            loadDataRevenue(_businessModuleLocator, ValueRevenue);
         }
 
         private void LiveChartReceiptPage_Load(object sender, RoutedEventArgs e)
         {
             decimal totalReceipt = 0;
             decimal totalOrder = 0;
-            var receiptList = _unitofwork.ReceiptNoteRepository.Get();
+            var receiptList = _businessModuleLocator.ReceiptNoteModule.getAllReceiveNotes();
             decimal AverageReceipt = 0;
             if (receiptList != null && receiptList.Any())
             {
@@ -131,7 +132,7 @@ namespace Cafocha.GUI.WareHouseWorkSpace
                 AverageReceipt = totalReceipt / (receiptList.Count());
             }
 
-            var OrderList = _unitofwork.OrderRepository.Get();
+            var OrderList = _businessModuleLocator.OrderModule.getOrdernoteList();
             decimal AveragOrder = 0;
             if (OrderList != null && OrderList.Any())
             {
@@ -174,11 +175,11 @@ namespace Cafocha.GUI.WareHouseWorkSpace
             Average2.Add(AveragOrder);
 
 
-            loadDataExpense(_unitofwork, ValueExpense);
-            loadDataRevenue(_unitofwork, ValueRevenue);
+            loadDataExpense(_businessModuleLocator, ValueExpense);
+            loadDataRevenue(_businessModuleLocator, ValueRevenue);
         }
 
-        private void loadDataExpense(RepositoryLocator unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataExpense(BusinessModuleLocator businessModuleLocator, ChartValues<decimal> ValueExpense)
         {
             
             decimal totalMonthAmount1 = 0;
@@ -194,21 +195,21 @@ namespace Cafocha.GUI.WareHouseWorkSpace
             decimal totalMonthAmount11 = 0;
             decimal totalMonthAmount12 = 0;
 
-            var valueM1 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 1);
-            var valueM2 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 2);
-            var valueM3 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 3);
-            var valueM4 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 4);
-            var valueM5 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 5);
-            var valueM6 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 6);
-            var valueM7 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 7);
-            var valueM8 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 8);
-            var valueM9 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 9);
-            var valueM10 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 10);
-            var valueM11 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 11);
-            var valueM12 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 12);
+            var valueM1 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(1);
+            var valueM2 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(2);
+            var valueM3 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(3);
+            var valueM4 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(4);
+            var valueM5 =  businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(5);
+            var valueM6 =  businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(6);
+            var valueM7 =  businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(7);
+            var valueM8 =  businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(8);
+            var valueM9 =  businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(9);
+            var valueM10 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(10);
+            var valueM11 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(11);
+            var valueM12 = businessModuleLocator.ReceiptNoteModule.getAllReceiptNotesByMonth(12);
             FindValueInMonthReceiptNote(ValueExpense, valueM1, totalMonthAmount1, valueM2, totalMonthAmount2, valueM3, totalMonthAmount3, valueM4, totalMonthAmount4, valueM5, totalMonthAmount5, valueM6, totalMonthAmount6, valueM7, totalMonthAmount7, valueM8, totalMonthAmount8, valueM9, totalMonthAmount9, valueM10, totalMonthAmount10, valueM11, totalMonthAmount11, valueM12, totalMonthAmount12);
         }
-        private void loadDataRevenue(RepositoryLocator unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataRevenue(BusinessModuleLocator businessModuleLocator, ChartValues<decimal> ValueExpense)
         {
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;
@@ -223,18 +224,19 @@ namespace Cafocha.GUI.WareHouseWorkSpace
             decimal totalMonthAmount11 = 0;
             decimal totalMonthAmount12 = 0;
 
-            var valueM1 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 1);
-            var valueM2 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 2);
-            var valueM3 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 3);
-            var valueM4 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 4);
-            var valueM5 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 5);
-            var valueM6 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 6);
-            var valueM7 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 7);
-            var valueM8 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 8);
-            var valueM9 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 9);
-            var valueM10 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 10);
-            var valueM11 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 11);
-            var valueM12 = unitofwork.OrderRepository.Get(c => c.Ordertime.Month == 12);
+            var valueM1 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(1);
+            var valueM2 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(2);
+            var valueM3 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(3);
+            var valueM4 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(3);
+            var valueM5 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(5);
+            var valueM6 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(6);
+            var valueM7 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(7);
+            var valueM8 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(8);
+            var valueM9 =  _businessModuleLocator.OrderModule.getOrdernoteByMonth(9);
+            var valueM10 = _businessModuleLocator.OrderModule.getOrdernoteByMonth(10);
+            var valueM11 = _businessModuleLocator.OrderModule.getOrdernoteByMonth(11);
+            var valueM12 = _businessModuleLocator.OrderModule.getOrdernoteByMonth(12);
+            
             FindValueInMonthOrderNote(ValueExpense, valueM1, totalMonthAmount1, valueM2, totalMonthAmount2, valueM3, totalMonthAmount3, valueM4, totalMonthAmount4, valueM5, totalMonthAmount5, valueM6, totalMonthAmount6, valueM7, totalMonthAmount7, valueM8, totalMonthAmount8, valueM9, totalMonthAmount9, valueM10, totalMonthAmount10, valueM11, totalMonthAmount11, valueM12, totalMonthAmount12);
         }
 

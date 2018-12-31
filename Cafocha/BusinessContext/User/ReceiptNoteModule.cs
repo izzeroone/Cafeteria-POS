@@ -26,6 +26,16 @@ namespace Cafocha.BusinessContext.User
             return _unitofwork.ReceiptNoteRepository.Get(includeProperties: "Employee");
         }
 
+        public IEnumerable<ReceiptNote> getAllReceiptNotesByMonth(int month)
+        {
+            if (month <= 0 || month >= 13)
+            {
+                return new List<ReceiptNote>();
+            }
+
+            return _unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == month);
+        }
+
         public IEnumerable<ReceiptNoteDetail> getReceiptNoteDetails(string receiptID)
         {
             return _unitofwork.ReceiptNoteDsetailsRepository.Get(c => c.RnId.Equals(receiptID));

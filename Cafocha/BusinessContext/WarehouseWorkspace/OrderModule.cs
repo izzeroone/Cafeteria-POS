@@ -29,6 +29,17 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             return ordernotelist;
         }
 
+        public IEnumerable<OrderNote> getOrdernoteByMonth(int month)
+        {
+            if (month <= 0 || month >= 13)
+            {
+                return new List<OrderNote>();
+            }
+
+            return _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == month);
+
+        }
+
         public IEnumerable<OrderNoteDetail> getOrderNoteDetail(string orderNoteID)
         {
             return _unitofwork.OrderDetailsRepository.Get(c => c.OrdernoteId.Equals(orderNoteID));
