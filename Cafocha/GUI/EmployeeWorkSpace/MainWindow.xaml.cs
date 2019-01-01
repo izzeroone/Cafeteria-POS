@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -36,6 +37,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         internal SettingFoodPage st;
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
+        internal SettingPrinter settingPrinter;
         internal Boolean isOrderPrint;
         internal Boolean isOrderOrder;
 
@@ -68,6 +70,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 en = new Entry();
                 info = new Info();
                 st = new SettingFoodPage(_businessModuleLocator);
+                settingPrinter = new SettingPrinter();
 
                 WorkTimer = new DispatcherTimer();
                 WorkTimer.Tick += WorkTime_Tick;
@@ -296,6 +299,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
+        }
+
+        private void LbiPrinterSetting_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(settingPrinter);
         }
     }
 }

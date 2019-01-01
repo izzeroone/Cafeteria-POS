@@ -79,10 +79,10 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
         public void DoPrint()
         {
-            if (curOrder == null)
-            {
-                return;
-            }
+//            if (curOrder == null)
+//            {
+//                return;
+//            }
 
             try
             {

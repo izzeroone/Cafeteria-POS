@@ -72,6 +72,7 @@ public partial class UcMenu : UserControl
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
+                MessageBox.Show("You should login before");
                 return;
             }
             ListBox lbSelected = sender as ListBox;
