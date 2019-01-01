@@ -277,6 +277,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
                 LoadStockInData();
+                MessageBox.Show("Stock in successful!");
             }
             catch (Exception ex)
             {

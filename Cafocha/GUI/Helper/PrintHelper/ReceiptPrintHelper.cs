@@ -238,8 +238,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Width = 60,
                 TextAlignment = TextAlignment.Right
             };
-            stpSVC.Children.Add(tbSVCLable);
-            stpSVC.Children.Add(tbSVCValue);
+//            stpSVC.Children.Add(tbSVCLable);
+//            stpSVC.Children.Add(tbSVCValue);
 
 
             // VAT

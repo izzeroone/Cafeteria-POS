@@ -222,96 +222,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
         }
 
-        //ToDo: Set the WareHouse's contain back when the order didn't call any more
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (App.Current.Properties["CurrentEmpWorking"] == null)
-            {
-                MessageBox.Show("No employee on working! Please try again!");
-                return;
-            }
-
-            int i = 0;
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == false)
-                {
-                    i++;
-                }
-            }
-            if (i == 0)
-            {
-                MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
-                return;
-            }
-
-            bool isDone = false;
-
-            //TODO: check whether printer or not
-            if (true)
-            {
-                MessageBoxResult mess = MessageBox.Show("Invoice of this table is already printed! You can not edit this table! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
-                if (mess == MessageBoxResult.Yes)
-                {
-                    if (App.Current.Properties["AdLogin"] != null)
-                    {
-                        DeleteConfirmDialog dcd = new DeleteConfirmDialog(((MainWindow)Window.GetWindow(this)).cUser, false);
-                        if (dcd.ShowDialog() == false)
-                        {
-                            return;
-                        }
-                        isDone = dcd.done;
-                        // update employee ID that effect to the OrderNote
-                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
-                    }
-                    else
-                    {
-                        PermissionRequired pr = new PermissionRequired(_businessModuleLocator, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
-                        if (pr.ShowDialog() == false)
-                        {
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-            OrderDetailsTemp o = new OrderDetailsTemp();
-            int index;
-
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == true)
-                {
-                    //delete chair order note
-
-                    while ((dep != null) && !(dep is ListViewItem))
-                    {
-                        dep = VisualTreeHelper.GetParent(dep);
-                    }
-
-                    if (dep == null)
-                        return;
-
-                    index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
-
-                    _businessModuleLocator.TakingOrderModule.deleteOrderDetail(index, isDone);
-
-                    RefreshControl();
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
-                    break;
-                }
-            }
-
             ClearTheTable();
-//            if (orderTempDetails.Count == 0)
-//            {
-//                
-//            }
         }
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
@@ -423,49 +336,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            //TODO: FIX whether print or not
-            if (true)
-            {
-                if (App.Current.Properties["AdLogin"] == null)
-                {
-                    MessageBoxResult mess = MessageBox.Show("This table is already printed! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
-                    if (mess == MessageBoxResult.Yes)
-                    {
-                        PermissionRequired pr = new PermissionRequired(_businessModuleLocator, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
-                        pr.ShowDialog();
+            ClearTheTable();
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
 
-                        if (App.Current.Properties["AdLogin"] != null)
-                        {
-                            ClearTheTable_ForDelete();
-
-                            // update employee ID that effect to the OrderNote
-                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    ClearTheTable_ForDelete();
-
-                    // update employee ID that effect to the OrderNote
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
-                }
-            }
-            else
-            {
-                ClearTheTable_ForDelete();
-
-                // update employee ID that effect to the OrderNote
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
-            }
         }
 
 
@@ -536,7 +409,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void checkWorkingAction(EmpLoginList currentEmp)
         {
-            if (currentEmp.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId))
+            if (currentEmp == null || currentEmp.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId))
             {
                 return;
             }

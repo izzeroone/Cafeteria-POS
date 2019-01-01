@@ -81,7 +81,7 @@
                     <GridView x:Name="gvDetails">
                         <GridViewColumn Header="Item"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding Sto_id}" />
+                                        DisplayMemberBinding="{Binding StockId}" />
                         <GridViewColumn Header="Qty"
                                         Width="70">
                             <GridViewColumn.CellTemplate>

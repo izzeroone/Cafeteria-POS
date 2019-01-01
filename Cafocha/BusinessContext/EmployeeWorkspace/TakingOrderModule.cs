@@ -153,57 +153,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public void updateOrderNote(int index, String note)
         {
-            var tempdata = OrderDetailsTempData(index);
-            tempdata.Note = note;
-            if (_orderTemp.OrderDetailsTemps.ElementAt(index).Quan == 1)
-            {
-                foreach (var cho in _orderTemp.OrderDetailsTemps)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                        && cho.ProductId.Equals(tempdata.ProductId)
-                        && cho.SelectedStats.Equals(tempdata.SelectedStats)
-                        && cho.Note.Equals(tempdata.Note)
-                        && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
-                    {
-                        cho.Quan++;
-                        return;
-                    }
-                }
-                return;
-            }
-
-            if (_orderTemp.OrderDetailsTemps.ElementAt(index).Quan > 1)
-            {
-                foreach (var cho in _orderTemp.OrderDetailsTemps)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                        && cho.ProductId.Equals(tempdata.ProductId)
-                        && cho.SelectedStats.Equals(tempdata.SelectedStats)
-                        && cho.Note.Equals(tempdata.Note)
-                        && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
-                    {
-                        tempdata.Note = _orderTemp.OrderDetailsTemps.ElementAt(index).Note;
-                        tempdata.Quan--;
-                        cho.Quan++;
-
-                        return;
-                    }
-                }
-
-                foreach (var cho in _orderTemp.OrderDetailsTemps)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                        && cho.ProductId.Equals(tempdata.ProductId)
-                        && cho.SelectedStats.Equals(tempdata.SelectedStats)
-                        && !cho.Note.Equals(tempdata.Note))
-                    {
-                        _orderTemp.OrderDetailsTemps.ElementAt(index).Quan--;
-                        tempdata.Quan = 1;
-
-                        return;
-                    }
-                }
-            }
+            _orderTemp.OrderDetailsTemps.ElementAt(index).Note = note;
         }
 
         public void deleteOrderDetail(int index, bool isDone)
@@ -259,7 +209,6 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                                            };
 
             // calculate totalPriceNonDisc and TotalPrice
-            decimal Svc = 0;
             decimal Vat = 0;
             decimal SaleValue = 0;
             decimal TotalWithDiscount = 0;
@@ -269,11 +218,8 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
 
-            // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
-            SaleValue = Total;
-            Svc = (Total * 5) / 100;
-            Vat = ((Total + (Total * 5) / 100) * 10) / 100;
-            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
+            SaleValue = Total *  90 / 100;
+            Vat = Total * 10 / 100;
             TotalWithDiscount = (decimal)(((float)Total * (100 - _orderTemp.Discount)) / 100.0);
 
             /*
@@ -283,7 +229,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
             _orderTemp.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
             _orderTemp.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
-            _orderTemp.Svc = Math.Round(Svc, 3);
+            _orderTemp.Svc = 0;
             _orderTemp.Vat = Math.Round(Vat, 3);
             _orderTemp.SaleValue = Math.Round(SaleValue, 3);
         }

@@ -21,5 +21,17 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             lvItem.ItemsSource = stockList;
         }
+
+        private void Page_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+        }
+
+        private void Page_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                lvItem.Items.Refresh();
+            }
+        }
     }
 }

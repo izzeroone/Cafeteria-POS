@@ -155,7 +155,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     Owner = new Owner()
                     {
                         ImgName = "logo.png",
-                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+                        Address = "Address: f.7th, Abc Building, 101 St.Vo Van Ngan, w.Thu Duc, HCM City, Viet Nam",
                         Phone = "",
                         PageName = "RECEIPT"
                     },

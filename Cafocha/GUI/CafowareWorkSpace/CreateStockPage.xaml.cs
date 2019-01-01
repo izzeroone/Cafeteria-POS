@@ -33,6 +33,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void initComboBox()
         {
             cboGroup.Items.Add(StockGroup.All);
+            cboGroup.Items.Add(StockGroup.Ingridient);
             cboGroup.Items.Add(StockGroup.Cosmetics);
             cboGroup.Items.Add(StockGroup.SpaVoucher);
             cboGroup.Items.Add(StockGroup.GymVoucher);
@@ -44,6 +45,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             cboGroup.Items.Add(StockGroup.TopTen);
             cboGroup.SelectedItem = StockGroup.All;
 
+            cboStockGroup.Items.Add(StockGroup.Ingridient);
             cboStockGroup.Items.Add(StockGroup.Cosmetics);
             cboStockGroup.Items.Add(StockGroup.SpaVoucher);
             cboStockGroup.Items.Add(StockGroup.GymVoucher);
@@ -53,7 +55,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             cboStockGroup.Items.Add(StockGroup.Agricultural);
             cboStockGroup.Items.Add(StockGroup.Watch);
             cboStockGroup.Items.Add(StockGroup.TopTen);
-            cboStockGroup.SelectedItem = StockGroup.Cosmetics;
+            cboStockGroup.SelectedIndex = 0;
 
             cboUnitIn.Items.Add("pcs");
             cboUnitIn.SelectedItem = "pcs";
@@ -120,6 +122,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             switch (_selectedStock.Group)
             {
+                case (int)StockGroup.Ingridient:
+                    cboStockGroup.SelectedItem = StockGroup.Ingridient;
+                    break;
                 case (int)StockGroup.Cosmetics:
                     cboStockGroup.SelectedItem = StockGroup.Cosmetics;
                     break;

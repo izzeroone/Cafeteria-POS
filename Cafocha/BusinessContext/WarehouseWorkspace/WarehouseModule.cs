@@ -85,6 +85,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             _unitofworkWH.ApWareHouseRepository.Insert(apWareHouse);
             _unitofworkWH.Save();
+            updateStock();
         }
 
 
@@ -92,12 +93,17 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             _unitofworkWH.StockRepository.Insert(stock);
             _unitofworkWH.Save();
+            updateStock();
+
+
         }
 
         public void updateStock(Stock stock)
         {
             _unitofworkWH.StockRepository.Update(stock);
             _unitofworkWH.Save();
+            updateStock();
+
         }
 
         private void UpdateAPWareHouseContain(StockIn stockIn)
@@ -115,6 +121,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     }
                 }
             }
+            updateStock();
         }
 
         private void UpdateAPWareHouseContain(StockOut stockOut)
@@ -132,6 +139,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     }
                 }
             }
+            updateStock();
+
+
         }
 
 
@@ -144,11 +154,11 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 stockInDetail.SiId = stockIn.SiId;
             }
             _unitofworkWH.StockInRepository.Insert(stockIn);
+            _unitofworkWH.Save();
 
             //ToDo: Update the contain value in Warehouse database
             UpdateAPWareHouseContain(stockIn);
 
-            _unitofworkWH.Save();
         }
 
         public void addStockOut(StockOut stockOut)
@@ -160,11 +170,12 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 stockInDetail.StockoutId = stockOut.StockoutId;
             }
             _unitofworkWH.StockOutRepository.Insert(stockOut);
+            _unitofworkWH.Save();
 
             //ToDo: Update the contain value in Warehouse database
             UpdateAPWareHouseContain(stockOut);
 
-            _unitofworkWH.Save();
+            
         }
 
         public void inputReceivedNoteDetails(ReceiptNote receipt)
@@ -178,6 +189,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             }
             _unitofworkWH.ReceiptNoteRepository.Insert(receipt);
             _unitofworkWH.Save();
+            updateStock();
+
+
 
         }
         public void updateIngerdientStock(Ingredient ingredient, double addNum)
@@ -188,6 +202,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 wareHouse.Contain += addNum * UnitBuyTrans.ToUnitContain(ingredient.UnitBuy);
                 _unitofworkWH.WareHouseRepository.Update(wareHouse);
             }
+            updateStock();
+
+
         }
         public ApWareHouse getApWareHouse(string id)
         {

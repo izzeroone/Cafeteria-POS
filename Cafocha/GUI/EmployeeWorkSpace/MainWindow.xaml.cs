@@ -241,10 +241,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //check employee
             if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
+                MessageBox.Show("Cannot end working when you are not started working!");
                 cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
             else if (App.Current.Properties["CurrentEmpWorking"] != null)
             {
+                if (_businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps.Count != 0)
+                {
+                    MessageBox.Show("You have pending order. Cannot end working!");
+                    return;
+                }
                 App.Current.Properties["CurrentEmpWorking"] = null;
                 cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
@@ -282,6 +288,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (App.Current.Properties["AdLogin"] != null)
             {
                 return;
+            }
+
+
+            if (App.Current.Properties["CurrentEmpWorking"] != null)
+            {
+                MessageBox.Show("You should end working before log out!");
             }
 
             AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _businessModuleLocator, cUser, 3);

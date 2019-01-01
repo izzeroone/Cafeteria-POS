@@ -67,7 +67,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         public void Refresh_Tick(object sender, EventArgs e)
         {
-           _businessModuleLocator.WarehouseModule.loadStock();
+           _businessModuleLocator.WarehouseModule.updateStock();
 
             if (isCreateStockRun)
             {

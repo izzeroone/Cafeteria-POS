@@ -278,6 +278,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
                 LoadStockOutData();
+                MessageBox.Show("Stock out successful!");
+
             }
             catch (Exception ex)
             {
