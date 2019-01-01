@@ -3,8 +3,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.GUI.BusinessModel;
 using Cafocha.Repository.DAL;
 using log4net;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Cafocha.GUI
 {
@@ -20,20 +22,20 @@ namespace Cafocha.GUI
 
         public LoginWindow()
         {
-            //string[] config = ReadWriteData.ReadDBConfig();
-            //if (config != null)
-            //{
-            //    _unitofwork = new RepositoryLocator(config[0], config[1], config[2], config[3]);
-            //}
-            //else
-            //{
-            //    _unitofwork = new RepositoryLocator();
-            //}
+            string config = ReadWriteData.ReadDBConfig();
 
-            _businessModuleLocator = new BusinessModuleLocator();
+//            try
+//            {
+//                _businessModuleLocator = new BusinessModuleLocator(config);
+//            }
+//            catch (Exception e)
+//            {
+//                _businessModuleLocator = new BusinessModuleLocator();
+//            }
+            
             InitializeComponent();
-
-//            txtUsername.Focus();
+            _businessModuleLocator = new BusinessModuleLocator();
+            //            txtUsername.Focus();
 
             this.WindowState = WindowState.Normal;
             this.ResizeMode = ResizeMode.NoResize;
@@ -151,6 +153,12 @@ namespace Cafocha.GUI
         {
             DatabaseConfigWindow dbConfig = new DatabaseConfigWindow();
             dbConfig.ShowDialog();
+            string connectString = (string) Application.Current.Properties["ConnectionString"];
+            if (!String.IsNullOrWhiteSpace(connectString))
+            {
+                _businessModuleLocator.ConnectionString = connectString;
+            }
+
         }
 
         private void Closing_LoginWindos(object sender, EventArgs args)

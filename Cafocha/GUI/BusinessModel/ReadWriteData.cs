@@ -13,6 +13,7 @@ namespace Cafocha.GUI.BusinessModel
     {
         //string a = System.IO.Directory.GetCurrentDirectory();
         static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        private static string ENCRYPT_PHASE = "OMA_ZIO_12312";
         public static string[] ReadPrinterSetting()
         {
             using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt", FileMode.Open))
@@ -44,7 +45,7 @@ namespace Cafocha.GUI.BusinessModel
             }
         }
 
-        public static string[] ReadDBConfig()
+        public static string ReadDBConfig()
         {
             using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\dbconfig.txt", FileMode.Open))
             {
@@ -53,10 +54,7 @@ namespace Cafocha.GUI.BusinessModel
                     string dbConfig = rd.ReadLine();
                     string[] result = dbConfig?.Split(',');
 
-                    if (result?.Length >= 5)
-                    {
-                        return result;
-                    }
+                    return dbConfig;
                 }
 
                 

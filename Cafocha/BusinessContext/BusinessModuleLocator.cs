@@ -13,15 +13,52 @@ namespace Cafocha.BusinessContext
     public class BusinessModuleLocator
     {
         private RepositoryLocator _repositoryLocator;
-
+        private string _connectionString;
         public BusinessModuleLocator()
         {
-            _repositoryLocator = new RepositoryLocator();
+            if (String.IsNullOrWhiteSpace(_connectionString))
+            {
+                _repositoryLocator = new RepositoryLocator();
+            }
+            else
+            {
+                _repositoryLocator = new RepositoryLocator(_connectionString);
+            }
+        }
+
+        public BusinessModuleLocator(string connectionString)
+        {
+            if (String.IsNullOrWhiteSpace(connectionString))
+            {
+                _repositoryLocator = new RepositoryLocator();
+            }
+            else
+            {
+                _connectionString = connectionString;
+                _repositoryLocator = new RepositoryLocator(_connectionString);
+            }
         }
 
         public BusinessModuleLocator(RepositoryLocator repositoryLocator)
         {
             _repositoryLocator = repositoryLocator;
+        }
+
+        public string ConnectionString
+        {
+            get => _connectionString;
+            set
+            {
+                _connectionString = value;
+                if (String.IsNullOrWhiteSpace(_connectionString))
+                {
+                    _repositoryLocator = new RepositoryLocator();
+                }
+                else
+                {
+                    _repositoryLocator = new RepositoryLocator(_connectionString);
+                }
+            }
         }
 
         private TakingOrderModule _takingOrderModule;

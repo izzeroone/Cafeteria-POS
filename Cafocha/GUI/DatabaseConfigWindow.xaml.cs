@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Cafocha.GUI.BusinessModel;
 
 namespace Cafocha.GUI
@@ -37,7 +38,11 @@ namespace Cafocha.GUI
             //App.Current.Properties["Password"] = pass;
             //App.Current.Properties["IsConfigDB"] = "true";
 
-            ReadWriteData.WriteDBConfig(initialCatalog + "," + source + "," + userId + "," + pass + "," + "true");
+            String connectionString = String.Format(
+                "data source={0};initial catalog={1};user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework",
+                source, initialCatalog, userId, pass);
+            Application.Current.Properties["ConnectionString"] = connectionString;
+            ReadWriteData.WriteDBConfig(connectionString);
 
             MessageBox.Show("Please reset the Application!");
             Close();

@@ -1,1 +1,1 @@
-﻿DBAsowell,commasv.database.windows.net,sampleuser,Trung1997,true
+﻿data source=127.0.0.1:1433;initial catalog=Cafocha;user id=sa;password=vip123;MultipleActiveResultSets=True;App=EntityFramework

@@ -33,6 +33,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 "Credit",
                 "OnAcount"
             };
+
+            CboPaymentMethod.SelectedIndex = 0;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,7 +86,17 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             try
             {
-                decimal cusPay = decimal.Parse(KbInput.InputValue);
+                decimal cusPay;
+                if (String.IsNullOrWhiteSpace(KbInput.InputValue))
+                {
+                    cusPay = currentOrder.TotalPrice;
+                }
+                else
+                {
+                    cusPay = decimal.Parse(KbInput.InputValue);
+                }
+
+                
 
                 if (cusPay < currentOrder.TotalPrice)
                 {

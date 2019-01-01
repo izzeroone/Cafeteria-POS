@@ -1,1 +1,1 @@
-﻿DBAsowell,commasv.database.windows.net,sampleuser,Trung1997,true
+﻿

@@ -40,7 +40,7 @@
                  Height="23"
                  Margin="160,23,0,0"
                  TextWrapping="Wrap"
-                 Text="DBAsowell"
+                 Text="Cafocha"
                  VerticalAlignment="Top"
                  Width="194"
                  Foreground="#FFFB8F51" />
@@ -55,7 +55,7 @@
                  Height="23"
                  Margin="160,63,0,0"
                  TextWrapping="Wrap"
-                 Text="127.0.0.1,1433"
+                 Text="127.0.0.1:1433"
                  VerticalAlignment="Top"
                  Width="194"
                  Foreground="#FFFB8F51" />
@@ -87,7 +87,7 @@
                      VerticalAlignment="Top"
                      Width="194"
                      Foreground="#FFFB8F51"
-                     Password="luuductrung1997" />
+                     Password="vip123" />
         <Button x:Name="btnCancel"
                 Content="Cancel"
                 Margin="83,222,241,0"
