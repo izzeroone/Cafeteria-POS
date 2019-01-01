@@ -19,10 +19,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public ReportOptionDialog(IListPdfReport reportHelper, BusinessModuleLocator businessModuleLocator)
         {
-            InitializeComponent();
-
             _businessModuleLocator = businessModuleLocator;
             _reportHelper = reportHelper;
+            InitializeComponent();
 
             DpFrom.SelectedDate = DateTime.Now;
             DpTo.SelectedDate = DateTime.Now;

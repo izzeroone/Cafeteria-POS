@@ -23,11 +23,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         public CreateStockPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
             _stockList = stockList;
+            InitializeComponent();
             lvStock.ItemsSource = _stockList;
-
             initComboBox();
         }
 

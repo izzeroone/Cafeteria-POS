@@ -37,7 +37,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 
         public void loadStock()
         {
-            _unitofworkWH.StockRepository
+            _stockList = _unitofworkWH.StockRepository
                 .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
         }
 

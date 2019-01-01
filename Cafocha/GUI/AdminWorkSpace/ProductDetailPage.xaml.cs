@@ -27,7 +27,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public ProductDetailPage(BusinessModuleLocator businessModuleLocator)
         {
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             this.Loaded += ProductDetailPage_Loaded;

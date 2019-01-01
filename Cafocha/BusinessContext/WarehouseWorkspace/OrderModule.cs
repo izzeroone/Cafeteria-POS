@@ -44,5 +44,10 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             return _unitofwork.OrderDetailsRepository.Get(c => c.OrdernoteId.Equals(orderNoteID));
         }
+
+        public IEnumerable<OrderNoteDetail> getAllOrderNoteDetails()
+        {
+            return _unitofwork.OrderDetailsRepository.Get(includeProperties: "Product").ToList();
+        }
     }
 }

@@ -45,8 +45,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public HomePage(BusinessModuleLocator businessModuleLocator)
         {
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
+            InitializeComponent();
             // init datasource for Time PieChart
             SeriesCollectionTime = new SeriesCollection();
             PriceList = new List<decimal>();

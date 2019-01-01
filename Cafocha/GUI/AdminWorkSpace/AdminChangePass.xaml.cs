@@ -16,8 +16,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public AdminChangePass(BusinessModuleLocator businessModuleLocator, AdminRe admin)
         {
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
+            InitializeComponent();
             _admin = admin;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;

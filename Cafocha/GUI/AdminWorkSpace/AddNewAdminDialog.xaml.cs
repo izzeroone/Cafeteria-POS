@@ -21,9 +21,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public AddNewAdminDialog(BusinessModuleLocator businessModuleLocator)
         {
+            _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
-            _businessModuleLocator = businessModuleLocator;
             _admin = new AdminRe();
             initControlAdd();
             this.WindowStyle = WindowStyle.SingleBorderWindow;

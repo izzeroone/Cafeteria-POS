@@ -26,9 +26,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
         public StockOutPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
             _businessModuleLocator = businessModuleLocator;
+            _stockList = stockList;
+
             InitializeComponent();
 
-            _stockList = stockList;
             lvDataStock.ItemsSource = _stockList;
 
             _stockOutDetailsList = new List<StockOutDetail>();

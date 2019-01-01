@@ -19,8 +19,8 @@ namespace Cafocha.GUI.AdminWorkSpace
         private List<Employee> empwithad;
         public AdminDetailWindow(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
+            InitializeComponent();
             admin = ad;
             empwithad = _businessModuleLocator.EmployeeModule.getEmployeeWithAd(admin.AdId).ToList();
             lvDataEmployee.ItemsSource = empwithad;

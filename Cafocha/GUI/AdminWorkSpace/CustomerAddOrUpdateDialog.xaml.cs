@@ -19,9 +19,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public CustomerAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Customer cus)
         {
-
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
+            InitializeComponent();
+
             if (cus != null)
             {
                 _cus = cus;

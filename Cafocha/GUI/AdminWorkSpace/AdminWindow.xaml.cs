@@ -39,8 +39,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public AdminWindow()
         {
-            InitializeComponent();
             _businessModuleLocator = new BusinessModuleLocator();
+            InitializeComponent();
 
             try
             {

@@ -24,9 +24,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public EmployeeListPage(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
-            
-            InitializeComponent();
             _businessModuleLocator = businessModuleLocator;
+            InitializeComponent();
             admin = ad;
 
             this.Loaded += EmployeeListPage_Loaded;

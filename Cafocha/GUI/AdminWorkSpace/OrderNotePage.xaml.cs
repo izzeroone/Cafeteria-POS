@@ -27,6 +27,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             _ordernotelist = _businessModuleLocator.OrderModule.getOrdernoteList().ToList();
+            _ordernotedetailslist= _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get(includeProperties: "Product").ToList();
             List<OrderNoteDetail> orderdetailsTempList = new List<OrderNoteDetail>();
             foreach (var orderdetails in _ordernotedetailslist)
             {
