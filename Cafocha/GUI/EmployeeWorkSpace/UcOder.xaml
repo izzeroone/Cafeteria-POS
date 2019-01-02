@@ -119,32 +119,16 @@
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
                             <GridViewColumn Header="Item"
-                                            Width="90"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding ProductName}" />
                             <GridViewColumn Header="Amt"
-                                            Width="70"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Quan}" />
                             <GridViewColumn Header="Price"
-                                            Width="80"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
-                            <GridViewColumn Header="Status"
-                                            Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ComboBox x:Name="cboStatus"
-                                                  Background="White"
-                                                  Width="80"
-                                                  Foreground="Black"
-                                                  IsReadOnly="True"
-                                                  ItemsSource="{Binding StatusItems, Mode=TwoWay}"
-                                                  SelectedItem="{Binding SelectedStats, Mode=OneWay}"
-                                                  SelectionChanged="cboStatus_SelectionChanged">
-                                        </ComboBox>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
                             <GridViewColumn Header="Edit"
-                                            Width="90">
+                                            Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

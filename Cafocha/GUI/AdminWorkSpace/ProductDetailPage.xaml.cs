@@ -47,14 +47,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvIngredient.ItemsSource = allIngre;
 
             cboType.Items.Add(ProductType.All);
-            cboType.Items.Add(ProductType.Beverage);
-            cboType.Items.Add(ProductType.Food);
-            cboType.Items.Add(ProductType.Beer);
-            cboType.Items.Add(ProductType.Wine);
-            cboType.Items.Add(ProductType.Snack);
+            cboType.Items.Add(ProductType.Drink);
+            cboType.Items.Add(ProductType.Topping);
+            cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
-            cboType.Items.Add(ProductType.Coffee);
-            cboType.Items.Add(ProductType.Cocktail);
 
             //init Ingredient Type
             cboTypeI.Items.Add("All");

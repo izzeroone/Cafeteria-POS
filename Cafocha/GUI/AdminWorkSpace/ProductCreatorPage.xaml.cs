@@ -53,15 +53,10 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void initComboBox()
         {
             iscboRaise = true;
-            cboType.Items.Add(ProductType.Beverage);
-            cboType.Items.Add(ProductType.Food);
-            cboType.Items.Add(ProductType.Beer);
-            cboType.Items.Add(ProductType.Wine);
-            cboType.Items.Add(ProductType.Snack);
+            cboType.Items.Add(ProductType.Drink);
+            cboType.Items.Add(ProductType.Topping);
+            cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
-            cboType.Items.Add(ProductType.Coffee);
-            cboType.Items.Add(ProductType.Cocktail);
-            cboType.SelectedItem = ProductType.Beverage;
 
             cboStatus.Items.Add("Drink");
             cboStatus.Items.Add("Starter");
@@ -214,44 +209,6 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
         bool iscboRaise = false;
-        private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!iscboRaise)
-            {
-                ComboBox ty = sender as ComboBox;
-                if (ty.SelectedItem == null)
-                {
-                    return;
-                }
-                else if ((ty.SelectedValue).Equals(ProductType.Food))
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Starter");
-                    cboStatus.Items.Add("Main");
-                    cboStatus.Items.Add("Dessert");
-                    cboStatus.SelectedItem = "Starter";
-                }
-                else if ((ty.SelectedValue).Equals(ProductType.Beverage)
-                    || (ty.SelectedValue).Equals(ProductType.Beer)
-                    || (ty.SelectedValue).Equals(ProductType.Cocktail)
-                    || (ty.SelectedValue).Equals(ProductType.Coffee)
-                    || (ty.SelectedValue).Equals(ProductType.Wine))
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Drink");
-                    cboStatus.SelectedItem = "Drink";
-                }
-                else
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Drink");
-                    cboStatus.Items.Add("Starter");
-                    cboStatus.Items.Add("Main");
-                    cboStatus.Items.Add("Dessert");
-                    cboStatus.SelectedItem = "Drink";
-                }
-            }
-        }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -396,7 +353,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             isRaiseEvent = true;
             txtName.Text = "";
             txtInfo.Text = "";
-            cboType.SelectedItem = ProductType.Beverage;
+            cboType.SelectedIndex = 0;
             txtImageName.Text = "";
             txtDiscount.Text = "";
             cboStatus.SelectedItem = "Drink";

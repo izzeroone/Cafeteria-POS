@@ -35,27 +35,10 @@ public partial class UcMenu : UserControl
             {
                 try
                 {
-                    lvCategoryBreakFast.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("BreakFast"));
-                    lvCategoryStarter.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Starter"));
-                    lvCategoryMain.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Main"));
-                    lvCategoryDessert.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Dessert"));
-                    lvCategoryBeverages.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => (p.Type == (int)ProductType.Beverage || p.Type == (int)ProductType.Coffee));
-                    lvCategoryBeer.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Beer);
-                    lvCategoryWine.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Wine);
-                    lvCategoryOther.ItemsSource =
-                        _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Other);
+                    refreshMenu();
 
 
                     IsRefreshMenu = false;
-
-
                 }
                 catch (Exception ex)
                 {
@@ -64,7 +47,17 @@ public partial class UcMenu : UserControl
             }
         }
 
-  
+        private void refreshMenu()
+        {
+            lvCategoryDessert.ItemsSource =
+                _businessModuleLocator.ProductModule.Get(p => p.Type == (int) ProductType.Dessert);
+            lvCategoryDrink.ItemsSource =
+                _businessModuleLocator.ProductModule.Get(p => (p.Type == (int) ProductType.Drink));
+            lvCategoryBeer.ItemsSource =
+                _businessModuleLocator.ProductModule.Get(p => p.Type == (int) ProductType.Topping);
+            lvCategoryOther.ItemsSource =
+                _businessModuleLocator.ProductModule.Get(p => p.Type == (int) ProductType.Other);
+        }
 
 
         //ToDo: Need to update the contain in Warehouse database when new order occur
@@ -111,14 +104,7 @@ public partial class UcMenu : UserControl
 
             if (filter.Length == 0)
             {
-                lvCategoryBreakFast.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("BreakFast"));
-                lvCategoryStarter.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Starter"));
-                lvCategoryMain.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Main"));
-                lvCategoryDessert.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Dessert"));
-                lvCategoryBeverages.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Beverage);
-                lvCategoryBeer.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Beer);
-                lvCategoryWine.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Wine);
-                lvCategoryOther.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Other);
+                refreshMenu();
                 return;
             }
 
@@ -128,53 +114,26 @@ public partial class UcMenu : UserControl
         //check khi Search
         private void checkSearch(string filter)
         {
-            if (ItemBreakFast.IsSelected == true)
-            {
-                lvCategoryBreakFast.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("BreakFast") && p.Name.Contains(filter));
-                lvCategoryBreakFast.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
-                curItem = ItemBreakFast;
-            }
-
-            if (ItemStarter.IsSelected == true)
-            {
-                lvCategoryStarter.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Starter") && p.Name.Contains(filter));
-                lvCategoryStarter.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
-                curItem = ItemStarter;
-            }
-
-            if (ItemMain.IsSelected == true)
-            {
-                lvCategoryMain.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Main") && p.Name.Contains(filter));
-                lvCategoryMain.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
-                curItem = ItemMain;
-            }
 
             if (ItemDessert.IsSelected == true)
             {
-                lvCategoryDessert.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.StdStats.Equals("Dessert") && p.Name.Contains(filter));
+                lvCategoryDessert.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Dessert && p.Name.Contains(filter));
                 lvCategoryDessert.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemDessert;
             }
 
             if (ItemBeverages.IsSelected == true)
             {
-                lvCategoryBeverages.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
-                lvCategoryBeverages.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                lvCategoryDrink.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Drink && p.Name.Contains(filter));
+                lvCategoryDrink.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeverages;
             }
 
             if (ItemBeer.IsSelected == true)
             {
-                lvCategoryBeer.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Beer && p.Name.Contains(filter));
+                lvCategoryBeer.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Topping && p.Name.Contains(filter));
                 lvCategoryBeer.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeer;
-            }
-
-            if (ItemWine.IsSelected == true)
-            {
-                lvCategoryWine.ItemsSource = _businessModuleLocator.ProductModule.Get(p => p.Type == (int)ProductType.Wine && p.Name.Contains(filter));
-                lvCategoryWine.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
-                curItem = ItemWine;
             }
 
             if (ItemOther.IsSelected == true)
@@ -233,5 +192,9 @@ public partial class UcMenu : UserControl
 
         }
 
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

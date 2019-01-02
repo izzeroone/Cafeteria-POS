@@ -566,10 +566,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                                                      && x.Ordertime.CompareTo(To) <= 0);
 
 
-            // Total Alcohol
-            var orderDetailsAlcoholQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Cocktail
-                                                                        || x.Product.Type == (int)ProductType.Beer
-                                                                        || x.Product.Type == (int)ProductType.Wine);
+            // Total Dribnk
+            var orderDetailsAlcoholQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Drink);
             decimal alcoholTotalAmount = 0;
             foreach (var orderDetails in orderDetailsAlcoholQuery)
             {
@@ -581,15 +579,14 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Count = orderDetailsAlcoholQuery.Count(),
                 Amount = alcoholTotalAmount
             };
-            result.Add("Total Alcohol", new List<MyPairValue>()
+            result.Add("Total Drink", new List<MyPairValue>()
             {
                 alcoholCal
             });
 
 
-            // Total Beverage
-            var orderDetailsBeverageQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Beverage
-                                                                        || x.Product.Type == (int)ProductType.Coffee);
+            // Total Topping
+            var orderDetailsBeverageQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Topping);
             decimal beverageTotalAmount = 0;
             foreach (var orderDetails in orderDetailsBeverageQuery)
             {
@@ -601,14 +598,14 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Count = orderDetailsBeverageQuery.Count(),
                 Amount = beverageTotalAmount
             };
-            result.Add("Total Beverage", new List<MyPairValue>()
+            result.Add("Total Topping", new List<MyPairValue>()
             {
                 beverageCal
             });
 
 
-            // Total Food
-            var orderDetailsFoodQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Food);
+            // Total Dessert
+            var orderDetailsFoodQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Dessert);
             decimal foodTotalAmount = 0;
             foreach (var orderDetails in orderDetailsFoodQuery)
             {
@@ -620,7 +617,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Count = orderDetailsFoodQuery.Count(),
                 Amount = foodTotalAmount
             };
-            result.Add("Total Food", new List<MyPairValue>()
+            result.Add("Total Dessert", new List<MyPairValue>()
             {
                 foodCal
             });

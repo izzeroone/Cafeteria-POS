@@ -52,7 +52,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.SelectedItem = _currentProduct.Type;
             txtImageName.Text = _currentProduct.ImageLink;
             txtDiscount.Text = _currentProduct.Discount.ToString();
-            cboStatus.SelectedItem = _currentProduct.StdStats;
             txtSusggestPrice.Text = String.Format("{0:0.000}", 0);
             txtPrice.Text = String.Format("{0:0.000}", _currentProduct.Price);
 
@@ -81,21 +80,12 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void initComboBox()
         {
             iscboRaise = true;
-            cboType.Items.Add(ProductType.Beverage);
-            cboType.Items.Add(ProductType.Food);
-            cboType.Items.Add(ProductType.Beer);
-            cboType.Items.Add(ProductType.Wine);
-            cboType.Items.Add(ProductType.Snack);
+            cboType.Items.Add(ProductType.Drink);
+            cboType.Items.Add(ProductType.Topping);
+            cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
-            cboType.Items.Add(ProductType.Coffee);
-            cboType.Items.Add(ProductType.Cocktail);
-            cboType.SelectedItem = ProductType.Beverage;
+            cboType.SelectedIndex = 0;
 
-            cboStatus.Items.Add("Drink");
-            cboStatus.Items.Add("Starter");
-            cboStatus.Items.Add("Main");
-            cboStatus.Items.Add("Dessert");
-            cboStatus.SelectedItem = "Drink";
             iscboRaise = false;
         }
 
@@ -188,11 +178,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 isRaiseEvent = true;
-                if (cboStatus.SelectedItem.Equals("Time"))
-                {
-                    _currentProduct.ProductDetails.ToList()[index].Quan = 1;
-                    _pdtList[index].ProDe.Quan = 1;
-                }
 
                 //_currentProduct.ProductDetails.ToList()[index].UnitUse = cbo.SelectedItem.ToString();
                 _pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
@@ -242,44 +227,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
         bool iscboRaise = false;
-        private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!iscboRaise)
-            {
-                ComboBox ty = sender as ComboBox;
-                if (ty.SelectedItem == null)
-                {
-                    return;
-                }
-                else if ((ty.SelectedValue).Equals(ProductType.Food))
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Starter");
-                    cboStatus.Items.Add("Main");
-                    cboStatus.Items.Add("Dessert");
-                    cboStatus.SelectedItem = "Starter";
-                }
-                else if ((ty.SelectedValue).Equals(ProductType.Beverage)
-                    || (ty.SelectedValue).Equals(ProductType.Beer)
-                    || (ty.SelectedValue).Equals(ProductType.Cocktail)
-                    || (ty.SelectedValue).Equals(ProductType.Coffee)
-                    || (ty.SelectedValue).Equals(ProductType.Wine))
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Drink");
-                    cboStatus.SelectedItem = "Drink";
-                }
-                else
-                {
-                    cboStatus.Items.Clear();
-                    cboStatus.Items.Add("Drink");
-                    cboStatus.Items.Add("Starter");
-                    cboStatus.Items.Add("Main");
-                    cboStatus.Items.Add("Dessert");
-                    cboStatus.SelectedItem = "Drink";
-                }
-            }
-        }
+
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -324,8 +272,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check discount
                 //
 
-                //check standard status
-                string stdstt = cboStatus.SelectedItem.ToString();
 
                 //check price
                 decimal price = 0;
@@ -343,7 +289,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _currentProduct.Type = type;
                 _currentProduct.ImageLink = imgname;
                 _currentProduct.Discount = 0;
-                _currentProduct.StdStats = stdstt;
                 _currentProduct.Price = price;
 
                 string destinationFile = startupProjectPath + "\\Images\\Products" + txtImageName.Text.Trim();
@@ -395,10 +340,9 @@ namespace Cafocha.GUI.AdminWorkSpace
             isRaiseEvent = true;
             txtName.Text = "";
             txtInfo.Text = "";
-            cboType.SelectedItem = ProductType.Beverage;
+            cboType.SelectedIndex = 0;
             txtImageName.Text = "";
             txtDiscount.Text = "";
-            cboStatus.SelectedItem = "Drink";
             txtSusggestPrice.Text = "";
             txtPrice.Text = "";
 
