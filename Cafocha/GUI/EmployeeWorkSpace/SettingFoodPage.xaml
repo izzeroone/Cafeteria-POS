@@ -17,11 +17,13 @@
                                   CornerRadius="3"
                                   Mode="PrimaryDark"
                                   Height="46">
-            <StackPanel  Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
                            VerticalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="16">Food List</TextBlock>
+                           FontSize="16">
+                    Food List
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvData"
@@ -53,9 +55,11 @@
                                   HorizontalAlignment="Left"
                                   Width="483"
                                   Height="46">
-            <StackPanel  Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
-                           VerticalAlignment="Center"><Run Text="Food information" /></TextBlock>
+                           VerticalAlignment="Center">
+                    <Run Text="Food information" />
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel HorizontalAlignment="Left"
@@ -110,8 +114,7 @@
                           x:Name="cbopromotion"
                           IsEditable="False"
                           IsEnabled="False"
-                          Width="60">
-                </ComboBox>
+                          Width="60" />
                 <TextBlock x:Name="textBlock"
                            HorizontalAlignment="Stretch"
                            TextWrapping="Wrap"

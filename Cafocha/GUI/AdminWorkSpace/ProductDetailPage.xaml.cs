@@ -5,31 +5,28 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.EmployeeWorkspace;
-using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
-using POS.AdminWorkSpace;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for ProductDetailPage.xaml
+    ///     Interaction logic for ProductDetailPage.xaml
     /// </summary>
     public partial class ProductDetailPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        private List<Product> allProduct;
-        private List<ProductDetail> allProductDetails;
-        private List<Stock> allIngre;
+        private readonly BusinessModuleLocator _businessModuleLocator;
         private Stock _ingre;
+        private List<Stock> allIngre;
+        private List<Product> allProduct;
+
+        private List<ProductDetail> allProductDetails;
 //        private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
 
         public ProductDetailPage(BusinessModuleLocator businessModuleLocator)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            this.Loaded += ProductDetailPage_Loaded;
+            Loaded += ProductDetailPage_Loaded;
         }
 
         private void ProductDetailPage_Loaded(object sender, RoutedEventArgs e)
@@ -64,11 +61,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Product pro = lvProduct.SelectedItem as Product;
-            if(pro == null)
-            {
-                return;
-            }
+            var pro = lvProduct.SelectedItem as Product;
+            if (pro == null) return;
 
             lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails(pro.ProductId);
         }
@@ -80,7 +74,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            string filter = SearchBox.Text.Trim();
+            var filter = SearchBox.Text.Trim();
 
             refreshData(filter);
         }
@@ -91,11 +85,13 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 if (filter.Length == 0)
                 {
-                    lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem);
+                    lvProduct.ItemsSource =
+                        _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem);
                     return;
                 }
 
-                lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem, filter);
+                lvProduct.ItemsSource =
+                    _businessModuleLocator.ProductModule.getAllProduct((int) cboType.SelectedItem, filter);
             }
             catch (Exception ex)
             {
@@ -111,7 +107,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string filter = SearchBox.Text.Trim();
+            var filter = SearchBox.Text.Trim();
 
             refreshData(filter);
         }
@@ -143,41 +139,39 @@ namespace Cafocha.GUI.AdminWorkSpace
             //    }
             //}
 
-            int selectedVal = ((int)(sender as ComboBox).SelectedValue);
+            var selectedVal = (int) (sender as ComboBox).SelectedValue;
             if (selectedVal == -1)
-            {
                 lvProduct.ItemsSource = allProduct;
-            }
             else
-            {
                 lvProduct.ItemsSource = allProduct.Where(p => p.Type == selectedVal);
-            }
-
         }
 
         private void bntEditPro_Click(object sender, RoutedEventArgs e)
         {
-            Product curPro = lvProduct.SelectedItem as Product;
+            var curPro = lvProduct.SelectedItem as Product;
             if (curPro == null)
             {
                 MessageBox.Show("Please choose exactly which product you want to update!");
                 return;
             }
 
-            ProductUpdatePage pup = new ProductUpdatePage(_businessModuleLocator, curPro);
-            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
+            var pup = new ProductUpdatePage(_businessModuleLocator, curPro);
+            ((AdminWindow) Window.GetWindow(this)).myframe.Navigate(pup);
         }
 
         private void bntDelPro_Click(object sender, RoutedEventArgs e)
         {
-            Product delPro = lvProduct.SelectedItem as Product;
+            var delPro = lvProduct.SelectedItem as Product;
             if (delPro == null)
             {
                 MessageBox.Show("Please choose exactly which product you want to delete!");
                 return;
             }
 
-            MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delPro.Name + "(" + delPro.ProductId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+            var delMess =
+                MessageBox.Show(
+                    "This action will delete all following product details! Do you want to delete " + delPro.Name +
+                    "(" + delPro.ProductId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
             if (delMess == MessageBoxResult.Yes)
             {
                 _businessModuleLocator.ProductModule.deleteProduct(delPro);
@@ -192,88 +186,64 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedI = cboTypeI.SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedI = cboTypeI.SelectedIndex;
 
             if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                }
                 else
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
             else
             {
                 if (filter.Length == 0)
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                }
                 else
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
         }
 
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedI = cboTypeI.SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedI = cboTypeI.SelectedIndex;
 
             if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                }
                 else
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
             else
             {
                 if (filter.Length == 0)
-                {
-                    lvIngredient.ItemsSource = allIngre.Where(p =>  p.Deleted.Equals(0));
-                }
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
                 else
-                {
                     lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
         }
 
         private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedI = (sender as ComboBox).SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedI = (sender as ComboBox).SelectedIndex;
 
             if (filter.Length == 0)
             {
                 if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
-                {
                     lvIngredient.ItemsSource = allIngre;
-                }
                 else
-                {
                     lvIngredient.ItemsSource = allIngre;
-                }
             }
             else
             {
                 if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
-                {
                     lvIngredient.ItemsSource = allIngre.Where(x => x.Name.Contains(filter));
-                }
                 else
-                {
                     lvIngredient.ItemsSource = allIngre.Where(x => x.Name.Contains(filter));
-                }
             }
         }
 

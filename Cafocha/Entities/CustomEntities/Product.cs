@@ -6,11 +6,7 @@ namespace Cafocha.Entities
 {
     public partial class Product
     {
-        [NotMapped]
-        public BitmapImage ImageData
-        {
-            get { return LoadImage(ImageLink); }
-        }
+        [NotMapped] public BitmapImage ImageData => LoadImage(ImageLink);
 
         public static BitmapImage LoadImage(string filename)
         {

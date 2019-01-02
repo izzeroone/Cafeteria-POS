@@ -6,15 +6,13 @@ namespace Cafocha.Entities
 {
     public partial class OrderDetailsTemp : INotifyPropertyChanged
     {
-        private string _oldstat;
-        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "BreakFast", "Starter", "Main", "Dessert", "Drink" };
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private ObservableCollection<string> _statusItems = new ObservableCollection<string>
+            {"BreakFast", "Starter", "Main", "Dessert", "Drink"};
 
         [NotMapped]
         public ObservableCollection<string> StatusItems
         {
-            get { return _statusItems; }
+            get => _statusItems;
             set
             {
                 _statusItems = value;
@@ -22,12 +20,9 @@ namespace Cafocha.Entities
             }
         }
 
-        [NotMapped]
-        public string OldStat
-        {
-            get { return _oldstat; }
-            set { _oldstat = value; }
-        }//OldStat
+        [NotMapped] public string OldStat { get; set; } //OldStat
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string propertyName)
         {
@@ -38,6 +33,10 @@ namespace Cafocha.Entities
 
     public partial class OrderDetailsTemp
     {
+        public OrderDetailsTemp()
+        {
+            InitializePartial();
+        }
 
         public int OrdertempId { get; set; } // ordertemp_id (Primary key)
 
@@ -56,14 +55,9 @@ namespace Cafocha.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent OrderTemp pointed by [OrderDetailsTemp].([OrdertempId]) (FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id)
+        ///     Parent OrderTemp pointed by [OrderDetailsTemp].([OrdertempId]) (FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id)
         /// </summary>
         public virtual OrderTemp OrderTemp { get; set; } // FK_dbo.OrderDetailsTemp_dbo.OrderTemp_ordertemp_id
-
-        public OrderDetailsTemp()
-        {
-            InitializePartial();
-        }
 
         partial void InitializePartial();
     }

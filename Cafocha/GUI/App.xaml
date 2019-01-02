@@ -8,15 +8,18 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />-->
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
 
                 <!-- primary color -->
                 <ResourceDictionary>
                     <!-- include your primary palette -->
                     <ResourceDictionary.MergedDictionaries>
 
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Orange.xaml" />
+                        <ResourceDictionary
+                            Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        <ResourceDictionary
+                            Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Orange.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                     <!--
                             include three hues from the primary palette (and the associated forecolours).
@@ -40,7 +43,8 @@
                 <ResourceDictionary>
                     <!-- include your secondary pallette -->
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Yellow.xaml" />
+                        <ResourceDictionary
+                            Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Yellow.xaml" />
                     </ResourceDictionary.MergedDictionaries>
 
                     <!-- include a single secondary accent color (and the associated forecolour) -->
@@ -82,22 +86,25 @@
                                 <ControlTemplate TargetType="{x:Type ProgressBar}">
                                     <ControlTemplate.Resources>
                                         <Storyboard x:Key="OnLoaded">
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                           Storyboard.TargetName="TemplateRoot">
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                Storyboard.TargetName="TemplateRoot">
                                                 <EasingDoubleKeyFrame KeyTime="0"
                                                                       Value="0" />
                                                 <EasingDoubleKeyFrame KeyTime="0:0:1"
                                                                       Value="1" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                                           Storyboard.TargetName="TemplateRoot">
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                Storyboard.TargetName="TemplateRoot">
                                                 <EasingDoubleKeyFrame KeyTime="0"
                                                                       Value="0" />
                                                 <EasingDoubleKeyFrame KeyTime="0:0:1"
                                                                       Value="1" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                                           Storyboard.TargetName="TemplateRoot">
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                Storyboard.TargetName="TemplateRoot">
                                                 <EasingDoubleKeyFrame KeyTime="0"
                                                                       Value="0" />
                                                 <EasingDoubleKeyFrame KeyTime="0:0:1"
@@ -109,14 +116,16 @@
                                                              Storyboard.TargetName="TemplateRoot"
                                                              To="1"
                                                              Duration="0" />
-                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                             Storyboard.TargetName="TemplateRoot"
-                                                             To="1"
-                                                             Duration="0" />
-                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                             Storyboard.TargetName="TemplateRoot"
-                                                             To="1"
-                                                             Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                Storyboard.TargetName="TemplateRoot"
+                                                To="1"
+                                                Duration="0" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                Storyboard.TargetName="TemplateRoot"
+                                                To="1"
+                                                Duration="0" />
                                         </Storyboard>
                                     </ControlTemplate.Resources>
                                     <Grid x:Name="TemplateRoot"
@@ -136,8 +145,9 @@
                                                 <VisualState x:Name="Determinate" />
                                                 <VisualState x:Name="Indeterminate">
                                                     <Storyboard RepeatBehavior="Forever">
-                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                                                       Storyboard.TargetName="Animation">
+                                                        <DoubleAnimationUsingKeyFrames
+                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                            Storyboard.TargetName="Animation">
                                                             <EasingDoubleKeyFrame KeyTime="0"
                                                                                   Value="0.25" />
                                                             <EasingDoubleKeyFrame KeyTime="0:0:1"
@@ -145,8 +155,9 @@
                                                             <EasingDoubleKeyFrame KeyTime="0:0:2"
                                                                                   Value="0.25" />
                                                         </DoubleAnimationUsingKeyFrames>
-                                                        <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)"
-                                                                                      Storyboard.TargetName="Animation">
+                                                        <PointAnimationUsingKeyFrames
+                                                            Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)"
+                                                            Storyboard.TargetName="Animation">
                                                             <EasingPointKeyFrame KeyTime="0"
                                                                                  Value="-0.5,0.5" />
                                                             <EasingPointKeyFrame KeyTime="0:0:1"
@@ -178,7 +189,8 @@
                                                     </TransformGroup>
                                                 </Rectangle.RenderTransform>
                                                 <Rectangle.Fill>
-                                                    <MultiBinding Converter="{StaticResource IngredientMaxProgressBarConverter}">
+                                                    <MultiBinding
+                                                        Converter="{StaticResource IngredientMaxProgressBarConverter}">
                                                         <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                                  Path="Value" />
                                                         <Binding RelativeSource="{RelativeSource TemplatedParent}"
@@ -196,15 +208,17 @@
                                                                  Name="BeginStoryboardOnLoadedNoAnimation" />
                                             </Trigger.EnterActions>
                                             <Trigger.ExitActions>
-                                                <RemoveStoryboard BeginStoryboardName="BeginStoryboardOnLoadedNoAnimation" />
+                                                <RemoveStoryboard
+                                                    BeginStoryboardName="BeginStoryboardOnLoadedNoAnimation" />
                                             </Trigger.ExitActions>
                                         </Trigger>
                                         <MultiTrigger>
                                             <MultiTrigger.Conditions>
                                                 <Condition Property="IsVisible"
                                                            Value="True" />
-                                                <Condition Property="materialDesign:TransitionAssist.DisableTransitions"
-                                                           Value="False" />
+                                                <Condition
+                                                    Property="materialDesign:TransitionAssist.DisableTransitions"
+                                                    Value="False" />
                                             </MultiTrigger.Conditions>
                                             <MultiTrigger.EnterActions>
                                                 <BeginStoryboard Storyboard="{StaticResource OnLoaded}"
@@ -265,9 +279,10 @@
                                                              Duration="0:0:2" />
                                         </Storyboard>
                                         <Storyboard x:Key="IsFullyIndeterminateScaleStoryboard">
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FullyIndeterminateGridScaleTransform"
-                                                                           Storyboard.TargetProperty="ScaleX"
-                                                                           RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="FullyIndeterminateGridScaleTransform"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                RepeatBehavior="Forever">
                                                 <SplineDoubleKeyFrame KeyTime="0"
                                                                       Value="0.0" />
                                                 <SplineDoubleKeyFrame KeyTime="0:0:1"
@@ -305,33 +320,45 @@
                                                   RenderTransformOrigin="0, 0">
                                                 <Path.Data>
                                                     <PathGeometry>
-                                                        <PathFigure StartPoint="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource StartPointConverter}, Mode=OneWay}">
-                                                            <ArcSegment Size="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource ArcSizeConverter}, Mode=OneWay}"
-                                                                        SweepDirection="Clockwise">
+                                                        <PathFigure
+                                                            StartPoint="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource StartPointConverter}, Mode=OneWay}">
+                                                            <ArcSegment
+                                                                Size="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource ArcSizeConverter}, Mode=OneWay}"
+                                                                SweepDirection="Clockwise">
                                                                 <ArcSegment.IsLargeArc>
-                                                                    <MultiBinding Converter="{StaticResource LargeArcConverter}">
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Value" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Minimum" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Maximum" />
-                                                                        <Binding ElementName="FullyIndeterminateGridScaleTransform"
-                                                                                 Path="ScaleX" />
+                                                                    <MultiBinding
+                                                                        Converter="{StaticResource LargeArcConverter}">
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Value" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Minimum" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Maximum" />
+                                                                        <Binding
+                                                                            ElementName="FullyIndeterminateGridScaleTransform"
+                                                                            Path="ScaleX" />
                                                                     </MultiBinding>
                                                                 </ArcSegment.IsLargeArc>
                                                                 <ArcSegment.Point>
-                                                                    <MultiBinding Converter="{StaticResource ArcEndPointConverter}">
+                                                                    <MultiBinding
+                                                                        Converter="{StaticResource ArcEndPointConverter}">
                                                                         <Binding ElementName="PathGrid"
                                                                                  Path="ActualWidth" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Value" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Minimum" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Maximum" />
-                                                                        <Binding ElementName="FullyIndeterminateGridScaleTransform"
-                                                                                 Path="ScaleX" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Value" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Minimum" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Maximum" />
+                                                                        <Binding
+                                                                            ElementName="FullyIndeterminateGridScaleTransform"
+                                                                            Path="ScaleX" />
                                                                     </MultiBinding>
                                                                 </ArcSegment.Point>
                                                             </ArcSegment>
@@ -344,13 +371,17 @@
                                                                          CenterX="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource RotateTransformCentreConverter}, Mode=OneWay}"
                                                                          CenterY="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource RotateTransformCentreConverter}, Mode=OneWay}">
                                                             <RotateTransform.Angle>
-                                                                <MultiBinding Converter="{StaticResource RotateTransformConverter}">
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Value" />
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Minimum" />
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Maximum" />
+                                                                <MultiBinding
+                                                                    Converter="{StaticResource RotateTransformConverter}">
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Value" />
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Minimum" />
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Maximum" />
                                                                 </MultiBinding>
                                                             </RotateTransform.Angle>
                                                         </RotateTransform>
@@ -364,29 +395,32 @@
                                                  VerticalAlignment="Center"
                                                  Width="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource MyConverter}}"
                                                  Height="{Binding ElementName=PathGrid, Path=ActualHeight, Converter={StaticResource MyConverter}}">
-                                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}
+                                            <TextBlock
+                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}
                                                                      ,Path=Value, Converter={StaticResource PercentCenverter}}"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontSize="12">
-
-                                            </TextBlock>
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="12" />
                                         </Viewbox>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsIndeterminate, RelativeSource={RelativeSource Self}}"
-                                                           Value="True" />
-                                                <Condition Binding="{Binding IsVisible, RelativeSource={RelativeSource Self}}"
-                                                           Value="True" />
-                                                <Condition Binding="{Binding Value, RelativeSource={RelativeSource Self}, Converter={StaticResource NotZeroConverter}}"
-                                                           Value="True" />
+                                                <Condition
+                                                    Binding="{Binding IsIndeterminate, RelativeSource={RelativeSource Self}}"
+                                                    Value="True" />
+                                                <Condition
+                                                    Binding="{Binding IsVisible, RelativeSource={RelativeSource Self}}"
+                                                    Value="True" />
+                                                <Condition
+                                                    Binding="{Binding Value, RelativeSource={RelativeSource Self}, Converter={StaticResource NotZeroConverter}}"
+                                                    Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsFullyIndeterminateStoryboard" />
-                                                <BeginStoryboard Storyboard="{StaticResource IsIndeterminateStoryboard}"
-                                                                 Name="IsIndeterminateStoryboard" />
+                                                <BeginStoryboard
+                                                    Storyboard="{StaticResource IsIndeterminateStoryboard}"
+                                                    Name="IsIndeterminateStoryboard" />
                                             </MultiDataTrigger.EnterActions>
                                             <MultiDataTrigger.ExitActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsIndeterminateStoryboard" />
@@ -403,8 +437,9 @@
                                             </MultiTrigger.Conditions>
                                             <MultiTrigger.EnterActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsIndeterminateStoryboard" />
-                                                <BeginStoryboard Storyboard="{StaticResource IsFullyIndeterminateScaleStoryboard}"
-                                                                 Name="IsFullyIndeterminateStoryboard" />
+                                                <BeginStoryboard
+                                                    Storyboard="{StaticResource IsFullyIndeterminateScaleStoryboard}"
+                                                    Name="IsFullyIndeterminateStoryboard" />
                                             </MultiTrigger.EnterActions>
                                             <MultiTrigger.ExitActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsFullyIndeterminateStoryboard" />
@@ -439,9 +474,10 @@
                                                              Duration="0:0:2" />
                                         </Storyboard>
                                         <Storyboard x:Key="IsFullyIndeterminateScaleStoryboard">
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FullyIndeterminateGridScaleTransform"
-                                                                           Storyboard.TargetProperty="ScaleX"
-                                                                           RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="FullyIndeterminateGridScaleTransform"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                RepeatBehavior="Forever">
                                                 <SplineDoubleKeyFrame KeyTime="0"
                                                                       Value="0.0" />
                                                 <SplineDoubleKeyFrame KeyTime="0:0:1"
@@ -479,33 +515,45 @@
                                                   RenderTransformOrigin="0, 0">
                                                 <Path.Data>
                                                     <PathGeometry>
-                                                        <PathFigure StartPoint="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource StartPointConverter}, Mode=OneWay}">
-                                                            <ArcSegment Size="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource ArcSizeConverter}, Mode=OneWay}"
-                                                                        SweepDirection="Clockwise">
+                                                        <PathFigure
+                                                            StartPoint="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource StartPointConverter}, Mode=OneWay}">
+                                                            <ArcSegment
+                                                                Size="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource ArcSizeConverter}, Mode=OneWay}"
+                                                                SweepDirection="Clockwise">
                                                                 <ArcSegment.IsLargeArc>
-                                                                    <MultiBinding Converter="{StaticResource LargeArcConverter}">
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Value" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Minimum" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Maximum" />
-                                                                        <Binding ElementName="FullyIndeterminateGridScaleTransform"
-                                                                                 Path="ScaleX" />
+                                                                    <MultiBinding
+                                                                        Converter="{StaticResource LargeArcConverter}">
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Value" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Minimum" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Maximum" />
+                                                                        <Binding
+                                                                            ElementName="FullyIndeterminateGridScaleTransform"
+                                                                            Path="ScaleX" />
                                                                     </MultiBinding>
                                                                 </ArcSegment.IsLargeArc>
                                                                 <ArcSegment.Point>
-                                                                    <MultiBinding Converter="{StaticResource ArcEndPointConverter}">
+                                                                    <MultiBinding
+                                                                        Converter="{StaticResource ArcEndPointConverter}">
                                                                         <Binding ElementName="PathGrid"
                                                                                  Path="ActualWidth" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Value" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Minimum" />
-                                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                                 Path="Maximum" />
-                                                                        <Binding ElementName="FullyIndeterminateGridScaleTransform"
-                                                                                 Path="ScaleX" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Value" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Minimum" />
+                                                                        <Binding
+                                                                            RelativeSource="{RelativeSource TemplatedParent}"
+                                                                            Path="Maximum" />
+                                                                        <Binding
+                                                                            ElementName="FullyIndeterminateGridScaleTransform"
+                                                                            Path="ScaleX" />
                                                                     </MultiBinding>
                                                                 </ArcSegment.Point>
                                                             </ArcSegment>
@@ -518,13 +566,17 @@
                                                                          CenterX="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource RotateTransformCentreConverter}, Mode=OneWay}"
                                                                          CenterY="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource RotateTransformCentreConverter}, Mode=OneWay}">
                                                             <RotateTransform.Angle>
-                                                                <MultiBinding Converter="{StaticResource RotateTransformConverter}">
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Value" />
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Minimum" />
-                                                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                                             Path="Maximum" />
+                                                                <MultiBinding
+                                                                    Converter="{StaticResource RotateTransformConverter}">
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Value" />
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Minimum" />
+                                                                    <Binding
+                                                                        RelativeSource="{RelativeSource TemplatedParent}"
+                                                                        Path="Maximum" />
                                                                 </MultiBinding>
                                                             </RotateTransform.Angle>
                                                         </RotateTransform>
@@ -538,30 +590,33 @@
                                                  Width="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource MyConverter}}"
                                                  Height="{Binding ElementName=PathGrid, Path=ActualHeight, Converter={StaticResource MyConverter}}">
 
-                                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}
+                                            <TextBlock
+                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}
                                                                       ,Path=Value, Converter={StaticResource NonPercentConverter}}"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontSize="12">
-
-                                            </TextBlock>
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="12" />
 
                                         </Viewbox>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsIndeterminate, RelativeSource={RelativeSource Self}}"
-                                                           Value="True" />
-                                                <Condition Binding="{Binding IsVisible, RelativeSource={RelativeSource Self}}"
-                                                           Value="True" />
-                                                <Condition Binding="{Binding Value, RelativeSource={RelativeSource Self}, Converter={StaticResource NotZeroConverter}}"
-                                                           Value="True" />
+                                                <Condition
+                                                    Binding="{Binding IsIndeterminate, RelativeSource={RelativeSource Self}}"
+                                                    Value="True" />
+                                                <Condition
+                                                    Binding="{Binding IsVisible, RelativeSource={RelativeSource Self}}"
+                                                    Value="True" />
+                                                <Condition
+                                                    Binding="{Binding Value, RelativeSource={RelativeSource Self}, Converter={StaticResource NotZeroConverter}}"
+                                                    Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsFullyIndeterminateStoryboard" />
-                                                <BeginStoryboard Storyboard="{StaticResource IsIndeterminateStoryboard}"
-                                                                 Name="IsIndeterminateStoryboard" />
+                                                <BeginStoryboard
+                                                    Storyboard="{StaticResource IsIndeterminateStoryboard}"
+                                                    Name="IsIndeterminateStoryboard" />
                                             </MultiDataTrigger.EnterActions>
                                             <MultiDataTrigger.ExitActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsIndeterminateStoryboard" />
@@ -578,8 +633,9 @@
                                             </MultiTrigger.Conditions>
                                             <MultiTrigger.EnterActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsIndeterminateStoryboard" />
-                                                <BeginStoryboard Storyboard="{StaticResource IsFullyIndeterminateScaleStoryboard}"
-                                                                 Name="IsFullyIndeterminateStoryboard" />
+                                                <BeginStoryboard
+                                                    Storyboard="{StaticResource IsFullyIndeterminateScaleStoryboard}"
+                                                    Name="IsFullyIndeterminateStoryboard" />
                                             </MultiTrigger.EnterActions>
                                             <MultiTrigger.ExitActions>
                                                 <RemoveStoryboard BeginStoryboardName="IsFullyIndeterminateStoryboard" />

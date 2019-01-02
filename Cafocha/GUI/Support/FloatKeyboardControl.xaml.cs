@@ -4,25 +4,24 @@ using System.Windows.Controls;
 namespace Cafocha.GUI.Support
 {
     /// <summary>
-    /// Interaction logic for FloatKeyboardControl.xaml
+    ///     Interaction logic for FloatKeyboardControl.xaml
     /// </summary>
     public partial class FloatKeyboardControl : UserControl
     {
-        public string InputValue { get; set; }
         private RoutedEventHandler _goClick;
-        public event RoutedEventHandler GoClick
-        {
-            add { _goClick += value; }
-            remove
-            {
-                _goClick -= value;
-            }
-        }
 
 
         public FloatKeyboardControl()
         {
             InitializeComponent();
+        }
+
+        public string InputValue { get; set; }
+
+        public event RoutedEventHandler GoClick
+        {
+            add => _goClick += value;
+            remove => _goClick -= value;
         }
 
 
@@ -39,7 +38,7 @@ namespace Cafocha.GUI.Support
 
         private void BtnCharacterKey_Click(object sender, RoutedEventArgs e)
         {
-            Button clickButton = sender as Button;
+            var clickButton = sender as Button;
             TxtInputValue.Text += clickButton.Content.ToString();
             //InputValue += clickButton.Content.ToString();
         }
@@ -54,7 +53,6 @@ namespace Cafocha.GUI.Support
         }
 
 
-
         private void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
             _goClick(sender, e);
@@ -64,7 +62,6 @@ namespace Cafocha.GUI.Support
 
         private void BtnShift_OnClick(object sender, RoutedEventArgs e)
         {
-            
         }
     }
 }

@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for EmployeeAddOrUpdateDialog.xaml
+    ///     Interaction logic for EmployeeAddOrUpdateDialog.xaml
     /// </summary>
     public partial class EmployeeAddOrUpdateDialog : Window
     {
-        private Employee _emp;
-        private BusinessModuleLocator _businessModuleLocator;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly Employee _emp;
 
         public EmployeeAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator)
         {
@@ -26,8 +23,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             _emp = new Employee();
             InitializeComponent();
             initControlAdd();
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         public EmployeeAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Employee emp)
@@ -37,21 +34,21 @@ namespace Cafocha.GUI.AdminWorkSpace
             InitializeComponent();
             initUptData();
             initControlAdd();
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         private void initControlAdd()
         {
-            txtBirth.DisplayDateEnd = new DateTime((DateTime.Now.Year - 16), 12, 31);
+            txtBirth.DisplayDateEnd = new DateTime(DateTime.Now.Year - 16, 12, 31);
             txtStartDay.DisplayDateStart = DateTime.Now;
 
-            List<dynamic> roleList = new List<dynamic>
+            var roleList = new List<dynamic>
             {
-                new { role = EmployeeRole.Counter, roleDisplay = "Counter"},
-                new { role = EmployeeRole.Stock, roleDisplay = "Stock"},
+                new {role = EmployeeRole.Counter, roleDisplay = "Counter"},
+                new {role = EmployeeRole.Stock, roleDisplay = "Stock"}
             };
-            cboRole.ItemsSource = roleList; 
+            cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";
             cboRole.DisplayMemberPath = "roleDisplay";
         }
@@ -72,7 +69,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                 txtStartDay.SelectedDate = _emp.Startday;
                 txtHour_wage.Text = _emp.HourWage.ToString();
                 txtCode.Password = _emp.DecryptedCode;
-                return;
             }
         }
 
@@ -80,8 +76,8 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             try
             {
-                string username = txtUsername.Text.Trim();
-                string pass = txtPass.Password.Trim();
+                var username = txtUsername.Text.Trim();
+                var pass = txtPass.Password.Trim();
                 //check username
                 if (username.Length == 0 || username.Length > 50)
                 {
@@ -110,7 +106,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                string passcon = txtCon.Password.Trim();
+                var passcon = txtCon.Password.Trim();
                 if (!passcon.Equals(pass))
                 {
                     MessageBox.Show("Confirm password is not match!");
@@ -120,7 +116,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
                 //check name
-                string namee = txtName.Text.Trim();
+                var namee = txtName.Text.Trim();
                 if (namee.Length == 0 || namee.Length > 50)
                 {
                     MessageBox.Show("Name is not valid!");
@@ -129,7 +125,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check role
-                int role = 0;
+                var role = 0;
 
                 if (cboRole.SelectedValue == null)
                 {
@@ -137,8 +133,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                role = (int)cboRole.SelectedValue;
-
+                role = (int) cboRole.SelectedValue;
 
 
                 //check birth
@@ -147,7 +142,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                     MessageBox.Show("Birth must be selected!");
                     return;
                 }
-                DateTime birth = txtBirth.SelectedDate.Value;
+
+                var birth = txtBirth.SelectedDate.Value;
                 if (DateTime.Now.Year - birth.Year < 17)
                 {
                     MessageBox.Show("Employee's age must higher than 17!");
@@ -156,7 +152,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
                 //check address
-                string addr = txtAddress.Text;
+                var addr = txtAddress.Text;
                 if (addr.Length > 200)
                 {
                     MessageBox.Show("Address is not valid!");
@@ -165,7 +161,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check phone
-                string phone = txtPhone.Text;
+                var phone = txtPhone.Text;
                 if (phone.Length > 20)
                 {
                     MessageBox.Show("Phone is not valid!");
@@ -174,7 +170,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check email
-                string email = txtMail.Text;
+                var email = txtMail.Text;
                 if (!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
                 {
                     MessageBox.Show("Email is not valid!");
@@ -189,10 +185,10 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                DateTime start = txtStartDay.SelectedDate.Value;
+                var start = txtStartDay.SelectedDate.Value;
 
                 //check hour wage
-                int hourwage = int.Parse(txtHour_wage.Text.Trim());
+                var hourwage = int.Parse(txtHour_wage.Text.Trim());
                 if (hourwage <= 0 || hourwage >= int.MaxValue)
                 {
                     MessageBox.Show("Hour wage is not valid! Hour wage must be greater than 0 and lesser than " +
@@ -202,7 +198,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check code
-                string code = txtCode.Password.Trim();
+                var code = txtCode.Password.Trim();
                 if (code.Length < 4)
                 {
                     MessageBox.Show("Employee code should be stronger!");
@@ -213,7 +209,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 // Adding
                 if (_emp.EmpId == null)
                 {
-                    Employee checkemp = new Employee()
+                    var checkemp = new Employee
                     {
                         EmpId = "",
                         Username = username,
@@ -228,13 +224,13 @@ namespace Cafocha.GUI.AdminWorkSpace
                         HourWage = hourwage,
                         EmpCode = code,
                         Deleted = 0,
-                        Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
+                        Manager = (Application.Current.Properties["AdLogin"] as AdminRe).AdId
                     };
 
                     _businessModuleLocator.EmployeeModule.insertEmployee(checkemp);
 
                     MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
-                    this.Close();
+                    Close();
                 }
                 else //Updating
                 {
@@ -253,26 +249,24 @@ namespace Cafocha.GUI.AdminWorkSpace
                     _businessModuleLocator.EmployeeModule.updateemployee(_emp);
 
                     MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
-                    this.Close();
+                    Close();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add or update employee. Please check the details again!");
+                MessageBox.Show(
+                    "Something went wrong. Can not add or update employee. Please check the details again!");
             }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Text))
-            {
-                e.Handled = !Char.IsNumber(e.Text[0]);
-            }
+            if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
 
 
@@ -280,27 +274,18 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             //check username
             if (string.IsNullOrEmpty(txtUsername.Text) || txtUsername.Text.Trim().Length > 50)
-            {
                 IcUserNameValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcUserNameValid.Visibility = Visibility.Hidden;
-            }
-
         }
 
         private void TxtPass_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             //check pass
             if (string.IsNullOrEmpty(txtPass.Password) || txtPass.Password.Trim().Length > 50)
-            {
                 IcPassValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcPassValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtCon_OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -311,80 +296,56 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            string passcon = txtCon.Password.Trim();
+            var passcon = txtCon.Password.Trim();
             if (!passcon.Equals(txtPass.Password.Trim()))
-            {
                 IcConfirmValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcConfirmValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtName_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //check name
             if (string.IsNullOrEmpty(txtName.Text) || txtName.Text.Length > 50)
-            {
                 IcNameValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcNameValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtBirth_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            var birth = ((DatePicker)sender).SelectedDate.Value.Date;
+            var birth = ((DatePicker) sender).SelectedDate.Value.Date;
             if (DateTime.Now.Year - birth.Year < 17)
-            {
                 IcBirthValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcBirthValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtAddress_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //check address
             if (txtAddress.Text.Length > 200)
-            {
                 IcAddrValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcAddrValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtPhone_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //check phone
             if (txtPhone.Text.Length > 20)
-            {
                 IcPhoneValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcPhoneValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtMail_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //check email
             if (!Regex.IsMatch(txtMail.Text, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
-            {
                 IcMailValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcMailValid.Visibility = Visibility.Hidden;
-            }
         }
 
         private void TxtCode_OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -396,16 +357,11 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             //check code
-            string code = txtCode.Password.Trim();
+            var code = txtCode.Password.Trim();
             if (code.Length < 4)
-            {
                 IcCodeValid.Visibility = Visibility.Visible;
-            }
             else
-            {
                 IcCodeValid.Visibility = Visibility.Hidden;
-            }
         }
-        
     }
 }

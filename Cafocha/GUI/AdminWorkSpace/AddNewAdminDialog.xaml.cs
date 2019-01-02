@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for AddNewAdminDialog.xaml
+    ///     Interaction logic for AddNewAdminDialog.xaml
     /// </summary>
     public partial class AddNewAdminDialog : Window
     {
-        internal BusinessModuleLocator _businessModuleLocator;
         private AdminRe _admin;
-
+        internal BusinessModuleLocator _businessModuleLocator;
 
 
         public AddNewAdminDialog(BusinessModuleLocator businessModuleLocator)
@@ -26,18 +22,18 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             _admin = new AdminRe();
             initControlAdd();
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         private void initControlAdd()
         {
-            List<dynamic> roleList = new List<dynamic>
+            var roleList = new List<dynamic>
             {
-                new { role = 1, roleDisplay = "Software Admin"},
-                new { role = 2, roleDisplay = "Asowel Admin"},
-                new { role = 3, roleDisplay = "AdPress Admin"},
-                new { role = 4, roleDisplay = "Higher Admin"}
+                new {role = 1, roleDisplay = "Software Admin"},
+                new {role = 2, roleDisplay = "Asowel Admin"},
+                new {role = 3, roleDisplay = "AdPress Admin"},
+                new {role = 4, roleDisplay = "Higher Admin"}
             };
             cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";
@@ -45,14 +41,12 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
 
-
-
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                string username = txtUsername.Text.Trim();
-                string pass = txtPass.Password.Trim();
+                var username = txtUsername.Text.Trim();
+                var pass = txtPass.Password.Trim();
 
                 //check username
                 if (username.Length == 0 || username.Length > 50)
@@ -80,7 +74,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                string passcon = txtCon.Password.Trim();
+                var passcon = txtCon.Password.Trim();
                 if (!passcon.Equals(pass))
                 {
                     MessageBox.Show("Confirm password is not match!");
@@ -90,7 +84,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
                 //check name
-                string name = txtName.Text.Trim();
+                var name = txtName.Text.Trim();
                 if (name.Length == 0 || name.Length > 50)
                 {
                     MessageBox.Show("Name is not valid!");
@@ -99,7 +93,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check role
-                int role = 0;
+                var role = 0;
 
                 if (cboRole.SelectedValue == null)
                 {
@@ -107,7 +101,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                role = (int)cboRole.SelectedValue;
+                role = (int) cboRole.SelectedValue;
 
                 if (role == 0)
                 {
@@ -117,9 +111,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
                 // Adding
-                
 
-                AdminRe newAd = new AdminRe()
+
+                var newAd = new AdminRe
                 {
                     AdId = "",
                     Username = username,
@@ -131,18 +125,18 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _businessModuleLocator.AdminModule.addAdmin(newAd);
 
                 MessageBox.Show("Insert " + newAd.Name + "(" + newAd.AdId + ") successful!");
-                this.Close();
-
+                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add or update admin info. Please check the details again!");
+                MessageBox.Show(
+                    "Something went wrong. Can not add or update admin info. Please check the details again!");
             }
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Windows;
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for InputNote.xaml
+    ///     Interaction logic for InputNote.xaml
     /// </summary>
     public partial class InputNote : Window
     {
@@ -13,20 +13,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             InitializeComponent();
             txtNote.Text = defautNote;
         }
-        public string Note
-        {
-            get { return txtNote.Text; }
-        }
+
+        public string Note => txtNote.Text;
+
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             txtNote.SelectAll();
             txtNote.Focus();
         }
+
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            DialogResult = true;
         }
-
-        
     }
 }

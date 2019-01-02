@@ -12,21 +12,25 @@ namespace Cafocha.GUI.Helper.PrintHelper
 {
     public class ReceiptPrintHelper : IPrintHelper
     {
-        private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        private static readonly string startupProjectPath =
+            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+        private readonly int SETORDER = 1;
+
+        public ReceiptPrintHelper()
+        {
+        }
+
+        public ReceiptPrintHelper(Owner owner)
+        {
+            Owner = owner;
+        }
 
         public Owner Owner { get; set; }
 
         public OrderForPrint Order { get; set; }
 
         public int OrderMode { get; set; }
-        private int SETORDER = 1;
-
-        public ReceiptPrintHelper() { }
-
-        public ReceiptPrintHelper(Owner owner)
-        {
-            this.Owner = owner;
-        }
 
         public FlowDocument CreateDocument()
         {
@@ -35,47 +39,44 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
         /// <summary>
-        /// Create a complete Receipt
+        ///     Create a complete Receipt
         /// </summary>
         /// <returns></returns>
         public FlowDocument CreateReceiptDocument()
         {
             // Create a FlowDocument
-            FlowDocument doc = new FlowDocument();
+            var doc = new FlowDocument();
 
             // Set Margin
             doc.PagePadding = new Thickness(0);
 
 
             // Set PageHeight and PageWidth to "Auto".
-            doc.PageHeight = Double.NaN;
+            doc.PageHeight = double.NaN;
             doc.PageWidth = 290;
 
             // Create a Section
-            Section sec = new Section();
+            var sec = new Section();
 
 
             // Head Text
-            BlockUIContainer blkHeadText = new BlockUIContainer();
-            if (Owner != null)
-            {
-                Generate_HeadText(blkHeadText, Owner);
-            }
+            var blkHeadText = new BlockUIContainer();
+            if (Owner != null) Generate_HeadText(blkHeadText, Owner);
 
 
             // Info Text
-            BlockUIContainer blkInfoText = new BlockUIContainer();
+            var blkInfoText = new BlockUIContainer();
             Generate_InfoText(blkInfoText, Order.getMetaReceiptInfo());
 
             // Table Text
-            BlockUIContainer blkTableText = new BlockUIContainer()
+            var blkTableText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
             Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.GetOrderDetailsForReceipt());
 
             // Summary Text
-            BlockUIContainer blkSummaryText = new BlockUIContainer()
+            var blkSummaryText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
@@ -83,7 +84,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Food Text
-            BlockUIContainer blkFootText = new BlockUIContainer()
+            var blkFootText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 20, 0, 0)
             };
@@ -105,20 +106,18 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
 
-
         /// <summary>
-        /// Create the Foot Section of Receipt
+        ///     Create the Foot Section of Receipt
         /// </summary>
         /// <param name="blkFootText"></param>
         private void Generate_FootText(BlockUIContainer blkFootText)
         {
             // Main stackPanel of Foot Text
-            StackPanel stpFootText = new StackPanel();
+            var stpFootText = new StackPanel();
 
 
-
-            StackPanel stpExp = new StackPanel();
-            TextBlock txtExp = new TextBlock()
+            var stpExp = new StackPanel();
+            var txtExp = new TextBlock
             {
                 Text = "receipt is available only in one month.",
                 FontSize = 11,
@@ -130,8 +129,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             stpExp.Children.Add(txtExp);
 
 
-            StackPanel stpThank = new StackPanel();
-            TextBlock txtThank = new TextBlock()
+            var stpThank = new StackPanel();
+            var txtThank = new TextBlock
             {
                 Text = "Thank you!",
                 FontSize = 11,
@@ -142,8 +141,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             };
             stpThank.Children.Add(txtThank);
 
-            StackPanel stpSeeAgain = new StackPanel();
-            TextBlock txtSeeAgain = new TextBlock()
+            var stpSeeAgain = new StackPanel();
+            var txtSeeAgain = new TextBlock
             {
                 Text = "See You Again!",
                 FontSize = 11,
@@ -154,10 +153,10 @@ namespace Cafocha.GUI.Helper.PrintHelper
             };
             stpSeeAgain.Children.Add(txtSeeAgain);
 
-            Random rand = new Random();
-            StackPanel stpEmo = new StackPanel();
-            Image imgEmo = new Image();
-            BitmapImage bimg = new BitmapImage();
+            var rand = new Random();
+            var stpEmo = new StackPanel();
+            var imgEmo = new Image();
+            var bimg = new BitmapImage();
             bimg.BeginInit();
             bimg.UriSource = new Uri(startupProjectPath + "\\Images\\rand" + rand.Next(5) + ".png", UriKind.Absolute);
             bimg.EndInit();
@@ -176,26 +175,25 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
         /// <summary>
-        /// Create the summary section of Receipt
+        ///     Create the summary section of Receipt
         /// </summary>
         /// <param name="blkTableText"></param>
         /// <param name="order">the order data for filling the receip</param>
         /// <param name="moneyUnit"></param>
         private void Generate_SummaryText(BlockUIContainer blkSummaryText, OrderForPrint order, string moneyUnit)
         {
-            StackPanel stpSummary = new StackPanel()
+            var stpSummary = new StackPanel
             {
                 Orientation = Orientation.Vertical
             };
 
 
-
             // Sale Value
-            StackPanel stpSaleValue = new StackPanel()
+            var stpSaleValue = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbSaleValueLable = new TextBlock()
+            var tbSaleValueLable = new TextBlock
             {
                 Text = "Sale Value:",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -204,9 +202,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbSaleValueValue = new TextBlock()
+            var tbSaleValueValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.SaleValue),
+                Text = string.Format("{0:0.000}", order.SaleValue),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -217,11 +215,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Service Charge
-            StackPanel stpSVC = new StackPanel()
+            var stpSVC = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbSVCLable = new TextBlock()
+            var tbSVCLable = new TextBlock
             {
                 Text = "SVC (5%):",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -230,9 +228,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbSVCValue = new TextBlock()
+            var tbSVCValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.Svc),
+                Text = string.Format("{0:0.000}", order.Svc),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -243,11 +241,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // VAT
-            StackPanel stpVAT = new StackPanel()
+            var stpVAT = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbVATLable = new TextBlock()
+            var tbVATLable = new TextBlock
             {
                 Text = "VAT (10%):",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -256,9 +254,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbVATValue = new TextBlock()
+            var tbVATValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.Vat),
+                Text = string.Format("{0:0.000}", order.Vat),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -268,13 +266,12 @@ namespace Cafocha.GUI.Helper.PrintHelper
             stpVAT.Children.Add(tbVATValue);
 
 
-
             // Total Price
-            StackPanel stpTotalPrice = new StackPanel()
+            var stpTotalPrice = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbTotalPriceLable = new TextBlock()
+            var tbTotalPriceLable = new TextBlock
             {
                 Text = "Total Amount " + "(" + moneyUnit + "):",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -283,9 +280,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbTotalPriceValue = new TextBlock()
+            var tbTotalPriceValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.TotalPrice),
+                Text = string.Format("{0:0.000}", order.TotalPrice),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -295,11 +292,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
             stpTotalPrice.Children.Add(tbTotalPriceValue);
 
             // Customer Pay
-            StackPanel stpCustomerPay = new StackPanel()
+            var stpCustomerPay = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbCustomerPayLable = new TextBlock()
+            var tbCustomerPayLable = new TextBlock
             {
                 Text = "Customer Pay:",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -308,9 +305,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbCustomerPayValue = new TextBlock()
+            var tbCustomerPayValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.CustomerPay),
+                Text = string.Format("{0:0.000}", order.CustomerPay),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -320,11 +317,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
             stpCustomerPay.Children.Add(tbCustomerPayValue);
 
             // Pay Back
-            StackPanel stpPayBack = new StackPanel()
+            var stpPayBack = new StackPanel
             {
                 Orientation = Orientation.Horizontal
             };
-            TextBlock tbPayBackLable = new TextBlock()
+            var tbPayBackLable = new TextBlock
             {
                 Text = "Change:",
                 FontFamily = new FontFamily("Century Gothic"),
@@ -333,9 +330,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            TextBlock tbPayBackValue = new TextBlock()
+            var tbPayBackValue = new TextBlock
             {
-                Text = String.Format("{0:0.000}", order.PayBack),
+                Text = string.Format("{0:0.000}", order.PayBack),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
                 Width = 60,
@@ -357,58 +354,57 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
         /// <summary>
-        /// Create the table section of Receipt
+        ///     Create the table section of Receipt
         /// </summary>
         /// <param name="blkTableText"></param>
         /// <param name="gridMeta">The meta header of the table</param>
         /// <param name="listData">The data source for table</param>
-        private void Generate_TableText(BlockUIContainer blkTableText, string[] gridMeta, List<OrderDetailsForPrint> listData)
+        private void Generate_TableText(BlockUIContainer blkTableText, string[] gridMeta,
+            List<OrderDetailsForPrint> listData)
         {
-            Grid dgDataTable = new Grid();
+            var dgDataTable = new Grid();
             dgDataTable.Width = 300;
             // set Columns
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 if (i == 0)
                 {
-                    ColumnDefinition firstCol = new ColumnDefinition();
+                    var firstCol = new ColumnDefinition();
                     firstCol.Width = new GridLength(120);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
+
                 if (i == 1)
                 {
-                    ColumnDefinition secondCol = new ColumnDefinition();
+                    var secondCol = new ColumnDefinition();
                     secondCol.Width = new GridLength(30);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }
+
                 if (i == 2)
                 {
-                    ColumnDefinition otherCol = new ColumnDefinition();
+                    var otherCol = new ColumnDefinition();
                     otherCol.Width = new GridLength(55);
                     dgDataTable.ColumnDefinitions.Add(otherCol);
-                    continue;
                 }
                 else
                 {
-                    ColumnDefinition otherCol = new ColumnDefinition();
+                    var otherCol = new ColumnDefinition();
                     otherCol.Width = new GridLength(65);
                     dgDataTable.ColumnDefinitions.Add(otherCol);
-                    continue;
                 }
             }
+
             // set Rows
-            for (int i = 0; i < listData.Count + 2; i++)
-            {
-                dgDataTable.RowDefinitions.Add(new RowDefinition());
-            }
+            for (var i = 0; i < listData.Count + 2; i++) dgDataTable.RowDefinitions.Add(new RowDefinition());
 
 
             // add Meta
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                TextBlock txtMeta = new TextBlock();
+                var txtMeta = new TextBlock();
                 if (i == 2 || i == 3)
                 {
                     txtMeta.Text = gridMeta[i];
@@ -432,10 +428,10 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 dgDataTable.Children.Add(txtMeta);
             }
 
-            int rowIndex = 1;
+            var rowIndex = 1;
             if (OrderMode == SETORDER)
             {
-                TextBlock txtProductName = new TextBlock();
+                var txtProductName = new TextBlock();
                 txtProductName.Width = 115;
                 txtProductName.Text = "SET";
                 txtProductName.FontSize = 11;
@@ -446,7 +442,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtProductName, 0);
                 dgDataTable.Children.Add(txtProductName);
 
-                TextBlock txtQuan = new TextBlock();
+                var txtQuan = new TextBlock();
                 txtQuan.Text = Order.Pax.ToString();
                 txtQuan.FontSize = 11;
                 txtQuan.VerticalAlignment = VerticalAlignment.Top;
@@ -455,8 +451,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtQuan, 1);
                 dgDataTable.Children.Add(txtQuan);
 
-                TextBlock txtPrice = new TextBlock();
-                txtPrice.Text = String.Format("{0:0.000}", Order.SaleValue/Order.Pax);
+                var txtPrice = new TextBlock();
+                txtPrice.Text = string.Format("{0:0.000}", Order.SaleValue / Order.Pax);
                 txtPrice.FontSize = 11;
                 txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
                 txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
@@ -465,8 +461,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtPrice, 2);
                 dgDataTable.Children.Add(txtPrice);
 
-                TextBlock txtAmt = new TextBlock();
-                txtAmt.Text = String.Format("{0:0.000}", Order.SaleValue);
+                var txtAmt = new TextBlock();
+                txtAmt.Text = string.Format("{0:0.000}", Order.SaleValue);
                 txtAmt.FontSize = 11;
                 txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
                 txtAmt.TextAlignment = TextAlignment.Right;
@@ -480,7 +476,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
             foreach (var orderItem in listData)
             {
-                TextBlock txtProductName = new TextBlock();
+                var txtProductName = new TextBlock();
                 txtProductName.Width = 115;
                 txtProductName.Text = seperateLongProductName(orderItem.ProductName);
                 txtProductName.FontSize = 11;
@@ -491,7 +487,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtProductName, 0);
                 dgDataTable.Children.Add(txtProductName);
 
-                TextBlock txtQuan = new TextBlock();
+                var txtQuan = new TextBlock();
                 txtQuan.Text = orderItem.Quan.ToString();
                 txtQuan.FontSize = 11;
                 txtQuan.VerticalAlignment = VerticalAlignment.Top;
@@ -500,15 +496,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtQuan, 1);
                 dgDataTable.Children.Add(txtQuan);
 
-                TextBlock txtPrice = new TextBlock();
+                var txtPrice = new TextBlock();
                 if (OrderMode == SETORDER)
-                {
                     txtPrice.Text = "";
-                }
                 else
-                {
-                    txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
-                }
+                    txtPrice.Text = string.Format("{0:0.000}", orderItem.ProductPrice);
 
                 txtPrice.FontSize = 11;
                 txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
@@ -518,15 +510,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Grid.SetColumn(txtPrice, 2);
                 dgDataTable.Children.Add(txtPrice);
 
-                TextBlock txtAmt = new TextBlock();
+                var txtAmt = new TextBlock();
                 if (OrderMode == SETORDER)
-                {
                     txtAmt.Text = "";
-                }
                 else
-                {
-                    txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
-                }
+                    txtAmt.Text = string.Format("{0:0.000}", orderItem.Amt);
                 txtAmt.FontSize = 11;
                 txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
                 txtAmt.TextAlignment = TextAlignment.Right;
@@ -543,21 +531,21 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
         /// <summary>
-        /// Create the Info section of Receipt
+        ///     Create the Info section of Receipt
         /// </summary>
         /// <param name="blkInfoText"></param>
         /// <param name="infos">The information of Receipt</param>
         private void Generate_InfoText(BlockUIContainer blkInfoText, Dictionary<string, string> infos)
         {
-            StackPanel stpMain = new StackPanel();
+            var stpMain = new StackPanel();
 
             foreach (var info in infos)
             {
-                StackPanel stpInfo = new StackPanel()
+                var stpInfo = new StackPanel
                 {
                     Orientation = Orientation.Horizontal
                 };
-                TextBlock tbInfoKey = new TextBlock()
+                var tbInfoKey = new TextBlock
                 {
                     Text = info.Key + ":",
                     FontFamily = new FontFamily("Century Gothic"),
@@ -566,7 +554,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     Margin = new Thickness(0, 0, 10, 0),
                     Width = 70
                 };
-                TextBlock tbInfoValue = new TextBlock()
+                var tbInfoValue = new TextBlock
                 {
                     Text = info.Value,
                     FontFamily = new FontFamily("Century Gothic"),
@@ -583,22 +571,21 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
 
-
         /// <summary>
-        /// Create the Head section of Receipt
+        ///     Create the Head section of Receipt
         /// </summary>
         /// <param name="blkHeadText"></param>
         private void Generate_HeadText(BlockUIContainer blkHeadText, Owner owner)
         {
             // Main stackPanel of Head Text
-            StackPanel stpHeadText = new StackPanel()
+            var stpHeadText = new StackPanel
             {
                 Orientation = Orientation.Vertical
             };
 
-            StackPanel stpLogo = new StackPanel();
-            Image imgOwner = new Image();
-            BitmapImage bimg = new BitmapImage();
+            var stpLogo = new StackPanel();
+            var imgOwner = new Image();
+            var bimg = new BitmapImage();
             bimg.BeginInit();
             bimg.UriSource = new Uri(startupProjectPath + "\\Images\\" + owner.ImgName, UriKind.Absolute);
             bimg.EndInit();
@@ -608,13 +595,12 @@ namespace Cafocha.GUI.Helper.PrintHelper
             stpLogo.Children.Add(imgOwner);
 
 
-
-            string address = "";
+            var address = "";
             // modify the long address
             if (owner.Address.Length > 54)
             {
-                string address1st = owner.Address.Substring(0, 53);
-                string address2nd = owner.Address.Substring(53);
+                var address1st = owner.Address.Substring(0, 53);
+                var address2nd = owner.Address.Substring(53);
                 address = address1st + "\n\t" + address2nd;
             }
             else
@@ -623,25 +609,23 @@ namespace Cafocha.GUI.Helper.PrintHelper
             }
 
 
-
-            TextBlock txtAddress = new TextBlock()
+            var txtAddress = new TextBlock
             {
                 Text = "ADDRESS:  " + address,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 10,
-                FontWeight = FontWeights.UltraBold,
-
+                FontWeight = FontWeights.UltraBold
             };
-            TextBlock txtPhone = new TextBlock()
+            var txtPhone = new TextBlock
             {
                 Text = "PHONE:  " + owner.Phone,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 10,
                 Margin = new Thickness(0, 0, 0, 5),
-                FontWeight = FontWeights.UltraBold,
+                FontWeight = FontWeights.UltraBold
             };
-            StackPanel stpPageName = new StackPanel();
-            TextBlock txtPageName = new TextBlock()
+            var stpPageName = new StackPanel();
+            var txtPageName = new TextBlock
             {
                 Text = owner.PageName,
                 FontSize = 13,
@@ -663,17 +647,15 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
 
-
-
         private string seperateLongProductName(string productName)
         {
-            string result = "";
+            var result = "";
 
-            string[] splProductName = productName.Split(' ');
+            var splProductName = productName.Split(' ');
             result = splProductName[0];
 
-            string line = result;
-            for (int i = 1; i < splProductName.Length; i++)
+            var line = result;
+            for (var i = 1; i < splProductName.Length; i++)
             {
                 line += " " + splProductName[i];
                 if (line.Length > 16)

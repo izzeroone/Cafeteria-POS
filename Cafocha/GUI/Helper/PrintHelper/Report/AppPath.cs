@@ -16,12 +16,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
             }
         }
 
-        private static bool isInWeb
-        {
-            get
-            {
-                return HttpContext.Current != null;
-            }
-        }
+        private static bool isInWeb => HttpContext.Current != null;
     }
 }

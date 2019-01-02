@@ -53,7 +53,7 @@
                          VerticalAlignment="Center"
                          Foreground="White"
                          Margin="10,0,0,0"
-                         PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                         PreviewTextInput="NumberOnly_PreviewTextInput" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="20"
@@ -64,12 +64,12 @@
                         Height="Auto"
                         Width="75"
                         Margin="0,0,50,0"
-                        Click="btnOk_Click"/>
+                        Click="btnOk_Click" />
                 <Button x:Name="btnCancel"
                         Content="Cancel"
                         Height="Auto"
                         Width="75"
-                        Click="btnCancel_Click"/>
+                        Click="btnCancel_Click" />
             </StackPanel>
         </StackPanel>
     </Grid>

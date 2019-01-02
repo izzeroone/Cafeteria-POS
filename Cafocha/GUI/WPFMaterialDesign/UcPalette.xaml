@@ -34,7 +34,9 @@
         <Border Background="{DynamicResource PrimaryHueLightBrush}"
                 Grid.Row="1">
             <TextBlock FontWeight="Bold"
-                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">Light</TextBlock>
+                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                Light
+            </TextBlock>
         </Border>
         <Border Background="{DynamicResource PrimaryHueMidBrush}"
                 Grid.Row="1"
@@ -53,4 +55,3 @@
         </Border>
     </Grid>
 </UserControl>
-

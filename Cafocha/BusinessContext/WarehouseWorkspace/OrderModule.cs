@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -10,7 +7,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 {
     public class OrderModule
     {
-        RepositoryLocator _unitofwork;
+        private readonly RepositoryLocator _unitofwork;
 
         public OrderModule()
         {
@@ -31,13 +28,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 
         public IEnumerable<OrderNote> getOrdernoteByMonth(int month)
         {
-            if (month <= 0 || month >= 13)
-            {
-                return new List<OrderNote>();
-            }
+            if (month <= 0 || month >= 13) return new List<OrderNote>();
 
             return _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == month);
-
         }
 
         public IEnumerable<OrderNoteDetail> getOrderNoteDetail(string orderNoteID)

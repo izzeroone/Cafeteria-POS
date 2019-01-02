@@ -75,13 +75,13 @@
                          Width="147"
                          Grid.Row="1"
                          KeyDown="txtPass_KeyDown" />
-            <Button  x:Name="btnLogin"
-                     HorizontalAlignment="Left"
-                     Margin="51,89.4,0,0"
-                     VerticalAlignment="Top"
-                     Width="75"
-                     Grid.Row="1"
-                     Click="btnLogin_Click">
+            <Button x:Name="btnLogin"
+                    HorizontalAlignment="Left"
+                    Margin="51,89.4,0,0"
+                    VerticalAlignment="Top"
+                    Width="75"
+                    Grid.Row="1"
+                    Click="btnLogin_Click">
                 Login
             </Button>
             <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"

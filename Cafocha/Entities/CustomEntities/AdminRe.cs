@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cafocha.Entities
-{ 
+{
     public enum AdminReRole
     {
         SoftwareAd = 1,
@@ -12,7 +12,6 @@ namespace Cafocha.Entities
 
     public partial class AdminRe
     {
-        [NotMapped]
-        public string DecryptedPass { get; set; }
+        [NotMapped] public string DecryptedPass { get; set; }
     }
 }

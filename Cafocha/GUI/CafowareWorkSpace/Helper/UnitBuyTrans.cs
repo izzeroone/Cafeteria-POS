@@ -15,10 +15,7 @@
     {
         public static double ToUnitContain(string unitOut)
         {
-            if (unitOut.Equals(UnitOut.pcs.ToString()))
-            {
-                return 1;
-            }
+            if (unitOut.Equals(UnitOut.pcs.ToString())) return 1;
 
             return 0;
         }
@@ -28,10 +25,7 @@
     {
         public static double ToUnitContain(string unitIn)
         {
-            if (unitIn.Equals(UnitIn.pcs.ToString()))
-            {
-                return 1;
-            }
+            if (unitIn.Equals(UnitIn.pcs.ToString())) return 1;
 
             return 0;
         }

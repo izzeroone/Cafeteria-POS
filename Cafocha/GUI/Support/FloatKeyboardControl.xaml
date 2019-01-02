@@ -19,8 +19,8 @@
                              FontSize="14"
                              FontWeight="Bold"
                              x:Name="TxtInputValue"
-                             Margin="5,0,0,2" 
-                             TextChanged="TxtInputValue_OnTextChanged"/>
+                             Margin="5,0,0,2"
+                             TextChanged="TxtInputValue_OnTextChanged" />
                     <Button Style="{DynamicResource MaterialDesignFlatButton}"
                             x:Name="BtnDeleteInput"
                             Width="40"
@@ -43,7 +43,7 @@
                             <StackPanel.Resources>
                                 <Style TargetType="Button">
                                     <EventSetter Event="Click"
-                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                                 Handler="BtnCharacterKey_Click" />
                                 </Style>
                             </StackPanel.Resources>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
@@ -102,7 +102,7 @@
                             <StackPanel.Resources>
                                 <Style TargetType="Button">
                                     <EventSetter Event="Click"
-                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                                 Handler="BtnCharacterKey_Click" />
                                 </Style>
                             </StackPanel.Resources>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
@@ -161,7 +161,7 @@
                             <StackPanel.Resources>
                                 <Style TargetType="Button">
                                     <EventSetter Event="Click"
-                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                                 Handler="BtnCharacterKey_Click" />
                                 </Style>
                             </StackPanel.Resources>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
@@ -226,7 +226,7 @@
                                 <StackPanel.Resources>
                                     <Style TargetType="Button">
                                         <EventSetter Event="Click"
-                                                     Handler="BtnCharacterKey_Click"></EventSetter>
+                                                     Handler="BtnCharacterKey_Click" />
                                     </Style>
                                 </StackPanel.Resources>
                                 <Button Style="{DynamicResource MaterialDesignFlatButton}"
@@ -282,15 +282,14 @@
                                 <StackPanel.Resources>
                                     <Style TargetType="Button">
                                         <EventSetter Event="Click"
-                                                     Handler="BtnCharacterKey_Click"></EventSetter>
+                                                     Handler="BtnCharacterKey_Click" />
                                     </Style>
                                 </StackPanel.Resources>
                                 <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                         Width="66"
                                         Height="30"
                                         Content="@"
-                                        Background="{DynamicResource MaterialDesignDarkBackground}">
-                                </Button>
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
                                 <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                         Width="44"
                                         Height="30"

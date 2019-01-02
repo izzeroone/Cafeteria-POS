@@ -13,6 +13,5 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public int Quan { get; set; } // quan
         public decimal TotalPrice { get; set; }
         public string PayMethod { get; set; }
-        
     }
 }

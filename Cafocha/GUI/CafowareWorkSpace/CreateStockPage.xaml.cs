@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Linq;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.CafowareWorkSpace
 {
     /// <summary>
-    /// Interaction logic for CreateStockPage.xaml
+    ///     Interaction logic for CreateStockPage.xaml
     /// </summary>
     public partial class CreateStockPage : Page
     {
-        private List<Stock> _stockList;
-        private BusinessModuleLocator _businessModuleLocator;
+        private readonly BusinessModuleLocator _businessModuleLocator;
 
-        Stock _currentNewStock = new Stock();
+        private Stock _currentNewStock = new Stock();
+
+        private Stock _selectedStock;
+        private readonly List<Stock> _stockList;
 
         public CreateStockPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
         {
@@ -65,42 +65,33 @@ namespace Cafocha.GUI.CafowareWorkSpace
         }
 
 
-
-
         /*********************************
         * Controls
         *********************************/
 
         private void cboGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedI = (sender as ComboBox).SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedI = (sender as ComboBox).SelectedIndex;
 
             if (filter.Length == 0)
             {
                 if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals(StockGroup.All))
-                {
                     lvStock.ItemsSource = _stockList;
-                }
                 else
-                {
-                    lvStock.ItemsSource = _stockList.Where(x => x.Group.Equals((int)(sender as ComboBox).SelectedItem));
-                }
+                    lvStock.ItemsSource =
+                        _stockList.Where(x => x.Group.Equals((int) (sender as ComboBox).SelectedItem));
             }
             else
             {
                 if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals(StockGroup.All))
-                {
                     lvStock.ItemsSource = _stockList.Where(x => x.Name.Contains(filter));
-                }
                 else
-                {
-                    lvStock.ItemsSource = _stockList.Where(x => x.Group.Equals((int)(sender as ComboBox).SelectedItem) && x.Name.Contains(filter));
-                }
+                    lvStock.ItemsSource = _stockList.Where(x =>
+                        x.Group.Equals((int) (sender as ComboBox).SelectedItem) && x.Name.Contains(filter));
             }
         }
 
-        Stock _selectedStock;
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
             _selectedStock = lvStock.SelectedItem as Stock;
@@ -122,37 +113,38 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             switch (_selectedStock.Group)
             {
-                case (int)StockGroup.Ingridient:
+                case (int) StockGroup.Ingridient:
                     cboStockGroup.SelectedItem = StockGroup.Ingridient;
                     break;
-                case (int)StockGroup.Cosmetics:
+                case (int) StockGroup.Cosmetics:
                     cboStockGroup.SelectedItem = StockGroup.Cosmetics;
                     break;
-                case (int)StockGroup.SpaVoucher:
+                case (int) StockGroup.SpaVoucher:
                     cboStockGroup.SelectedItem = StockGroup.SpaVoucher;
                     break;
-                case (int)StockGroup.GymVoucher:
+                case (int) StockGroup.GymVoucher:
                     cboStockGroup.SelectedItem = StockGroup.GymVoucher;
                     break;
-                case (int)StockGroup.ResVoucher:
+                case (int) StockGroup.ResVoucher:
                     cboStockGroup.SelectedItem = StockGroup.ResVoucher;
                     break;
-                case (int)StockGroup.TravVoucher:
+                case (int) StockGroup.TravVoucher:
                     cboStockGroup.SelectedItem = StockGroup.TravVoucher;
                     break;
-                case (int)StockGroup.Food:
+                case (int) StockGroup.Food:
                     cboStockGroup.SelectedItem = StockGroup.Food;
                     break;
-                case (int)StockGroup.Agricultural:
+                case (int) StockGroup.Agricultural:
                     cboStockGroup.SelectedItem = StockGroup.Agricultural;
                     break;
-                case (int)StockGroup.Watch:
+                case (int) StockGroup.Watch:
                     cboStockGroup.SelectedItem = StockGroup.Watch;
                     break;
-                case (int)StockGroup.TopTen:
+                case (int) StockGroup.TopTen:
                     cboStockGroup.SelectedItem = StockGroup.TopTen;
                     break;
             }
+
             txtBarterCode.Text = _selectedStock.BarterCode;
             txtBarterName.Text = _selectedStock.BarterName;
             cboUnitIn.SelectedItem = _selectedStock.UnitIn;
@@ -170,15 +162,18 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
 
             var delStock = lvStock.SelectedItem as Stock;
-            if(delStock != null)
+            if (delStock != null)
             {
-                MessageBoxResult delMess = MessageBox.Show("This action will delete all following stock details! Do you want to delete " + delStock.Name + "(" + delStock.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                var delMess =
+                    MessageBox.Show(
+                        "This action will delete all following stock details! Do you want to delete " + delStock.Name +
+                        "(" + delStock.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
                     _businessModuleLocator.WarehouseModule.deleteStock(delStock);
 
                     // refesh data
-                    ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
+                    ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
                     lvStock.Items.Refresh();
                 }
             }
@@ -195,67 +190,53 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedStock = cboGroup.SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedStock = cboGroup.SelectedIndex;
 
             if (selectedStock < 0 || cboGroup.SelectedValue.Equals(StockGroup.All))
             {
                 if (filter.Length == 0)
-                {
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));
-                }
                 else
-                {
                     lvStock.ItemsSource = _stockList.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
             else
             {
                 if (filter.Length == 0)
-                {
-                    lvStock.ItemsSource = _stockList.Where(p => p.Group.Equals((int)cboGroup.SelectedItem) && p.Deleted.Equals(0));
-                }
+                    lvStock.ItemsSource = _stockList.Where(p =>
+                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Deleted.Equals(0));
                 else
-                {
-                    lvStock.ItemsSource = _stockList.Where(p => p.Group.Equals((int)cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
+                    lvStock.ItemsSource = _stockList.Where(p =>
+                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
             }
         }
 
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string filter = SearchIBox.Text.Trim();
-            int selectedStock = cboGroup.SelectedIndex;
+            var filter = SearchIBox.Text.Trim();
+            var selectedStock = cboGroup.SelectedIndex;
 
             if (selectedStock < 0 || cboGroup.SelectedValue.Equals(StockGroup.All))
             {
                 if (filter.Length == 0)
-                {
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));
-                }
                 else
-                {
                     lvStock.ItemsSource = _stockList.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
             }
             else
             {
                 if (filter.Length == 0)
-                {
-                    lvStock.ItemsSource = _stockList.Where(p => p.Group.Equals((int)cboGroup.SelectedItem) && p.Deleted.Equals(0));
-                }
+                    lvStock.ItemsSource = _stockList.Where(p =>
+                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Deleted.Equals(0));
                 else
-                {
-                    lvStock.ItemsSource = _stockList.Where(p => p.Group.Equals((int)cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
-                }
+                    lvStock.ItemsSource = _stockList.Where(p =>
+                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
             }
         }
 
         private void SearchIBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            
         }
-
 
 
         /*********************************
@@ -264,10 +245,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Text))
-            {
-                e.Handled = !Char.IsNumber(e.Text[0]);
-            }
+            if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
 
         private void cboStockGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -290,7 +268,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             try
             {
                 //check name
-                string name = txtName.Text.Trim();
+                var name = txtName.Text.Trim();
                 if (name.Length == 0)
                 {
                     MessageBox.Show("Name is not valid!");
@@ -299,25 +277,24 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 }
 
                 //check info
-                string info = txtInfo.Text.Trim();
+                var info = txtInfo.Text.Trim();
                 //check barter code
-                string barterCode = txtBarterCode.Text;
+                var barterCode = txtBarterCode.Text;
                 //check barter name
-                string barterName = txtBarterName.Text;
+                var barterName = txtBarterName.Text;
 
-                int group = (int)cboStockGroup.SelectedItem;
-                string unitIn = cboUnitIn.SelectedItem.ToString();
-                string unitOut = cboUnitOut.SelectedItem.ToString();
+                var group = (int) cboStockGroup.SelectedItem;
+                var unitIn = cboUnitIn.SelectedItem.ToString();
+                var unitOut = cboUnitOut.SelectedItem.ToString();
 
                 //check supplier
-                string supplier = txtSupplier.Text;
+                var supplier = txtSupplier.Text;
 
                 //check price
-                decimal price = decimal.Parse(txtPrice.Text.Trim());
+                var price = decimal.Parse(txtPrice.Text.Trim());
 
 
-
-                ApWareHouse newWareHouse = new ApWareHouse
+                var newWareHouse = new ApWareHouse
                 {
                     ApwarehouseId = "",
                     Name = "",
@@ -326,7 +303,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 };
 
                 _businessModuleLocator.WarehouseModule.insertWarehouse(newWareHouse);
-
 
 
                 _currentNewStock.ApwarehouseId = newWareHouse.ApwarehouseId;
@@ -343,11 +319,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _businessModuleLocator.WarehouseModule.insertStock(_currentNewStock);
 
 
-                MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId + ") successful!");
+                MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId +
+                                ") successful!");
                 clearAllData();
 
                 // refesh data
-                ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
+                ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
             }
             catch (Exception ex)
             {
@@ -380,7 +357,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             //check name
-            string name = txtName.Text.Trim();
+            var name = txtName.Text.Trim();
             if (name.Length == 0)
             {
                 MessageBox.Show("Name is not valid!");
@@ -389,21 +366,21 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
 
             //check info
-            string info = txtInfo.Text.Trim();
+            var info = txtInfo.Text.Trim();
             //check barter code
-            string barterCode = txtBarterCode.Text;
+            var barterCode = txtBarterCode.Text;
             //check barter name
-            string barterName = txtBarterName.Text;
+            var barterName = txtBarterName.Text;
 
-            int group = (int)cboStockGroup.SelectedItem;
-            string unitIn = cboUnitIn.SelectedItem.ToString();
-            string unitOut = cboUnitOut.SelectedItem.ToString();
+            var group = (int) cboStockGroup.SelectedItem;
+            var unitIn = cboUnitIn.SelectedItem.ToString();
+            var unitOut = cboUnitOut.SelectedItem.ToString();
 
             //check supplier
-            string supplier = txtSupplier.Text;
+            var supplier = txtSupplier.Text;
 
             //check price
-            decimal price = decimal.Parse(txtPrice.Text.Trim());
+            var price = decimal.Parse(txtPrice.Text.Trim());
 
 
             _selectedStock.Name = name;
@@ -425,7 +402,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             btnUpdate.Visibility = Visibility.Hidden;
             _selectedStock = null;
             // refesh data
-            ((CafowareWindow)Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
+            ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
         }
     }
 }

@@ -1,28 +1,28 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
 using Cafocha.GUI.BusinessModel;
-using Cafocha.Repository.DAL;
 using log4net;
-using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Cafocha.GUI
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    ///     Interaction logic for Login.xaml
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private static readonly ILog AppLog = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         internal BusinessModuleLocator _businessModuleLocator;
-        private DispatcherTimer LoadCodeLogin;
 
-        private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private bool isCodeLoginTurnOn;
+        private readonly DispatcherTimer LoadCodeLogin;
 
         public LoginWindow()
         {
-            string config = ReadWriteData.ReadDBConfig();
+            var config = ReadWriteData.ReadDBConfig();
 
 //            try
 //            {
@@ -32,23 +32,22 @@ namespace Cafocha.GUI
 //            {
 //                _businessModuleLocator = new BusinessModuleLocator();
 //            }
-            
+
             InitializeComponent();
             _businessModuleLocator = new BusinessModuleLocator();
             //            txtUsername.Focus();
 
-            this.WindowState = WindowState.Normal;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowState = WindowState.Normal;
+            ResizeMode = ResizeMode.NoResize;
 
             LoadCodeLogin = new DispatcherTimer();
-            LoadCodeLogin.Tick += LoadCodeLogin_Tick; ;
+            LoadCodeLogin.Tick += LoadCodeLogin_Tick;
+            ;
             LoadCodeLogin.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
-            this.Closing += Closing_LoginWindos;
+            Closing += Closing_LoginWindos;
             LoginModule = new LoginModule(this);
         }
-
-        private bool isCodeLoginTurnOn = false;
 
         public LoginModule LoginModule { get; }
 
@@ -57,35 +56,26 @@ namespace Cafocha.GUI
             if (isCodeLoginTurnOn)
             {
                 gNormalLoginForm.Width -= 10;
-                if (gNormalLoginForm.Width == 0)
-                {
-                    LoadCodeLogin.Stop();
-                }
+                if (gNormalLoginForm.Width == 0) LoadCodeLogin.Stop();
             }
             else
             {
                 gNormalLoginForm.Width += 10;
-                if (gNormalLoginForm.Width == 400)
-                {
-                    LoadCodeLogin.Stop();
-                }
+                if (gNormalLoginForm.Width == 400) LoadCodeLogin.Stop();
             }
         }
 
-        private void txtUsername_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                txtPass.Focus();
-            }
+            if (e.Key == Key.Enter) txtPass.Focus();
         }
 
-        private async void txtPass_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private async void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                string username = txtUsername.Text;
-                string pass = txtPass.Password;
+                var username = txtUsername.Text;
+                var pass = txtPass.Password;
                 try
                 {
                     btnLogin.IsEnabled = false;
@@ -103,11 +93,10 @@ namespace Cafocha.GUI
         }
 
 
-
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string pass = txtPass.Password.Trim();
+            var username = txtUsername.Text.Trim();
+            var pass = txtPass.Password.Trim();
             try
             {
                 btnLogin.IsEnabled = false;
@@ -151,14 +140,10 @@ namespace Cafocha.GUI
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseConfigWindow dbConfig = new DatabaseConfigWindow();
+            var dbConfig = new DatabaseConfigWindow();
             dbConfig.ShowDialog();
-            string connectString = (string) Application.Current.Properties["ConnectionString"];
-            if (!String.IsNullOrWhiteSpace(connectString))
-            {
-                _businessModuleLocator.ConnectionString = connectString;
-            }
-
+            var connectString = (string) Application.Current.Properties["ConnectionString"];
+            if (!string.IsNullOrWhiteSpace(connectString)) _businessModuleLocator.ConnectionString = connectString;
         }
 
         private void Closing_LoginWindos(object sender, EventArgs args)

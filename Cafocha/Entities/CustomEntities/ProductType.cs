@@ -6,6 +6,6 @@
         Drink = 1,
         Topping = 2,
         Dessert = 3,
-        Other = 4,
+        Other = 4
     }
 }

@@ -35,7 +35,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">Personal Infomation</TextBlock>
+                           FontSize="18">
+                    Personal Infomation
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel Orientation="Vertical"
@@ -57,8 +59,8 @@
                             Value="Center" />
                 </Style>
             </StackPanel.Resources>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Username:"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtUsername"
@@ -90,8 +92,8 @@
                                          Foreground="#FFC13E17"
                                          Visibility="Hidden" />
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Name: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
@@ -106,8 +108,8 @@
                                          Kind="Alert"
                                          Foreground="#FFC13E17"
                                          Visibility="Hidden" />
-                <StackPanel  Orientation="Horizontal"
-                             Margin="90,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="90,0,0,0">
                     <TextBlock x:Name="txbCon"
                                Text="Confirm Password:"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
@@ -125,16 +127,16 @@
                                              Visibility="Hidden" />
                 </StackPanel>
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Employee Role:"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <ComboBox x:Name="cboRole"
                           Width="215"
                           FontSize="18"
                           Foreground="White" />
-                <StackPanel  Orientation="Horizontal"
-                             Margin="130,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="130,0,0,0">
                     <TextBlock Text="Birth: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <DatePicker x:Name="txtBirth"
@@ -153,8 +155,8 @@
                                              Visibility="Hidden" />
                 </StackPanel>
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Address: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox MaxWidth="300"
@@ -179,7 +181,7 @@
                                          Visibility="Hidden" />
                 <StackPanel VerticalAlignment="Center"
                             Margin="90,0,0,0">
-                    <StackPanel  Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
                                                  Kind="Phone"
                                                  Width="30"
@@ -201,7 +203,7 @@
                                                  Visibility="Hidden" />
                     </StackPanel>
 
-                    <StackPanel  Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
                                                  Kind="MailRu"
                                                  Width="30"
@@ -223,8 +225,8 @@
                 </StackPanel>
 
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Start Day: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <DatePicker x:Name="txtStartDay"
@@ -254,8 +256,8 @@
                                          Foreground="#FFC13E17"
                                          Visibility="Hidden" />
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="15,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
                 <TextBlock Text="Code: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <PasswordBox x:Name="txtCode"
@@ -271,10 +273,10 @@
                                          Foreground="#FFC13E17"
                                          Visibility="Hidden" />
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="0,30,0,0"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,30,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
                 <Button x:Name="btnAddNew"
                         Content="Save"
                         Width="121"

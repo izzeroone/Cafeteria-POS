@@ -1,12 +1,11 @@
-﻿using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 
 namespace Cafocha.GUI.WPFMaterialDesign
 {
-
     public class PaletteSelectorViewModel
     {
         public PaletteSelectorViewModel()
@@ -14,29 +13,23 @@ namespace Cafocha.GUI.WPFMaterialDesign
             Swatches = new SwatchesProvider().Swatches;
         }
 
-        public ICommand ToggleBaseCommand {
-            get;
-        } = new AnotherCommandImplementation(o => ApplyBase((bool)o));
+        public ICommand ToggleBaseCommand { get; } = new AnotherCommandImplementation(o => ApplyBase((bool) o));
+
+        public IEnumerable<Swatch> Swatches { get; }
+
+        public ICommand ApplyPrimaryCommand { get; } = new AnotherCommandImplementation(o => ApplyPrimary((Swatch) o));
+
+        public ICommand ApplyAccentCommand { get; } = new AnotherCommandImplementation(o => ApplyAccent((Swatch) o));
 
         private static void ApplyBase(bool isDark)
         {
             new PaletteHelper().SetLightDark(isDark);
         }
 
-        public IEnumerable<Swatch> Swatches {
-            get;
-        }
-
-        public ICommand ApplyPrimaryCommand {
-            get;
-        } = new AnotherCommandImplementation(o => ApplyPrimary((Swatch)o));
-
         private static void ApplyPrimary(Swatch swatch)
         {
             new PaletteHelper().ReplacePrimaryColor(swatch);
         }
-
-        public ICommand ApplyAccentCommand { get; } = new AnotherCommandImplementation(o => ApplyAccent((Swatch)o));
 
         private static void ApplyAccent(Swatch swatch)
         {
@@ -44,10 +37,11 @@ namespace Cafocha.GUI.WPFMaterialDesign
         }
     }
 }
+
 public class AnotherCommandImplementation : ICommand
 {
-    private readonly Action<object> _execute;
     private readonly Func<object, bool> _canExecute;
+    private readonly Action<object> _execute;
 
     public AnotherCommandImplementation(Action<object> execute) : this(execute, null)
     {
@@ -73,14 +67,8 @@ public class AnotherCommandImplementation : ICommand
 
     public event EventHandler CanExecuteChanged
     {
-        add
-        {
-            CommandManager.RequerySuggested += value;
-        }
-        remove
-        {
-            CommandManager.RequerySuggested -= value;
-        }
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
     public void Refresh()
@@ -88,4 +76,3 @@ public class AnotherCommandImplementation : ICommand
         CommandManager.InvalidateRequerySuggested();
     }
 }
-

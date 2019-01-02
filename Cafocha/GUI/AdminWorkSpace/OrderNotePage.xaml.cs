@@ -5,51 +5,50 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.EmployeeWorkspace;
-using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper.Report;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for OrderNotePage.xaml
+    ///     Interaction logic for OrderNotePage.xaml
     /// </summary>
     public partial class OrderNotePage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        List<Product> _proList;
-        List<OrderNote> _ordernotelist;
-        List<OrderNoteDetail> _ordernotedetailslist;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly List<OrderNoteDetail> _ordernotedetailslist;
+        private readonly List<OrderNote> _ordernotelist;
+        private List<Product> _proList;
+        private List<OrderNote> filtero = new List<OrderNote>();
+
+        private List<OrderNoteDetail> filterod = new List<OrderNoteDetail>();
+        private bool isRaiseEvent = true;
+
         public OrderNotePage(BusinessModuleLocator businessModuleLocator, AdminRe admin)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             _ordernotelist = _businessModuleLocator.OrderModule.getOrdernoteList().ToList();
-            _ordernotedetailslist= _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get(includeProperties: "Product").ToList();
-            List<OrderNoteDetail> orderdetailsTempList = new List<OrderNoteDetail>();
+            _ordernotedetailslist = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository
+                .Get(includeProperties: "Product").ToList();
+            var orderdetailsTempList = new List<OrderNoteDetail>();
             foreach (var orderdetails in _ordernotedetailslist)
             {
-                bool found = false;
-                foreach(var order in _ordernotelist)
-                {
+                var found = false;
+                foreach (var order in _ordernotelist)
                     if (orderdetails.OrdernoteId.Equals(order.OrdernoteId))
                     {
                         found = true;
                         break;
                     }
-                }
 
-                if (found)
-                {
-                    orderdetailsTempList.Add(orderdetails);
-                }
+                if (found) orderdetailsTempList.Add(orderdetails);
             }
+
             _ordernotedetailslist = orderdetailsTempList;
             lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
 
-            this.Loaded += OrderNotePage_Loaded;
+            Loaded += OrderNotePage_Loaded;
         }
 
         private void OrderNotePage_Loaded(object sender, RoutedEventArgs e)
@@ -61,12 +60,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void initData()
         {
             isRaiseEvent = false;
-            List<dynamic> prol = new List<dynamic>();
-            prol.Add(new { Id = "--", Name = "--" });
-            foreach (var p in _proList)
-            {
-                prol.Add(new { Id = p.ProductId, Name = p.Name });
-            }
+            var prol = new List<dynamic>();
+            prol.Add(new {Id = "--", Name = "--"});
+            foreach (var p in _proList) prol.Add(new {Id = p.ProductId, p.Name});
 
             cboProduct.ItemsSource = prol;
             cboProduct.SelectedValuePath = "Id";
@@ -77,20 +73,13 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void lvOrderNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            OrderNote odn = lvOrderNote.SelectedItem as OrderNote;
-            if(odn != null)
-            {
+            var odn = lvOrderNote.SelectedItem as OrderNote;
+            if (odn != null)
                 lvOrderNoteDetails.ItemsSource = _businessModuleLocator.OrderModule.getOrderNoteDetail(odn.OrdernoteId);
-            }
             else
-            {
                 lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
-            }
         }
 
-        List<OrderNoteDetail> filterod = new List<OrderNoteDetail>();
-        List<OrderNote> filtero = new List<OrderNote>();
-        bool isRaiseEvent = true;
         private void cboProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             filtero = new List<OrderNote>();
@@ -98,32 +87,32 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvOrderNoteDetails.UnselectAll();
             if (isRaiseEvent)
             {
-                ComboBox cbopro = sender as ComboBox;
-                string proid = cbopro.SelectedValue.ToString();
+                var cbopro = sender as ComboBox;
+                var proid = cbopro.SelectedValue.ToString();
                 if (!proid.Equals("--"))
                 {
                     filterod = _ordernotedetailslist.Where(x => x.ProductId.Equals(proid)).ToList();
                     var odd = filterod.GroupBy(x => x.OrdernoteId).Select(y => y.ToList()).ToList();
 
                     foreach (var i in odd)
+                    foreach (var j in i)
                     {
-                        foreach (var j in i)
-                        {
-                            filtero.Add(_ordernotelist.Where(x => x.OrdernoteId.Equals(j.OrdernoteId)).FirstOrDefault());
-                            break;
-                        }
+                        filtero.Add(_ordernotelist.Where(x => x.OrdernoteId.Equals(j.OrdernoteId)).FirstOrDefault());
+                        break;
                     }
-                    
-                    if(filtero.Count != 0 && pickOrderDate.SelectedDate == null)
+
+                    if (filtero.Count != 0 && pickOrderDate.SelectedDate == null)
                     {
                         lvOrderNote.ItemsSource = filtero;
                         lvOrderNote.Items.Refresh();
                         lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                         lvOrderNoteDetails.Items.Refresh();
                     }
-                    else if(filtero.Count != 0 && pickOrderDate.SelectedDate != null)
+                    else if (filtero.Count != 0 && pickOrderDate.SelectedDate != null)
                     {
-                        lvOrderNote.ItemsSource = filtero.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvOrderNote.ItemsSource = filtero.Where(x =>
+                            x.Ordertime.ToShortDateString()
+                                .Equals(((DateTime) pickOrderDate.SelectedDate).ToShortDateString())).ToList();
                         lvOrderNote.Items.Refresh();
                         lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                         lvOrderNoteDetails.Items.Refresh();
@@ -138,7 +127,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
                 else
                 {
-                    if(pickOrderDate.SelectedDate == null)
+                    if (pickOrderDate.SelectedDate == null)
                     {
                         lvOrderNote.ItemsSource = _ordernotelist;
                         lvOrderNote.Items.Refresh();
@@ -147,7 +136,9 @@ namespace Cafocha.GUI.AdminWorkSpace
                     }
                     else
                     {
-                        lvOrderNote.ItemsSource = _ordernotelist.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvOrderNote.ItemsSource = _ordernotelist.Where(x =>
+                            x.Ordertime.ToShortDateString()
+                                .Equals(((DateTime) pickOrderDate.SelectedDate).ToShortDateString())).ToList();
                         lvOrderNote.Items.Refresh();
                         lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                         lvOrderNoteDetails.Items.Refresh();
@@ -158,39 +149,35 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void txtSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
 
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void lvOrderNoteDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DatePicker pick = sender as DatePicker;
-            if(pick.SelectedDate == null)
-            {
-                return;
-            }
+            var pick = sender as DatePicker;
+            if (pick.SelectedDate == null) return;
 
-            if(cboProduct.SelectedValue.Equals("--"))
+            if (cboProduct.SelectedValue.Equals("--"))
             {
-                lvOrderNote.ItemsSource = _ordernotelist.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                lvOrderNote.ItemsSource = _ordernotelist.Where(x =>
+                    x.Ordertime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
                 lvOrderNote.Items.Refresh();
                 lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                 lvOrderNoteDetails.Items.Refresh();
             }
             else
             {
-                if(filtero.Count != 0)
+                if (filtero.Count != 0)
                 {
-                    lvOrderNote.ItemsSource = filtero.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                    lvOrderNote.ItemsSource = filtero.Where(x =>
+                        x.Ordertime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
                     lvOrderNote.Items.Refresh();
                 }
                 else
@@ -198,7 +185,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     lvOrderNote.ItemsSource = new List<OrderNote>();
                     lvOrderNote.Items.Refresh();
                 }
-                
+
                 lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                 lvOrderNoteDetails.Items.Refresh();
             }
@@ -209,6 +196,5 @@ namespace Cafocha.GUI.AdminWorkSpace
             var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _businessModuleLocator);
             optionDialog.Show();
         }
-
     }
 }

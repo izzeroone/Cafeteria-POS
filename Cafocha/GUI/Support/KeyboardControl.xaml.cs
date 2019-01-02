@@ -4,25 +4,24 @@ using System.Windows.Controls;
 namespace Cafocha.GUI.Support
 {
     /// <summary>
-    /// Interaction logic for KeyboardControl.xaml
+    ///     Interaction logic for KeyboardControl.xaml
     /// </summary>
     public partial class KeyboardControl : UserControl
     {
-        public string InputValue { get; set; }
         public RoutedEventHandler _goClick;
-        public event RoutedEventHandler GoClick
-        {
-            add { _goClick += value; }
-            remove
-            {
-                _goClick -= value;
-            }
-        }
 
 
         public KeyboardControl()
         {
             InitializeComponent();
+        }
+
+        public string InputValue { get; set; }
+
+        public event RoutedEventHandler GoClick
+        {
+            add => _goClick += value;
+            remove => _goClick -= value;
         }
 
         private void TxtInputValue_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -38,7 +37,7 @@ namespace Cafocha.GUI.Support
 
         private void ButtonKey_Click(object sender, RoutedEventArgs e)
         {
-            Button clickButton = sender as Button;
+            var clickButton = sender as Button;
             TxtInputValue.Text += clickButton.Content.ToString();
             //InputValue += clickButton.Content.ToString();
         }
@@ -52,7 +51,6 @@ namespace Cafocha.GUI.Support
         }
 
 
-
         private async void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
             _goClick(sender, e);
@@ -62,7 +60,5 @@ namespace Cafocha.GUI.Support
         {
             BtnGo.IsEnabled = state;
         }
-
-        
     }
 }

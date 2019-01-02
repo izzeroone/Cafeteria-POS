@@ -27,7 +27,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">Customer List</TextBlock>
+                           FontSize="18">
+                    Customer List
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvDataCustomer"
@@ -67,7 +69,9 @@
                     <TextBlock VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                FontWeight="Bold"
-                               FontSize="18">Personal Infomation</TextBlock>
+                               FontSize="18">
+                        Personal Infomation
+                    </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
             <StackPanel Orientation="Vertical"
@@ -98,8 +102,8 @@
                                Foreground="White"
                                Width="215" />
                 </StackPanel>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="15,20,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="15,20,0,0">
                     <TextBlock Text="Name: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtName"
@@ -107,15 +111,13 @@
                              Foreground="White"
                              Width="215"
                              Margin="0,0,100,0" />
-                    <StackPanel  Orientation="Horizontal">
-                        
-                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    
+
                     <StackPanel VerticalAlignment="Center">
-                        <StackPanel  Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"
                                                      Kind="Phone"
                                                      Width="30"
@@ -128,7 +130,7 @@
                                      Margin="90,0,0,0"
                                      materialDesign:TransitionAssist.DisableTransitions="True" />
                         </StackPanel>
-                        <StackPanel  Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
                                                      Kind="MailRu"
                                                      Width="30"
@@ -141,18 +143,17 @@
                                      Foreground="White" />
                         </StackPanel>
                     </StackPanel>
-                   
+
                 </StackPanel>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="15,20,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="15,20,0,0">
                     <TextBlock Text="Discount"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <ComboBox Foreground="White"
                               x:Name="cbodiscount"
                               IsEditable="False"
                               IsEnabled="False"
-                              Width="60">
-                    </ComboBox>
+                              Width="60" />
                     <TextBlock x:Name="textBlock"
                                HorizontalAlignment="Stretch"
                                TextWrapping="Wrap"
@@ -165,7 +166,7 @@
                 </StackPanel>
 
             </StackPanel>
-            
+
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Height="50"
@@ -200,4 +201,3 @@
     </Grid>
 
 </Page>
-

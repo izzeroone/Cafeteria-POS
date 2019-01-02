@@ -17,8 +17,8 @@
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal"
@@ -30,70 +30,76 @@
                                  FontSize="14"
                                  FontWeight="Bold"
                                  IsChecked="True"
-                                 Click="RdAll_OnClick">All</RadioButton>
+                                 Click="RdAll_OnClick">
+                        All
+                    </RadioButton>
                     <RadioButton x:Name="rdToday"
                                  Foreground="White"
                                  FontWeight="Bold"
                                  FontSize="14"
                                  GroupName="FilterByTime"
-                                 Click="RdToday_OnClick">Today</RadioButton>
+                                 Click="RdToday_OnClick">
+                        Today
+                    </RadioButton>
                     <RadioButton x:Name="rdMonth"
                                  Foreground="White"
                                  FontWeight="Bold"
                                  FontSize="14"
                                  Click="RdMonth_OnClick"
-                                 GroupName="FilterByTime">Month</RadioButton>
+                                 GroupName="FilterByTime">
+                        Month
+                    </RadioButton>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="1"
                               Header="Filter by Employee"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
-                    <lvc:PieChart Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"
-                                  DataClick="Chart_OnDataClick"
-                                  Hoverable="True"
-                                  Foreground="Black"
-                                  >
-                        <lvc:PieChart.ChartLegend>
-                            <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-                        </lvc:PieChart.ChartLegend>
-                        <lvc:PieChart.DataTooltip>
-                            <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-                        </lvc:PieChart.DataTooltip>
-                    </lvc:PieChart>
-                        </GroupBox>
+                        <lvc:PieChart
+                            Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"
+                            DataClick="Chart_OnDataClick"
+                            Hoverable="True"
+                            Foreground="Black">
+                            <lvc:PieChart.ChartLegend>
+                                <lvc:DefaultLegend BulletSize="20" />
+                            </lvc:PieChart.ChartLegend>
+                            <lvc:PieChart.DataTooltip>
+                                <lvc:DefaultTooltip BulletSize="20" />
+                            </lvc:PieChart.DataTooltip>
+                        </lvc:PieChart>
+                    </GroupBox>
                     <GroupBox Grid.Row="0"
                               Header="Filter by time in day"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
-                        <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
-                                  DataClick="Chart_OnDataClick"
-                                  Hoverable="True"
-                                  Foreground="Black"
-                                  >
-                        <lvc:PieChart.ChartLegend>
-                            <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-                        </lvc:PieChart.ChartLegend>
-                        <lvc:PieChart.DataTooltip>
-                            <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-                        </lvc:PieChart.DataTooltip>
-                    </lvc:PieChart>
+                        <lvc:PieChart
+                            Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
+                            DataClick="Chart_OnDataClick"
+                            Hoverable="True"
+                            Foreground="Black">
+                            <lvc:PieChart.ChartLegend>
+                                <lvc:DefaultLegend BulletSize="20" />
+                            </lvc:PieChart.ChartLegend>
+                            <lvc:PieChart.DataTooltip>
+                                <lvc:DefaultTooltip BulletSize="20" />
+                            </lvc:PieChart.DataTooltip>
+                        </lvc:PieChart>
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <lvc:CartesianChart x:Name="LvcQuantityChart"
                                         Foreground="OrangeRed"
@@ -102,7 +108,7 @@
 
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Usage"
-                                      LabelFormatter="{Binding Formatter,StringFormat=0:000}"></lvc:Axis>
+                                      LabelFormatter="{Binding Formatter,StringFormat=0:000}" />
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Labels="{Binding Labels}" />
@@ -110,21 +116,23 @@
                     </lvc:CartesianChart>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.8*" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0"
                                     VerticalAlignment="Center">
-                            <TextBlock 
+                            <TextBlock
                                 Foreground="White"
                                 FontWeight="Bold"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center">Revenue</TextBlock>
+                                FontSize="20"
+                                HorizontalAlignment="Center">
+                                Revenue
+                            </TextBlock>
                             <Border HorizontalAlignment="Center">
                                 <TextBlock x:Name="txtRevenue"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"
-                                    FontSize="50"></TextBlock>
+                                           FontSize="50" />
                             </Border>
                         </StackPanel>
                         <StackPanel Grid.Column="1"
@@ -132,7 +140,9 @@
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
-                                           FontSize="20">Sale Value</TextBlock>
+                                           FontSize="20">
+                                    Sale Value
+                                </TextBlock>
                                 <TextBlock x:Name="txtSaleValue"
                                            Foreground="OrangeRed"
                                            FontWeight="Bold"
@@ -141,7 +151,9 @@
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
-                                           FontSize="20">Total Bills</TextBlock>
+                                           FontSize="20">
+                                    Total Bills
+                                </TextBlock>
                                 <TextBlock x:Name="txtTotalBills"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"
@@ -150,7 +162,9 @@
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
-                                           FontSize="20">Discounts</TextBlock>
+                                           FontSize="20">
+                                    Discounts
+                                </TextBlock>
                                 <TextBlock x:Name="txtDiscounts"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"
@@ -159,7 +173,9 @@
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
-                                           FontSize="20">Total Receivables</TextBlock>
+                                           FontSize="20">
+                                    Total Receivables
+                                </TextBlock>
                                 <TextBlock x:Name="txtReceivables"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"

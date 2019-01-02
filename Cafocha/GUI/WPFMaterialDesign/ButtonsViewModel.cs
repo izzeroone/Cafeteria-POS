@@ -8,9 +8,9 @@ namespace Cafocha.GUI.WPFMaterialDesign
 {
     public class ButtonsViewModel : INotifyPropertyChanged
     {
-        private bool _showDismissButton;
-        private double _dismissButtonProgress;
         private string _demoRestartCountdownText;
+        private double _dismissButtonProgress;
+        private bool _showDismissButton;
 
         public ButtonsViewModel()
         {
@@ -21,13 +21,14 @@ namespace Cafocha.GUI.WPFMaterialDesign
             ShowDismissButton = true;
 
             #region DISMISS button demo control
+
             //just some demo code for the DISMISS button...it's up to you to set 
             //up the progress on the button as it would be with a progress bar.
             //and then hide the button, do whatever action you want to do
             new DispatcherTimer(
-                TimeSpan.FromMilliseconds(100), 
-                DispatcherPriority.Normal, 
-                new EventHandler((o, e) => 
+                TimeSpan.FromMilliseconds(100),
+                DispatcherPriority.Normal,
+                (o, e) =>
                 {
                     bool isComplete;
                     if (dismissRequested)
@@ -40,7 +41,8 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
                     if (ShowDismissButton)
                     {
-                        var totalDuration = autoStartingActionCountdownStart.AddSeconds(5).Ticks - autoStartingActionCountdownStart.Ticks;
+                        var totalDuration = autoStartingActionCountdownStart.AddSeconds(5).Ticks -
+                                            autoStartingActionCountdownStart.Ticks;
                         var currentDuration = DateTime.Now.Ticks - autoStartingActionCountdownStart.Ticks;
                         var autoCountdownPercentComplete = 100.0 / totalDuration * currentDuration;
                         DismissButtonProgress = autoCountdownPercentComplete;
@@ -61,14 +63,14 @@ namespace Cafocha.GUI.WPFMaterialDesign
                             ShowDismissButton = true;
                         }
                     }
+                }, Dispatcher.CurrentDispatcher);
 
-                }), Dispatcher.CurrentDispatcher);
             #endregion
 
             //just some demo code for the SAVE button
             SaveComand = new AnotherCommandImplementation(_ =>
             {
-                if (IsSaveComplete == true)
+                if (IsSaveComplete)
                 {
                     IsSaveComplete = false;
                     return;
@@ -82,24 +84,30 @@ namespace Cafocha.GUI.WPFMaterialDesign
                 new DispatcherTimer(
                     TimeSpan.FromMilliseconds(50),
                     DispatcherPriority.Normal,
-                    new EventHandler((o, e) =>
+                    (o, e) =>
                     {
                         var totalDuration = started.AddSeconds(3).Ticks - started.Ticks;
                         var currentProgress = DateTime.Now.Ticks - started.Ticks;
                         var currentProgressPercent = 100.0 / totalDuration * currentProgress;
 
                         SaveProgress = currentProgressPercent;
-                        
+
                         if (SaveProgress >= 100)
                         {
                             IsSaveComplete = true;
                             IsSaving = false;
                             SaveProgress = 0;
-                            ((DispatcherTimer)o).Stop();
+                            ((DispatcherTimer) o).Stop();
                         }
-
-                    }), Dispatcher.CurrentDispatcher);
+                    }, Dispatcher.CurrentDispatcher);
             });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Action<PropertyChangedEventArgs> RaisePropertyChanged()
+        {
+            return args => PropertyChanged?.Invoke(this, args);
         }
 
         #region Dismiss button demo
@@ -108,20 +116,20 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         public bool ShowDismissButton
         {
-            get { return _showDismissButton; }
-            set { this.MutateVerbose(ref _showDismissButton, value, RaisePropertyChanged()); }
-        }        
+            get => _showDismissButton;
+            set => this.MutateVerbose(ref _showDismissButton, value, RaisePropertyChanged());
+        }
 
         public double DismissButtonProgress
         {
-            get { return _dismissButtonProgress; }
-            set { this.MutateVerbose(ref _dismissButtonProgress, value, RaisePropertyChanged()); }
+            get => _dismissButtonProgress;
+            set => this.MutateVerbose(ref _dismissButtonProgress, value, RaisePropertyChanged());
         }
 
         public string DemoRestartCountdownText
         {
-            get { return _demoRestartCountdownText; }
-            private set { this.MutateVerbose(ref _demoRestartCountdownText, value, RaisePropertyChanged()); }
+            get => _demoRestartCountdownText;
+            private set => this.MutateVerbose(ref _demoRestartCountdownText, value, RaisePropertyChanged());
         }
 
         private void UpdateDemoRestartCountdownText(DateTime endTime, out bool isComplete)
@@ -139,33 +147,29 @@ namespace Cafocha.GUI.WPFMaterialDesign
         public ICommand SaveComand { get; }
 
         private bool _isSaving;
+
         public bool IsSaving
         {
-            get { return _isSaving; }
-            private set { this.MutateVerbose(ref _isSaving, value, RaisePropertyChanged()); }
+            get => _isSaving;
+            private set => this.MutateVerbose(ref _isSaving, value, RaisePropertyChanged());
         }
 
         private bool _isSaveComplete;
+
         public bool IsSaveComplete
         {
-            get { return _isSaveComplete; }
-            private set { this.MutateVerbose(ref _isSaveComplete, value, RaisePropertyChanged()); }
+            get => _isSaveComplete;
+            private set => this.MutateVerbose(ref _isSaveComplete, value, RaisePropertyChanged());
         }
 
         private double _saveProgress;
+
         public double SaveProgress
         {
-            get { return _saveProgress; }
-            private set { this.MutateVerbose(ref _saveProgress, value, RaisePropertyChanged()); }
+            get => _saveProgress;
+            private set => this.MutateVerbose(ref _saveProgress, value, RaisePropertyChanged());
         }
 
         #endregion
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private Action<PropertyChangedEventArgs> RaisePropertyChanged()
-        {
-            return args => PropertyChanged?.Invoke(this, args);
-        }
     }
 }

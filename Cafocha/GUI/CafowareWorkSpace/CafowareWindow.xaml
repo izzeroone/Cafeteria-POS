@@ -13,16 +13,16 @@
         Width="1366">
 
 
-
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
 
 
             <!-- data template used for the dialogs example, defines a View for a ViewModel of type DateTime  -->
@@ -46,7 +46,7 @@
                                      Content="End of day Report"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="EodReport_PreviewMouseLeftButtonUp"
-                                     Foreground="White" Visibility="Collapsed"/>
+                                     Foreground="White" Visibility="Collapsed" />
                         <ListBoxItem x:Name="CreateStock"
                                      Content="Manage Stock Info"
                                      FontWeight="Bold"
@@ -111,7 +111,9 @@
                                    FontWeight="Bold"
                                    Margin="0,-3"
                                    TextAlignment="Center"
-                                   Width="239">Warehouse</TextBlock>
+                                   Width="239">
+                            Warehouse
+                        </TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
 

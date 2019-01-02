@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Cafocha.GUI.BusinessModel;
 
 namespace Cafocha.GUI
 {
     /// <summary>
-    /// Interaction logic for DatabaseConfigWindow.xaml
+    ///     Interaction logic for DatabaseConfigWindow.xaml
     /// </summary>
     public partial class DatabaseConfigWindow : Window
     {
@@ -21,10 +20,10 @@ namespace Cafocha.GUI
 
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
-            string initialCatalog = txtInitialCatalog.Text.Trim();
-            string source = txtDataSource.Text.Trim();
-            string userId = txtUserId.Text.Trim();
-            string pass = txtPassword.Password.Trim();
+            var initialCatalog = txtInitialCatalog.Text.Trim();
+            var source = txtDataSource.Text.Trim();
+            var userId = txtUserId.Text.Trim();
+            var pass = txtPassword.Password.Trim();
 
             if (initialCatalog.Length == 0 || source.Length == 0 || userId.Length == 0 || pass.Length == 0)
             {
@@ -38,7 +37,7 @@ namespace Cafocha.GUI
             //App.Current.Properties["Password"] = pass;
             //App.Current.Properties["IsConfigDB"] = "true";
 
-            String connectionString = String.Format(
+            var connectionString = string.Format(
                 "data source={0};initial catalog={1};user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework",
                 source, initialCatalog, userId, pass);
             Application.Current.Properties["ConnectionString"] = connectionString;

@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
-using Cafocha.GUI.CafowareWorkSpace.Helper;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.CafowareWorkSpace
 {
     /// <summary>
-    /// Interaction logic for StockOutPage.xaml
+    ///     Interaction logic for StockOutPage.xaml
     /// </summary>
     public partial class StockOutPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        private List<Stock> _stockList;
+        private readonly BusinessModuleLocator _businessModuleLocator;
         internal StockOut _currentStockOut;
+        private readonly List<Stock> _stockList;
         internal List<StockOutDetail> _stockOutDetailsList;
+
+
+        /*********************************
+         * Form Manipulate
+         *********************************/
+
+
+        private readonly List<int> ErrorDetailsItem = new List<int>();
 
 
         public StockOutPage(BusinessModuleLocator businessModuleLocator, List<Stock> stockList)
@@ -33,9 +39,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvDataStock.ItemsSource = _stockList;
 
             _stockOutDetailsList = new List<StockOutDetail>();
-            _currentStockOut = new StockOut()
+            _currentStockOut = new StockOut
             {
-                AdId = (App.Current.Properties["AdLogin"] as AdminRe).AdId,
+                AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
                 StockOutDetails = _stockOutDetailsList
             };
 
@@ -48,28 +54,24 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
             _currentStockOut.TotalAmount = 0;
             foreach (var details in _stockOutDetailsList)
-            {
-                _currentStockOut.TotalAmount += details.ItemPrice * (decimal)details.Quan;
-            }
+                _currentStockOut.TotalAmount += details.ItemPrice * details.Quan;
             txtTotalPrice.Text = string.Format("{0:0.000}", _currentStockOut.TotalAmount);
         }
-
-
 
 
         /*********************************
          * Manipulate Each Stock
          *********************************/
 
-        private void lvDataStock_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void lvDataStock_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Stock stock = (Stock)lvDataStock.SelectedItem;
+            var stock = (Stock) lvDataStock.SelectedItem;
             if (stock == null)
                 return;
 
             if (checkWareHouse(stock))
             {
-                StockOutDetail r = new StockOutDetail();
+                var r = new StockOutDetail();
 
                 var foundIteminReceipt = _stockOutDetailsList.FirstOrDefault(c => c.StockId.Equals(stock.StoId));
                 if (foundIteminReceipt == null)
@@ -83,6 +85,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 {
                     foundIteminReceipt.Quan++;
                 }
+
                 lvDataStockOut.Items.Refresh();
                 LoadStockOutData();
             }
@@ -90,14 +93,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private bool checkWareHouse(Stock stock)
         {
-
             var details = _currentStockOut.StockOutDetails.FirstOrDefault(x => x.StockId.Equals(stock.StoId));
-            ApWareHouse wareHouse = _businessModuleLocator.WarehouseModule.getApWareHouse(stock.ApwarehouseId);
+            var wareHouse = _businessModuleLocator.WarehouseModule.getApWareHouse(stock.ApwarehouseId);
             if (details != null)
             {
                 if (wareHouse != null)
                 {
-                    if (wareHouse.Contain < (details.Quan + 1))
+                    if (wareHouse.Contain < details.Quan + 1)
                     {
                         MessageBox.Show("Doesn't have enough this kind of Stock in Warehouse to take out!");
                         return false;
@@ -122,23 +124,19 @@ namespace Cafocha.GUI.CafowareWorkSpace
         }
 
 
-
         /*********************************
          * Manipulate Each StockInDetails
          *********************************/
 
         private void txtItemPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textboxItemPrice = sender as TextBox;
+            var textboxItemPrice = sender as TextBox;
 
 
             int index;
-            StockOutDetail r = new StockOutDetail();
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-            while ((dep != null) && !(dep is ListViewItem))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
+            var r = new StockOutDetail();
+            var dep = (DependencyObject) e.OriginalSource;
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
             if (dep == null)
                 return;
             index = lvDataStockOut.ItemContainerGenerator.IndexFromContainer(dep);
@@ -153,6 +151,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                         ErrorDetailsItem.Add(index);
                     return;
                 }
+
                 _stockOutDetailsList[index].ItemPrice = decimal.Parse(textboxItemPrice.Text);
 
                 LoadStockOutData();
@@ -169,16 +168,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void txtQuan_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textboxQuan = sender as TextBox;
+            var textboxQuan = sender as TextBox;
 
 
             int index;
-            StockOutDetail r = new StockOutDetail();
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-            while ((dep != null) && !(dep is ListViewItem))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
+            var r = new StockOutDetail();
+            var dep = (DependencyObject) e.OriginalSource;
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
             if (dep == null)
                 return;
             index = lvDataStockOut.ItemContainerGenerator.IndexFromContainer(dep);
@@ -193,6 +189,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                         ErrorDetailsItem.Add(index);
                     return;
                 }
+
                 _stockOutDetailsList[index].Quan = int.Parse(textboxQuan.Text);
 
                 LoadStockOutData();
@@ -210,16 +207,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
             int index;
-            StockOutDetail r = new StockOutDetail();
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-            while ((dep != null) && !(dep is ListViewItem))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
+            var r = new StockOutDetail();
+            var dep = (DependencyObject) e.OriginalSource;
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
             if (dep == null)
                 return;
             index = lvDataStockOut.ItemContainerGenerator.IndexFromContainer(dep);
-
 
 
             if (_stockOutDetailsList[index].Quan > 1 && !ErrorDetailsItem.Contains(index))
@@ -235,19 +228,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 if (ErrorDetailsItem.Contains(index))
                     ErrorDetailsItem.Remove(index);
             }
+
             lvDataStockOut.Items.Refresh();
             LoadStockOutData();
         }
 
-
-
-        /*********************************
-         * Form Manipulate
-         *********************************/
-
-
-
-        private List<int> ErrorDetailsItem = new List<int>();
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -270,20 +255,20 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 lvDataStockOut.ItemsSource = _stockOutDetailsList;
                 lvDataStockOut.Items.Refresh();
 
-                _currentStockOut = new StockOut()
+                _currentStockOut = new StockOut
                 {
-                    AdId = (App.Current.Properties["AdLogin"] as AdminRe).AdId,
+                    AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
                     StockOutDetails = _stockOutDetailsList
                 };
 
 
                 LoadStockOutData();
                 MessageBox.Show("Stock out successful!");
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong when trying to input the new StockOut Receipt! May be you should reload this app or call for support!");
+                MessageBox.Show(
+                    "Something went wrong when trying to input the new StockOut Receipt! May be you should reload this app or call for support!");
             }
         }
 

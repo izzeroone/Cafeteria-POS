@@ -73,7 +73,7 @@
                                           Background="White"
                                           Width="135"
                                           Margin="0,0,20,0"
-                                          SelectionChanged="cboType_SelectionChanged"></ComboBox>
+                                          SelectionChanged="cboType_SelectionChanged" />
                             </StackPanel>
                         </Border>
                         <Button x:Name="bntEditPro"
@@ -96,11 +96,13 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold">Product</TextBlock>
+                                   FontWeight="Bold">
+                            Product
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvProduct"
@@ -143,11 +145,13 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold">Details</TextBlock>
+                                   FontWeight="Bold">
+                            Details
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvDetails"
@@ -237,7 +241,7 @@
                                           Background="White"
                                           Width="135"
                                           Margin="0,0,20,0"
-                                          SelectionChanged="cboTypeI_SelectionChanged"></ComboBox>
+                                          SelectionChanged="cboTypeI_SelectionChanged" />
                                 <!-- <Button x:Name="bntAdd" -->
                                 <!--         Content="Add" -->
                                 <!--         Height="auto" -->
@@ -267,13 +271,15 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold"><Run Text="Ingredient"
-                                                          FontWeight="Bold"
-                                                          FontSize="16" /></TextBlock>
+                                   FontWeight="Bold">
+                            <Run Text="Ingredient"
+                                 FontWeight="Bold"
+                                 FontSize="16" />
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvIngredient"

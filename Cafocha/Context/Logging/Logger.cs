@@ -58,7 +58,7 @@ namespace Cafocha.Context.Logging
 
         public void TraceApi(string componentName, string method, TimeSpan timeSpan, string properties)
         {
-            string message = String.Concat("Component:", componentName, " ;Method:", method, " ;Timespan:",
+            var message = string.Concat("Component:", componentName, " ;Method:", method, " ;Timespan:",
                 timeSpan.ToString(), " ;Properties:", properties);
             Trace.TraceInformation(message);
         }
@@ -74,7 +74,7 @@ namespace Cafocha.Context.Logging
             var sb = new StringBuilder();
             sb.Append(string.Format(fmt, vars));
             sb.Append(" Exception: ");
-            sb.Append(exception.ToString());
+            sb.Append(exception);
             return sb.ToString();
         }
     }

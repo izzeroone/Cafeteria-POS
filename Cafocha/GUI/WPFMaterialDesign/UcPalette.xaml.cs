@@ -3,7 +3,7 @@
 namespace Cafocha.GUI.WPFMaterialDesign
 {
     /// <summary>
-    /// Interaction logic for Palette.xaml
+    ///     Interaction logic for Palette.xaml
     /// </summary>
     public partial class Palette : UserControl
     {

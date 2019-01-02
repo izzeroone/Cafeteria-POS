@@ -2,21 +2,19 @@
 using System.Linq;
 using System.Windows;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for AdminDetailWindow.xaml
+    ///     Interaction logic for AdminDetailWindow.xaml
     /// </summary>
-    
     public partial class AdminDetailWindow : Window
     {
         internal BusinessModuleLocator _businessModuleLocator;
-        private AdminRe admin;
-        private List<Employee> empwithad;
+        private readonly AdminRe admin;
+        private readonly List<Employee> empwithad;
+
         public AdminDetailWindow(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
             _businessModuleLocator = businessModuleLocator;
@@ -29,14 +27,14 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void loadAdData()
         {
-            this.AdminInfo.DataContext = admin;
+            AdminInfo.DataContext = admin;
             //txtName.IsEnabled = false;
         }
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
             //check name
-            string namee = txtName.Text.Trim();
+            var namee = txtName.Text.Trim();
             if (namee.Length == 0 || namee.Length > 50)
             {
                 MessageBox.Show("Name is not valid!");
@@ -51,7 +49,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void btnChangePass_Click(object sender, RoutedEventArgs e)
         {
-            AdminChangePass adPass = new AdminChangePass(_businessModuleLocator, admin);
+            var adPass = new AdminChangePass(_businessModuleLocator, admin);
             adPass.ShowDialog();
         }
     }

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
-using Cafocha.Entities;
+﻿using System.Windows.Controls;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for Entry.xaml
+    ///     Interaction logic for Entry.xaml
     /// </summary>
     public partial class Entry : Page
     {
@@ -13,7 +11,5 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             InitializeComponent();
         }
-
-
     }
 }

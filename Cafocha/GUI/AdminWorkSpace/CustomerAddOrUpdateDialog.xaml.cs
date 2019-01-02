@@ -1,31 +1,25 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for CustomerAddOrUpdateDialog.xaml
+    ///     Interaction logic for CustomerAddOrUpdateDialog.xaml
     /// </summary>
     public partial class CustomerAddOrUpdateDialog : Window
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        Customer _cus;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly Customer _cus;
 
         public CustomerAddOrUpdateDialog(BusinessModuleLocator businessModuleLocator, Customer cus)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
-            if (cus != null)
-            {
-                _cus = cus;
-            }
+            if (cus != null) _cus = cus;
             initData();
         }
 
@@ -43,7 +37,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void bntAddnew_Click(object sender, RoutedEventArgs e)
         {
             //check name
-            string namee = txtName.Text.Trim();
+            var namee = txtName.Text.Trim();
             if (namee.Length == 0 || namee.Length > 50)
             {
                 MessageBox.Show("Name is not valid!");
@@ -52,7 +46,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             //check phone
-            string phone = txtPhone.Text.Trim();
+            var phone = txtPhone.Text.Trim();
             if (phone.Length == 0 || phone.Length > 20)
             {
                 MessageBox.Show("Phone is not valid!");
@@ -61,7 +55,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             //check email
-            string email = txtMail.Text.Trim();
+            var email = txtMail.Text.Trim();
             if (!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
             {
                 MessageBox.Show("Email is not valid!");
@@ -70,7 +64,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             //check discount
-            int discount = int.Parse(txtDiscount.Text.Trim());
+            var discount = int.Parse(txtDiscount.Text.Trim());
             if (discount < 0 || discount > 100)
             {
                 MessageBox.Show("Discount value is not valid!");
@@ -80,7 +74,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             if (_cus == null) //insert
             {
-                Customer checkcus = new Customer
+                var checkcus = new Customer
                 {
                     CusId = "",
                     Name = namee,
@@ -93,7 +87,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _businessModuleLocator.CustomerModule.insertCustomer(checkcus);
 
                 MessageBox.Show("Insert " + checkcus.Name + "(" + checkcus.CusId + ") successful!");
-                this.Close();
+                Close();
             }
             else //update
             {
@@ -106,21 +100,18 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _businessModuleLocator.CustomerModule.updateCustomer(_cus);
 
                 MessageBox.Show("Update " + _cus.Name + "(" + _cus.CusId + ") successful!");
-                this.Close();
+                Close();
             }
         }
 
         private void bntCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Text))
-            {
-                e.Handled = !Char.IsNumber(e.Text[0]);
-            }
+            if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
     }
 }

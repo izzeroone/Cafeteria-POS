@@ -8,11 +8,8 @@ namespace MaterialDesignThemes.Wpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string val = "";
-            if (value != null)
-            {
-                val = value.ToString();
-            }
+            var val = "";
+            if (value != null) val = value.ToString();
             return val;
         }
 

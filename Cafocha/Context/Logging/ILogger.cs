@@ -2,7 +2,7 @@
 
 namespace Cafocha.Context.Logging
 {
-    interface ILogger
+    internal interface ILogger
     {
         void Information(string message);
         void Information(string fmt, params object[] vars);

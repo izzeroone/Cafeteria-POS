@@ -21,14 +21,14 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
         private readonly RepositoryLocator _unitofwork;
 
-        private IPrintHelper ph;
-        private int type;
-
         private readonly OrderNote curOrder;
-        private PrintDialog printDlg;
 
-        private string _receptionPrinter;
-        private bool isShowReview;
+        private readonly string _receptionPrinter;
+        private readonly bool isShowReview;
+
+        private IPrintHelper ph;
+        private readonly PrintDialog printDlg;
+        private readonly int type;
 
         public DoPrintHelper(RepositoryLocator unitofwork, int printType)
         {
@@ -36,7 +36,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             type = printType;
             printDlg = new PrintDialog();
 
-            string[] result = ReadWriteData.ReadPrinterSetting();
+            var result = ReadWriteData.ReadPrinterSetting();
             if (result != null)
             {
                 _receptionPrinter = result[0];
@@ -60,7 +60,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             curOrder = currentOrder;
             printDlg = new PrintDialog();
 
-            string[] result = ReadWriteData.ReadPrinterSetting();
+            var result = ReadWriteData.ReadPrinterSetting();
             if (result != null)
             {
                 _receptionPrinter = result[0];
@@ -90,7 +90,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 CreatePrintHelper();
 
                 // Create a FlowDocument dynamically.
-                FlowDocument doc = ph.CreateDocument();
+                var doc = ph.CreateDocument();
                 doc.Name = "FlowDoc";
 
 
@@ -104,7 +104,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
         /// <summary>
-        /// CHOOSING PRINT TO PAPER OR PRINT TO WINDOWS
+        ///     CHOOSING PRINT TO PAPER OR PRINT TO WINDOWS
         /// </summary>
         /// <param name="doc"></param>
         private void PrintToReal(FlowDocument doc)
@@ -127,13 +127,13 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 PackageStore.AddPackage(packUri, package);
                 var xps = new XpsDocument(package, CompressionOption.NotCompressed, packUri.ToString());
                 XpsDocument.CreateXpsDocumentWriter(xps).Write(paginator);
-                FixedDocument fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
+                var fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
 
-                DocumentViewer previewWindow = new DocumentViewer
+                var previewWindow = new DocumentViewer
                 {
                     Document = fdoc
                 };
-                Window printpriview = new Window();
+                var printpriview = new Window();
                 printpriview.Content = previewWindow;
                 printpriview.Title = "Print Preview";
                 printpriview.Show();
@@ -150,9 +150,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
                 var order = new OrderForPrint().GetAndConvertOrder(curOrder);
                 order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
-                ph = new ReceiptPrintHelper()
+                ph = new ReceiptPrintHelper
                 {
-                    Owner = new Owner()
+                    Owner = new Owner
                     {
                         ImgName = "logo.png",
                         Address = "Address: f.7th, Abc Building, 101 St.Vo Van Ngan, w.Thu Duc, HCM City, Viet Nam",
@@ -160,23 +160,22 @@ namespace Cafocha.GUI.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = order,
-
+                    Order = order
                 };
             }
 
 
             if (type == TempReceipt_Printing)
             {
-                if(!string.IsNullOrEmpty(_receptionPrinter))
-                    printDlg.PrintQueue =new PrintQueue(new PrintServer(), _receptionPrinter);
+                if (!string.IsNullOrEmpty(_receptionPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
 
                 var order = new OrderForPrint().GetAndConvertOrder(curOrder);
                 order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
 
-                ph = new ReceiptPrintHelper()
+                ph = new ReceiptPrintHelper
                 {
-                    Owner = new Owner()
+                    Owner = new Owner
                     {
                         ImgName = "logo.png",
                         Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
@@ -188,7 +187,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 };
             }
 
-        
 
             if (type == Eod_Printing)
             {
@@ -197,7 +195,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
                 ph = new EndOfDayPrintHelper(_unitofwork);
             }
-
         }
     }
 }

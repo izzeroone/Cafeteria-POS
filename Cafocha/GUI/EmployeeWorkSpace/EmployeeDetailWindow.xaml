@@ -37,7 +37,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">Personal Infomation</TextBlock>
+                           FontSize="18">
+                    Personal Infomation
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel Orientation="Vertical"
@@ -59,8 +61,8 @@
                             Value="Center" />
                 </Style>
             </StackPanel.Resources>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="30,20,0,0">
                 <TextBlock Text="Name: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
@@ -68,8 +70,8 @@
                          Foreground="White"
                          Text="{Binding Name}"
                          Width="215" />
-                <StackPanel  Orientation="Horizontal"
-                             Margin="100,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="100,0,0,0">
                     <TextBlock Text="Birth: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <DatePicker SelectedDate="{Binding Birth, StringFormat=dd/MM/yyyy}"
@@ -82,8 +84,8 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="30,20,0,0">
                 <TextBlock Text="Address: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox MaxWidth="300"
@@ -101,7 +103,7 @@
                          Width="215" />
                 <StackPanel VerticalAlignment="Center"
                             Margin="100,0,0,0">
-                    <StackPanel  Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"
                                                  Kind="Phone"
                                                  Width="30"
@@ -115,7 +117,7 @@
                                  materialDesign:TransitionAssist.DisableTransitions="True" />
                     </StackPanel>
 
-                    <StackPanel  Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
                                                  Kind="MailRu"
                                                  Width="30"
@@ -130,8 +132,8 @@
                 </StackPanel>
 
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="30,20,0,0">
                 <TextBlock Text="Start day: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBlock x:Name="txtStartDay"
@@ -148,8 +150,8 @@
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-            <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+            <StackPanel Orientation="Horizontal"
+                        Margin="30,20,0,0">
                 <Button x:Name="btn"
                         Content="Change Password"
                         Height="Auto"
@@ -166,7 +168,9 @@
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="18"
-                           FontWeight="Bold">Working History</TextBlock>
+                           FontWeight="Bold">
+                    Working History
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView x:Name="lsWH"

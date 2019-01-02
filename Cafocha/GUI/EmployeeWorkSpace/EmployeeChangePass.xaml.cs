@@ -1,32 +1,29 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for EmployeeChangePass.xaml
+    ///     Interaction logic for EmployeeChangePass.xaml
     /// </summary>
     public partial class EmployeeChangePass : Window
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        private Employee _emp;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly Employee _emp;
 
         public EmployeeChangePass(BusinessModuleLocator businessModuleLocator, Employee emp)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             _emp = emp;
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            string oldPass = txtPass.Password.Trim();
+            var oldPass = txtPass.Password.Trim();
             if (!oldPass.Equals(_emp.Pass))
             {
                 MessageBox.Show("Your old password is incorrect!");
@@ -34,7 +31,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            string newPass = txtNewPass.Password.Trim();
+            var newPass = txtNewPass.Password.Trim();
             if (newPass.Length == 0 || newPass.Length > 50)
             {
                 MessageBox.Show("New password is not valid!");
@@ -42,7 +39,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            string passcon = txtConNew.Password.Trim();
+            var passcon = txtConNew.Password.Trim();
             if (!passcon.Equals(newPass))
             {
                 MessageBox.Show("Confirm new password is not match!");
@@ -53,12 +50,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             _businessModuleLocator.EmployeeModule.updateEmployeePassword(_emp, newPass);
 
             MessageBox.Show("Your password was changed!");
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

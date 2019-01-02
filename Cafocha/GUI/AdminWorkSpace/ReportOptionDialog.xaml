@@ -19,7 +19,7 @@
             </Button.Background>
             <Image Source="../Icon/Folder_30px.png"
                    Width="25"
-                   Height="20"></Image>
+                   Height="20" />
         </Button>
         <StackPanel Orientation="Horizontal">
             <StackPanel>
@@ -32,7 +32,9 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="10,12,10,20">
                         <TextBlock VerticalAlignment="Center"
-                                   Foreground="AliceBlue">From:</TextBlock>
+                                   Foreground="AliceBlue">
+                            From:
+                        </TextBlock>
                         <DatePicker x:Name="DpFrom"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource {x:Type DatePicker}}"
@@ -43,7 +45,9 @@
                                     Width="100" />
 
                         <TextBlock VerticalAlignment="Center"
-                                   Foreground="AliceBlue">To:</TextBlock>
+                                   Foreground="AliceBlue">
+                            To:
+                        </TextBlock>
                         <DatePicker x:Name="DpTo"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource {x:Type DatePicker}}"
@@ -110,27 +114,25 @@
                                     Content="Month Rpt"
                                     Foreground="Yellow"
                                     Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
-                                    Click="BtnFastChoiceMonthRpt_OnClick"/>
+                                    Click="BtnFastChoiceMonthRpt_OnClick" />
                             <Button x:Name="BtnFastChoiceDayRpt"
                                     Width="100"
                                     Height="20"
                                     Content="Day Rpt"
                                     Foreground="Yellow"
-                                    Style="{StaticResource MaterialDesignMenuCommandButtonStyle}" 
-                                    Click="BtnFastChoiceDayRpt_OnClick"/>
+                                    Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
+                                    Click="BtnFastChoiceDayRpt_OnClick" />
                             <Button x:Name="BtnFastChoiceYearRpt"
                                     Width="100"
                                     Height="20"
                                     Content="Year Rpt"
                                     Foreground="Yellow"
                                     Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
-                                    Click="BtnFastChoiceYearRpt_OnClick"/>
+                                    Click="BtnFastChoiceYearRpt_OnClick" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal"
-                                    Margin="10,12,10,30">
-                            
-                        </StackPanel>
+                                    Margin="10,12,10,30" />
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

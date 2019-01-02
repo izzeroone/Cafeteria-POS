@@ -4,28 +4,23 @@ using System.Linq;
 using System.Windows.Controls;
 using Cafocha.BusinessContext;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 using LiveCharts;
 using LiveCharts.Wpf;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for statisticsFoodPage.xaml
+    ///     Interaction logic for statisticsFoodPage.xaml
     /// </summary>
     public partial class statisticsFoodPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
+        private readonly BusinessModuleLocator _businessModuleLocator;
 
-        private ChartValues<int> Values;
-        public SeriesCollection SeriesCollection { get; set; }
-        
         public Dictionary<string, int> CountList;
-        public Func<decimal, string> Formatter { get; set; }
-        public List<string> Labels { get; set; }
-       
 
-        
+        private readonly ChartValues<int> Values;
+
+
         public statisticsFoodPage(BusinessModuleLocator businessModuleLocator)
         {
             // init data
@@ -50,31 +45,29 @@ namespace Cafocha.GUI.AdminWorkSpace
             ChartDataFilling(false);
         }
 
+        public SeriesCollection SeriesCollection { get; set; }
+        public Func<decimal, string> Formatter { get; set; }
+        public List<string> Labels { get; set; }
+
         private void ChartDataFilling(bool isfilter)
         {
             CountList.Clear();
 
-            List<OrderNoteDetail> orderDetailsWithTime = new List<OrderNoteDetail>();
+            var orderDetailsWithTime = new List<OrderNoteDetail>();
             if (isfilter)
-            {
                 orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get(x =>
                     x.OrderNote.Ordertime.Year == DpTimeFilter.SelectedDate.Value.Year
                     && x.OrderNote.Ordertime.Month == DpTimeFilter.SelectedDate.Value.Month).ToList();
-            }
             else
-            {
                 orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get().ToList();
-            }
-            
+
 
             // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
-            int count = 0;
+            var count = 0;
             foreach (var item in _businessModuleLocator.RepositoryLocator.ProductRepository.Get())
             {
                 foreach (var item2 in orderDetailsWithTime.Where(o => o.ProductId.Equals(item.ProductId)))
-                {
                     count += item2.Quan;
-                }
                 CountList.Add(item.Name, count);
                 count = 0;
             }

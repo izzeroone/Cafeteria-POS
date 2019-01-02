@@ -15,10 +15,10 @@ namespace Cafocha.GUI.Helper.PrintHelper
 {
     public class EndOfDayPrintHelper : IPrintHelper
     {
-        private RepositoryLocator _cloudPosUnitofwork;
-        private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        private static readonly string startupProjectPath =
+            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+        private readonly RepositoryLocator _cloudPosUnitofwork;
 
         public EndOfDayPrintHelper(RepositoryLocator cloudPosUnitofwork)
         {
@@ -28,6 +28,9 @@ namespace Cafocha.GUI.Helper.PrintHelper
             To = To.AddDays(1);
         }
 
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+
         public FlowDocument CreateDocument()
         {
             return CreateEndOfDayDocument();
@@ -36,27 +39,27 @@ namespace Cafocha.GUI.Helper.PrintHelper
         public FlowDocument CreateEndOfDayDocument()
         {
             // Create a FlowDocument
-            FlowDocument doc = new FlowDocument();
+            var doc = new FlowDocument();
 
             // Set Margin
             doc.PagePadding = new Thickness(0);
 
 
             // Set PageHeight and PageWidth to "Auto".
-            doc.PageHeight = Double.NaN;
+            doc.PageHeight = double.NaN;
             doc.PageWidth = 290;
 
             // Create a Section
-            Section sec = new Section();
+            var sec = new Section();
 
 
             // Head Text
-            BlockUIContainer blkHeadText = new BlockUIContainer();
+            var blkHeadText = new BlockUIContainer();
             Generate_HeadText(blkHeadText);
 
 
             // Table Total Sales Text
-            BlockUIContainer blkTableTotalSalesText = new BlockUIContainer()
+            var blkTableTotalSalesText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
@@ -64,7 +67,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Table Payment And Refund Text
-            BlockUIContainer blkTablePayAndRefundText = new BlockUIContainer()
+            var blkTablePayAndRefundText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
@@ -72,7 +75,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Table Receipt Total Text
-            BlockUIContainer blkTableReceiptText = new BlockUIContainer()
+            var blkTableReceiptText = new BlockUIContainer
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
@@ -98,14 +101,14 @@ namespace Cafocha.GUI.Helper.PrintHelper
         private void Generate_HeadText(BlockUIContainer blkHeadText)
         {
             // Main stackPanel of Head Text
-            StackPanel stpHeadText = new StackPanel()
+            var stpHeadText = new StackPanel
             {
                 Orientation = Orientation.Vertical
             };
 
-            StackPanel stpLogo = new StackPanel();
-            Image imgOwner = new Image();
-            BitmapImage bimg = new BitmapImage();
+            var stpLogo = new StackPanel();
+            var imgOwner = new Image();
+            var bimg = new BitmapImage();
             bimg.BeginInit();
             bimg.UriSource = new Uri(startupProjectPath + "\\Images\\logo.png", UriKind.Absolute);
             bimg.EndInit();
@@ -114,8 +117,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             imgOwner.Margin = new Thickness(85, 0, 0, 0);
             stpLogo.Children.Add(imgOwner);
 
-            StackPanel stpPageName = new StackPanel();
-            TextBlock txtPageName = new TextBlock()
+            var stpPageName = new StackPanel();
+            var txtPageName = new TextBlock
             {
                 Text = "END OF DAY REPORT",
                 FontSize = 13,
@@ -126,7 +129,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             };
             stpPageName.Children.Add(txtPageName);
 
-            TextBlock txtFrom = new TextBlock()
+            var txtFrom = new TextBlock
             {
                 Text = "From: " + From.ToShortDateString(),
                 FontSize = 11,
@@ -136,7 +139,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(0, 0, 0, 10)
             };
 
-            TextBlock txtTo = new TextBlock()
+            var txtTo = new TextBlock
             {
                 Text = "To: " + To.ToShortDateString(),
                 FontSize = 11,
@@ -158,7 +161,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
         private void Generate_TableTotalSalesText(BlockUIContainer blkTableTotalSalesText)
         {
             //// Main stackPanel in Table Text
-            StackPanel stpTableTotalSalesText = new StackPanel();
+            var stpTableTotalSalesText = new StackPanel();
 
             // Seperate Line
             var separator1 = new Rectangle();
@@ -168,8 +171,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             separator1.Width = double.NaN;
 
             //Table Header
-            StackPanel stpHeader = new StackPanel();
-            TextBlock tbHeader = new TextBlock()
+            var stpHeader = new StackPanel();
+            var tbHeader = new TextBlock
             {
                 Text = "Sales Totals",
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -192,41 +195,39 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Create Table
-            Grid dgDataTable = new Grid();
+            var dgDataTable = new Grid();
             dgDataTable.Width = 300;
             // set Columns
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
-                    ColumnDefinition firstCol = new ColumnDefinition();
+                    var firstCol = new ColumnDefinition();
                     firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
+
                 if (i == 1)
                 {
-                    ColumnDefinition secondCol = new ColumnDefinition();
+                    var secondCol = new ColumnDefinition();
                     secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
-                    continue;
-                }
-            }
-            // set Rows
-            for (int i = 0; i < totalSalesData.Count; i++)
-            {
-                dgDataTable.RowDefinitions.Add(new RowDefinition());
-                foreach (var item in totalSalesData.Values)
-                {
-                    dgDataTable.RowDefinitions.Add(new RowDefinition());
                 }
             }
 
+            // set Rows
+            for (var i = 0; i < totalSalesData.Count; i++)
+            {
+                dgDataTable.RowDefinitions.Add(new RowDefinition());
+                foreach (var item in totalSalesData.Values) dgDataTable.RowDefinitions.Add(new RowDefinition());
+            }
+
             // Fill Table data
-            int rowIndex = 0;
+            var rowIndex = 0;
             foreach (var item in totalSalesData)
             {
-                TextBlock txtMeta = new TextBlock()
+                var txtMeta = new TextBlock
                 {
                     Text = item.Key,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -240,18 +241,18 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
                 foreach (var keypairvalue in item.Value)
                 {
-                    StackPanel stpLeftData = new StackPanel()
+                    var stpLeftData = new StackPanel
                     {
                         Orientation = Orientation.Horizontal
                     };
-                    TextBlock txtTitle = new TextBlock()
+                    var txtTitle = new TextBlock
                     {
                         Text = keypairvalue.Title + ": ",
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         Margin = new Thickness(10, 0, 0, 0)
                     };
-                    TextBlock txtCount = new TextBlock()
+                    var txtCount = new TextBlock
                     {
                         Text = keypairvalue.Count.ToString(),
                         VerticalAlignment = VerticalAlignment.Top,
@@ -263,7 +264,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     Grid.SetColumn(stpLeftData, 0);
                     dgDataTable.Children.Add(stpLeftData);
 
-                    TextBlock txtAmount = new TextBlock()
+                    var txtAmount = new TextBlock
                     {
                         Text = string.Format("{0:0.000}", keypairvalue.Amount),
                         VerticalAlignment = VerticalAlignment.Top,
@@ -290,7 +291,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
         private void Generate_TablePayAndRefundText(BlockUIContainer blkTablePayAndRefundText)
         {
             //// Main stackPanel in Table Text
-            StackPanel stpTablePayAndRefundText = new StackPanel();
+            var stpTablePayAndRefundText = new StackPanel();
 
             // Seperate Line
             var separator1 = new Rectangle();
@@ -300,8 +301,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             separator1.Width = double.NaN;
 
             //Table Header
-            StackPanel stpHeader = new StackPanel();
-            TextBlock tbHeader = new TextBlock()
+            var stpHeader = new StackPanel();
+            var tbHeader = new TextBlock
             {
                 Text = "Payment and Refund Totals",
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -324,41 +325,39 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Create Table
-            Grid dgDataTable = new Grid();
+            var dgDataTable = new Grid();
             dgDataTable.Width = 300;
             // set Columns
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
-                    ColumnDefinition firstCol = new ColumnDefinition();
+                    var firstCol = new ColumnDefinition();
                     firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
+
                 if (i == 1)
                 {
-                    ColumnDefinition secondCol = new ColumnDefinition();
+                    var secondCol = new ColumnDefinition();
                     secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
-                    continue;
-                }
-            }
-            // set Rows
-            for (int i = 0; i < totalPayAndRefundData.Count; i++)
-            {
-                dgDataTable.RowDefinitions.Add(new RowDefinition());
-                foreach (var item in totalPayAndRefundData.Values)
-                {
-                    dgDataTable.RowDefinitions.Add(new RowDefinition());
                 }
             }
 
+            // set Rows
+            for (var i = 0; i < totalPayAndRefundData.Count; i++)
+            {
+                dgDataTable.RowDefinitions.Add(new RowDefinition());
+                foreach (var item in totalPayAndRefundData.Values) dgDataTable.RowDefinitions.Add(new RowDefinition());
+            }
+
             // Fill Table data
-            int rowIndex = 0;
+            var rowIndex = 0;
             foreach (var item in totalPayAndRefundData)
             {
-                TextBlock txtMeta = new TextBlock()
+                var txtMeta = new TextBlock
                 {
                     Text = item.Key,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -372,18 +371,18 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
                 foreach (var keypairvalue in item.Value)
                 {
-                    StackPanel stpLeftData = new StackPanel()
+                    var stpLeftData = new StackPanel
                     {
                         Orientation = Orientation.Horizontal
                     };
-                    TextBlock txtTitle = new TextBlock()
+                    var txtTitle = new TextBlock
                     {
                         Text = keypairvalue.Title + ": ",
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         Margin = new Thickness(10, 0, 0, 0)
                     };
-                    TextBlock txtCount = new TextBlock()
+                    var txtCount = new TextBlock
                     {
                         Text = keypairvalue.Count.ToString(),
                         VerticalAlignment = VerticalAlignment.Top,
@@ -395,7 +394,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     Grid.SetColumn(stpLeftData, 0);
                     dgDataTable.Children.Add(stpLeftData);
 
-                    TextBlock txtAmount = new TextBlock()
+                    var txtAmount = new TextBlock
                     {
                         Text = string.Format("{0:0.000}", keypairvalue.Amount),
                         VerticalAlignment = VerticalAlignment.Top,
@@ -422,7 +421,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
         private void Generate_TableReceiptText(BlockUIContainer blkTableReceiptText)
         {
             //// Main stackPanel in Table Text
-            StackPanel stpTableReceiptText = new StackPanel();
+            var stpTableReceiptText = new StackPanel();
 
             // Seperate Line
             var separator1 = new Rectangle();
@@ -432,8 +431,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             separator1.Width = double.NaN;
 
             //Table Header
-            StackPanel stpHeader = new StackPanel();
-            TextBlock tbHeader = new TextBlock()
+            var stpHeader = new StackPanel();
+            var tbHeader = new TextBlock
             {
                 Text = "Receipt Totals",
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -456,24 +455,24 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Create Table
-            Grid dgDataTable = new Grid();
+            var dgDataTable = new Grid();
             dgDataTable.Width = 300;
             // set Columns
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
-                    ColumnDefinition firstCol = new ColumnDefinition();
+                    var firstCol = new ColumnDefinition();
                     firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
+
                 if (i == 1)
                 {
-                    ColumnDefinition secondCol = new ColumnDefinition();
+                    var secondCol = new ColumnDefinition();
                     secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
-                    continue;
                 }
             }
 //            // set Rows
@@ -554,89 +553,83 @@ namespace Cafocha.GUI.Helper.PrintHelper
         }
 
 
-
         private Dictionary<string, List<MyPairValue>> CalculateTotalSales()
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderDetailsQuery =
                 _cloudPosUnitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From) >= 0
-                                                            && x.OrderNote.Ordertime.CompareTo(To) <= 0);
+                                                                    && x.OrderNote.Ordertime.CompareTo(To) <= 0);
             var orderQuery =
                 _cloudPosUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
-                                                     && x.Ordertime.CompareTo(To) <= 0);
+                                                             && x.Ordertime.CompareTo(To) <= 0);
 
 
             // Total Dribnk
-            var orderDetailsAlcoholQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Drink);
+            var orderDetailsAlcoholQuery = orderDetailsQuery.Where(x => x.Product.Type == (int) ProductType.Drink);
             decimal alcoholTotalAmount = 0;
             foreach (var orderDetails in orderDetailsAlcoholQuery)
-            {
-                alcoholTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100-orderDetails.Discount))/100;
-            }
-            MyPairValue alcoholCal = new MyPairValue()
+                alcoholTotalAmount +=
+                    orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
+            var alcoholCal = new MyPairValue
             {
                 Title = "Count",
                 Count = orderDetailsAlcoholQuery.Count(),
                 Amount = alcoholTotalAmount
             };
-            result.Add("Total Drink", new List<MyPairValue>()
+            result.Add("Total Drink", new List<MyPairValue>
             {
                 alcoholCal
             });
 
 
             // Total Topping
-            var orderDetailsBeverageQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Topping);
+            var orderDetailsBeverageQuery = orderDetailsQuery.Where(x => x.Product.Type == (int) ProductType.Topping);
             decimal beverageTotalAmount = 0;
             foreach (var orderDetails in orderDetailsBeverageQuery)
-            {
-                beverageTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
-            }
-            MyPairValue beverageCal = new MyPairValue()
+                beverageTotalAmount +=
+                    orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
+            var beverageCal = new MyPairValue
             {
                 Title = "Count",
                 Count = orderDetailsBeverageQuery.Count(),
                 Amount = beverageTotalAmount
             };
-            result.Add("Total Topping", new List<MyPairValue>()
+            result.Add("Total Topping", new List<MyPairValue>
             {
                 beverageCal
             });
 
 
             // Total Dessert
-            var orderDetailsFoodQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Dessert);
+            var orderDetailsFoodQuery = orderDetailsQuery.Where(x => x.Product.Type == (int) ProductType.Dessert);
             decimal foodTotalAmount = 0;
             foreach (var orderDetails in orderDetailsFoodQuery)
-            {
-                foodTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
-            }
-            MyPairValue foodCal = new MyPairValue()
+                foodTotalAmount += orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
+            var foodCal = new MyPairValue
             {
                 Title = "Count",
                 Count = orderDetailsFoodQuery.Count(),
                 Amount = foodTotalAmount
             };
-            result.Add("Total Dessert", new List<MyPairValue>()
+            result.Add("Total Dessert", new List<MyPairValue>
             {
                 foodCal
             });
 
 
             // Total Other
-            var orderDetailsOtherQuery = orderDetailsQuery.Where(x => x.Product.Type == (int)ProductType.Other);
+            var orderDetailsOtherQuery = orderDetailsQuery.Where(x => x.Product.Type == (int) ProductType.Other);
             decimal otherTotalAmount = 0;
             foreach (var orderDetails in orderDetailsOtherQuery)
-            {
-                otherTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
-            }
-            MyPairValue otherCal = new MyPairValue()
+                otherTotalAmount +=
+                    orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
+            var otherCal = new MyPairValue
             {
                 Title = "Count",
                 Count = orderDetailsOtherQuery.Count(),
                 Amount = otherTotalAmount
             };
-            result.Add("Total Other", new List<MyPairValue>()
+            result.Add("Total Other", new List<MyPairValue>
             {
                 otherCal
             });
@@ -646,10 +639,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
             // real TotalAmount
             decimal totalAmount = 0;
             foreach (var orderDetails in orderDetailsQuery)
-            {
-                totalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100-orderDetails.Discount))/100;
-            }
-            MyPairValue orderTotalCal = new MyPairValue()
+                totalAmount += orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
+            var orderTotalCal = new MyPairValue
             {
                 Title = "Orders",
                 Amount = totalAmount,
@@ -661,13 +652,13 @@ namespace Cafocha.GUI.Helper.PrintHelper
             {
                 decimal curTotalAmount = 0;
                 foreach (var orderDetails in order.OrderNoteDetails)
-                {
-                    curTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
-                }
+                    curTotalAmount += orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) /
+                                      100;
 
                 totalVAT += curTotalAmount * 10 / 100;
             }
-            MyPairValue VATTotalCal = new MyPairValue()
+
+            var VATTotalCal = new MyPairValue
             {
                 Title = "VAT",
                 Amount = totalVAT,
@@ -676,23 +667,22 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
             // DIscount
             decimal totalDisc = 0;
-            int countDisc = 0;
+            var countDisc = 0;
             foreach (var order in orderQuery)
-            {
                 if (order.Discount != 0)
                 {
                     totalDisc += order.TotalPriceNonDisc - order.TotalPrice;
                     countDisc++;
                 }
-            }
-            MyPairValue DiscTotalCal = new MyPairValue()
+
+            var DiscTotalCal = new MyPairValue
             {
                 Title = "Discount",
                 Amount = totalDisc,
                 Count = countDisc
             };
 
-            result.Add("SubTotal", new List<MyPairValue>()
+            result.Add("SubTotal", new List<MyPairValue>
             {
                 orderTotalCal,
                 VATTotalCal,
@@ -702,17 +692,14 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
             // Total
             decimal total = 0;
-            foreach (var order in orderQuery)
-            {
-                total += order.TotalPrice;
-            }
-            MyPairValue totalCal = new MyPairValue()
+            foreach (var order in orderQuery) total += order.TotalPrice;
+            var totalCal = new MyPairValue
             {
                 Title = "Orders",
                 Amount = total,
                 Count = orderQuery.Count()
             };
-            result.Add("Total", new List<MyPairValue>()
+            result.Add("Total", new List<MyPairValue>
             {
                 totalCal
             });
@@ -725,117 +712,99 @@ namespace Cafocha.GUI.Helper.PrintHelper
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderQuery =
                 _cloudPosUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
-                                                     && x.Ordertime.CompareTo(To) <= 0);
+                                                             && x.Ordertime.CompareTo(To) <= 0);
 
             //Total Cash
-            var orderCashQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.Cash);
+            var orderCashQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Cash);
             decimal cashTotalAmount = 0;
-            foreach (var order in orderCashQuery)
-            {
-                cashTotalAmount += order.TotalPrice;
-            }
-            MyPairValue cashCal = new MyPairValue()
+            foreach (var order in orderCashQuery) cashTotalAmount += order.TotalPrice;
+            var cashCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderCashQuery.Count(),
                 Amount = cashTotalAmount
             };
-            result.Add("Cash", new List<MyPairValue>()
+            result.Add("Cash", new List<MyPairValue>
             {
                 cashCal
             });
 
 
             //Total Cheque
-            var orderChequeQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.Cheque);
+            var orderChequeQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Cheque);
             decimal chequeTotalAmount = 0;
-            foreach (var order in orderChequeQuery)
-            {
-                chequeTotalAmount += order.TotalPrice;
-            }
-            MyPairValue chequeCal = new MyPairValue()
+            foreach (var order in orderChequeQuery) chequeTotalAmount += order.TotalPrice;
+            var chequeCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderChequeQuery.Count(),
                 Amount = chequeTotalAmount
             };
-            result.Add("Cheque", new List<MyPairValue>()
+            result.Add("Cheque", new List<MyPairValue>
             {
                 chequeCal
             });
 
 
             //Total Deferred
-            var orderDeferredQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.Deferred);
+            var orderDeferredQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Deferred);
             decimal deferredTotalAmount = 0;
-            foreach (var order in orderDeferredQuery)
-            {
-                deferredTotalAmount += order.TotalPrice;
-            }
-            MyPairValue defferedCal = new MyPairValue()
+            foreach (var order in orderDeferredQuery) deferredTotalAmount += order.TotalPrice;
+            var defferedCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderDeferredQuery.Count(),
                 Amount = deferredTotalAmount
             };
-            result.Add("Deferred", new List<MyPairValue>()
+            result.Add("Deferred", new List<MyPairValue>
             {
                 defferedCal
             });
 
 
             //Total International(Visa)
-            var orderInterQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.International);
+            var orderInterQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.International);
             decimal interTotalAmount = 0;
-            foreach (var order in orderInterQuery)
-            {
-                interTotalAmount += order.TotalPrice;
-            }
-            MyPairValue interCal = new MyPairValue()
+            foreach (var order in orderInterQuery) interTotalAmount += order.TotalPrice;
+            var interCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderInterQuery.Count(),
                 Amount = interTotalAmount
             };
-            result.Add("International(Visa)", new List<MyPairValue>()
+            result.Add("International(Visa)", new List<MyPairValue>
             {
                 interCal
             });
 
 
             //Total Credit
-            var orderCreditQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.Credit);
+            var orderCreditQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Credit);
             decimal creditTotalAmount = 0;
-            foreach (var order in orderCreditQuery)
-            {
-                creditTotalAmount += order.TotalPrice;
-            }
-            MyPairValue creditCal = new MyPairValue()
+            foreach (var order in orderCreditQuery) creditTotalAmount += order.TotalPrice;
+            var creditCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderCreditQuery.Count(),
                 Amount = creditTotalAmount
             };
-            result.Add("Credit", new List<MyPairValue>()
+            result.Add("Credit", new List<MyPairValue>
             {
                 creditCal
             });
 
 
             //Total OnAcount
-            var orderOnAcountQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.OnAcount);
+            var orderOnAcountQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.OnAcount);
             decimal onAcountTotalAmount = 0;
-            foreach (var order in orderOnAcountQuery)
-            {
-                onAcountTotalAmount += order.TotalPrice;
-            }
-            MyPairValue onAcountCal = new MyPairValue()
+            foreach (var order in orderOnAcountQuery) onAcountTotalAmount += order.TotalPrice;
+            var onAcountCal = new MyPairValue
             {
                 Title = "Orders",
                 Count = orderOnAcountQuery.Count(),
                 Amount = onAcountTotalAmount
             };
-            result.Add("On Account", new List<MyPairValue>()
+            result.Add("On Account", new List<MyPairValue>
             {
                 onAcountCal
             });

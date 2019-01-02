@@ -10,8 +10,5 @@
       Height="610"
       Width="1024">
 
-    <Grid>
-
-
-    </Grid>
+    <Grid />
 </Page>

@@ -21,14 +21,14 @@
                                       VerticalAlignment="Top"
                                       Width="600"
                                       Height="600"
-                                      Margin="0,0,10,0"/>
+                                      Margin="0,0,10,0" />
         </Grid>
         <Grid Grid.Column="1">
             <employeeWorkSpace:UcOder x:Name="ucOrder"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Top"
                                       Width="450"
-                                      Height="600"/>
+                                      Height="600" />
         </Grid>
     </Grid>
 </Page>

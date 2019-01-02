@@ -1,21 +1,22 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Cafocha.Entities;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for Info.xaml
+    ///     Interaction logic for Info.xaml
     /// </summary>
     public partial class Info : Page
     {
-        string formatDate = "yyyy-MM-dd";
-        Employee emp = App.Current.Properties["EmpLogin"] as Employee;
+        private Employee emp = Application.Current.Properties["EmpLogin"] as Employee;
+        private string formatDate = "yyyy-MM-dd";
 
         public Info()
         {
             InitializeComponent();
 
-          //  initEmployeeInfo();
+            //  initEmployeeInfo();
         }
 
         //private void initEmployeeInfo()

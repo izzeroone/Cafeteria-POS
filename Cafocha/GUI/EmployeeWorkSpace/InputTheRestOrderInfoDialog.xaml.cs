@@ -7,14 +7,13 @@ using Cafocha.Entities;
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for InputTheRestOrderInfoDialog.xaml
+    ///     Interaction logic for InputTheRestOrderInfoDialog.xaml
     /// </summary>
     public partial class InputTheRestOrderInfoDialog : Window
     {
-        private Entities.OrderNote currentOrder;
         private string _payMethod;
-        public bool IsSuccess { get; set; }
- 
+        private readonly OrderNote currentOrder;
+
         public InputTheRestOrderInfoDialog(OrderNote currentOrder)
         {
             InitializeComponent();
@@ -24,7 +23,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             _payMethod = "";
             IsSuccess = false;
 
-            CboPaymentMethod.ItemsSource = new List<string>()
+            CboPaymentMethod.ItemsSource = new List<string>
             {
                 "Cash",
                 "Cheque",
@@ -37,15 +36,17 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             CboPaymentMethod.SelectedIndex = 0;
         }
 
+        public bool IsSuccess { get; set; }
+
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox cboPayment = sender as ComboBox;
-            this._payMethod = cboPayment.SelectedValue.ToString();
+            var cboPayment = sender as ComboBox;
+            _payMethod = cboPayment.SelectedValue.ToString();
         }
 
         public bool MyShowDialog()
         {
-            this.ShowDialog();
+            ShowDialog();
             return IsSuccess;
         }
 
@@ -59,44 +60,27 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
             if (_payMethod == PaymentMethod.Cash.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.Cash;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.Cash;
             else if (_payMethod == PaymentMethod.Cheque.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.Cheque;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.Cheque;
             else if (_payMethod == PaymentMethod.Credit.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.Credit;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.Credit;
             else if (_payMethod == PaymentMethod.Deferred.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.Deferred;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.Deferred;
             else if (_payMethod == PaymentMethod.International.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.International;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.International;
             else if (_payMethod == PaymentMethod.OnAcount.ToString())
-            {
-                currentOrder.paymentMethod = (int)PaymentMethod.OnAcount;
-            }
+                currentOrder.paymentMethod = (int) PaymentMethod.OnAcount;
 
 
             try
             {
                 decimal cusPay;
-                if (String.IsNullOrWhiteSpace(KbInput.InputValue))
-                {
+                if (string.IsNullOrWhiteSpace(KbInput.InputValue))
                     cusPay = currentOrder.TotalPrice;
-                }
                 else
-                {
                     cusPay = decimal.Parse(KbInput.InputValue);
-                }
 
-                
 
                 if (cusPay < currentOrder.TotalPrice)
                 {
@@ -107,19 +91,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 currentOrder.CustomerPay = cusPay;
                 currentOrder.PayBack = currentOrder.CustomerPay - currentOrder.TotalPrice;
                 IsSuccess = true;
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Incorrect input!");
-                return;
             }
         }
 
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

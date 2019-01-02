@@ -1,47 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.IO;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
-using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 using Microsoft.Win32;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for ProductCreatorPage.xaml
+    ///     Interaction logic for ProductCreatorPage.xaml
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        List<Stock> _igreList;
-        private List<ProductModule.PDTemp> _pdtList;
+        private readonly BusinessModuleLocator _businessModuleLocator;
 
-        string browseImagePath = "";
-        string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        private readonly Product _currentProduct = new Product();
+        private List<Stock> _igreList;
+        private readonly List<ProductModule.PDTemp> _pdtList;
 
-        Product _currentProduct = new Product();
+        private string browseImagePath = "";
+
+        private bool iscboRaise;
+
+        private bool isRaiseEvent;
+
+        public bool isRaiseIngreShowEvent = false;
+
+        private readonly string startupProjectPath =
+            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
         public ProductCreatorPage(BusinessModuleLocator businessModuleLocator)
         {
             _businessModuleLocator = businessModuleLocator;
             _pdtList = _businessModuleLocator.ProductModule.PdtList;
             InitializeComponent();
 
-            this.Loaded += ProductCreatorPage_Loaded;
+            Loaded += ProductCreatorPage_Loaded;
 
             _currentProduct = new Product();
 
             initComboBox();
         }
 
-        public bool isRaiseIngreShowEvent = false;
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
             _igreList = _businessModuleLocator.WarehouseModule.IngredientList;
@@ -68,13 +74,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void LvAvaibleIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListView lv = sender as ListView;
+            var lv = sender as ListView;
             var ingre = lv.SelectedItem as Stock;
 
-            if (ingre == null)
-            {
-                return;
-            }
+            if (ingre == null) return;
 
             if (_pdtList.Count != 0)
             {
@@ -86,7 +89,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
             }
 
-            ProductDetail newPD = new ProductDetail
+            var newPD = new ProductDetail
             {
                 PdetailId = "",
                 ProductId = "",
@@ -97,7 +100,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Add(newPD);
-            _pdtList.Add(new ProductModule.PDTemp { ProDe = newPD, Ingre = ingre });
+            _pdtList.Add(new ProductModule.PDTemp {ProDe = newPD, Ingre = ingre});
             lvDetails.ItemsSource = _pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
@@ -105,16 +108,13 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BntDeleteItem_OnClick(object sender, RoutedEventArgs e)
         {
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-            while ((dep != null) && !(dep is ListViewItem))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
+            var dep = (DependencyObject) e.OriginalSource;
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
 
             if (dep == null)
                 return;
 
-            int index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
+            var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
 
             if (index < 0)
                 return;
@@ -128,31 +128,21 @@ namespace Cafocha.GUI.AdminWorkSpace
             isRaiseEvent = false;
         }
 
-        bool isRaiseEvent = false;
         private void cboUnitUse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!isRaiseEvent)
             {
-                ComboBox cbo = sender as ComboBox;
-                if (cbo.SelectedItem.Equals(""))
-                {
-                    return;
-                }
+                var cbo = sender as ComboBox;
+                if (cbo.SelectedItem.Equals("")) return;
 
-                DependencyObject dep = (DependencyObject)e.OriginalSource;
-                while ((dep != null) && !(dep is ListViewItem))
-                {
-                    dep = VisualTreeHelper.GetParent(dep);
-                }
+                var dep = (DependencyObject) e.OriginalSource;
+                while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
 
                 if (dep == null)
                     return;
 
-                int index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
-                if (index < 0)
-                {
-                    return;
-                }
+                var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
+                if (index < 0) return;
 
                 isRaiseEvent = true;
                 if (cboStatus.SelectedItem.Equals("Time"))
@@ -172,25 +162,16 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             if (!isRaiseEvent)
             {
-                DependencyObject dep = (DependencyObject)e.OriginalSource;
-                while ((dep != null) && !(dep is ListViewItem))
-                {
-                    dep = VisualTreeHelper.GetParent(dep);
-                }
+                var dep = (DependencyObject) e.OriginalSource;
+                while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
 
                 if (dep == null)
                     return;
 
-                int index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
-                if (index < 0)
-                {
-                    return;
-                }
+                var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
+                if (index < 0) return;
 
-                if ((sender as TextBox).Text.Trim().Equals("") || (sender as TextBox).Text.Trim() == null)
-                {
-                    return;
-                }
+                if ((sender as TextBox).Text.Trim().Equals("") || (sender as TextBox).Text.Trim() == null) return;
 
                 isRaiseEvent = true;
                 //_currentProduct.ProductDetails.ToList()[index].Quan = int.Parse((sender as TextBox).Text.Trim());
@@ -202,32 +183,24 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Text))
-            {
-                e.Handled = !Char.IsNumber(e.Text[0]);
-            }
+            if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
-
-        bool iscboRaise = false;
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (_pdtList.Count() != 0)
-                {
                     foreach (var pd in _pdtList)
-                    {
                         if (pd.ProDe.UnitUse.Equals("") || pd.ProDe.UnitUse == null || pd.ProDe.Quan < 1)
                         {
-                            MessageBox.Show("Please check information of " + pd.Ingre.Name + " again! Something is not valid!");
+                            MessageBox.Show("Please check information of " + pd.Ingre.Name +
+                                            " again! Something is not valid!");
                             return;
                         }
-                    }
-                }
 
                 //check name
-                string name = txtName.Text.Trim();
+                var name = txtName.Text.Trim();
                 if (name.Length == 0)
                 {
                     MessageBox.Show("Name is not valid!");
@@ -236,13 +209,13 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check info
-                string info = txtInfo.Text.Trim();
+                var info = txtInfo.Text.Trim();
 
                 //check type
-                int type = (int)cboType.SelectedItem;
+                var type = (int) cboType.SelectedItem;
 
                 //check imagename
-                string imgname = txtImageName.Text.Trim();
+                var imgname = txtImageName.Text.Trim();
                 if (imgname.Length == 0)
                 {
                     MessageBox.Show("Please choose a image to continue!");
@@ -254,22 +227,20 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //
 
                 //check standard status
-                string stdstt = cboStatus.SelectedItem.ToString();
+                var stdstt = cboStatus.SelectedItem.ToString();
 
                 //check price
                 decimal price = 0;
                 if (string.IsNullOrEmpty(txtPrice.Text.Trim()))
                 {
-                    if(string.IsNullOrEmpty(txtSusggestPrice.Text.Trim()))
+                    if (string.IsNullOrEmpty(txtSusggestPrice.Text.Trim()))
                     {
                         MessageBox.Show("Price is not valid!");
                         txtPrice.Focus();
                         return;
                     }
-                    else
-                    {
-                        price = decimal.Parse(txtSusggestPrice.Text.Trim());
-                    }
+
+                    price = decimal.Parse(txtSusggestPrice.Text.Trim());
                 }
                 else
                 {
@@ -286,7 +257,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _currentProduct.Price = price;
 
                 //C:\Program Files\ITComma\Asowel POS\Project POS\POS\POS
-                string destinationFile = startupProjectPath + "\\Images\\Products\\" + txtImageName.Text.Trim();
+                var destinationFile = startupProjectPath + "\\Images\\Products\\" + txtImageName.Text.Trim();
                 try
                 {
                     //using (FileStream fs = new FileStream("D:\\tableImagePath.txt", FileMode.Create))
@@ -297,20 +268,22 @@ namespace Cafocha.GUI.AdminWorkSpace
                     //    }
                     //}
 
-                    if(File.Exists(destinationFile))
+                    if (File.Exists(destinationFile))
                     {
-                        MessageBoxResult mess = MessageBox.Show("This product's image is already exist! Do you want to replace it?", "Warning!", MessageBoxButton.YesNo);
-                        if(mess == MessageBoxResult.Yes)
+                        var mess = MessageBox.Show("This product's image is already exist! Do you want to replace it?",
+                            "Warning!", MessageBoxButton.YesNo);
+                        if (mess == MessageBoxResult.Yes)
                         {
                             File.Delete(destinationFile);
                         }
                         else
                         {
-                            MessageBox.Show("Please choose another image for this product or rename new image and try again!");
+                            MessageBox.Show(
+                                "Please choose another image for this product or rename new image and try again!");
                             return;
                         }
                     }
-                    
+
                     File.Copy(browseImagePath, destinationFile);
                 }
                 catch (Exception ex)
@@ -320,7 +293,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 _businessModuleLocator.ProductModule.insertProduct(_currentProduct, _pdtList);
 
-                MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
+                MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId +
+                                ") successful!");
                 ClearAllData();
             }
             catch (Exception ex)
@@ -331,10 +305,11 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void btnLinkImg_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog browseFile = new OpenFileDialog();
+            var browseFile = new OpenFileDialog();
             browseFile.DefaultExt = ".";
-            browseFile.Filter = "All Image Files (*.png, *.jpg, *.jpeg)|*.png; *.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg | PNG Files (*.png)|*.png | JPG Files (*.jpg)|*.jpg";
-            Nullable<bool> result = browseFile.ShowDialog();
+            browseFile.Filter =
+                "All Image Files (*.png, *.jpg, *.jpeg)|*.png; *.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg | PNG Files (*.png)|*.png | JPG Files (*.jpg)|*.jpg";
+            var result = browseFile.ShowDialog();
 
             if (result == true)
             {
@@ -372,13 +347,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void CalSuggestPrice()
         {
             decimal sugprice = 0;
-            foreach (var pd in _pdtList)
-            {
-                sugprice += ((decimal)(pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice);
-            }
+            foreach (var pd in _pdtList) sugprice += (decimal) (pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice;
 
             txtSusggestPrice.Text = sugprice + "";
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
@@ -10,7 +6,7 @@ namespace Cafocha.BusinessContext.User
 {
     public class CustomerModule
     {
-        RepositoryLocator _unitofwork;
+        private readonly RepositoryLocator _unitofwork;
 
         public CustomerModule()
         {
@@ -25,10 +21,12 @@ namespace Cafocha.BusinessContext.User
         {
             return _unitofwork.CustomerRepository.GetById(customerID);
         }
+
         public IEnumerable<Customer> getAllCustomer()
         {
             return _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0));
         }
+
         public void insertCustomer(Customer customer)
         {
             _unitofwork.CustomerRepository.Insert(customer);

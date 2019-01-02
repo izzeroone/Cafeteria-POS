@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Cafocha.Entities;
-using Cafocha.GUI.EmployeeWorkSpace;
 using Cafocha.Repository.DAL;
 
 namespace Cafocha.BusinessContext.EmployeeWorkspace
@@ -17,28 +12,22 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
     //A class to help manaing order
     public class TakingOrderModule
     {
-        private RepositoryLocator _unitofwork;
-        private OrderTemp _orderTemp;
+        private readonly RepositoryLocator _unitofwork;
 
         public TakingOrderModule()
         {
-            _orderTemp = new OrderTemp();
-            this.clearOrder();
+            OrderTemp = new OrderTemp();
+            clearOrder();
         }
 
         public TakingOrderModule(RepositoryLocator unitofwork)
         {
-            _orderTemp = new OrderTemp();
-            this.clearOrder();
+            OrderTemp = new OrderTemp();
+            clearOrder();
             _unitofwork = unitofwork;
         }
 
-        public OrderTemp OrderTemp
-        {
-            get => _orderTemp;
-            set => _orderTemp = value;
-        }
-
+        public OrderTemp OrderTemp { get; set; }
 
 
 //        public ICollection<OrderDetailsTempData> OrderDetails
@@ -50,26 +39,24 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         {
             var flag = false;
 
-            var item = _orderTemp.OrderDetailsTemps.FirstOrDefault(o => o.ProductId.Equals(orderTempDetail.ProductId));
+            var item = OrderTemp.OrderDetailsTemps.FirstOrDefault(o => o.ProductId.Equals(orderTempDetail.ProductId));
 
-            if (item != null)
-            {
-                _orderTemp.OrderDetailsTemps.Remove(item);
-            }
+            if (item != null) OrderTemp.OrderDetailsTemps.Remove(item);
 
-            _orderTemp.OrderDetailsTemps.Add(orderTempDetail);
+            OrderTemp.OrderDetailsTemps.Add(orderTempDetail);
         }
 
         //This function create a new order temp or update quanity by 1 when click
         public void addProductToOrder(Product pt)
         {
-            _orderTemp.Ordertime = DateTime.Now;
-            OrderDetailsTemp o = new OrderDetailsTemp();
+            OrderTemp.Ordertime = DateTime.Now;
+            var o = new OrderDetailsTemp();
 
 
             //order for each chair
 
-            var orderProductDetailsTemps = _orderTemp.OrderDetailsTemps.Where(x => pt.ProductId.Equals(x.ProductId)).ToList();
+            var orderProductDetailsTemps =
+                OrderTemp.OrderDetailsTemps.Where(x => pt.ProductId.Equals(x.ProductId)).ToList();
 
             //TODO: Take from wake house
             //                // go to warehouse, check and get the ingredient to make product
@@ -81,7 +68,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             // add a product to order
             if (orderProductDetailsTemps.Count == 0)
             {
-                o.OrdertempId = _orderTemp.OrdertempId;
+                o.OrdertempId = OrderTemp.OrdertempId;
                 o.ProductId = pt.ProductId;
                 o.SelectedStats = pt.StdStats;
                 o.Note = "";
@@ -89,8 +76,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 o.IsPrinted = 0;
                 o.Discount = pt.Discount;
 
-                _orderTemp.OrderDetailsTemps.Add(o);
-
+                OrderTemp.OrderDetailsTemps.Add(o);
             }
             else
             {
@@ -98,7 +84,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 {
                     if (!order.SelectedStats.Equals(pt.StdStats) || !order.Note.Equals("") || order.IsPrinted != 0)
                     {
-                        o.OrdertempId = _orderTemp.OrdertempId;
+                        o.OrdertempId = OrderTemp.OrdertempId;
                         o.ProductId = pt.ProductId;
                         o.SelectedStats = pt.StdStats;
                         o.Note = "";
@@ -106,7 +92,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                         o.IsPrinted = 0;
                         o.Discount = pt.Discount;
 
-                        _orderTemp.OrderDetailsTemps.Add(o);
+                        OrderTemp.OrderDetailsTemps.Add(o);
 
                         break;
                     }
@@ -122,38 +108,21 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             }
         }
 
-        public void updateOrderDetail(int index,String value)
-        {
-            var tempdata = OrderDetailsTempData(index);
-            tempdata.SelectedStats = value;
-            foreach (var cho in _orderTemp.OrderDetailsTemps)
-            {
-                if (cho.OrdertempId.Equals(tempdata.OrdertempId)
-                    && cho.ProductId.Equals(tempdata.ProductId)
-                    && cho.SelectedStats.Equals(tempdata.SelectedStats)
-                    && cho.Note.Equals(tempdata.Note)
-                    && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
-                {
-                    cho.Quan += _orderTemp.OrderDetailsTemps.ElementAt(index).Quan;
-                }
-            }
-        }
-
         private OrderDetailsTemp OrderDetailsTempData(int index)
         {
-            OrderDetailsTemp tempdata = new OrderDetailsTemp();
-            tempdata.OrdertempId = _orderTemp.OrderDetailsTemps.ElementAt(index).OrdertempId;
-            tempdata.ProductId = _orderTemp.OrderDetailsTemps.ElementAt(index).ProductId;
-            tempdata.StatusItems = _orderTemp.OrderDetailsTemps.ElementAt(index).StatusItems;
-            tempdata.Quan = _orderTemp.OrderDetailsTemps.ElementAt(index).Quan;
-            tempdata.Note = _orderTemp.OrderDetailsTemps.ElementAt(index).Note;
+            var tempdata = new OrderDetailsTemp();
+            tempdata.OrdertempId = OrderTemp.OrderDetailsTemps.ElementAt(index).OrdertempId;
+            tempdata.ProductId = OrderTemp.OrderDetailsTemps.ElementAt(index).ProductId;
+            tempdata.StatusItems = OrderTemp.OrderDetailsTemps.ElementAt(index).StatusItems;
+            tempdata.Quan = OrderTemp.OrderDetailsTemps.ElementAt(index).Quan;
+            tempdata.Note = OrderTemp.OrderDetailsTemps.ElementAt(index).Note;
             tempdata.IsPrinted = 0;
             return tempdata;
         }
 
-        public void updateOrderNote(int index, String note)
+        public void updateOrderNote(int index, string note)
         {
-            _orderTemp.OrderDetailsTemps.ElementAt(index).Note = note;
+            OrderTemp.OrderDetailsTemps.ElementAt(index).Note = note;
         }
 
 //        public void deleteOrderDetail(int index, bool isDone)
@@ -180,10 +149,9 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         public IEnumerable<OrderDetails_Product_Joiner> getOrderDetailsDisplay()
         {
             // chuyen product_id thanh product name
-            var query = from orderdetails in _orderTemp.OrderDetailsTemps
+            var query = from orderdetails in OrderTemp.OrderDetailsTemps
                 join product in _unitofwork.ProductRepository.Get()
                     on orderdetails.ProductId equals product.ProductId
-
                 select new OrderDetails_Product_Joiner
                 {
                     OrderDetailsTemp = orderdetails,
@@ -191,22 +159,20 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 };
 
             return query;
-
         }
 
         public void loadTotalPrice()
         {
-
             // chuyen product_id thanh product name
-            var query_item_in_ordertails = from orderdetails in _orderTemp.OrderDetailsTemps
-                                           join product in _unitofwork.ProductRepository.Get()
-                                           on orderdetails.ProductId equals product.ProductId
-                                           select new
-                                           {
-                                               item_quan = orderdetails.Quan,
-                                               item_price = product.Price,
-                                               item_discount = product.Discount
-                                           };
+            var query_item_in_ordertails = from orderdetails in OrderTemp.OrderDetailsTemps
+                join product in _unitofwork.ProductRepository.Get()
+                    on orderdetails.ProductId equals product.ProductId
+                select new
+                {
+                    item_quan = orderdetails.Quan,
+                    item_price = product.Price,
+                    item_discount = product.Discount
+                };
 
             // calculate totalPriceNonDisc and TotalPrice
             decimal Vat = 0;
@@ -214,67 +180,61 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             decimal TotalWithDiscount = 0;
             decimal Total = 0;
             foreach (var item in query_item_in_ordertails)
-            {
-                Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
-            }
+                Total = (decimal) ((float) Total +
+                                   (float) (item.item_quan *
+                                            ((float) item.item_price * ((100 - item.item_discount) / 100.0))));
 
-            SaleValue = Total *  90 / 100;
+            SaleValue = Total * 90 / 100;
             Vat = Total * 10 / 100;
-            TotalWithDiscount = (decimal)(((float)Total * (100 - _orderTemp.Discount)) / 100.0);
+            TotalWithDiscount = (decimal) ((float) Total * (100 - OrderTemp.Discount) / 100.0);
 
             /*
              * If the current order isn't in Set Order  Mode
              * Use the casual calculate method to compute the Total Price
              */
 
-            _orderTemp.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
-            _orderTemp.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
-            _orderTemp.Svc = 0;
-            _orderTemp.Vat = Math.Round(Vat, 3);
-            _orderTemp.SaleValue = Math.Round(SaleValue, 3);
+            OrderTemp.TotalPrice = Math.Round(TotalWithDiscount, 3);
+            OrderTemp.TotalPriceNonDisc = Math.Round(Total, 3);
+            OrderTemp.Svc = 0;
+            OrderTemp.Vat = Math.Round(Vat, 3);
+            OrderTemp.SaleValue = Math.Round(SaleValue, 3);
         }
 
         public bool ConvertTableToOrder(OrderNote newOrder)
         {
-            if (_orderTemp != null)
+            if (OrderTemp != null)
             {
                 newOrder.OrdernoteId = _unitofwork.OrderRepository.AutoGeneteId_DBAsowell(newOrder).OrdernoteId;
-                newOrder.CusId = _orderTemp.CusId;
-                newOrder.EmpId = _orderTemp.EmpId;
-                newOrder.Pax = _orderTemp.Pax;
-                newOrder.Ordertime = _orderTemp.Ordertime;
-                newOrder.TotalPriceNonDisc = _orderTemp.TotalPriceNonDisc;
-                newOrder.TotalPrice = _orderTemp.TotalPrice;
-                newOrder.Svc = _orderTemp.Svc;
-                newOrder.Vat = _orderTemp.Vat;
-                newOrder.SaleValue = _orderTemp.SaleValue;
-                newOrder.Discount = _orderTemp.Discount;
-                newOrder.SubEmpId = _orderTemp.SubEmpId;
+                newOrder.CusId = OrderTemp.CusId;
+                newOrder.EmpId = OrderTemp.EmpId;
+                newOrder.Pax = OrderTemp.Pax;
+                newOrder.Ordertime = OrderTemp.Ordertime;
+                newOrder.TotalPriceNonDisc = OrderTemp.TotalPriceNonDisc;
+                newOrder.TotalPrice = OrderTemp.TotalPrice;
+                newOrder.Svc = OrderTemp.Svc;
+                newOrder.Vat = OrderTemp.Vat;
+                newOrder.SaleValue = OrderTemp.SaleValue;
+                newOrder.Discount = OrderTemp.Discount;
+                newOrder.SubEmpId = OrderTemp.SubEmpId;
             }
-            else return false;
-
-            Dictionary<string, OrderNoteDetail> newDetailsList = new Dictionary<string, OrderNoteDetail>();
-            foreach (var details in _orderTemp.OrderDetailsTemps)
+            else
             {
+                return false;
+            }
+
+            var newDetailsList = new Dictionary<string, OrderNoteDetail>();
+            foreach (var details in OrderTemp.OrderDetailsTemps)
                 if (newDetailsList.ContainsKey(details.ProductId))
-                {
                     newDetailsList[details.ProductId].Quan += details.Quan;
-                }
                 else
-                {
-                    newDetailsList.Add(details.ProductId, new OrderNoteDetail()
+                    newDetailsList.Add(details.ProductId, new OrderNoteDetail
                     {
                         OrdernoteId = newOrder.OrdernoteId,
                         ProductId = details.ProductId,
                         Discount = details.Discount,
                         Quan = details.Quan
                     });
-                }
-            }
-            foreach (var newDetails in newDetailsList)
-            {
-                newOrder.OrderNoteDetails.Add(newDetails.Value);
-            }
+            foreach (var newDetails in newDetailsList) newOrder.OrderNoteDetails.Add(newDetails.Value);
 
             return true;
         }
@@ -287,22 +247,21 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public void clearOrder()
         {
-
-            _orderTemp.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
-            _orderTemp.CusId = "CUS0000001";
-            _orderTemp.Discount = 0;
-            _orderTemp.Ordertime = DateTime.Now;
-            _orderTemp.TotalPriceNonDisc = 0;
-            _orderTemp.SaleValue = 0;
-            _orderTemp.Svc = 0;
-            _orderTemp.Vat = 0;
-            _orderTemp.TotalPrice = 0;
-            _orderTemp.CustomerPay = 0;
-            _orderTemp.PayBack = 0;
-            _orderTemp.SubEmpId = "";
-            _orderTemp.Pax = 0;
-            _orderTemp.OrderMode = 0;
-            _orderTemp.OrderDetailsTemps.Clear();
+            OrderTemp.EmpId = (Application.Current.Properties["EmpLogin"] as Employee).EmpId;
+            OrderTemp.CusId = "CUS0000001";
+            OrderTemp.Discount = 0;
+            OrderTemp.Ordertime = DateTime.Now;
+            OrderTemp.TotalPriceNonDisc = 0;
+            OrderTemp.SaleValue = 0;
+            OrderTemp.Svc = 0;
+            OrderTemp.Vat = 0;
+            OrderTemp.TotalPrice = 0;
+            OrderTemp.CustomerPay = 0;
+            OrderTemp.PayBack = 0;
+            OrderTemp.SubEmpId = "";
+            OrderTemp.Pax = 0;
+            OrderTemp.OrderMode = 0;
+            OrderTemp.OrderDetailsTemps.Clear();
         }
 
 //        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails, Product orderingProduct)
@@ -431,50 +390,33 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             public OrderDetailsTemp OrderDetailsTemp { get; set; }
             public Product Product { get; set; }
 
-            public string ProductName
-            {
-                get
-                {
-                    return Product.Name;
-                }
-            }
-            public decimal Price
-            {
-                get
-                {
-                    return Product.Price;
-                }
-            }
+            public string ProductName => Product.Name;
+
+            public decimal Price => Product.Price;
+
             public int Quan
             {
-                get
-                {
-                    return OrderDetailsTemp.Quan;
-                }
+                get => OrderDetailsTemp.Quan;
                 set
                 {
                     OrderDetailsTemp.Quan = value;
                     OnPropertyChanged("Quan");
                 }
             }
+
             public ObservableCollection<string> StatusItems
             {
-                get
-                {
-                    return OrderDetailsTemp.StatusItems;
-                }
+                get => OrderDetailsTemp.StatusItems;
                 set
                 {
                     OrderDetailsTemp.StatusItems = value;
                     OnPropertyChanged("StatusItems");
                 }
             }
+
             public string SelectedStats
             {
-                get
-                {
-                    return OrderDetailsTemp.SelectedStats;
-                }
+                get => OrderDetailsTemp.SelectedStats;
                 set
                 {
                     OrderDetailsTemp.SelectedStats = value;
@@ -483,6 +425,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
+
             public void OnPropertyChanged(string propertyName)
             {
                 if (PropertyChanged != null)

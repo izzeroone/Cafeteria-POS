@@ -9,10 +9,7 @@ namespace MaterialDesignThemes.Wpf.Converters.CircularProgressBar
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double && ((double)value > 0.0))
-            {
-                return new Size((double)value / 2, (double)value / 2);
-            }
+            if (value is double && (double) value > 0.0) return new Size((double) value / 2, (double) value / 2);
 
             return new Point();
         }

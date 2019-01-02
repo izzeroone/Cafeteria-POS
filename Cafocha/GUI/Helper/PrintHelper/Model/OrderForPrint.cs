@@ -4,11 +4,15 @@ using System.Linq;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
-
 namespace Cafocha.GUI.Helper.PrintHelper.Model
 {
     public class OrderForPrint
     {
+        public OrderForPrint()
+        {
+            OrderDetails = new List<OrderDetailsForPrint>();
+        }
+
         public string No { get; set; }
         public string Casher { get; set; }
         public string Customer { get; set; }
@@ -22,17 +26,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public decimal SaleValue { get; set; }
         public decimal CustomerPay { get; set; }
         public decimal PayBack { get; set; }
-        
+
 
         public List<OrderDetailsForPrint> OrderDetails { get; set; }
 
-        public OrderForPrint()
-        {
-            OrderDetails = new List<OrderDetailsForPrint>();
-        }
-
         /// <summary>
-        /// Convert data of OrderTemp object to OrderForPrint
+        ///     Convert data of OrderTemp object to OrderForPrint
         /// </summary>
         /// <param name="table">target table that contain order</param>
         public OrderForPrint GetAndConvertOrder(OrderTemp orderTemp)
@@ -74,7 +73,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         }
 
         /// <summary>
-        /// Convert the list of OrderDetailsTemp's data to OrderDetailForPrint
+        ///     Convert the list of OrderDetailsTemp's data to OrderDetailForPrint
         /// </summary>
         /// <param name="targetTable"></param>
         /// <param name="unitofwork"></param>
@@ -82,28 +81,27 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public OrderForPrint GetAndConverOrderDetails(RepositoryLocator unitofwork, int printType)
         {
             // get OrderDetailsTemp data from target Table
-            List<OrderDetailsTemp> targetOrderDetails = new List<OrderDetailsTemp>();
+            var targetOrderDetails = new List<OrderDetailsTemp>();
 
             // convert
             foreach (var orderDetailsTemp in targetOrderDetails)
             {
-                if (orderDetailsTemp.IsPrinted == 1)
-                { 
-                    continue;
-                }
-                OrderDetails.Add(new OrderDetailsForPrint()
+                if (orderDetailsTemp.IsPrinted == 1) continue;
+                OrderDetails.Add(new OrderDetailsForPrint
                 {
                     Quan = orderDetailsTemp.Quan,
-                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
-                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
+                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Name,
+                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Price,
 
                     ProductId = orderDetailsTemp.ProductId,
-                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
-                  
+                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Type,
+
                     Note = orderDetailsTemp.Note,
-                    SelectedStats = orderDetailsTemp.SelectedStats,
+                    SelectedStats = orderDetailsTemp.SelectedStats
                 });
-                
             }
 
 
@@ -112,31 +110,28 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 
         public OrderForPrint GetAndConverOrderDetails(OrderNote targetOrder, RepositoryLocator unitofwork)
         {
-
             // convert
             foreach (var orderDetailsTemp in targetOrder.OrderNoteDetails)
-            {
-                OrderDetails.Add(new OrderDetailsForPrint()
+                OrderDetails.Add(new OrderDetailsForPrint
                 {
                     Quan = orderDetailsTemp.Quan,
-                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
-                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
+                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Name,
+                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Price,
 
                     ProductId = orderDetailsTemp.ProductId,
-                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
+                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
+                        .First().Type
                 });
-
-            }
 
 
             return this;
         }
 
 
-
-
         /// <summary>
-        /// Apply the Receipt Printing to OrderDetails
+        ///     Apply the Receipt Printing to OrderDetails
         /// </summary>
         /// <returns></returns>
         public List<OrderDetailsForPrint> GetOrderDetailsForReceipt()
@@ -145,9 +140,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 
             foreach (var resultItem in OrderDetails)
             {
-                bool ishad = false;
+                var ishad = false;
                 foreach (var periodItem in resultList)
-                {
                     if (periodItem.ProductId == resultItem.ProductId)
                     {
                         periodItem.Quan += resultItem.Quan;
@@ -155,12 +149,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
                         ishad = true;
                         break;
                     }
-                }
 
-                if (!ishad)
-                {
-                    resultList.Add(resultItem);
-                }
+                if (!ishad) resultList.Add(resultItem);
             }
 
 
@@ -247,7 +237,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 //        }
 
         /// <summary>
-        /// Apply the Bar Printing to OrderDetails
+        ///     Apply the Bar Printing to OrderDetails
         /// </summary>
         /// <returns></returns>
 //        public Dictionary<string, Dictionary<int, List<OrderDetailsForPrint>>> GetOrderDetailsForBar()
@@ -348,24 +338,21 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
 //            return resultList;
 //        }
 
-
-
-
-
         // Receipt Meta
         public Dictionary<string, string> getMetaReceiptInfo()
         {
-            return new Dictionary<string, string>()
+            return new Dictionary<string, string>
             {
-                { "No", No},
-                { "Date", Date.ToString() },
-                { "Casher", Casher},
-                { "Customer", Customer}
+                {"No", No},
+                {"Date", Date.ToString()},
+                {"Casher", Casher},
+                {"Customer", Customer}
             };
         }
+
         public string[] getMetaReceiptTable()
         {
-            return new string[]
+            return new[]
             {
                 "Product Price",
                 "Qty",
@@ -377,22 +364,22 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         // Kitchen Meta
         public string[] getMetaKitchenTable()
         {
-            return new string[]
+            return new[]
             {
                 "Position",
                 "Qty",
-                "Product",
+                "Product"
             };
         }
 
         // Bar Meta
         public string[] getMetaBarTable()
         {
-            return new string[]
+            return new[]
             {
                 "Position",
                 "Qty",
-                "Product",
+                "Product"
             };
         }
     }

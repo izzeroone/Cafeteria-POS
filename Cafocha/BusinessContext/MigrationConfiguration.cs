@@ -1,8 +1,9 @@
-﻿using Cafocha.Entities;
+﻿using System.Data.Entity.Migrations;
+using Cafocha.Entities;
 
 namespace Cafocha.BusinessContext
 {
-    internal sealed partial class MigrationConfiguration : System.Data.Entity.Migrations.DbMigrationsConfiguration<LocalContext>
+    internal sealed class MigrationConfiguration : DbMigrationsConfiguration<LocalContext>
     {
         public MigrationConfiguration()
         {

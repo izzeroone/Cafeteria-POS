@@ -28,7 +28,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-   
+
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
@@ -41,12 +41,16 @@
                                VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1">
                             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                       Margin="16 16 16 8">Admin WorkSpace</TextBlock>
+                                       Margin="16 16 16 8">
+                                Admin WorkSpace
+                            </TextBlock>
                             <TextBlock TextWrapping="Wrap"
                                        Margin="16 0 16 8"
                                        Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Top">Admin WorkSpace is for target user like admin or manager to 
-                                        view, insert, modify,... their important data</TextBlock>
+                                       VerticalAlignment="Top">
+                                Admin WorkSpace is for target user like admin or manager to
+                                view, insert, modify,... their important data
+                            </TextBlock>
                         </StackPanel>
                         <Border Grid.Row="1"
                                 Grid.ColumnSpan="2"
@@ -61,14 +65,16 @@
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Navigation" />
                                         <TextBlock Margin="8 0 0 0"
-                                                   VerticalAlignment="Center">Start</TextBlock>
+                                                   VerticalAlignment="Center">
+                                            Start
+                                        </TextBlock>
                                     </StackPanel>
                                 </Button>
                                 <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
                                            TextWrapping="Wrap"
                                            Margin="16"
                                            VerticalAlignment="Center">
-                                        Go to Admin WorkSpace:
+                                    Go to Admin WorkSpace:
                                 </TextBlock>
                             </DockPanel>
                         </Border>
@@ -93,12 +99,16 @@
                                VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1">
                             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                       Margin="16 16 16 8">WareHouse WorkSpace</TextBlock>
+                                       Margin="16 16 16 8">
+                                WareHouse WorkSpace
+                            </TextBlock>
                             <TextBlock TextWrapping="Wrap"
                                        Margin="16 0 16 8"
                                        Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Top">Warehouse WorkSpace is for target user like admin or manager. It 
-                                        supply many feature to manage your storage, goods, items,....</TextBlock>
+                                       VerticalAlignment="Top">
+                                Warehouse WorkSpace is for target user like admin or manager. It
+                                supply many feature to manage your storage, goods, items,....
+                            </TextBlock>
                         </StackPanel>
                         <Border Grid.Row="1"
                                 Grid.ColumnSpan="2"
@@ -113,14 +123,16 @@
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Navigation" />
                                         <TextBlock Margin="8 0 0 0"
-                                                   VerticalAlignment="Center">Start</TextBlock>
+                                                   VerticalAlignment="Center">
+                                            Start
+                                        </TextBlock>
                                     </StackPanel>
                                 </Button>
                                 <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
                                            TextWrapping="Wrap"
                                            Margin="16"
                                            VerticalAlignment="Center">
-                                        Go to WareHouse WorkSpace:
+                                    Go to WareHouse WorkSpace:
                                 </TextBlock>
                             </DockPanel>
                         </Border>
@@ -145,12 +157,16 @@
                                VerticalAlignment="Center" />
                         <StackPanel Grid.Column="1">
                             <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                       Margin="16 16 16 8">Ingredient WorkSpace</TextBlock>
+                                       Margin="16 16 16 8">
+                                Ingredient WorkSpace
+                            </TextBlock>
                             <TextBlock TextWrapping="Wrap"
                                        Margin="16 0 16 8"
                                        Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Top">Ingredient WorkSpace is for target user like admin or manager. It 
-                                        supply many feature to manage your ingredient</TextBlock>
+                                       VerticalAlignment="Top">
+                                Ingredient WorkSpace is for target user like admin or manager. It
+                                supply many feature to manage your ingredient
+                            </TextBlock>
                         </StackPanel>
                         <Border Grid.Row="1"
                                 Grid.ColumnSpan="2"
@@ -165,14 +181,16 @@
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Navigation" />
                                         <TextBlock Margin="8 0 0 0"
-                                                   VerticalAlignment="Center">Start</TextBlock>
+                                                   VerticalAlignment="Center">
+                                            Start
+                                        </TextBlock>
                                     </StackPanel>
                                 </Button>
                                 <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
                                            TextWrapping="Wrap"
                                            Margin="16"
                                            VerticalAlignment="Center">
-                                        Go to Ingredient WorkSpace:
+                                    Go to Ingredient WorkSpace:
                                 </TextBlock>
                             </DockPanel>
                         </Border>

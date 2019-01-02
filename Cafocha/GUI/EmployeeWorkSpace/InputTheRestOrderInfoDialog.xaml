@@ -23,12 +23,14 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            Margin="0,0,100,0"
-                           FontSize="18">Payment Form</TextBlock>
-                <ComboBox   x:Name="CboPaymentMethod"
-                            Width="100"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            SelectionChanged="Selector_OnSelectionChanged" />
+                           FontSize="18">
+                    Payment Form
+                </TextBlock>
+                <ComboBox x:Name="CboPaymentMethod"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          SelectionChanged="Selector_OnSelectionChanged" />
             </StackPanel>
         </materialDesign:ColorZone>
 

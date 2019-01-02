@@ -1,15 +1,13 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.GUI.BusinessModel;
-using POS;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for SettingPrinter.xaml
+    ///     Interaction logic for SettingPrinter.xaml
     /// </summary>
     public partial class SettingPrinter : Page
     {
@@ -20,8 +18,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             InitializeComponent();
 
             isLoading = true;
-            this.Loaded += SettingTableSize_Loaded;
-            
+            Loaded += SettingTableSize_Loaded;
         }
 
         private void SettingTableSize_Loaded(object sender, RoutedEventArgs e)
@@ -29,7 +26,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 //            txtWidth.Text = ReadWriteData.readTableSize()[0];
 //            txtHeight.Text = ReadWriteData.readTableSize()[1];
 
-            string[] result = ReadWriteData.ReadPrinterSetting();
+            var result = ReadWriteData.ReadPrinterSetting();
             if (result != null)
             {
                 txtReceptionPrinter.Text = result[0];
@@ -54,32 +51,32 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void CheckNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Text))
-            {
-                e.Handled = !Char.IsNumber(e.Text[0]);
-            }
+            if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
 
 
         private void BtnPrinterApply_OnClick(object sender, RoutedEventArgs e)
         {
-            if (txtKitPrinter.Text.Trim().Length == 0 || txtBarPrinter.Text.Trim().Length == 0 || txtReceptionPrinter.Text.Trim().Length == 0)
+            if (txtKitPrinter.Text.Trim().Length == 0 || txtBarPrinter.Text.Trim().Length == 0 ||
+                txtReceptionPrinter.Text.Trim().Length == 0)
             {
                 MessageBox.Show("Please input all Printer Name that required here!");
                 return;
             }
 
-            if(chbShowReviewWin.IsChecked == true)
-                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "1");
+            if (chbShowReviewWin.IsChecked == true)
+                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," +
+                                                  txtBarPrinter.Text + "," + "1");
             else
-                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "0");
+                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," +
+                                                  txtBarPrinter.Text + "," + "0");
 
             btnPrinterApply.Background = Brushes.Orange;
         }
 
         private void BtnPrinterCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            string[] result = ReadWriteData.ReadPrinterSetting();
+            var result = ReadWriteData.ReadPrinterSetting();
             if (result != null)
             {
                 txtReceptionPrinter.Text = result[0];

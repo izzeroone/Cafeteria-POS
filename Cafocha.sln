@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafocha", "Cafocha\Cafocha.csproj", "{DA90DECE-1A68-478E-A158-18856C871CFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafochaTests", "CafochaTests\CafochaTests.csproj", "{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{DA90DECE-1A68-478E-A158-18856C871CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA90DECE-1A68-478E-A158-18856C871CFE}.Release|x64.ActiveCfg = Release|x64
 		{DA90DECE-1A68-478E-A158-18856C871CFE}.Release|x64.Build.0 = Release|x64
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Debug|x64.Build.0 = Debug|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Release|x64.ActiveCfg = Release|Any CPU
+		{5791D5EC-F5D0-4438-97F3-E1D644C9E33D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

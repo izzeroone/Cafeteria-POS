@@ -2,42 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Cafocha.Entities;
-using Cafocha.GUI.AdminWorkSpace;
 using Cafocha.Repository.DAL;
 
 namespace Cafocha.BusinessContext.EmployeeWorkspace
 {
     public class ProductModule
     {
-        private RepositoryLocator _unitofwork;
-        private List<PDTemp> _pdtList;
-
-        public List<PDTemp> PdtList
-        {
-            get => _pdtList;
-            set => _pdtList = value;
-        }
+        private readonly RepositoryLocator _unitofwork;
 
         public ProductModule()
         {
             _unitofwork = new RepositoryLocator();
-            _pdtList = new List<PDTemp>();
+            PdtList = new List<PDTemp>();
         }
+
         public ProductModule(RepositoryLocator unitofwork)
         {
             _unitofwork = unitofwork;
-            _pdtList = new List<PDTemp>();
+            PdtList = new List<PDTemp>();
         }
 
+        public List<PDTemp> PdtList { get; set; }
+
         /// <summary>
-        /// Get data
+        ///     Get data
         /// </summary>
         /// <param name="filter">Lambda expression to filtering data</param>
         /// <param name="orderBy">Lambda expression to ordering data</param>
-        /// <param name="includeProperties">the properties represent the relationship with other entities (use ',' to seperate these properties)</param>
+        /// <param name="includeProperties">
+        ///     the properties represent the relationship with other entities (use ',' to seperate
+        ///     these properties)
+        /// </param>
         /// <returns></returns>
         public IEnumerable<Product> Get(
             Expression<Func<Product, bool>> filter = null,
@@ -66,6 +62,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         {
             return _unitofwork.ProductRepository.Get(p => p.Type.Equals(type) && p.Deleted.Equals(0));
         }
+
         public IEnumerable<Product> getAllProduct(string filter)
         {
             return _unitofwork.ProductRepository.Get(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
@@ -74,7 +71,8 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public IEnumerable<Product> getAllProduct(int type, string filter)
         {
-            return _unitofwork.ProductRepository.Get(p => p.Type.Equals(type) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+            return _unitofwork.ProductRepository.Get(p =>
+                p.Type.Equals(type) && p.Name.Contains(filter) && p.Deleted.Equals(0));
         }
 
 
@@ -83,21 +81,19 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             return _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
         }
 
-        public void insertProduct(Product product, List<ProductModule.PDTemp> pdTempData)
+        public void insertProduct(Product product, List<PDTemp> pdTempData)
         {
             product.ProductId = _unitofwork.ProductRepository.AutoGeneteId_DBAsowell(product).ProductId;
             _unitofwork.ProductRepository.Insert(product);
             _unitofwork.Save();
 
             if (pdTempData.Count() != 0)
-            {
                 foreach (var pd in pdTempData)
                 {
                     pd.ProDe.ProductId = product.ProductId;
                     _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
                     _unitofwork.Save();
                 }
-            }
         }
 
         public void updateProduct(Product product)
@@ -106,19 +102,16 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             _unitofwork.Save();
         }
 
-        public void updateProduct(Product product, List<ProductDetail> productDetails ,List<ProductModule.PDTemp> pdTempData)
+        public void updateProduct(Product product, List<ProductDetail> productDetails, List<PDTemp> pdTempData)
         {
             updateProduct(product);
 
-            if (_pdtList.Count() != 0)
+            if (PdtList.Count() != 0)
             {
-                foreach (var pd in productDetails)
-                {
-                    _unitofwork.ProductDetailsRepository.Delete(pd);
-                }
+                foreach (var pd in productDetails) _unitofwork.ProductDetailsRepository.Delete(pd);
                 _unitofwork.Save();
 
-                foreach (var pd in _pdtList)
+                foreach (var pd in PdtList)
                 {
                     pd.ProDe.ProductId = product.ProductId;
                     pd.ProDe.IgdId = pd.Ingre.StoId;
@@ -131,13 +124,11 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         public void deleteProduct(Product product)
         {
             product.Deleted = 1;
-            var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(product.ProductId)).ToList();
+            var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(product.ProductId))
+                .ToList();
             if (pdofingre.Count != 0)
             {
-                foreach (var pd in pdofingre)
-                {
-                    _unitofwork.ProductDetailsRepository.Delete(pd);
-                }
+                foreach (var pd in pdofingre) _unitofwork.ProductDetailsRepository.Delete(pd);
                 _unitofwork.Save();
             }
 
@@ -147,36 +138,11 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public class PDTemp
         {
-            private ProductDetail _pd;
-            private Stock _ingre;
+            public ProductDetail ProDe { get; set; }
 
-            public ProductDetail ProDe
-            {
-                get { return _pd; }
-                set
-                {
-                    _pd = value;
-                }
-            }
+            public Stock Ingre { get; set; }
 
-            public Stock Ingre
-            {
-                get { return _ingre; }
-                set
-                {
-                    _ingre = value;
-                }
-            }
-
-            public List<string> UnitUseT
-            {
-                get
-                {
-                    return new List<string> { "", "g", "ml" };
-                }
-            }
+            public List<string> UnitUseT => new List<string> {"", "g", "ml"};
         }
-
-
     }
 }

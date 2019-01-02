@@ -26,7 +26,7 @@ namespace Cafocha.Security
         public static readonly int MinPasswordLength = 12;
 
         /// <summary>
-        /// Helper that generates a random key on each call.
+        ///     Helper that generates a random key on each call.
         /// </summary>
         /// <returns></returns>
         public static byte[] NewKey()
@@ -37,21 +37,21 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Encryption (AES) then Authentication (HMAC) for a UTF8 Message.
+        ///     Simple Encryption (AES) then Authentication (HMAC) for a UTF8 Message.
         /// </summary>
         /// <param name="secretMessage">The secret message.</param>
         /// <param name="cryptKey">The crypt key.</param>
         /// <param name="authKey">The auth key.</param>
         /// <param name="nonSecretPayload">(Optional) Non-Secret Payload.</param>
         /// <returns>
-        /// Encrypted Message
+        ///     Encrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">Secret Message Required!;secretMessage</exception>
         /// <remarks>
-        /// Adds overhead of (Optional-Payload + BlockSize(16) + Message-Padded-To-Blocksize +  HMac-Tag(32)) * 1.33 Base64
+        ///     Adds overhead of (Optional-Payload + BlockSize(16) + Message-Padded-To-Blocksize +  HMac-Tag(32)) * 1.33 Base64
         /// </remarks>
         public static string SimpleEncrypt(string secretMessage, byte[] cryptKey, byte[] authKey,
-                           byte[] nonSecretPayload = null)
+            byte[] nonSecretPayload = null)
         {
             if (string.IsNullOrEmpty(secretMessage))
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -62,18 +62,18 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Authentication (HMAC) then Decryption (AES) for a secrets UTF8 Message.
+        ///     Simple Authentication (HMAC) then Decryption (AES) for a secrets UTF8 Message.
         /// </summary>
         /// <param name="encryptedMessage">The encrypted message.</param>
         /// <param name="cryptKey">The crypt key.</param>
         /// <param name="authKey">The auth key.</param>
         /// <param name="nonSecretPayloadLength">Length of the non secret payload.</param>
         /// <returns>
-        /// Decrypted Message
+        ///     Decrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">Encrypted Message Required!;encryptedMessage</exception>
         public static string SimpleDecrypt(string encryptedMessage, byte[] cryptKey, byte[] authKey,
-                           int nonSecretPayloadLength = 0)
+            int nonSecretPayloadLength = 0)
         {
             if (string.IsNullOrWhiteSpace(encryptedMessage))
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -84,22 +84,22 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Encryption (AES) then Authentication (HMAC) of a UTF8 message
-        /// using Keys derived from a Password (PBKDF2).
+        ///     Simple Encryption (AES) then Authentication (HMAC) of a UTF8 message
+        ///     using Keys derived from a Password (PBKDF2).
         /// </summary>
         /// <param name="secretMessage">The secret message.</param>
         /// <param name="password">The password.</param>
         /// <param name="nonSecretPayload">The non secret payload.</param>
         /// <returns>
-        /// Encrypted Message
+        ///     Encrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">password</exception>
         /// <remarks>
-        /// Significantly less secure than using random binary keys.
-        /// Adds additional non secret payload for key generation parameters.
+        ///     Significantly less secure than using random binary keys.
+        ///     Adds additional non secret payload for key generation parameters.
         /// </remarks>
         public static string SimpleEncryptWithPassword(string secretMessage, string password,
-                                 byte[] nonSecretPayload = null)
+            byte[] nonSecretPayload = null)
         {
             if (string.IsNullOrEmpty(secretMessage))
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -110,21 +110,21 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Authentication (HMAC) and then Descryption (AES) of a UTF8 Message
-        /// using keys derived from a password (PBKDF2). 
+        ///     Simple Authentication (HMAC) and then Descryption (AES) of a UTF8 Message
+        ///     using keys derived from a password (PBKDF2).
         /// </summary>
         /// <param name="encryptedMessage">The encrypted message.</param>
         /// <param name="password">The password.</param>
         /// <param name="nonSecretPayloadLength">Length of the non secret payload.</param>
         /// <returns>
-        /// Decrypted Message
+        ///     Decrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">Encrypted Message Required!;encryptedMessage</exception>
         /// <remarks>
-        /// Significantly less secure than using random binary keys.
+        ///     Significantly less secure than using random binary keys.
         /// </remarks>
         public static string SimpleDecryptWithPassword(string encryptedMessage, string password,
-                                 int nonSecretPayloadLength = 0)
+            int nonSecretPayloadLength = 0)
         {
             if (string.IsNullOrWhiteSpace(encryptedMessage))
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -134,14 +134,15 @@ namespace Cafocha.Security
             return plainText == null ? null : Encoding.UTF8.GetString(plainText);
         }
 
-        public static byte[] SimpleEncrypt(byte[] secretMessage, byte[] cryptKey, byte[] authKey, byte[] nonSecretPayload = null)
+        public static byte[] SimpleEncrypt(byte[] secretMessage, byte[] cryptKey, byte[] authKey,
+            byte[] nonSecretPayload = null)
         {
             //User Error Checks
             if (cryptKey == null || cryptKey.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("Key needs to be {0} bit!", KeyBitSize), "cryptKey");
+                throw new ArgumentException(string.Format("Key needs to be {0} bit!", KeyBitSize), "cryptKey");
 
             if (authKey == null || authKey.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("Key needs to be {0} bit!", KeyBitSize), "authKey");
+                throw new ArgumentException(string.Format("Key needs to be {0} bit!", KeyBitSize), "authKey");
 
             if (secretMessage == null || secretMessage.Length < 1)
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -160,7 +161,6 @@ namespace Cafocha.Security
                 Padding = PaddingMode.PKCS7
             })
             {
-
                 //Use random IV
                 aes.GenerateIV();
                 iv = aes.IV;
@@ -177,7 +177,6 @@ namespace Cafocha.Security
 
                     cipherText = cipherStream.ToArray();
                 }
-
             }
 
             //Assemble encrypted message and add authentication
@@ -199,20 +198,20 @@ namespace Cafocha.Security
                     //Postpend tag
                     binaryWriter.Write(tag);
                 }
+
                 return encryptedStream.ToArray();
             }
-
         }
 
-        public static byte[] SimpleDecrypt(byte[] encryptedMessage, byte[] cryptKey, byte[] authKey, int nonSecretPayloadLength = 0)
+        public static byte[] SimpleDecrypt(byte[] encryptedMessage, byte[] cryptKey, byte[] authKey,
+            int nonSecretPayloadLength = 0)
         {
-
             //Basic Usage Error Checks
             if (cryptKey == null || cryptKey.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("CryptKey needs to be {0} bit!", KeyBitSize), "cryptKey");
+                throw new ArgumentException(string.Format("CryptKey needs to be {0} bit!", KeyBitSize), "cryptKey");
 
             if (authKey == null || authKey.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("AuthKey needs to be {0} bit!", KeyBitSize), "authKey");
+                throw new ArgumentException(string.Format("AuthKey needs to be {0} bit!", KeyBitSize), "authKey");
 
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -222,7 +221,7 @@ namespace Cafocha.Security
                 var sentTag = new byte[hmac.HashSize / 8];
                 //Calculate Tag
                 var calcTag = hmac.ComputeHash(encryptedMessage, 0, encryptedMessage.Length - sentTag.Length);
-                var ivLength = (BlockBitSize / 8);
+                var ivLength = BlockBitSize / 8;
 
                 //if message length is to small just return null
                 if (encryptedMessage.Length < sentTag.Length + nonSecretPayloadLength + ivLength)
@@ -248,7 +247,6 @@ namespace Cafocha.Security
                     Padding = PaddingMode.PKCS7
                 })
                 {
-
                     //Grab IV from message
                     var iv = new byte[ivLength];
                     Array.Copy(encryptedMessage, nonSecretPayloadLength, iv, 0, iv.Length);
@@ -256,16 +254,18 @@ namespace Cafocha.Security
                     using (var decrypter = aes.CreateDecryptor(cryptKey, iv))
                     using (var plainTextStream = new MemoryStream())
                     {
-                        using (var decrypterStream = new CryptoStream(plainTextStream, decrypter, CryptoStreamMode.Write))
+                        using (var decrypterStream =
+                            new CryptoStream(plainTextStream, decrypter, CryptoStreamMode.Write))
                         using (var binaryWriter = new BinaryWriter(decrypterStream))
                         {
                             //Decrypt Cipher Text from Message
                             binaryWriter.Write(
-                              encryptedMessage,
-                              nonSecretPayloadLength + iv.Length,
-                              encryptedMessage.Length - nonSecretPayloadLength - iv.Length - sentTag.Length
+                                encryptedMessage,
+                                nonSecretPayloadLength + iv.Length,
+                                encryptedMessage.Length - nonSecretPayloadLength - iv.Length - sentTag.Length
                             );
                         }
+
                         //Return Plain Text
                         return plainTextStream.ToArray();
                     }
@@ -273,21 +273,23 @@ namespace Cafocha.Security
             }
         }
 
-        public static byte[] SimpleEncryptWithPassword(byte[] secretMessage, string password, byte[] nonSecretPayload = null)
+        public static byte[] SimpleEncryptWithPassword(byte[] secretMessage, string password,
+            byte[] nonSecretPayload = null)
         {
             nonSecretPayload = nonSecretPayload ?? new byte[] { };
 
             //User Error Checks
             if (string.IsNullOrWhiteSpace(password) || password.Length < MinPasswordLength)
-                throw new ArgumentException(String.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
+                throw new ArgumentException(
+                    string.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
 
             if (secretMessage == null || secretMessage.Length == 0)
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
 
-            var payload = new byte[((SaltBitSize / 8) * 2) + nonSecretPayload.Length];
+            var payload = new byte[SaltBitSize / 8 * 2 + nonSecretPayload.Length];
 
             Array.Copy(nonSecretPayload, payload, nonSecretPayload.Length);
-            int payloadIndex = nonSecretPayload.Length;
+            var payloadIndex = nonSecretPayload.Length;
 
             byte[] cryptKey;
             byte[] authKey;
@@ -320,11 +322,13 @@ namespace Cafocha.Security
             return SimpleEncrypt(secretMessage, cryptKey, authKey, payload);
         }
 
-        public static byte[] SimpleDecryptWithPassword(byte[] encryptedMessage, string password, int nonSecretPayloadLength = 0)
+        public static byte[] SimpleDecryptWithPassword(byte[] encryptedMessage, string password,
+            int nonSecretPayloadLength = 0)
         {
             //User Error Checks
             if (string.IsNullOrWhiteSpace(password) || password.Length < MinPasswordLength)
-                throw new ArgumentException(String.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
+                throw new ArgumentException(
+                    string.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
 
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -344,13 +348,15 @@ namespace Cafocha.Security
             {
                 cryptKey = generator.GetBytes(KeyBitSize / 8);
             }
+
             //Generate auth key
             using (var generator = new Rfc2898DeriveBytes(password, authSalt, Iterations))
             {
                 authKey = generator.GetBytes(KeyBitSize / 8);
             }
 
-            return SimpleDecrypt(encryptedMessage, cryptKey, authKey, cryptSalt.Length + authSalt.Length + nonSecretPayloadLength);
+            return SimpleDecrypt(encryptedMessage, cryptKey, authKey,
+                cryptSalt.Length + authSalt.Length + nonSecretPayloadLength);
         }
     }
 }

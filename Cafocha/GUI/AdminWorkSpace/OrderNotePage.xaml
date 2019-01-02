@@ -70,7 +70,7 @@
                                       Width="135"
                                       Margin="0,0,20,0"
                                       ToolTip="Filter by Product"
-                                      SelectionChanged="cboProduct_SelectionChanged"/>
+                                      SelectionChanged="cboProduct_SelectionChanged" />
                             <DatePicker x:Name="pickOrderDate"
                                         ToolTip="Filter by Order Date"
                                         SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
@@ -85,7 +85,7 @@
                             ToolTip="Generate Report">
                         <Image Source="../Icon/Report Card_32px.png"
                                Width="27"
-                               Height="32"></Image>
+                               Height="32" />
                     </Button>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -97,12 +97,14 @@
                                       CornerRadius="3"
                                       Mode="PrimaryDark"
                                       Height="46">
-                <StackPanel  Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="16,0,0,-15.6"
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="30">Order Note</TextBlock>
+                               Height="30">
+                        Order Note
+                    </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
             <ListView Name="lvOrderNote"
@@ -160,7 +162,9 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="32"> Order Note Details</TextBlock>
+                               Height="32">
+                        Order Note Details
+                    </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
             <ListView Name="lvOrderNoteDetails"

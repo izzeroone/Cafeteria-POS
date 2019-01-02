@@ -16,7 +16,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="670*" />
             <ColumnDefinition Width="647*" />
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0"
               Margin="0,0,109.6,0">
@@ -58,7 +58,7 @@
                                 Height="46"
                                 Width="136"
                                 Click="btnUpdate_Click"
-                                Visibility="Hidden"/>
+                                Visibility="Hidden" />
                     </StackPanel>
 
                 </materialDesign:ColorZone>
@@ -69,11 +69,13 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold">Information Details</TextBlock>
+                                   FontWeight="Bold">
+                            Information Details
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <StackPanel Margin="46,60,0,0">
@@ -274,7 +276,7 @@
                                           Width="135"
                                           Margin="0,0,20,0"
                                           SelectionChanged="cboGroup_SelectionChanged"
-                                          ToolTip="group"></ComboBox>
+                                          ToolTip="group" />
                                 <!--<Button x:Name="bntAdd"
                                         Content="Add"
                                         Height="auto"
@@ -306,13 +308,15 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold"><Run Text="Stock"
-                                                          FontWeight="Bold"
-                                                          FontSize="16" /></TextBlock>
+                                   FontWeight="Bold">
+                            <Run Text="Stock"
+                                 FontWeight="Bold"
+                                 FontSize="16" />
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvStock"

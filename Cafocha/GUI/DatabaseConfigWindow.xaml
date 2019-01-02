@@ -91,13 +91,13 @@
         <Button x:Name="btnCancel"
                 Content="Cancel"
                 Margin="83,222,241,0"
-                VerticalAlignment="Top" 
-                Click="BtnCancel_OnClick"/>
+                VerticalAlignment="Top"
+                Click="BtnCancel_OnClick" />
         <Button x:Name="btnSave"
                 Content="Save"
                 Margin="241,222,83,0"
-                VerticalAlignment="Top" 
-                Click="BtnSave_OnClick"/>
+                VerticalAlignment="Top"
+                Click="BtnSave_OnClick" />
 
 
     </Grid>

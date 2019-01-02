@@ -17,7 +17,6 @@ using Org.BouncyCastle.Security;
 
 namespace Cafocha.Security
 {
-
     public static class AESGCM
     {
         private static readonly SecureRandom Random = new SecureRandom();
@@ -34,7 +33,7 @@ namespace Cafocha.Security
 
 
         /// <summary>
-        /// Helper that generates a random new key on each call.
+        ///     Helper that generates a random new key on each call.
         /// </summary>
         /// <returns></returns>
         public static byte[] NewKey()
@@ -45,17 +44,17 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Encryption And Authentication (AES-GCM) of a UTF8 string.
+        ///     Simple Encryption And Authentication (AES-GCM) of a UTF8 string.
         /// </summary>
         /// <param name="secretMessage">The secret message.</param>
         /// <param name="key">The key.</param>
         /// <param name="nonSecretPayload">Optional non-secret payload.</param>
         /// <returns>
-        /// Encrypted Message
+        ///     Encrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">Secret Message Required!;secretMessage</exception>
         /// <remarks>
-        /// Adds overhead of (Optional-Payload + BlockSize(16) + Message +  HMac-Tag(16)) * 1.33 Base64
+        ///     Adds overhead of (Optional-Payload + BlockSize(16) + Message +  HMac-Tag(16)) * 1.33 Base64
         /// </remarks>
         public static string SimpleEncrypt(string secretMessage, byte[] key, byte[] nonSecretPayload = null)
         {
@@ -69,7 +68,7 @@ namespace Cafocha.Security
 
 
         /// <summary>
-        /// Simple Decryption & Authentication (AES-GCM) of a UTF8 Message
+        ///     Simple Decryption & Authentication (AES-GCM) of a UTF8 Message
         /// </summary>
         /// <param name="encryptedMessage">The encrypted message.</param>
         /// <param name="key">The key.</param>
@@ -86,21 +85,21 @@ namespace Cafocha.Security
         }
 
         /// <summary>
-        /// Simple Encryption And Authentication (AES-GCM) of a UTF8 String
-        /// using key derived from a password (PBKDF2).
+        ///     Simple Encryption And Authentication (AES-GCM) of a UTF8 String
+        ///     using key derived from a password (PBKDF2).
         /// </summary>
         /// <param name="secretMessage">The secret message.</param>
         /// <param name="password">The password.</param>
         /// <param name="nonSecretPayload">The non secret payload.</param>
         /// <returns>
-        /// Encrypted Message
+        ///     Encrypted Message
         /// </returns>
         /// <remarks>
-        /// Significantly less secure than using random binary keys.
-        /// Adds additional non secret payload for key generation parameters.
+        ///     Significantly less secure than using random binary keys.
+        ///     Adds additional non secret payload for key generation parameters.
         /// </remarks>
         public static string SimpleEncryptWithPassword(string secretMessage, string password,
-                                 byte[] nonSecretPayload = null)
+            byte[] nonSecretPayload = null)
         {
             if (string.IsNullOrEmpty(secretMessage))
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -112,21 +111,21 @@ namespace Cafocha.Security
 
 
         /// <summary>
-        /// Simple Decryption and Authentication (AES-GCM) of a UTF8 message
-        /// using a key derived from a password (PBKDF2)
+        ///     Simple Decryption and Authentication (AES-GCM) of a UTF8 message
+        ///     using a key derived from a password (PBKDF2)
         /// </summary>
         /// <param name="encryptedMessage">The encrypted message.</param>
         /// <param name="password">The password.</param>
         /// <param name="nonSecretPayloadLength">Length of the non secret payload.</param>
         /// <returns>
-        /// Decrypted Message
+        ///     Decrypted Message
         /// </returns>
         /// <exception cref="System.ArgumentException">Encrypted Message Required!;encryptedMessage</exception>
         /// <remarks>
-        /// Significantly less secure than using random binary keys.
+        ///     Significantly less secure than using random binary keys.
         /// </remarks>
         public static string SimpleDecryptWithPassword(string encryptedMessage, string password,
-                                 int nonSecretPayloadLength = 0)
+            int nonSecretPayloadLength = 0)
         {
             if (string.IsNullOrWhiteSpace(encryptedMessage))
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -140,7 +139,7 @@ namespace Cafocha.Security
         {
             //User Error Checks
             if (key == null || key.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("Key needs to be {0} bit!", KeyBitSize), "key");
+                throw new ArgumentException(string.Format("Key needs to be {0} bit!", KeyBitSize), "key");
 
             if (secretMessage == null || secretMessage.Length == 0)
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -173,6 +172,7 @@ namespace Cafocha.Security
                     //Write Cipher Text
                     binaryWriter.Write(cipherText);
                 }
+
                 return combinedStream.ToArray();
             }
         }
@@ -181,7 +181,7 @@ namespace Cafocha.Security
         {
             //User Error Checks
             if (key == null || key.Length != KeyBitSize / 8)
-                throw new ArgumentException(String.Format("Key needs to be {0} bit!", KeyBitSize), "key");
+                throw new ArgumentException(string.Format("Key needs to be {0} bit!", KeyBitSize), "key");
 
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -200,14 +200,14 @@ namespace Cafocha.Security
                 cipher.Init(false, parameters);
 
                 //Decrypt Cipher Text
-                var cipherText = cipherReader.ReadBytes(encryptedMessage.Length - nonSecretPayloadLength - nonce.Length);
+                var cipherText =
+                    cipherReader.ReadBytes(encryptedMessage.Length - nonSecretPayloadLength - nonce.Length);
                 var plainText = new byte[cipher.GetOutputSize(cipherText.Length)];
 
                 try
                 {
                     var len = cipher.ProcessBytes(cipherText, 0, cipherText.Length, plainText, 0);
                     cipher.DoFinal(plainText, len);
-
                 }
                 catch (InvalidCipherTextException)
                 {
@@ -217,16 +217,17 @@ namespace Cafocha.Security
 
                 return plainText;
             }
-
         }
 
-        public static byte[] SimpleEncryptWithPassword(byte[] secretMessage, string password, byte[] nonSecretPayload = null)
+        public static byte[] SimpleEncryptWithPassword(byte[] secretMessage, string password,
+            byte[] nonSecretPayload = null)
         {
             nonSecretPayload = nonSecretPayload ?? new byte[] { };
 
             //User Error Checks
             if (string.IsNullOrWhiteSpace(password) || password.Length < MinPasswordLength)
-                throw new ArgumentException(String.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
+                throw new ArgumentException(
+                    string.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
 
             if (secretMessage == null || secretMessage.Length == 0)
                 throw new ArgumentException("Secret Message Required!", "secretMessage");
@@ -238,12 +239,12 @@ namespace Cafocha.Security
             Random.NextBytes(salt);
 
             generator.Init(
-              PbeParametersGenerator.Pkcs5PasswordToBytes(password.ToCharArray()),
-              salt,
-              Iterations);
+                PbeParametersGenerator.Pkcs5PasswordToBytes(password.ToCharArray()),
+                salt,
+                Iterations);
 
             //Generate Key
-            var key = (KeyParameter)generator.GenerateDerivedMacParameters(KeyBitSize);
+            var key = (KeyParameter) generator.GenerateDerivedMacParameters(KeyBitSize);
 
             //Create Full Non Secret Payload
             var payload = new byte[salt.Length + nonSecretPayload.Length];
@@ -253,11 +254,13 @@ namespace Cafocha.Security
             return SimpleEncrypt(secretMessage, key.GetKey(), payload);
         }
 
-        public static byte[] SimpleDecryptWithPassword(byte[] encryptedMessage, string password, int nonSecretPayloadLength = 0)
+        public static byte[] SimpleDecryptWithPassword(byte[] encryptedMessage, string password,
+            int nonSecretPayloadLength = 0)
         {
             //User Error Checks
             if (string.IsNullOrWhiteSpace(password) || password.Length < MinPasswordLength)
-                throw new ArgumentException(String.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
+                throw new ArgumentException(
+                    string.Format("Must have a password of at least {0} characters!", MinPasswordLength), "password");
 
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException("Encrypted Message Required!", "encryptedMessage");
@@ -269,12 +272,12 @@ namespace Cafocha.Security
             Array.Copy(encryptedMessage, nonSecretPayloadLength, salt, 0, salt.Length);
 
             generator.Init(
-              PbeParametersGenerator.Pkcs5PasswordToBytes(password.ToCharArray()),
-              salt,
-              Iterations);
+                PbeParametersGenerator.Pkcs5PasswordToBytes(password.ToCharArray()),
+                salt,
+                Iterations);
 
             //Generate Key
-            var key = (KeyParameter)generator.GenerateDerivedMacParameters(KeyBitSize);
+            var key = (KeyParameter) generator.GenerateDerivedMacParameters(KeyBitSize);
 
             return SimpleDecrypt(encryptedMessage, key.GetKey(), salt.Length + nonSecretPayloadLength);
         }

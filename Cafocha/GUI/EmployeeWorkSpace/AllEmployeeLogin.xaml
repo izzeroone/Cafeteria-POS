@@ -36,7 +36,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18"><Run Text="Employee Login List" /></TextBlock>
+                           FontSize="18">
+                    <Run Text="Employee Login List" />
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView x:Name="lvLoginList"
@@ -118,10 +120,10 @@
                     VerticalAlignment="Center"
                     Margin="20,0,0,0"
                     Click="btnLogout_Click" />
-            <Button  x:Name="btnView"
-                     Content="View Details"
-                     Margin="20,0,20,0"
-                     Click="btnView_Click" />
+            <Button x:Name="btnView"
+                    Content="View Details"
+                    Margin="20,0,20,0"
+                    Click="btnView_Click" />
         </StackPanel>
         <StackPanel x:Name="spLoginAnother"
                     Width="350"
@@ -171,26 +173,26 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,10,0,0">
-                        <Button  x:Name="btnAcceptLogin"
-                                 Content="Login"
-                                 Margin="20,0,0,0"
-                                 Click="btnAcceptLogin_Click" />
-                        <Button  x:Name="btnAcceptStart"
-                                 Content="Start"
-                                 Margin="20,0,0,0"
-                                 Click="btnAcceptStart_Click" />
-                        <Button  x:Name="btnAcceptLogout"
-                                 Content="Logout"
-                                 Margin="20,0,0,0"
-                                 Click="btnAcceptLogout_Click" />
-                        <Button  x:Name="btnAcceptView"
-                                 Content="View"
-                                 Margin="20,0,0,0"
-                                 Click="btnAcceptView_Click" />
-                        <Button  x:Name="btnAcceptCancel"
-                                 Content="Cancel"
-                                 Margin="20,0,20,0"
-                                 Click="btnAcceptCancel_Click" />
+                        <Button x:Name="btnAcceptLogin"
+                                Content="Login"
+                                Margin="20,0,0,0"
+                                Click="btnAcceptLogin_Click" />
+                        <Button x:Name="btnAcceptStart"
+                                Content="Start"
+                                Margin="20,0,0,0"
+                                Click="btnAcceptStart_Click" />
+                        <Button x:Name="btnAcceptLogout"
+                                Content="Logout"
+                                Margin="20,0,0,0"
+                                Click="btnAcceptLogout_Click" />
+                        <Button x:Name="btnAcceptView"
+                                Content="View"
+                                Margin="20,0,0,0"
+                                Click="btnAcceptView_Click" />
+                        <Button x:Name="btnAcceptCancel"
+                                Content="Cancel"
+                                Margin="20,0,20,0"
+                                Click="btnAcceptCancel_Click" />
                         <ProgressBar x:Name="PgbLoginProcess"
                                      Style="{StaticResource MaterialDesignCircularProgressBar}"
                                      Value="0"
@@ -207,7 +209,7 @@
                                          Width="Auto"
                                          GoClick="loginCode_GoClick"
                                          Height="300"
-                                         TurnOffKeyboard="LoginCode_OnTurnOffKeyboard"/>
+                                         TurnOffKeyboard="LoginCode_OnTurnOffKeyboard" />
         </StackPanel>
     </Grid>
 </Window>

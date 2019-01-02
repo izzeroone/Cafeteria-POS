@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Forms;
 using Cafocha.BusinessContext;
 using Cafocha.GUI.Helper.PrintHelper.Report;
-using Cafocha.Repository.DAL;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for ReportOptionDialog.xaml
+    ///     Interaction logic for ReportOptionDialog.xaml
     /// </summary>
     public partial class ReportOptionDialog : Window
     {
-        private DateTime startTime;
-        private DateTime endTime;
-        private IListPdfReport _reportHelper;
-        private BusinessModuleLocator _businessModuleLocator;
         private static string folderPath = AppPath.ApplicationPath + "\\SerializedData";
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly IListPdfReport _reportHelper;
+        private DateTime endTime;
+        private DateTime startTime;
 
         public ReportOptionDialog(IListPdfReport reportHelper, BusinessModuleLocator businessModuleLocator)
         {
@@ -29,7 +30,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void BtnOk_OnClick(object sender, RoutedEventArgs e)
@@ -40,24 +41,21 @@ namespace Cafocha.GUI.AdminWorkSpace
                 {
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
-                    {
-                        _reportHelper.CreatePdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreatePdfReport(_businessModuleLocator.RepositoryLocator,
+                            DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
-                    }
                     else if (ChbDetailsReport.IsChecked == true)
-                    {
-                        _reportHelper.CreateDetailsPdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreateDetailsPdfReport(_businessModuleLocator.RepositoryLocator,
+                            DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
-                    }
                     else
-                    {
-                        _reportHelper.CreateEntityPdfReport(_businessModuleLocator.RepositoryLocator, DpFrom.SelectedDate.Value.Date,
+                        _reportHelper.CreateEntityPdfReport(_businessModuleLocator.RepositoryLocator,
+                            DpFrom.SelectedDate.Value.Date,
                             DpTo.SelectedDate.Value.Date, folderPath);
-                    }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
-                    this.Close();
+                    Close();
                 }
                 else
                 {
@@ -78,13 +76,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 {
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
-                    {
                         _reportHelper.CreateMonthPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
-                    }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
-                    this.Close();
+                    Close();
                 }
                 else
                 {
@@ -105,13 +101,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 {
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
-                    {
                         _reportHelper.CreateDayPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
-                    }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
-                    this.Close();
+                    Close();
                 }
                 else
                 {
@@ -132,13 +126,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 {
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
-                    {
                         _reportHelper.CreateYearPdfReport(_businessModuleLocator.RepositoryLocator, folderPath);
-                    }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
-                    this.Close();
+                    Close();
                 }
                 else
                 {
@@ -152,22 +144,18 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
 
-
         /// <summary>
-        /// Select Directory to store Report
+        ///     Select Directory to store Report
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            using (var dialog = new FolderBrowserDialog())
             {
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                var result = dialog.ShowDialog();
 
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    folderPath = dialog.SelectedPath;
-                }
+                if (result == System.Windows.Forms.DialogResult.OK) folderPath = dialog.SelectedPath;
             }
         }
     }

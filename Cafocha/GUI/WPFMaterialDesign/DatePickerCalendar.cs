@@ -15,11 +15,11 @@ namespace Cafocha.GUI.WPFMaterialDesign
     {
         public static readonly DependencyProperty IsMonthYearProperty =
             DependencyProperty.RegisterAttached("IsMonthYear", typeof(bool), typeof(DatePickerCalendar),
-                                                new PropertyMetadata(OnIsMonthYearChanged));
+                new PropertyMetadata(OnIsMonthYearChanged));
 
         public static bool GetIsMonthYear(DependencyObject dobj)
         {
-            return (bool)dobj.GetValue(IsMonthYearProperty);
+            return (bool) dobj.GetValue(IsMonthYearProperty);
         }
 
         public static void SetIsMonthYear(DependencyObject dobj, bool value)
@@ -29,12 +29,12 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static void OnIsMonthYearChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
         {
-            var datePicker = (DatePicker)dobj;
+            var datePicker = (DatePicker) dobj;
 
             Application.Current.Dispatcher
                 .BeginInvoke(DispatcherPriority.Loaded,
-                             new Action<DatePicker, DependencyPropertyChangedEventArgs>(SetCalendarEventHandlers),
-                             datePicker, e);
+                    new Action<DatePicker, DependencyPropertyChangedEventArgs>(SetCalendarEventHandlers),
+                    datePicker, e);
         }
 
         private static void SetCalendarEventHandlers(DatePicker datePicker, DependencyPropertyChangedEventArgs e)
@@ -42,7 +42,7 @@ namespace Cafocha.GUI.WPFMaterialDesign
             if (e.NewValue == e.OldValue)
                 return;
 
-            if ((bool)e.NewValue)
+            if ((bool) e.NewValue)
             {
                 datePicker.CalendarOpened += DatePickerOnCalendarOpened;
                 datePicker.CalendarClosed += DatePickerOnCalendarClosed;
@@ -64,7 +64,7 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static void DatePickerOnCalendarClosed(object sender, RoutedEventArgs routedEventArgs)
         {
-            var datePicker = (DatePicker)sender;
+            var datePicker = (DatePicker) sender;
             var calendar = GetDatePickerCalendar(sender);
             datePicker.SelectedDate = calendar.SelectedDate;
 
@@ -73,7 +73,7 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static void CalendarOnDisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
         {
-            var calendar = (Calendar)sender;
+            var calendar = (Calendar) sender;
             if (calendar.DisplayMode != CalendarMode.Month)
                 return;
 
@@ -85,16 +85,16 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static Calendar GetDatePickerCalendar(object sender)
         {
-            var datePicker = (DatePicker)sender;
-            var popup = (Popup)datePicker.Template.FindName("PART_Popup", datePicker);
-            return ((Calendar)popup.Child);
+            var datePicker = (DatePicker) sender;
+            var popup = (Popup) datePicker.Template.FindName("PART_Popup", datePicker);
+            return (Calendar) popup.Child;
         }
 
         private static DatePicker GetCalendarsDatePicker(FrameworkElement child)
         {
-            var parent = (FrameworkElement)child.Parent;
+            var parent = (FrameworkElement) child.Parent;
             if (parent.Name == "PART_Root")
-                return (DatePicker)parent.TemplatedParent;
+                return (DatePicker) parent.TemplatedParent;
             return GetCalendarsDatePicker(parent);
         }
 
@@ -110,11 +110,11 @@ namespace Cafocha.GUI.WPFMaterialDesign
     {
         public static readonly DependencyProperty DateFormatProperty =
             DependencyProperty.RegisterAttached("DateFormat", typeof(string), typeof(DatePickerDateFormat),
-                                                new PropertyMetadata(OnDateFormatChanged));
+                new PropertyMetadata(OnDateFormatChanged));
 
         public static string GetDateFormat(DependencyObject dobj)
         {
-            return (string)dobj.GetValue(DateFormatProperty);
+            return (string) dobj.GetValue(DateFormatProperty);
         }
 
         public static void SetDateFormat(DependencyObject dobj, string value)
@@ -124,16 +124,17 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static void OnDateFormatChanged(DependencyObject dobj, DependencyPropertyChangedEventArgs e)
         {
-            var datePicker = (DatePicker)dobj;
+            var datePicker = (DatePicker) dobj;
 
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Loaded, new Action<DatePicker>(ApplyDateFormat), datePicker);
         }
+
         private static void ApplyDateFormat(DatePicker datePicker)
         {
             var binding = new Binding("SelectedDate")
             {
-                RelativeSource = new RelativeSource { AncestorType = typeof(DatePicker) },
+                RelativeSource = new RelativeSource {AncestorType = typeof(DatePicker)},
                 Converter = new DatePickerDateTimeConverter(),
                 ConverterParameter = new Tuple<DatePicker, string>(datePicker, GetDateFormat(datePicker)),
                 StringFormat = GetDateFormat(datePicker) // This is also new but didnt seem to help
@@ -157,12 +158,13 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private static ButtonBase GetTemplateButton(DatePicker datePicker)
         {
-            return (ButtonBase)datePicker.Template.FindName("PART_Button", datePicker);
+            return (ButtonBase) datePicker.Template.FindName("PART_Button", datePicker);
         }
 
 
         /// <summary>
-        ///     Prevents a bug in the DatePicker, where clicking the Dropdown open button results in Text being set to default formatting regardless of StringFormat or binding overrides
+        ///     Prevents a bug in the DatePicker, where clicking the Dropdown open button results in Text being set to default
+        ///     formatting regardless of StringFormat or binding overrides
         /// </summary>
         private static void DropDownButtonPreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -192,11 +194,10 @@ namespace Cafocha.GUI.WPFMaterialDesign
         }
 
 
-
         private static TextBox GetTemplateTextBox(Control control)
         {
             control.ApplyTemplate();
-            return (TextBox)control?.Template?.FindName("PART_TextBox", control);
+            return (TextBox) control?.Template?.FindName("PART_TextBox", control);
         }
 
         private static void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -211,8 +212,8 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
             e.Handled = true;
 
-            var textBox = (TextBox)sender;
-            var datePicker = (DatePicker)textBox.TemplatedParent;
+            var textBox = (TextBox) sender;
+            var datePicker = (DatePicker) textBox.TemplatedParent;
             var dateStr = textBox.Text;
             var formatStr = GetDateFormat(datePicker);
             datePicker.SelectedDate = DatePickerDateTimeConverter.StringToDateTime(datePicker, formatStr, dateStr);
@@ -224,7 +225,7 @@ namespace Cafocha.GUI.WPFMaterialDesign
              * its text will be the result of its internal date parsing until its TextBox is focused and another
              * date is selected. A workaround is to set this string when it is opened. */
 
-            var datePicker = (DatePicker)sender;
+            var datePicker = (DatePicker) sender;
             var textBox = GetTemplateTextBox(datePicker);
             var formatStr = GetDateFormat(datePicker);
             textBox.Text = DatePickerDateTimeConverter.DateTimeToString(formatStr, datePicker.SelectedDate);
@@ -234,15 +235,15 @@ namespace Cafocha.GUI.WPFMaterialDesign
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
-                var formatStr = ((Tuple<DatePicker, string>)parameter).Item2;
-                var selectedDate = (DateTime?)value;
+                var formatStr = ((Tuple<DatePicker, string>) parameter).Item2;
+                var selectedDate = (DateTime?) value;
                 return DateTimeToString(formatStr, selectedDate);
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
-                var tupleParam = ((Tuple<DatePicker, string>)parameter);
-                var dateStr = (string)value;
+                var tupleParam = (Tuple<DatePicker, string>) parameter;
+                var dateStr = (string) value;
                 return StringToDateTime(tupleParam.Item1, tupleParam.Item2, dateStr);
             }
 
@@ -255,83 +256,79 @@ namespace Cafocha.GUI.WPFMaterialDesign
             {
                 DateTime date;
                 var canParse = DateTime.TryParseExact(dateStr, formatStr, CultureInfo.CurrentCulture,
-                                                      DateTimeStyles.None, out date);
+                    DateTimeStyles.None, out date);
 
                 if (!canParse)
                     canParse = DateTime.TryParse(dateStr, CultureInfo.CurrentCulture, DateTimeStyles.None, out date);
 
                 return canParse ? date : datePicker.SelectedDate;
             }
-
-
         }
-
     }
-
 
 
     public static class FEExten
     {
         /// <summary>
-        /// Finds a parent of a given item on the visual tree.
+        ///     Finds a parent of a given item on the visual tree.
         /// </summary>
         /// <typeparam name="T">The type of the queried item.</typeparam>
-        /// <param name="child">A direct or indirect child of the
-        /// queried item.</param>
-        /// <returns>The first parent item that matches the submitted
-        /// type parameter. If not matching item can be found, a null
-        /// reference is being returned.</returns>
+        /// <param name="child">
+        ///     A direct or indirect child of the
+        ///     queried item.
+        /// </param>
+        /// <returns>
+        ///     The first parent item that matches the submitted
+        ///     type parameter. If not matching item can be found, a null
+        ///     reference is being returned.
+        /// </returns>
         public static T TryFindParent<T>(this DependencyObject child)
             where T : DependencyObject
         {
             //get parent item
-            DependencyObject parentObject = GetParentObject(child);
+            var parentObject = GetParentObject(child);
 
             //we've reached the end of the tree
             if (parentObject == null) return null;
 
             //check if the parent matches the type we're looking for
-            T parent = parentObject as T;
+            var parent = parentObject as T;
             if (parent != null)
-            {
                 return parent;
-            }
-            else
-            {
-                //use recursion to proceed with next level
-                return TryFindParent<T>(parentObject);
-            }
+            return TryFindParent<T>(parentObject);
         }
 
         /// <summary>
-        /// This method is an alternative to WPF's
-        /// <see cref="VisualTreeHelper.GetParent"/> method, which also
-        /// supports content elements. Keep in mind that for content element,
-        /// this method falls back to the logical tree of the element!
+        ///     This method is an alternative to WPF's
+        ///     <see cref="VisualTreeHelper.GetParent" /> method, which also
+        ///     supports content elements. Keep in mind that for content element,
+        ///     this method falls back to the logical tree of the element!
         /// </summary>
         /// <param name="child">The item to be processed.</param>
-        /// <returns>The submitted item's parent, if available. Otherwise
-        /// null.</returns>
+        /// <returns>
+        ///     The submitted item's parent, if available. Otherwise
+        ///     null.
+        /// </returns>
         public static DependencyObject GetParentObject(this DependencyObject child)
         {
             if (child == null) return null;
 
             //handle content elements separately
-            ContentElement contentElement = child as ContentElement;
+            var contentElement = child as ContentElement;
             if (contentElement != null)
             {
-                DependencyObject parent = ContentOperations.GetParent(contentElement);
+                var parent = ContentOperations.GetParent(contentElement);
                 if (parent != null) return parent;
 
-                FrameworkContentElement fce = contentElement as FrameworkContentElement;
+                var fce = contentElement as FrameworkContentElement;
                 return fce != null ? fce.Parent : null;
             }
 
             //also try searching for parent in framework elements (such as DockPanel, etc)
-            FrameworkElement frameworkElement = child as FrameworkElement;
+            var frameworkElement = child as FrameworkElement;
             if (frameworkElement != null)
             {
-                DependencyObject parent = frameworkElement.Parent;
+                var parent = frameworkElement.Parent;
                 if (parent != null) return parent;
             }
 
@@ -340,5 +337,3 @@ namespace Cafocha.GUI.WPFMaterialDesign
         }
     }
 }
-    
-

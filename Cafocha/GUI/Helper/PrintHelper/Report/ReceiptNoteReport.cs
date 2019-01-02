@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cafocha.Entities;
-using Cafocha.GUI.Helper.PrintHelper.Model;
-using Cafocha.Repository.DAL;
-using PdfRpt.Core.Contracts;
-using PdfRpt.FluentInterface;
-
-namespace Cafocha.GUI.Helper.PrintHelper.Report
+﻿namespace Cafocha.GUI.Helper.PrintHelper.Report
 {
     /// <summary>
     /// Create Report about ReceiptNote(outcome) in specific time
@@ -1017,5 +1008,4 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 //            .Generate(data => data.AsPdfFile(string.Format("{0}\\InStorage-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
 //        }
 //    }
-
 }

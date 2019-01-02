@@ -12,16 +12,14 @@ namespace MaterialDesignThemes.Wpf.Converters.CircularProgressBar
             var minimum = values[1].ExtractDouble();
             var maximum = values[2].ExtractDouble();
 
-            if (new[] { value, minimum, maximum }.AnyNan())
+            if (new[] {value, minimum, maximum}.AnyNan())
                 return Binding.DoNothing;
 
             if (values.Length == 4)
             {
                 var fullIndeterminateScaling = values[3].ExtractDouble();
                 if (!double.IsNaN(fullIndeterminateScaling) && fullIndeterminateScaling > 0.0)
-                {
                     value = (maximum - minimum) * fullIndeterminateScaling;
-                }
             }
 
             var percent = maximum <= minimum ? 1.0 : (value - minimum) / (maximum - minimum);

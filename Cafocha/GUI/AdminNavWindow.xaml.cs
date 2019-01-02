@@ -2,19 +2,19 @@
 using Cafocha.Entities;
 using Cafocha.GUI.AdminWorkSpace;
 using Cafocha.GUI.CafowareWorkSpace;
+
 namespace Cafocha.GUI
 {
     /// <summary>
-    /// Interaction logic for AdminNavWindow.xaml
+    ///     Interaction logic for AdminNavWindow.xaml
     /// </summary>
     public partial class AdminNavWindow : Window
     {
-
         public AdminNavWindow()
         {
             InitializeComponent();
 
-            var curAd = POS.App.Current.Properties["AdLogin"]  as AdminRe;
+            var curAd = Application.Current.Properties["AdLogin"] as AdminRe;
 
 
             // Control layout depend on logging Admin
@@ -24,42 +24,36 @@ namespace Cafocha.GUI
             }
             else
             {
-                if (curAd.AdRole == (int) AdminReRole.CafowareAd)
-                {
-                    stpAsowel.Visibility = Visibility.Collapsed;
-                }
+                if (curAd.AdRole == (int) AdminReRole.CafowareAd) stpAsowel.Visibility = Visibility.Collapsed;
             }
         }
-
 
 
         private void GotoWareHouseWSButton_OnClick(object sender, RoutedEventArgs e)
         {
 //            WareHouseWindow whWindow = new WareHouseWindow();
 //            whWindow.Show();
-    
-            CafowareWindow cfWindows = new CafowareWindow();
+
+            var cfWindows = new CafowareWindow();
             cfWindows.Show();
-            this.Close();
+            Close();
         }
 
         private void GotoAdminWSButton_OnClick(object sender, RoutedEventArgs e)
         {
-
-            AdminWindow adminWindow = new AdminWindow();
+            var adminWindow = new AdminWindow();
             adminWindow.Show();
 
-            this.Close();
+            Close();
         }
 
         private void Home_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void GotoWareHouseIGButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CafowareWindow cfWindows = new CafowareWindow();
+            var cfWindows = new CafowareWindow();
             cfWindows.Show();
         }
     }

@@ -4,15 +4,12 @@ using System.Windows.Data;
 
 namespace MaterialDesignThemes.Wpf.Converters
 {
-    class MyConverter : IValueConverter
+    internal class MyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double val;
-            if (double.TryParse((value ?? "").ToString(), out val))
-            {
-                return val / 2;
-            }
+            if (double.TryParse((value ?? "").ToString(), out val)) return val / 2;
             return null;
         }
 

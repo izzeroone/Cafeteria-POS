@@ -5,34 +5,39 @@ using Cafocha.Repository.Generic;
 namespace Cafocha.Repository.DAL
 {
     /// <summary>
-    /// The Employee WorkSpace Of Asowell (is a Unit Of Work class) that serves one purpose: to make sure that when you use multiple repositories that related each other in Employee WorkSpace situation, and they share a single database context. 
-    /// That way, when a Employee WorkSpace Of Asowell is complete you can call the SaveChanges method on that instance of the context and be assured that all related changes will be coordinated.
-    /// All that the class needs is a Save method and a property for each repository. 
-    /// Each repository property returns a repository instance that has been instantiated using the same database context instance as the other repository instances.
+    ///     The Employee WorkSpace Of Asowell (is a Unit Of Work class) that serves one purpose: to make sure that when you use
+    ///     multiple repositories that related each other in Employee WorkSpace situation, and they share a single database
+    ///     context.
+    ///     That way, when a Employee WorkSpace Of Asowell is complete you can call the SaveChanges method on that instance of
+    ///     the context and be assured that all related changes will be coordinated.
+    ///     All that the class needs is a Save method and a property for each repository.
+    ///     Each repository property returns a repository instance that has been instantiated using the same database context
+    ///     instance as the other repository instances.
     /// </summary>
     public class RepositoryLocator : IDisposable
     {
-        private ILocalContext _context;
+        private GenericRepository<AdminRe> _adminreRepository;
 
         // business repo
         private GenericRepository<ApplicationLog> _appLogRepository;
-        private GenericRepository<AdminRe> _adminreRepository;
-        private GenericRepository<Customer> _customerRepository;
-        private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<Product> _productRepository;
-        private GenericRepository<ProductDetail> _productdetailsRepository;
-        private GenericRepository<SalaryNote> _salarynoteRepository;
-        private GenericRepository<WorkingHistory> _workinghistoryRepository;
-        private GenericRepository<OrderNote> _orderRepository;
-        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
-        private GenericRepository<WareHouse> _wareHouseRepository;
         private GenericRepository<ApWareHouse> _apwareHouseRepository;
-        private GenericRepository<Stock> _stockRepository;
-        private GenericRepository<StockIn> _stockInRepository;
-        private GenericRepository<StockInDetail> _stockInDetailsRepository;
-        private GenericRepository<StockOut> _stockOutRepository;
-        private GenericRepository<StockOutDetail> _stockOutDetailsRepository;
+        private ILocalContext _context;
+        private GenericRepository<Customer> _customerRepository;
 
+        private bool _disposed;
+        private GenericRepository<Employee> _employeeRepository;
+        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
+        private GenericRepository<OrderNote> _orderRepository;
+        private GenericRepository<ProductDetail> _productdetailsRepository;
+        private GenericRepository<Product> _productRepository;
+        private GenericRepository<SalaryNote> _salarynoteRepository;
+        private GenericRepository<StockInDetail> _stockInDetailsRepository;
+        private GenericRepository<StockIn> _stockInRepository;
+        private GenericRepository<StockOutDetail> _stockOutDetailsRepository;
+        private GenericRepository<StockOut> _stockOutRepository;
+        private GenericRepository<Stock> _stockRepository;
+        private GenericRepository<WareHouse> _wareHouseRepository;
+        private GenericRepository<WorkingHistory> _workinghistoryRepository;
 
 
         public RepositoryLocator()
@@ -51,15 +56,11 @@ namespace Cafocha.Repository.DAL
         }
 
 
-
         public GenericRepository<WareHouse> WareHouseRepository
         {
             get
             {
-                if (_wareHouseRepository == null)
-                {
-                    _wareHouseRepository = new GenericRepository<WareHouse>(_context);
-                }
+                if (_wareHouseRepository == null) _wareHouseRepository = new GenericRepository<WareHouse>(_context);
 
                 return _wareHouseRepository;
             }
@@ -69,10 +70,7 @@ namespace Cafocha.Repository.DAL
         {
             get
             {
-                if (_appLogRepository == null)
-                {
-                    _appLogRepository = new GenericRepository<ApplicationLog>(_context);
-                }
+                if (_appLogRepository == null) _appLogRepository = new GenericRepository<ApplicationLog>(_context);
 
                 return _appLogRepository;
             }
@@ -84,9 +82,7 @@ namespace Cafocha.Repository.DAL
             get
             {
                 if (_orderDetailsRepository == null)
-                {
                     _orderDetailsRepository = new GenericRepository<OrderNoteDetail>(_context);
-                }
 
                 return _orderDetailsRepository;
             }
@@ -97,10 +93,7 @@ namespace Cafocha.Repository.DAL
         {
             get
             {
-                if (_adminreRepository == null)
-                {
-                    _adminreRepository = new GenericRepository<AdminRe>(_context);
-                }
+                if (_adminreRepository == null) _adminreRepository = new GenericRepository<AdminRe>(_context);
 
                 return _adminreRepository;
             }
@@ -110,28 +103,20 @@ namespace Cafocha.Repository.DAL
         {
             get
             {
-                if (_customerRepository == null)
-                {
-                    _customerRepository = new GenericRepository<Customer>(_context);
-                }
+                if (_customerRepository == null) _customerRepository = new GenericRepository<Customer>(_context);
 
                 return _customerRepository;
             }
         }
 
-        public GenericRepository<Employee> EmployeeRepository
-        {
-            get { return _employeeRepository ?? (_employeeRepository = new GenericRepository<Employee>(_context)); }
-        }
+        public GenericRepository<Employee> EmployeeRepository =>
+            _employeeRepository ?? (_employeeRepository = new GenericRepository<Employee>(_context));
 
         public GenericRepository<Product> ProductRepository
         {
             get
             {
-                if (_productRepository == null)
-                {
-                    _productRepository = new GenericRepository<Product>(_context);
-                }
+                if (_productRepository == null) _productRepository = new GenericRepository<Product>(_context);
 
                 return _productRepository;
             }
@@ -142,9 +127,7 @@ namespace Cafocha.Repository.DAL
             get
             {
                 if (_productdetailsRepository == null)
-                {
                     _productdetailsRepository = new GenericRepository<ProductDetail>(_context);
-                }
 
                 return _productdetailsRepository;
             }
@@ -154,10 +137,7 @@ namespace Cafocha.Repository.DAL
         {
             get
             {
-                if (_orderRepository == null)
-                {
-                    _orderRepository = new GenericRepository<OrderNote>(_context);
-                }
+                if (_orderRepository == null) _orderRepository = new GenericRepository<OrderNote>(_context);
 
                 return _orderRepository;
             }
@@ -167,10 +147,7 @@ namespace Cafocha.Repository.DAL
         {
             get
             {
-                if (_salarynoteRepository == null)
-                {
-                    _salarynoteRepository = new GenericRepository<SalaryNote>(_context);
-                }
+                if (_salarynoteRepository == null) _salarynoteRepository = new GenericRepository<SalaryNote>(_context);
 
                 return _salarynoteRepository;
             }
@@ -181,9 +158,7 @@ namespace Cafocha.Repository.DAL
             get
             {
                 if (_workinghistoryRepository == null)
-                {
                     _workinghistoryRepository = new GenericRepository<WorkingHistory>(_context);
-                }
 
                 return _workinghistoryRepository;
             }
@@ -194,85 +169,56 @@ namespace Cafocha.Repository.DAL
             get
             {
                 if (_apwareHouseRepository == null)
-                {
                     _apwareHouseRepository = new GenericRepository<ApWareHouse>(_context);
-                }
                 return _apwareHouseRepository;
             }
         }
+
         public GenericRepository<Stock> StockRepository
         {
             get
             {
-                if (_stockRepository == null)
-                {
-                    _stockRepository = new GenericRepository<Stock>(_context);
-                }
+                if (_stockRepository == null) _stockRepository = new GenericRepository<Stock>(_context);
                 return _stockRepository;
             }
         }
+
         public GenericRepository<StockIn> StockInRepository
         {
             get
             {
-                if (_stockInRepository == null)
-                {
-                    _stockInRepository = new GenericRepository<StockIn>(_context);
-                }
+                if (_stockInRepository == null) _stockInRepository = new GenericRepository<StockIn>(_context);
                 return _stockInRepository;
             }
         }
+
         public GenericRepository<StockInDetail> StockInDetailsRepository
         {
             get
             {
                 if (_stockInDetailsRepository == null)
-                {
                     _stockInDetailsRepository = new GenericRepository<StockInDetail>(_context);
-                }
                 return _stockInDetailsRepository;
             }
         }
+
         public GenericRepository<StockOut> StockOutRepository
         {
             get
             {
-                if (_stockOutRepository == null)
-                {
-                    _stockOutRepository = new GenericRepository<StockOut>(_context);
-                }
+                if (_stockOutRepository == null) _stockOutRepository = new GenericRepository<StockOut>(_context);
                 return _stockOutRepository;
             }
         }
+
         public GenericRepository<StockOutDetail> StockOutDetailsRepository
         {
             get
             {
                 if (_stockOutDetailsRepository == null)
-                {
                     _stockOutDetailsRepository = new GenericRepository<StockOutDetail>(_context);
-                }
                 return _stockOutDetailsRepository;
             }
-        }
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
-        private bool _disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-
-            _disposed = true;
         }
 
         public void Dispose()
@@ -281,18 +227,25 @@ namespace Cafocha.Repository.DAL
             GC.SuppressFinalize(this);
         }
 
-        public void Refresh()
+        public void Save()
         {
-            this.Save();
-            this.Dispose();
-            this._context = new LocalContext();
+            _context.SaveChanges();
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+                if (disposing)
+                    _context.Dispose();
+
+            _disposed = true;
+        }
+
+        public void Refresh()
+        {
+            Save();
+            Dispose();
+            _context = new LocalContext();
+        }
     }
 }
-
-
-
-
-
-       

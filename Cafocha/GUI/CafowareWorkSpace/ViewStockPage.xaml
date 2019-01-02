@@ -1,8 +1,8 @@
 ﻿<Page x:Class="Cafocha.GUI.CafowareWorkSpace.ViewStockPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -11,7 +11,7 @@
       d:DesignWidth="300"
       Height="630"
       Width="1366"
-      Title="ViewStockPage" IsVisibleChanged="Page_IsVisibleChanged" >
+      Title="ViewStockPage" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Page.Resources>
         <converters:IngredientMaxProgressBarConverter x:Key="IngredientMaxProgressBarConverter" />
@@ -49,39 +49,49 @@
                                 <StackPanel Grid.Row="1"
                                             Orientation="Horizontal">
                                     <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">Name:</TextBlock>
+                                               Margin="0,0,10,0">
+                                        Name:
+                                    </TextBlock>
                                     <TextBlock Foreground="White"
-                                               Text="{Binding Name}"></TextBlock>
+                                               Text="{Binding Name}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="3"
                                             Orientation="Horizontal"
                                             Margin="0,0,10,0">
                                     <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">Unit Out:</TextBlock>
+                                               Margin="0,0,10,0">
+                                        Unit Out:
+                                    </TextBlock>
                                     <TextBlock Foreground="White"
-                                               Text="{Binding UnitOut}"></TextBlock>
+                                               Text="{Binding UnitOut}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="3"
                                             Orientation="Horizontal"
                                             Margin="0,0,10,0">
                                     <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">Unit In:</TextBlock>
+                                               Margin="0,0,10,0">
+                                        Unit In:
+                                    </TextBlock>
                                     <TextBlock Foreground="White"
-                                               Text="{Binding UnitIn}"></TextBlock>
+                                               Text="{Binding UnitIn}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="4"
                                             Orientation="Horizontal">
                                     <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">Std.Price/Unit Buy:</TextBlock>
+                                               Margin="0,0,10,0">
+                                        Std.Price/Unit Buy:
+                                    </TextBlock>
                                     <TextBlock Foreground="White"
-                                               Text="{Binding StandardPrice, StringFormat=0.000}"></TextBlock>
+                                               Text="{Binding StandardPrice, StringFormat=0.000}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="5"
                                             Orientation="Horizontal">
                                     <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">Contain:</TextBlock>
+                                               Margin="0,0,10,0">
+                                        Contain:
+                                    </TextBlock>
                                     <TextBlock Foreground="White"
-                                               Text="{Binding ApWareHouse.Contain}"></TextBlock>
+                                               Text="{Binding ApWareHouse.Contain}" />
                                 </StackPanel>
                             </StackPanel>
                             <ProgressBar x:Name="prgcontent"
@@ -91,8 +101,7 @@
                                          Maximum="{Binding ApWareHouse.StandardContain}"
                                          Value="{Binding ApWareHouse.Contain}"
                                          Style="{StaticResource MyMaterialDesignLinearProgressBar}"
-                                         Grid.Row="6">
-                            </ProgressBar>
+                                         Grid.Row="6" />
 
                         </Grid>
                     </materialDesign:Card>

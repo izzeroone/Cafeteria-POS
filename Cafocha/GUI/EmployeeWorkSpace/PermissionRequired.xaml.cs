@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
+using MaterialDesignThemes.Wpf;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for PermissionRequired.xaml
+    ///     Interaction logic for PermissionRequired.xaml
     /// </summary>
     public partial class PermissionRequired : Window
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        MaterialDesignThemes.Wpf.Chip _cUser;
-        bool _isPrinted;
-        bool _isTable;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly Chip _cUser;
+        private readonly bool _isPrinted;
+        private readonly bool _isTable;
 
-        public PermissionRequired(BusinessModuleLocator BusinessModuleLocator, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
+        public PermissionRequired(BusinessModuleLocator BusinessModuleLocator, Chip cUser, bool isPrinted, bool isTable)
         {
             _businessModuleLocator = BusinessModuleLocator;
             _cUser = cUser;
@@ -30,14 +29,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             //txtUsername.Focus();
 
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         private async void btnAcceptLogin_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string pass = txtPass.Password.Trim();
+            var username = txtUsername.Text.Trim();
+            var pass = txtPass.Password.Trim();
             try
             {
                 btnAcceptLogin.IsEnabled = false;
@@ -59,14 +58,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 await Task.Run(() =>
                 {
-                    List<AdminRe> AdList = _businessModuleLocator.AdminModule.getAdmins().ToList();
+                    var AdList = _businessModuleLocator.AdminModule.getAdmins().ToList();
 
                     var ad = AdList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     //Get Admin
-                    bool isFoundAd = false;
+                    var isFoundAd = false;
                     if (ad != null)
                     {
-                        App.Current.Properties["AdLogin"] = ad;
+                        Application.Current.Properties["AdLogin"] = ad;
                         isFoundAd = true;
                     }
 
@@ -78,23 +77,18 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                     Dispatcher.Invoke(() =>
                     {
-                        _cUser.Content = (App.Current.Properties["AdLogin"] as AdminRe).Username;
-                        if(_isPrinted)
+                        _cUser.Content = (Application.Current.Properties["AdLogin"] as AdminRe).Username;
+                        if (_isPrinted)
                         {
-                            DeleteConfirmDialog dcd = new DeleteConfirmDialog(_cUser, _isTable);
-                            if(dcd.ShowDialog() == false)
-                            {
-                                this.DialogResult = false;
-                            }
+                            var dcd = new DeleteConfirmDialog(_cUser, _isTable);
+                            if (dcd.ShowDialog() == false) DialogResult = false;
 
-                            this.Close();
+                            Close();
                         }
 
-                        this.Close();
+                        Close();
                     });
-
                 });
-
             }
             catch (Exception e)
             {
@@ -105,18 +99,15 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void txtUsername_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                txtPass.Focus();
-            }
+            if (e.Key == Key.Enter) txtPass.Focus();
         }
 
         private async void txtPass_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                string username = txtUsername.Text.Trim();
-                string pass = txtPass.Password.Trim();
+                var username = txtUsername.Text.Trim();
+                var pass = txtPass.Password.Trim();
                 try
                 {
                     btnAcceptLogin.IsEnabled = false;
@@ -135,8 +126,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnAcceptCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
-
     }
 }

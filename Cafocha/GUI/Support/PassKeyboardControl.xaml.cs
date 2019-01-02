@@ -5,36 +5,32 @@ using MaterialDesignThemes.Wpf;
 namespace Cafocha.GUI.Support
 {
     /// <summary>
-    /// Interaction logic for PassKeyboardControl.xaml
+    ///     Interaction logic for PassKeyboardControl.xaml
     /// </summary>
     public partial class PassKeyboardControl : UserControl
     {
-        public string InputValue { get; set; }
         private RoutedEventHandler _goClick;
-        public event RoutedEventHandler GoClick
-        {
-            add { _goClick += value; }
-            remove
-            {
-                _goClick -= value;
-            }
-        }
 
         private RoutedEventHandler _turnOffKeyboard;
-        public event RoutedEventHandler TurnOffKeyboard
-        {
-            add { _turnOffKeyboard += value; }
-            remove
-            {
-                _turnOffKeyboard -= value;
-            }
-        }
-
 
 
         public PassKeyboardControl()
         {
             InitializeComponent();
+        }
+
+        public string InputValue { get; set; }
+
+        public event RoutedEventHandler GoClick
+        {
+            add => _goClick += value;
+            remove => _goClick -= value;
+        }
+
+        public event RoutedEventHandler TurnOffKeyboard
+        {
+            add => _turnOffKeyboard += value;
+            remove => _turnOffKeyboard -= value;
         }
 
         private void TxtInputValue_OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -51,7 +47,7 @@ namespace Cafocha.GUI.Support
 
         private void ButtonKey_Click(object sender, RoutedEventArgs e)
         {
-            Button clickButton = sender as Button;
+            var clickButton = sender as Button;
             TxtInputValue.Password += clickButton.Content.ToString();
             //InputValue += clickButton.Content.ToString();
         }
@@ -63,18 +59,13 @@ namespace Cafocha.GUI.Support
                 _turnOffKeyboard(sender, e);
                 return;
             }
-                
+
 
             TxtInputValue.Password = TxtInputValue.Password.Remove(TxtInputValue.Password.Length - 1);
             //InputValue = InputValue.Remove(InputValue.Length - 1);
 
-            if (TxtInputValue.Password.Length == 0)
-            {
-                picBackspace.Kind = PackIconKind.KeyboardReturn;
-            }
+            if (TxtInputValue.Password.Length == 0) picBackspace.Kind = PackIconKind.KeyboardReturn;
         }
-
-
 
 
         private async void BtnGo_OnClick(object sender, RoutedEventArgs e)
@@ -89,6 +80,5 @@ namespace Cafocha.GUI.Support
         {
             BtnGo.IsEnabled = state;
         }
-        
     }
 }

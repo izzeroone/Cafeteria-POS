@@ -12,12 +12,12 @@ namespace MaterialDesignThemes.Wpf.Converters.CircularProgressBar
             var minimum = values[1].ExtractDouble();
             var maximum = values[2].ExtractDouble();
 
-            if (new[] { value, minimum, maximum }.AnyNan())
+            if (new[] {value, minimum, maximum}.AnyNan())
                 return Binding.DoNothing;
 
             var percent = maximum <= minimum ? 1.0 : (value - minimum) / (maximum - minimum);
 
-            return 360*percent;
+            return 360 * percent;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

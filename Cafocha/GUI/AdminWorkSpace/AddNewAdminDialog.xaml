@@ -21,7 +21,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">New Admin Infomation</TextBlock>
+                           FontSize="18">
+                    New Admin Infomation
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
 
@@ -44,19 +46,18 @@
                 </Style>
             </StackPanel.Resources>
 
-            <StackPanel  Orientation="Vertical"
-                         Margin="30,40,30,0">
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
+            <StackPanel Orientation="Vertical"
+                        Margin="30,40,30,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <TextBlock Text="UserName: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBox 
-                             x:Name="txtUsername"
-                             Width="215"
-                             FontSize="18"
-                             Foreground="White"
-                             HorizontalAlignment="Left"
-                              />
+                    <TextBox
+                        x:Name="txtUsername"
+                        Width="215"
+                        FontSize="18"
+                        Foreground="White"
+                        HorizontalAlignment="Left" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
@@ -89,28 +90,32 @@
                              Width="215" />
                 </StackPanel>
 
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <TextBlock Text="Admin Role:"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <ComboBox x:Name="cboRole"
                               Width="215"
                               FontSize="18"
                               Foreground="White" />
-                    
+
                 </StackPanel>
 
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,30,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,30,0,0">
                     <Button x:Name="btnAdd"
                             FontWeight="Bold"
                             Width="100"
-                            Click="BtnAdd_OnClick">Save</Button>
+                            Click="BtnAdd_OnClick">
+                        Save
+                    </Button>
                     <Button x:Name="btnCancel"
                             Margin="100,0,0,0"
                             FontWeight="Bold"
                             Width="100"
-                            Click="BtnCancel_OnClick">Cancel</Button>
+                            Click="BtnCancel_OnClick">
+                        Cancel
+                    </Button>
                 </StackPanel>
             </StackPanel>
 

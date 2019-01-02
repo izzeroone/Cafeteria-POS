@@ -14,11 +14,13 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
 
 
             <!-- data template used for the dialogs example, defines a View for a ViewModel of type DateTime  -->
@@ -72,8 +74,8 @@
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                       IsChecked="False"
                                       x:Name="MenuToggleButton"
-                                      RenderTransformOrigin="0.5,0.503" 
-                                      ToolTip="Extended Menu"/>
+                                      RenderTransformOrigin="0.5,0.503"
+                                      ToolTip="Extended Menu" />
                         <materialDesign:PopupBox DockPanel.Dock="Right"
                                                  PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False"
@@ -118,7 +120,9 @@
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="36"
-                                   FontWeight="Bold">Cafocha</TextBlock>
+                                   FontWeight="Bold">
+                            Cafocha
+                        </TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -130,8 +134,8 @@
                             BorderThickness="2"
                             Grid.Row="0">
                         <DockPanel VerticalAlignment="Center"
-                                    HorizontalAlignment="Left"
-                                    Height="58"
+                                   HorizontalAlignment="Left"
+                                   Height="58"
                                    Width="1014"
                                    Margin="0,-4,-2,-3">
 
@@ -155,8 +159,8 @@
                                        Width="150"
                                        Height="30"
                                        DockPanel.Dock="Right"
-                                       Margin="0,14,30,14" 
-                                       ToolTip="Working Time Counter"/>
+                                       Margin="0,14,30,14"
+                                       ToolTip="Working Time Counter" />
 
                             <TextBlock Foreground="White"
                                        FontSize="18"
@@ -164,7 +168,7 @@
                                        Width="150"
                                        Height="30"
                                        DockPanel.Dock="Right"
-                                       Visibility="Hidden"/>
+                                       Visibility="Hidden" />
                         </DockPanel>
 
 

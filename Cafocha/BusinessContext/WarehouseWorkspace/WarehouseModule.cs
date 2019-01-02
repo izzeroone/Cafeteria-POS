@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
 using Cafocha.Repository.DAL;
@@ -13,8 +11,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
     {
         private static readonly string OTHER_PURCHASE_ID = "IGD0000047";
 
-        private List<Stock> _stockList;
-        RepositoryLocator _unitofworkWH;
+        private readonly RepositoryLocator _unitofworkWH;
 
 
         public WarehouseModule()
@@ -27,27 +24,20 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             _unitofworkWH = unitofworkWh;
         }
 
-        public List<Stock>StockList
-        {
-            get => _stockList;
-            set => _stockList = value;
-        }
+        public List<Stock> StockList { get; set; }
 
         public List<Stock> IngredientList
         {
             get
             {
-                if (_stockList == null)
-                {
-                    loadStock();
-                }
-                    return _stockList.Where(s => s.Group.Equals((int) StockGroup.Ingridient)).ToList();
+                if (StockList == null) loadStock();
+                return StockList.Where(s => s.Group.Equals((int) StockGroup.Ingridient)).ToList();
             }
         }
 
         public void loadStock()
         {
-            _stockList = _unitofworkWH.StockRepository
+            StockList = _unitofworkWH.StockRepository
                 .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
         }
 
@@ -58,10 +48,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 if (stock.Deleted == 1)
                 {
                     var deletedIngd = StockList.FirstOrDefault(x => x.StoId.Equals(stock.StoId));
-                    if (deletedIngd != null)
-                    {
-                        StockList.Remove(deletedIngd);
-                    }
+                    if (deletedIngd != null) StockList.Remove(deletedIngd);
                     continue;
                 }
 
@@ -104,8 +91,6 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             _unitofworkWH.StockRepository.Insert(stock);
             _unitofworkWH.Save();
             updateStock();
-
-
         }
 
         public void updateStock(Stock stock)
@@ -113,17 +98,16 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             _unitofworkWH.StockRepository.Update(stock);
             _unitofworkWH.Save();
             updateStock();
-
         }
 
         private void UpdateAPWareHouseContain(StockIn stockIn)
         {
             foreach (var details in stockIn.StockInDetails)
             {
-                var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
+                var stock = StockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
                 if (stock != null)
                 {
-                    ApWareHouse wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+                    var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
                         wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
@@ -131,6 +115,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     }
                 }
             }
+
             updateStock();
         }
 
@@ -138,10 +123,10 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             foreach (var details in stockOut.StockOutDetails)
             {
-                var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StockId));
+                var stock = StockList.FirstOrDefault(x => x.StoId.Equals(details.StockId));
                 if (stock != null)
                 {
-                    ApWareHouse wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+                    var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
                         wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.UnitOut);
@@ -149,9 +134,8 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     }
                 }
             }
+
             updateStock();
-
-
         }
 
 
@@ -159,39 +143,30 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             stockIn.Intime = DateTime.Now;
             stockIn.SiId = _unitofworkWH.StockInRepository.AutoGeneteId_DBAsowell(stockIn).SiId;
-            foreach (var stockInDetail in stockIn.StockInDetails)
-            {
-                stockInDetail.SiId = stockIn.SiId;
-            }
+            foreach (var stockInDetail in stockIn.StockInDetails) stockInDetail.SiId = stockIn.SiId;
             _unitofworkWH.StockInRepository.Insert(stockIn);
             _unitofworkWH.Save();
 
             //ToDo: Update the contain value in Warehouse database
             UpdateAPWareHouseContain(stockIn);
-
         }
 
         public void addStockOut(StockOut stockOut)
         {
             stockOut.OutTime = DateTime.Now;
             stockOut.StockoutId = _unitofworkWH.StockOutRepository.AutoGeneteId_DBAsowell(stockOut).StockoutId;
-            foreach (var stockInDetail in stockOut.StockOutDetails)
-            {
-                stockInDetail.StockoutId = stockOut.StockoutId;
-            }
+            foreach (var stockInDetail in stockOut.StockOutDetails) stockInDetail.StockoutId = stockOut.StockoutId;
             _unitofworkWH.StockOutRepository.Insert(stockOut);
             _unitofworkWH.Save();
 
             //ToDo: Update the contain value in Warehouse database
             UpdateAPWareHouseContain(stockOut);
-
-            
         }
 
 
         public ApWareHouse getApWareHouse(string id)
         {
-           return _unitofworkWH.ApWareHouseRepository.GetById(id);
+            return _unitofworkWH.ApWareHouseRepository.GetById(id);
         }
     }
 }

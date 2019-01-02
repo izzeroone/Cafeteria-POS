@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using POS;
 
 namespace Cafocha.GUI
 {
     /// <summary>
-    /// Interaction logic for StartupWindows.xaml
+    ///     Interaction logic for StartupWindows.xaml
     /// </summary>
     public partial class StartupWindows : Window
     {
@@ -19,13 +18,10 @@ namespace Cafocha.GUI
                 Thread.Sleep(4000);
                 Dispatcher.Invoke(() =>
                 {
-
-                    
-                    LoginWindow loginWindow = new LoginWindow();
+                    var loginWindow = new LoginWindow();
                     loginWindow.Show();
-                    this.Close();
+                    Close();
                 });
-
             });
         }
     }

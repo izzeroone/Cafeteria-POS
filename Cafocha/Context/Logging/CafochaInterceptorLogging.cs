@@ -21,13 +21,10 @@ namespace Cafocha.Context.Logging
         {
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
-            {
                 _logger.Error(interceptionContext.Exception, "Error executing command: {0}", command.CommandText);
-            }
             else
-            {
-                _logger.TraceApi("SQL Database", "CafochaInterceptor.ScalarExecuted", _stopwatch.Elapsed, "Command: {0}", command.CommandText);
-            }
+                _logger.TraceApi("SQL Database", "CafochaInterceptor.ScalarExecuted", _stopwatch.Elapsed,
+                    "Command: {0}", command.CommandText);
             base.ScalarExecuted(command, interceptionContext);
         }
 
@@ -43,35 +40,30 @@ namespace Cafocha.Context.Logging
         {
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
-            {
                 _logger.Error("SQL Database", "Error executing command: {0}", command.CommandText);
-            }
             else
-            {
-                _logger.TraceApi("SQL Database", "CafochaIntereptor.NonQueryExecuted", _stopwatch.Elapsed, "Command: {0}", command.CommandText);
-            }
+                _logger.TraceApi("SQL Database", "CafochaIntereptor.NonQueryExecuted", _stopwatch.Elapsed,
+                    "Command: {0}", command.CommandText);
             base.NonQueryExecuting(command, interceptionContext);
         }
 
-        public override void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
+        public override void ReaderExecuting(DbCommand command,
+            DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
             base.ReaderExecuting(command, interceptionContext);
             _stopwatch.Restart();
         }
 
-        public override void ReaderExecuted(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
+        public override void ReaderExecuted(DbCommand command,
+            DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
-            {
                 _logger.Error("SQL Database", "Error executing command: {0}", command.CommandText);
-            }
             else
-            {
-                _logger.TraceApi("SQL Database", "CafochaIntereptor.NonQueryExecuted", _stopwatch.Elapsed, "Command: {0}", command.CommandText);
-            }
+                _logger.TraceApi("SQL Database", "CafochaIntereptor.NonQueryExecuted", _stopwatch.Elapsed,
+                    "Command: {0}", command.CommandText);
             base.ReaderExecuted(command, interceptionContext);
         }
-
     }
 }

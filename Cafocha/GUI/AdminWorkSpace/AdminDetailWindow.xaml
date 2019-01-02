@@ -20,7 +20,9 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">Personal Infomation</TextBlock>
+                           FontSize="18">
+                    Personal Infomation
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel Orientation="Vertical"
@@ -42,10 +44,10 @@
                             Value="Center" />
                 </Style>
             </StackPanel.Resources>
-            <StackPanel  Orientation="Vertical"
-                         Margin="30,20,30,0">
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
+            <StackPanel Orientation="Vertical"
+                        Margin="30,20,30,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <TextBlock Text="ID: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBlock x:Name="txtID"
@@ -55,8 +57,8 @@
                                Foreground="White"
                                HorizontalAlignment="Left" />
                 </StackPanel>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <TextBlock Text="UserName: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox Text="{Binding Username}"
@@ -77,15 +79,19 @@
                              Text="{Binding Name}"
                              Width="215" />
                 </StackPanel>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <Button x:Name="bntUpdate"
                             FontWeight="Bold"
-                            Click="bntUpdate_Click">Update</Button>
+                            Click="bntUpdate_Click">
+                        Update
+                    </Button>
                     <Button x:Name="btnChangePass"
                             Margin="100,0,0,0"
                             FontWeight="Bold"
-                            Click="btnChangePass_Click">Change Password</Button>
+                            Click="btnChangePass_Click">
+                        Change Password
+                    </Button>
                 </StackPanel>
             </StackPanel>
 
@@ -101,7 +107,9 @@
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="18"
-                           FontWeight="Bold">Employee List</TextBlock>
+                           FontWeight="Bold">
+                    Employee List
+                </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvDataEmployee"

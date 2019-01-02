@@ -99,7 +99,7 @@
                                     ToolTip="Generate Report">
                                 <Image Source="../Icon/Report Card_32px.png"
                                        Width="30"
-                                       Height="25"></Image>
+                                       Height="25" />
                             </Button>
                         </StackPanel>
                     </Border>
@@ -113,12 +113,14 @@
                                       CornerRadius="3"
                                       Mode="PrimaryDark"
                                       Height="46">
-                <StackPanel  Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="16,0,0,-15.6"
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="30">Salary Note</TextBlock>
+                               Height="30">
+                        Salary Note
+                    </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
             <ListView Name="lvSalary"
@@ -181,7 +183,9 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="32"> Working History</TextBlock>
+                               Height="32">
+                        Working History
+                    </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
             <ListView Name="lvWokingHistory"

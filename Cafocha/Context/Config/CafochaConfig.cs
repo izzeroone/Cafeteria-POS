@@ -8,7 +8,7 @@ namespace Cafocha.Context.Config
     {
         public CafochaConfig()
         {
-            DbInterception.Add((new CafochaInterceptorLogging()));
+            DbInterception.Add(new CafochaInterceptorLogging());
         }
     }
 }

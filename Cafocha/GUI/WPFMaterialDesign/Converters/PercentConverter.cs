@@ -8,12 +8,13 @@ namespace MaterialDesignThemes.Wpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string val = "";
+            var val = "";
             if (value != null)
             {
                 val = value + "%";
                 return val;
             }
+
             return val;
         }
 

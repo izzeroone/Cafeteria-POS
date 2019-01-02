@@ -3,32 +3,27 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for CustomerPage.xaml
+    ///     Interaction logic for CustomerPage.xaml
     /// </summary>
-    
     public partial class CustomerPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        Customer ctm;
-        List<Customer> allcus;
-        CustomerAddOrUpdateDialog _cusAddOrUpdate;
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private CustomerAddOrUpdateDialog _cusAddOrUpdate;
+        private List<Customer> allcus;
+        private Customer ctm;
+
         public CustomerPage(BusinessModuleLocator businessModuleLocator)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
             allcus = _businessModuleLocator.CustomerModule.getAllCustomer().ToList();
             lvDataCustomer.ItemsSource = allcus;
-            for (int i = 0; i <= 100; i++)
-            {
-                cbodiscount.Items.Add(i.ToString());
-            }
+            for (var i = 0; i <= 100; i++) cbodiscount.Items.Add(i.ToString());
         }
 
         private void lvDataCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,12 +32,13 @@ namespace Cafocha.GUI.AdminWorkSpace
             if (ctm == null)
             {
                 txtID.Text = "";
-                txtName.Text = "";                
+                txtName.Text = "";
                 txtMail.Text = "";
                 txtPhone.Text = "";
                 cbodiscount.SelectedIndex = 0;
                 return;
             }
+
             txtID.Text = ctm.CusId;
             txtName.Text = ctm.Name;
             txtMail.Text = ctm.Email;
@@ -86,7 +82,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             var delCus = lvDataCustomer.SelectedItem as Customer;
             if (delCus != null)
             {
-                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delCus.Name + "(" + delCus.CusId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                var delMess = MessageBox.Show("Do you want to delete " + delCus.Name + "(" + delCus.CusId + ")?",
+                    "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
                     _businessModuleLocator.CustomerModule.deleteCustomer(delCus);

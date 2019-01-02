@@ -11,15 +11,13 @@ namespace MaterialDesignThemes.Wpf.Converters
         {
             if (values[0] != null && values[1] != null)
             {
-                double contain = (double)values[0];
-                double std_contain = (double) values[1];
-                if (contain < std_contain)
-                {
-                    return Brushes.Red;
-                }
+                var contain = (double) values[0];
+                var std_contain = (double) values[1];
+                if (contain < std_contain) return Brushes.Red;
 
                 return Brushes.Chartreuse;
             }
+
             return null;
         }
 

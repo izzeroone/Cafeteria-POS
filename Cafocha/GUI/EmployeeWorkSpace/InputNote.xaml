@@ -24,7 +24,9 @@
 
         <TextBlock Name="lblQuestion"
                    Grid.Column="1"
-                   FontSize="25">Note</TextBlock>
+                   FontSize="25">
+            Note
+        </TextBlock>
         <TextBox Name="txtNote"
                  Grid.Column="1"
                  Grid.Row="1"
@@ -43,9 +45,13 @@
                     Name="btnDialogOk"
                     Click="btnDialogOk_Click"
                     MinWidth="60"
-                    Margin="0,0,10,0">_Ok</Button>
+                    Margin="0,0,10,0">
+                _Ok
+            </Button>
             <Button IsCancel="True"
-                    MinWidth="60">_Cancel</Button>
+                    MinWidth="60">
+                _Cancel
+            </Button>
         </WrapPanel>
     </Grid>
 </Window>

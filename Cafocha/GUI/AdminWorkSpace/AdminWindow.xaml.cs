@@ -1,40 +1,36 @@
 ﻿using System;
-using System.Linq;
+using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 using Cafocha.Repository.DAL;
 using log4net;
-using POS;
-using POS.AdminWorkSpace;
-
 
 namespace Cafocha.GUI.AdminWorkSpace
-{ 
+{
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    ///     Interaction logic for AdminWindow.xaml
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private BusinessModuleLocator _businessModuleLocator;
-        EmployeeListPage empListPage;
-        OrderNotePage ordernotepage;
-        SalaryPage salarypage;
-        ProductDetailPage productdetals;
-        internal LoginWindow LoginWindow;
-        AdminRe curAdmin;
-        CustomerPage ctmP;
-        private statisticsFoodPage FoodPage;
-        private StatisticsWorkingHourPage statisticsWorkingHourPage;
+        private static readonly ILog AppLog = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly BusinessModuleLocator _businessModuleLocator;
+        private readonly CustomerPage ctmP;
+        private readonly AdminRe curAdmin;
+        private readonly EmployeeListPage empListPage;
+        private readonly statisticsFoodPage FoodPage;
+        private readonly HomePage homePage;
         private LiveChartReceiptPage liveChartReceipt;
-        private HomePage homePage;
-        private ProductCreatorPage productCreator;
-
-        private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        internal LoginWindow LoginWindow;
+        private readonly OrderNotePage ordernotepage;
+        private readonly ProductCreatorPage productCreator;
+        private readonly ProductDetailPage productdetals;
+        private readonly SalaryPage salarypage;
+        private readonly StatisticsWorkingHourPage statisticsWorkingHourPage;
 
         public AdminWindow()
         {
@@ -43,18 +39,12 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             try
             {
-                var getLoginAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+                var getLoginAdmin = Application.Current.Properties["AdLogin"] as AdminRe;
                 curAdmin = _businessModuleLocator.AdminModule.getAdmin(getLoginAdmin.AdId);
-                if (curAdmin == null)
-                {
-                    this.Close();
-                }
+                if (curAdmin == null) Close();
                 cUser.Content = curAdmin.Name;
 
-                if (curAdmin.AdRole == (int)AdminReRole.SoftwareAd)
-                {
-                    btnCreateAdmin.Visibility = Visibility.Visible;
-                }
+                if (curAdmin.AdRole == (int) AdminReRole.SoftwareAd) btnCreateAdmin.Visibility = Visibility.Visible;
 
                 empListPage = new EmployeeListPage(_businessModuleLocator, curAdmin);
                 salarypage = new SalaryPage(_businessModuleLocator, curAdmin);
@@ -69,7 +59,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 productCreator = new ProductCreatorPage(_businessModuleLocator);
                 myframe.Navigate(homePage);
 
-                DispatcherTimer RefreshTimer = new DispatcherTimer();
+                var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
                 RefreshTimer.Interval = new TimeSpan(0, 2, 0);
                 RefreshTimer.Start();
@@ -89,18 +79,18 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
 
-        private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void AdminWindow_Closing(object sender, CancelEventArgs e)
         {
 //            _unitofwork.Dispose();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            App.Current.Properties["AdLogin"] = null;
-            App.Current.Properties["CurrentEmpWorking"] = null;
+            Application.Current.Properties["AdLogin"] = null;
+            Application.Current.Properties["CurrentEmpWorking"] = null;
 
             LoginWindow = new LoginWindow();
-            this.Close();
+            Close();
             LoginWindow.Show();
         }
 
@@ -111,7 +101,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void PopupBox_OnClosed(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void SalaryInfo_onClick(object sender, RoutedEventArgs e)
@@ -126,13 +115,12 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BtnDetails_OnClick(object sender, RoutedEventArgs e)
         {
-            Cafocha.GUI.AdminWorkSpace.AdminDetailWindow adw = new Cafocha.GUI.AdminWorkSpace.AdminDetailWindow(_businessModuleLocator, curAdmin);
+            var adw = new AdminDetailWindow(_businessModuleLocator, curAdmin);
             adw.Show();
         }
 
         private void bntCustomer_Click(object sender, RoutedEventArgs e)
         {
-
             myframe.Navigate(ctmP);
         }
 
@@ -158,7 +146,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void HomePage_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
             myframe.Navigate(homePage);
         }
 
@@ -176,13 +163,12 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void ViewstaticReAndEx_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
             myframe.Navigate(liveChartReceipt);
         }
 
         private void BtnCreateAdmin_OnClick(object sender, RoutedEventArgs e)
         {
-            Cafocha.GUI.AdminWorkSpace.AddNewAdminDialog newAdminDialog = new Cafocha.GUI.AdminWorkSpace.AddNewAdminDialog(_businessModuleLocator);
+            var newAdminDialog = new AddNewAdminDialog(_businessModuleLocator);
             newAdminDialog.Show();
         }
     }

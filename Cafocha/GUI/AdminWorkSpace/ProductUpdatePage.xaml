@@ -27,11 +27,13 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold">Available Ingredient</TextBlock>
+                                   FontWeight="Bold">
+                            Available Ingredient
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvAvaibleIngredient"
@@ -75,11 +77,13 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold">Product Details</TextBlock>
+                                   FontWeight="Bold">
+                            Product Details
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <ListView Name="lvDetails"
@@ -153,13 +157,15 @@
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
                                           Height="46">
-                    <StackPanel  Orientation="Horizontal"
-                                 Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
-                                   FontWeight="Bold"><Run Text="Information"
-                                                          FontWeight="Bold"
-                                                          FontSize="16" /></TextBlock>
+                                   FontWeight="Bold">
+                            <Run Text="Information"
+                                 FontWeight="Bold"
+                                 FontSize="16" />
+                        </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
                 <StackPanel Margin="10,60,0,0">
@@ -220,7 +226,7 @@
                                   FontSize="18"
                                   Foreground="White"
                                   Width="215"
-                                  Margin="0,0,100,0"/>
+                                  Margin="0,0,100,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">

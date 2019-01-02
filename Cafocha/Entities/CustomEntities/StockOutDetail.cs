@@ -4,7 +4,6 @@ namespace Cafocha.Entities
 {
     public partial class StockOutDetail
     {
-        [NotMapped]
-        public decimal ItemPrice { get; set; }
+        [NotMapped] public decimal ItemPrice { get; set; }
     }
 }

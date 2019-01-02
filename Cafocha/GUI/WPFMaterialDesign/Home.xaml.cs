@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Cafocha.GUI.WPFMaterialDesign
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    ///     Interaction logic for Home.xaml
     /// </summary>
     public partial class Home : UserControl
     {
@@ -31,7 +31,7 @@ namespace Cafocha.GUI.WPFMaterialDesign
 
         private void ExitButton_OnClick(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void DetailsButton_OnClick(object sender, RoutedEventArgs e)

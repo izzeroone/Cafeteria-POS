@@ -3,7 +3,7 @@
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    /// Interaction logic for ChangeThemePage.xaml
+    ///     Interaction logic for ChangeThemePage.xaml
     /// </summary>
     public partial class ChangeThemePage : Window
     {

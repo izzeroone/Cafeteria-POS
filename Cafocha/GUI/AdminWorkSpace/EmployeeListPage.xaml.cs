@@ -4,23 +4,20 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Cafocha.BusinessContext;
-using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
-    
     /// <summary>
-    /// Interaction logic for EmployeeListPage.xaml
+    ///     Interaction logic for EmployeeListPage.xaml
     /// </summary>
     public partial class EmployeeListPage : Page
     {
-        private BusinessModuleLocator _businessModuleLocator;
+        private readonly BusinessModuleLocator _businessModuleLocator;
         private AdminRe admin;
         private Employee emp;
-        private List<Employee> empwithad;
         internal EmployeeAddOrUpdateDialog empAddUptDialog;
+        private List<Employee> empwithad;
 
         public EmployeeListPage(BusinessModuleLocator businessModuleLocator, AdminRe ad)
         {
@@ -28,7 +25,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             InitializeComponent();
             admin = ad;
 
-            this.Loaded += EmployeeListPage_Loaded;
+            Loaded += EmployeeListPage_Loaded;
         }
 
         private void EmployeeListPage_Loaded(object sender, RoutedEventArgs e)
@@ -36,7 +33,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             //            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
             refreshData();
 
-            txtBirth.DisplayDateEnd = new DateTime((DateTime.Now.Year - 16), 12, 31);
+            txtBirth.DisplayDateEnd = new DateTime(DateTime.Now.Year - 16, 12, 31);
             txtStart.DisplayDateStart = DateTime.Now;
         }
 
@@ -57,6 +54,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 txtPass.Password = "";
                 return;
             }
+
             txtID.Text = emp.EmpId;
             txtName.Text = emp.Name;
             txtBirth.SelectedDate = emp.Birth;
@@ -74,7 +72,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     txtRole.Text = EmployeeRole.Counter.ToString();
                     break;
                 }
-                case (int)EmployeeRole.Stock:
+                case (int) EmployeeRole.Stock:
                 {
                     txtRole.Text = EmployeeRole.Stock.ToString();
                     break;
@@ -92,7 +90,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if(lvDataEmployee.SelectedItem == null)
+            if (lvDataEmployee.SelectedItem == null)
             {
                 MessageBox.Show("Employee must be selected to update! Choose again!");
                 return;
@@ -106,7 +104,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void bntDel_Click(object sender, RoutedEventArgs e)
         {
-            if(lvDataEmployee.SelectedItem == null)
+            if (lvDataEmployee.SelectedItem == null)
             {
                 MessageBox.Show("Employee must be selected to delete! Choose again!");
                 return;
@@ -115,8 +113,9 @@ namespace Cafocha.GUI.AdminWorkSpace
             var delEmp = lvDataEmployee.SelectedItem as Employee;
             if (delEmp != null)
             {
-                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delEmp.Name + "(" + delEmp.Username + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
-                if(delMess == MessageBoxResult.Yes)
+                var delMess = MessageBox.Show("Do you want to delete " + delEmp.Name + "(" + delEmp.Username + ")?",
+                    "Warning! Are you sure?", MessageBoxButton.YesNo);
+                if (delMess == MessageBoxResult.Yes)
                 {
                     _businessModuleLocator.EmployeeModule.deleteEmployee(delEmp);
                     refreshData();
