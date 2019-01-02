@@ -21,7 +21,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     public partial class ProductCreatorPage : Page
     {
         private BusinessModuleLocator _businessModuleLocator;
-        List<Ingredient> _igreList;
+        List<Stock> _igreList;
         private List<ProductModule.PDTemp> _pdtList;
 
         string browseImagePath = "";
@@ -44,7 +44,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         public bool isRaiseIngreShowEvent = false;
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _igreList = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
+            _igreList = _businessModuleLocator.WarehouseModule.IngredientList;
             lvAvaibleIngredient.ItemsSource = _igreList;
 
             _pdtList.Clear();
@@ -69,7 +69,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void LvAvaibleIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView lv = sender as ListView;
-            var ingre = lv.SelectedItem as Ingredient;
+            var ingre = lv.SelectedItem as Stock;
 
             if (ingre == null)
             {
@@ -78,7 +78,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             if (_pdtList.Count != 0)
             {
-                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
+                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.StoId)).FirstOrDefault();
                 if (igre != null)
                 {
                     MessageBox.Show("This Ingredient is already exist in Product Details List! Please choose another!");
@@ -90,7 +90,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 PdetailId = "",
                 ProductId = "",
-                IgdId = ingre.IgdId,
+                IgdId = ingre.StoId,
                 Quan = 0,
                 UnitUse = ""
             };

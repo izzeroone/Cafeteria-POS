@@ -48,13 +48,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             List<dynamic> roleList = new List<dynamic>
             {
-                new { role = EmployeeRole.Ministering, roleDisplay = "Ministering"},
-                new { role = EmployeeRole.Cashier, roleDisplay = "Cashier"},
-                new { role = EmployeeRole.Bar, roleDisplay = "Bar"},
-                new { role = EmployeeRole.Kitchen, roleDisplay = "Kitchen"},
+                new { role = EmployeeRole.Counter, roleDisplay = "Counter"},
                 new { role = EmployeeRole.Stock, roleDisplay = "Stock"},
             };
-            cboRole.ItemsSource = roleList;
+            cboRole.ItemsSource = roleList; 
             cboRole.SelectedValuePath = "role";
             cboRole.DisplayMemberPath = "roleDisplay";
         }

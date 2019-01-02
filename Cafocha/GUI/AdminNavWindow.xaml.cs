@@ -2,8 +2,6 @@
 using Cafocha.Entities;
 using Cafocha.GUI.AdminWorkSpace;
 using Cafocha.GUI.CafowareWorkSpace;
-using Cafocha.GUI.WareHouseWorkSpace;
-
 namespace Cafocha.GUI
 {
     /// <summary>
@@ -61,8 +59,8 @@ namespace Cafocha.GUI
 
         private void GotoWareHouseIGButton_OnClick(object sender, RoutedEventArgs e)
         {
-            WareHouseWindow whWindow = new WareHouseWindow();
-            whWindow.Show();
+            CafowareWindow cfWindows = new CafowareWindow();
+            cfWindows.Show();
         }
     }
 }

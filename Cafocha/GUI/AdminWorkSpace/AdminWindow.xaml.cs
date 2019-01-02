@@ -28,7 +28,6 @@ namespace Cafocha.GUI.AdminWorkSpace
         internal LoginWindow LoginWindow;
         AdminRe curAdmin;
         CustomerPage ctmP;
-        ReceiptNotePage receiptnotepage;
         private statisticsFoodPage FoodPage;
         private StatisticsWorkingHourPage statisticsWorkingHourPage;
         private LiveChartReceiptPage liveChartReceipt;
@@ -59,11 +58,11 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 empListPage = new EmployeeListPage(_businessModuleLocator, curAdmin);
                 salarypage = new SalaryPage(_businessModuleLocator, curAdmin);
-                liveChartReceipt = new LiveChartReceiptPage(_businessModuleLocator);
+//                liveChartReceipt = new LiveChartReceiptPage(_businessModuleLocator);
                 productdetals = new ProductDetailPage(_businessModuleLocator);
                 ctmP = new CustomerPage(_businessModuleLocator);
                 ordernotepage = new OrderNotePage(_businessModuleLocator, curAdmin);
-                receiptnotepage = new ReceiptNotePage(_businessModuleLocator, curAdmin);
+//                receiptnotepage = new ReceiptNotePage(_businessModuleLocator, curAdmin);
                 FoodPage = new statisticsFoodPage(_businessModuleLocator);
                 statisticsWorkingHourPage = new StatisticsWorkingHourPage(_businessModuleLocator);
                 homePage = new HomePage(_businessModuleLocator);
@@ -142,10 +141,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             myframe.Navigate(ordernotepage);
         }
 
-        private void bntReceipt_Click(object sender, RoutedEventArgs e)
-        {
-            myframe.Navigate(receiptnotepage);
-        }
+//        private void bntReceipt_Click(object sender, RoutedEventArgs e)
+//        {
+//            myframe.Navigate(receiptnotepage);
+//        }
 
         private void View_Statistics_Quantity_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

@@ -4,11 +4,8 @@ namespace Cafocha.Entities
 {
     public enum EmployeeRole
     {
-        Ministering = 0,
-        Bar = 1,
-        Kitchen = 2,
+        Counter = 0,
         Stock = 3,
-        Cashier = 4
     }
 
     public partial class Employee

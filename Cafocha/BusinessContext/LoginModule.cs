@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Cafocha.Entities;
 using Cafocha.GUI;
+using Cafocha.GUI.CafowareWorkSpace;
 using Cafocha.GUI.EmployeeWorkSpace;
-using Cafocha.GUI.WareHouseWorkSpace;
 using log4net;
 
 namespace Cafocha.BusinessContext
@@ -37,7 +37,7 @@ namespace Cafocha.BusinessContext
                         {
                             _loginWindow.Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                CafowareWindow wareHouse = new CafowareWindow();
                                 wareHouse.Show();
                             });
                         }
@@ -155,7 +155,7 @@ namespace Cafocha.BusinessContext
                         {
                             _loginWindow.Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                CafowareWindow wareHouse = new CafowareWindow();
                                 wareHouse.Show();
                             });
                         }

@@ -170,12 +170,12 @@
                                     ToolTip="Order Infomation">
                                 <materialDesign:PackIcon Kind="BookmarkCheck" />
                             </Button>
-                            <Button Background="RosyBrown"
-                                    x:Name="bntReceipt"
-                                    Click="bntReceipt_Click"
-                                    ToolTip="Receipt Infomation">
-                                <materialDesign:PackIcon Kind="History" />
-                            </Button>
+                            <!-- <Button Background="RosyBrown" -->
+                            <!--         x:Name="bntReceipt" -->
+                            <!--         Click="bntReceipt_Click" -->
+                            <!--         ToolTip="Receipt Infomation"> -->
+                            <!--     <materialDesign:PackIcon Kind="History" /> -->
+                            <!-- </Button> -->
                             <Button x:Name="bntCreateNewProduct"
                                     Background="DarkSlateGray"
                                     ToolTip="Create new Product"

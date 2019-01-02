@@ -148,8 +148,6 @@
     <Compile Include="BusinessContext\User\AdminModule.cs" />
     <Compile Include="BusinessContext\User\CustomerModule.cs" />
     <Compile Include="BusinessContext\User\EmployeeModule.cs" />
-    <Compile Include="BusinessContext\User\ReceiptNoteModule.cs" />
-    <Compile Include="BusinessContext\WarehouseWorkspace\IngredientModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\OrderModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModule.cs" />
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
@@ -189,9 +187,6 @@
     <Compile Include="GUI\AdminWorkSpace\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\IngredientAddOrUpdateDialog.xaml.cs">
-      <DependentUpon>IngredientAddOrUpdateDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\AdminWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -206,9 +201,6 @@
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml.cs">
       <DependentUpon>ProductUpdatePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\AdminWorkSpace\ReceiptNotePage.xaml.cs">
-      <DependentUpon>ReceiptNotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\ReportOptionDialog.xaml.cs">
       <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
@@ -323,22 +315,6 @@
     <Compile Include="GUI\Support\PassKeyboardControl.xaml.cs">
       <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\Helper\UnitBuyTrans.cs" />
-    <Compile Include="GUI\IngredientWorkSpace\IngredientPage.xaml.cs">
-      <DependentUpon>IngredientPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\InputNote.xaml.cs">
-      <DependentUpon>InputNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\InputReceiptNote.xaml.cs">
-      <DependentUpon>InputReceiptNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\LiveChartReceiptPage.xaml.cs">
-      <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\WareHouseWindow.xaml.cs">
-      <DependentUpon>WareHouseWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\WPFMaterialDesign\ButtonsViewModel.cs" />
     <Compile Include="GUI\WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
     <Compile Include="GUI\WPFMaterialDesign\Converters\MyConverter.cs" />
@@ -370,7 +346,6 @@
     <Compile Include="Repository\Interfaces\IAdminRepository.cs" />
     <Compile Include="Repository\Interfaces\ICustomerRepository.cs" />
     <Compile Include="Repository\Interfaces\IEmployeeRepository.cs" />
-    <Compile Include="Repository\Interfaces\IIngredientRepository.cs" />
     <Compile Include="Repository\Interfaces\IProductRepository.cs" />
     <Compile Include="Security\AESGCM.cs" />
     <Compile Include="Security\AESThenHMAC.cs" />
@@ -434,10 +409,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\IngredientAddOrUpdateDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\AdminWorkSpace\LiveChartReceiptPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -455,10 +426,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\AdminWorkSpace\ReceiptNotePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -594,26 +561,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\IngredientWorkSpace\IngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\InputNote.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\InputReceiptNote.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\LiveChartReceiptPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\WareHouseWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\WPFMaterialDesign\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -679,11 +626,11 @@
       <LastGenOutput>CafochaEntities.cs</LastGenOutput>
     </Content>
     <Content Include="DB\DBCafocha.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DB\DBCafocha_log.ldf">
       <DependentUpon>DBCafocha.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\softwarepdate.jpg" />
     <Resource Include="Images\Search_50px.png" />

@@ -452,7 +452,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
 
             // Calculate Data
-            var totalReceiptData = CalculateReceipt();
+//            var totalReceiptData = CalculateReceipt();
 
 
             // Create Table
@@ -476,72 +476,72 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     continue;
                 }
             }
-            // set Rows
-            for (int i = 0; i < totalReceiptData.Count; i++)
-            {
-                dgDataTable.RowDefinitions.Add(new RowDefinition());
-                foreach (var item in totalReceiptData.Values)
-                {
-                    dgDataTable.RowDefinitions.Add(new RowDefinition());
-                }
-            }
+//            // set Rows
+//            for (int i = 0; i < totalReceiptData.Count; i++)
+//            {
+//                dgDataTable.RowDefinitions.Add(new RowDefinition());
+//                foreach (var item in totalReceiptData.Values)
+//                {
+//                    dgDataTable.RowDefinitions.Add(new RowDefinition());
+//                }
+//            }
 
-            // Fill Table data
-            int rowIndex = 0;
-            foreach (var item in totalReceiptData)
-            {
-                TextBlock txtMeta = new TextBlock()
-                {
-                    Text = item.Key,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    FontWeight = FontWeights.Bold,
-                    Margin = new Thickness(0, 10, 0, 0)
-                };
-                Grid.SetRow(txtMeta, rowIndex);
-                Grid.SetColumn(txtMeta, 0);
-                dgDataTable.Children.Add(txtMeta);
-
-                foreach (var keypairvalue in item.Value)
-                {
-                    StackPanel stpLeftData = new StackPanel()
-                    {
-                        Orientation = Orientation.Horizontal
-                    };
-                    TextBlock txtTitle = new TextBlock()
-                    {
-                        Text = keypairvalue.Title + ": ",
-                        VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Margin = new Thickness(10, 0, 0, 0)
-                    };
-                    TextBlock txtCount = new TextBlock()
-                    {
-                        Text = keypairvalue.Count.ToString(),
-                        VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Left
-                    };
-                    stpLeftData.Children.Add(txtTitle);
-                    stpLeftData.Children.Add(txtCount);
-                    Grid.SetRow(stpLeftData, rowIndex + 1);
-                    Grid.SetColumn(stpLeftData, 0);
-                    dgDataTable.Children.Add(stpLeftData);
-
-                    TextBlock txtAmount = new TextBlock()
-                    {
-                        Text = string.Format("{0:0.000}", keypairvalue.Amount),
-                        VerticalAlignment = VerticalAlignment.Top,
-                        HorizontalAlignment = HorizontalAlignment.Right
-                    };
-                    Grid.SetRow(txtAmount, rowIndex + 1);
-                    Grid.SetColumn(txtAmount, 1);
-                    dgDataTable.Children.Add(txtAmount);
-
-                    rowIndex++;
-                }
-
-                rowIndex++;
-            }
+//            // Fill Table data
+//            int rowIndex = 0;
+//            foreach (var item in totalReceiptData)
+//            {
+//                TextBlock txtMeta = new TextBlock()
+//                {
+//                    Text = item.Key,
+//                    VerticalAlignment = VerticalAlignment.Top,
+//                    HorizontalAlignment = HorizontalAlignment.Left,
+//                    FontWeight = FontWeights.Bold,
+//                    Margin = new Thickness(0, 10, 0, 0)
+//                };
+//                Grid.SetRow(txtMeta, rowIndex);
+//                Grid.SetColumn(txtMeta, 0);
+//                dgDataTable.Children.Add(txtMeta);
+//
+//                foreach (var keypairvalue in item.Value)
+//                {
+//                    StackPanel stpLeftData = new StackPanel()
+//                    {
+//                        Orientation = Orientation.Horizontal
+//                    };
+//                    TextBlock txtTitle = new TextBlock()
+//                    {
+//                        Text = keypairvalue.Title + ": ",
+//                        VerticalAlignment = VerticalAlignment.Top,
+//                        HorizontalAlignment = HorizontalAlignment.Left,
+//                        Margin = new Thickness(10, 0, 0, 0)
+//                    };
+//                    TextBlock txtCount = new TextBlock()
+//                    {
+//                        Text = keypairvalue.Count.ToString(),
+//                        VerticalAlignment = VerticalAlignment.Top,
+//                        HorizontalAlignment = HorizontalAlignment.Left
+//                    };
+//                    stpLeftData.Children.Add(txtTitle);
+//                    stpLeftData.Children.Add(txtCount);
+//                    Grid.SetRow(stpLeftData, rowIndex + 1);
+//                    Grid.SetColumn(stpLeftData, 0);
+//                    dgDataTable.Children.Add(stpLeftData);
+//
+//                    TextBlock txtAmount = new TextBlock()
+//                    {
+//                        Text = string.Format("{0:0.000}", keypairvalue.Amount),
+//                        VerticalAlignment = VerticalAlignment.Top,
+//                        HorizontalAlignment = HorizontalAlignment.Right
+//                    };
+//                    Grid.SetRow(txtAmount, rowIndex + 1);
+//                    Grid.SetColumn(txtAmount, 1);
+//                    dgDataTable.Children.Add(txtAmount);
+//
+//                    rowIndex++;
+//                }
+//
+//                rowIndex++;
+//            }
 
 
             stpTableReceiptText.Children.Add(separator1);
@@ -655,26 +655,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Amount = totalAmount,
                 Count = orderQuery.Count()
             };
-
-            // SVC
-            decimal totalSVC = 0;
-            foreach (var order in orderQuery)
-            {
-                decimal curTotalAmount = 0;
-                foreach (var orderDetails in order.OrderNoteDetails)
-                {
-                    curTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
-                }
-
-                totalSVC += (curTotalAmount * 5) / 100;
-            }
-            MyPairValue SVCTotalCal = new MyPairValue()
-            {
-                Title = "Service Charge",
-                Amount = totalSVC,
-                Count = orderQuery.Count()
-            };
-
             // VAT
             decimal totalVAT = 0;
             foreach (var order in orderQuery)
@@ -685,7 +665,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
                     curTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
                 }
 
-                totalVAT += ((((curTotalAmount * 5)/100) + curTotalAmount) * 10) / 100;
+                totalVAT += curTotalAmount * 10 / 100;
             }
             MyPairValue VATTotalCal = new MyPairValue()
             {
@@ -715,7 +695,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             result.Add("SubTotal", new List<MyPairValue>()
             {
                 orderTotalCal,
-                SVCTotalCal,
                 VATTotalCal,
                 DiscTotalCal
             });
@@ -865,33 +844,33 @@ namespace Cafocha.GUI.Helper.PrintHelper
             return result;
         }
 
-        private Dictionary<string, List<MyPairValue>> CalculateReceipt()
-        {
-            var result = new Dictionary<string, List<MyPairValue>>();
-
-            var receiptQuery =
-                _cloudPosUnitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From) >= 0
-                                                     && x.Inday.CompareTo(To) <= 0);
-
-            //Total Receipt
-            decimal totalAmount = 0;
-            foreach (var order in receiptQuery)
-            {
-                totalAmount += order.TotalAmount;
-            }
-            MyPairValue receiptCal = new MyPairValue()
-            {
-                Title = "Bills",
-                Count = receiptQuery.Count(),
-                Amount = totalAmount
-            };
-            result.Add("Total", new List<MyPairValue>()
-            {
-                receiptCal
-            });
-
-            return result;
-        }
+//        private Dictionary<string, List<MyPairValue>> CalculateReceipt()
+//        {
+//            var result = new Dictionary<string, List<MyPairValue>>();
+//
+//            var receiptQuery =
+//                _cloudPosUnitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From) >= 0
+//                                                     && x.Inday.CompareTo(To) <= 0);
+//
+//            //Total Receipt
+//            decimal totalAmount = 0;
+//            foreach (var order in receiptQuery)
+//            {
+//                totalAmount += order.TotalAmount;
+//            }
+//            MyPairValue receiptCal = new MyPairValue()
+//            {
+//                Title = "Bills",
+//                Count = receiptQuery.Count(),
+//                Amount = totalAmount
+//            };
+//            result.Add("Total", new List<MyPairValue>()
+//            {
+//                receiptCal
+//            });
+//
+//            return result;
+//        }
     }
 
     public class MyPairValue

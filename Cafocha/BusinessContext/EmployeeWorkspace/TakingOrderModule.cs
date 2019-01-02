@@ -156,25 +156,25 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             _orderTemp.OrderDetailsTemps.ElementAt(index).Note = note;
         }
 
-        public void deleteOrderDetail(int index, bool isDone)
-        {
-            if (_orderTemp.OrderDetailsTemps.ElementAt(index).Quan > 1)
-            {
-                if (!isDone)
-                {
-                    GiveBackToWareHouseData(_orderTemp.OrderDetailsTemps.ElementAt(index), 1);
-                }
-                _orderTemp.OrderDetailsTemps.ElementAt(index).Quan--;
-            }
-            else
-            {
-                if (!isDone)
-                {
-                    GiveBackToWareHouseData(_orderTemp.OrderDetailsTemps.ElementAt(index), 1);
-                }
-                _orderTemp.OrderDetailsTemps.Remove(_orderTemp.OrderDetailsTemps.ElementAt(index));
-            }
-        }
+//        public void deleteOrderDetail(int index, bool isDone)
+//        {
+//            if (_orderTemp.OrderDetailsTemps.ElementAt(index).Quan > 1)
+//            {
+//                if (!isDone)
+//                {
+//                    GiveBackToWareHouseData(_orderTemp.OrderDetailsTemps.ElementAt(index), 1);
+//                }
+//                _orderTemp.OrderDetailsTemps.ElementAt(index).Quan--;
+//            }
+//            else
+//            {
+//                if (!isDone)
+//                {
+//                    GiveBackToWareHouseData(_orderTemp.OrderDetailsTemps.ElementAt(index), 1);
+//                }
+//                _orderTemp.OrderDetailsTemps.Remove(_orderTemp.OrderDetailsTemps.ElementAt(index));
+//            }
+//        }
 
 
         public IEnumerable<OrderDetails_Product_Joiner> getOrderDetailsDisplay()
@@ -305,126 +305,126 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             _orderTemp.OrderDetailsTemps.Clear();
         }
 
-        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails, Product orderingProduct)
-        {
-            var prodOfOrderDetails =
-                _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderingProduct.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
-            if (prodOfOrderDetails != null)
-            {
-                // if product have no product details
-                if (prodOfOrderDetails.ProductDetails.Count == 0)
-                {
-                    // still allow to order but no ingredient relate to this product for tracking
-                    return true;
-                }
-
-
-                var wareHouseDict = new Dictionary<WareHouse, double?>();
-                // going to warehouse and take the contain of each ingredient
-                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
-                {
-                    var quan = prodDetails.Quan;
-                    var ingd =
-                        _unitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId))
-                            .FirstOrDefault();
-                    if (ingd == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
-                        return false;
-                    }
-                    var wareHouse =
-                        _unitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId))
-                            .FirstOrDefault();
-                    if (wareHouse == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
-                        return false;
-                    }
-
-                    var temple_Contain = wareHouse.Contain;
-
-                    if (temple_Contain < quan)
-                    {
-                        MessageBox.Show("This Product can not order now. Please check to WareHouse for Ingredient's stock!");
-                        return false;
-                    }
-                    else
-                    {
-                        temple_Contain -= quan;
-                    }
-
-                    wareHouseDict.Add(wareHouse, temple_Contain);
-                }
-
-                // when all ingredient are enough to make product
-                foreach (var item in wareHouseDict)
-                {
-                    item.Key.Contain = item.Value;
-                }
-                _unitofwork.Save();
-            }
-            else
-            {
-                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
-                return false;
-            }
-
-            return true;
-        }
-
-        private void GiveBackToWareHouseData(OrderDetailsTemp orderDetails, int productQuan)
-        {
-            var prodOfOrderDetails =
-                _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
-            if (prodOfOrderDetails != null)
-            {
-                if (prodOfOrderDetails.ProductDetails.Count == 0)
-                {
-                    // not ingredient relate to this product for tracking
-                    return;
-                }
-
-                var wareHouseDict = new Dictionary<WareHouse, double?>();
-                // going to warehouse and give back the contain for each ingredient
-                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
-                {
-                    var detailsUsingQuan = prodDetails.Quan;
-                    var ingd =
-                        _unitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
-                    if (ingd == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
-                        return;
-                    }
-                    var wareHouse =
-                        _unitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
-                    if (wareHouse == null)
-                    {
-                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
-                        return;
-                    }
-
-
-                    var temple_Contain = wareHouse.Contain;
-                    temple_Contain += (detailsUsingQuan * productQuan);
-                    wareHouseDict.Add(wareHouse, temple_Contain);
-                }
-
-
-                // when giving back is success full for all ingredient
-                // let update the contain data
-                foreach (var item in wareHouseDict)
-                {
-                    item.Key.Contain = item.Value;
-                }
-                //_cloudPosUnitofwork.Save();
-            }
-            else
-            {
-                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
-            }
-
-        }
+//        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails, Product orderingProduct)
+//        {
+//            var prodOfOrderDetails =
+//                _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderingProduct.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
+//            if (prodOfOrderDetails != null)
+//            {
+//                // if product have no product details
+//                if (prodOfOrderDetails.ProductDetails.Count == 0)
+//                {
+//                    // still allow to order but no ingredient relate to this product for tracking
+//                    return true;
+//                }
+//
+//
+//                var wareHouseDict = new Dictionary<WareHouse, double?>();
+//                // going to warehouse and take the contain of each ingredient
+//                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
+//                {
+//                    var quan = prodDetails.Quan;
+//                    var ingd =
+//                        _unitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId))
+//                            .FirstOrDefault();
+//                    if (ingd == null)
+//                    {
+//                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
+//                        return false;
+//                    }
+//                    var wareHouse =
+//                        _unitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId))
+//                            .FirstOrDefault();
+//                    if (wareHouse == null)
+//                    {
+//                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
+//                        return false;
+//                    }
+//
+//                    var temple_Contain = wareHouse.Contain;
+//
+//                    if (temple_Contain < quan)
+//                    {
+//                        MessageBox.Show("This Product can not order now. Please check to WareHouse for Ingredient's stock!");
+//                        return false;
+//                    }
+//                    else
+//                    {
+//                        temple_Contain -= quan;
+//                    }
+//
+//                    wareHouseDict.Add(wareHouse, temple_Contain);
+//                }
+//
+//                // when all ingredient are enough to make product
+//                foreach (var item in wareHouseDict)
+//                {
+//                    item.Key.Contain = item.Value;
+//                }
+//                _unitofwork.Save();
+//            }
+//            else
+//            {
+//                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
+//                return false;
+//            }
+//
+//            return true;
+//        }
+//
+//        private void GiveBackToWareHouseData(OrderDetailsTemp orderDetails, int productQuan)
+//        {
+//            var prodOfOrderDetails =
+//                _unitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
+//            if (prodOfOrderDetails != null)
+//            {
+//                if (prodOfOrderDetails.ProductDetails.Count == 0)
+//                {
+//                    // not ingredient relate to this product for tracking
+//                    return;
+//                }
+//
+//                var wareHouseDict = new Dictionary<WareHouse, double?>();
+//                // going to warehouse and give back the contain for each ingredient
+//                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
+//                {
+//                    var detailsUsingQuan = prodDetails.Quan;
+//                    var ingd =
+//                        _unitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
+//                    if (ingd == null)
+//                    {
+//                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
+//                        return;
+//                    }
+//                    var wareHouse =
+//                        _unitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
+//                    if (wareHouse == null)
+//                    {
+//                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
+//                        return;
+//                    }
+//
+//
+//                    var temple_Contain = wareHouse.Contain;
+//                    temple_Contain += (detailsUsingQuan * productQuan);
+//                    wareHouseDict.Add(wareHouse, temple_Contain);
+//                }
+//
+//
+//                // when giving back is success full for all ingredient
+//                // let update the contain data
+//                foreach (var item in wareHouseDict)
+//                {
+//                    item.Key.Contain = item.Value;
+//                }
+//                //_cloudPosUnitofwork.Save();
+//            }
+//            else
+//            {
+//                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
+//            }
+//
+//        }
 
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
         {

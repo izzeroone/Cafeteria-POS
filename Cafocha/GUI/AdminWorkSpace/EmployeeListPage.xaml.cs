@@ -69,19 +69,9 @@ namespace Cafocha.GUI.AdminWorkSpace
             txtPass.Password = emp.DecryptedPass;
             switch (emp.EmpRole)
             {
-                case (int) EmployeeRole.Ministering:
+                case (int) EmployeeRole.Counter:
                 {
-                    txtRole.Text = EmployeeRole.Ministering.ToString();
-                    break;
-                }
-                case (int)EmployeeRole.Bar:
-                {
-                    txtRole.Text = EmployeeRole.Bar.ToString();
-                    break;
-                }
-                case (int)EmployeeRole.Kitchen:
-                {
-                    txtRole.Text = EmployeeRole.Kitchen.ToString();
+                    txtRole.Text = EmployeeRole.Counter.ToString();
                     break;
                 }
                 case (int)EmployeeRole.Stock:

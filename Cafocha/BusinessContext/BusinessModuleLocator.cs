@@ -66,8 +66,6 @@ namespace Cafocha.BusinessContext
         private CustomerModule _customerModule;
         private EmployeeModule _employeeModule;
         private ProductModule _productModule;
-        private ReceiptNoteModule _receiptNoteModule;
-        private IngredientModule _ingredientModule;
         private OrderModule _orderModule;
         private WarehouseModule _warehouseModule;
 
@@ -84,14 +82,7 @@ namespace Cafocha.BusinessContext
         {
             get { return _orderModule ?? (_orderModule = new OrderModule(_repositoryLocator)); }
         }
-        public IngredientModule IngredientModule
-        {
-            get { return _ingredientModule ?? (_ingredientModule = new IngredientModule(_repositoryLocator)); }
-        }
-        public ReceiptNoteModule ReceiptNoteModule
-        {
-            get { return _receiptNoteModule ?? (_receiptNoteModule = new ReceiptNoteModule(_repositoryLocator)); }
-        }
+
         public ProductModule ProductModule
         {
             get { return _productModule ?? (_productModule = new ProductModule(_repositoryLocator)); }

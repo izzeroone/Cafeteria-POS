@@ -8,7 +8,7 @@ using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 using Cafocha.GUI.CafowareWorkSpace.Helper;
-using Cafocha.GUI.WareHouseWorkSpace;
+using Cafocha.GUI.EmployeeWorkSpace;
 using Cafocha.Repository.DAL;
 
 namespace Cafocha.GUI.CafowareWorkSpace

@@ -12,22 +12,19 @@ namespace Cafocha.Repository.DAL
     /// </summary>
     public class RepositoryLocator : IDisposable
     {
-        private LocalContext _context;
+        private ILocalContext _context;
 
         // business repo
         private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
         private GenericRepository<ProductDetail> _productdetailsRepository;
         private GenericRepository<SalaryNote> _salarynoteRepository;
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<OrderNote> _orderRepository;
         private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
-        private GenericRepository<ReceiptNote> _receiptNoteRepository;
-        private GenericRepository<ReceiptNoteDetail> _receiptnotedetailsRepository;
         private GenericRepository<WareHouse> _wareHouseRepository;
         private GenericRepository<ApWareHouse> _apwareHouseRepository;
         private GenericRepository<Stock> _stockRepository;
@@ -46,6 +43,11 @@ namespace Cafocha.Repository.DAL
         public RepositoryLocator(string connectionString)
         {
             _context = new LocalContext(connectionString);
+        }
+
+        public RepositoryLocator(ILocalContext localContext)
+        {
+            _context = localContext;
         }
 
 
@@ -76,31 +78,6 @@ namespace Cafocha.Repository.DAL
             }
         }
 
-        public GenericRepository<ReceiptNote> ReceiptNoteRepository
-        {
-            get
-            {
-                if (_receiptNoteRepository == null)
-                {
-                    _receiptNoteRepository = new GenericRepository<ReceiptNote>(_context);
-                }
-
-                return _receiptNoteRepository;
-            }
-        }
-
-        public GenericRepository<ReceiptNoteDetail> ReceiptNoteDsetailsRepository
-        {
-            get
-            {
-                if (_receiptnotedetailsRepository == null)
-                {
-                    _receiptnotedetailsRepository = new GenericRepository<ReceiptNoteDetail>(_context);
-                }
-
-                return _receiptnotedetailsRepository;
-            }
-        }
 
         public GenericRepository<OrderNoteDetail> OrderDetailsRepository
         {
@@ -144,28 +121,7 @@ namespace Cafocha.Repository.DAL
 
         public GenericRepository<Employee> EmployeeRepository
         {
-            get
-            {
-                if (_employeeRepository == null)
-                {
-                    _employeeRepository = new GenericRepository<Employee>(_context);
-                }
-
-                return _employeeRepository;
-            }
-        }
-
-        public GenericRepository<Ingredient> IngredientRepository
-        {
-            get
-            {
-                if (_ingredientRepository == null)
-                {
-                    _ingredientRepository = new GenericRepository<Ingredient>(_context);
-                }
-
-                return _ingredientRepository;
-            }
+            get { return _employeeRepository ?? (_employeeRepository = new GenericRepository<Employee>(_context)); }
         }
 
         public GenericRepository<Product> ProductRepository
