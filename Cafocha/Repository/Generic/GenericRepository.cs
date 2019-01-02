@@ -344,23 +344,6 @@ namespace Cafocha.Repository.Generic
                 WareHouse wh = entity as WareHouse;
                 wh.WarehouseId = result;
             }
-            else if (entity is Ingredient)
-            {
-                sign = "IGD";
-                // lấy số thứ tự mới nhất
-                string numberWantToset = (this.Get().Count() + 1).ToString();
-
-                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
-                string result = sign;
-                for (int i = 0; i < blank; i++)
-                {
-                    result += "0";
-                }
-                result += numberWantToset;
-
-                Ingredient ign = entity as Ingredient;
-                ign.IgdId = result;
-            }
             else if (entity is Product)
             {
                 sign = "P";

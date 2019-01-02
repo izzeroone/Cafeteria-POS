@@ -44,13 +44,10 @@ namespace Cafocha.Entities
         System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; } // APWareHouse
         System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
-        System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
         System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
         System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
-        System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
-        System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails
         System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; } // SalaryNote
         System.Data.Entity.DbSet<Stock> Stocks { get; set; } // Stock
         System.Data.Entity.DbSet<StockIn> StockIns { get; set; } // StockIn
@@ -86,13 +83,10 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; } // APWareHouse
         public System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         public System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
-        public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
         public System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
-        public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
-        public System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails
         public System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; } // SalaryNote
         public System.Data.Entity.DbSet<Stock> Stocks { get; set; } // Stock
         public System.Data.Entity.DbSet<StockIn> StockIns { get; set; } // StockIn
@@ -161,13 +155,10 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new ApWareHouseMapping());
             modelBuilder.Configurations.Add(new CustomerMapping());
             modelBuilder.Configurations.Add(new EmployeeMapping());
-            modelBuilder.Configurations.Add(new IngredientMapping());
             modelBuilder.Configurations.Add(new OrderNoteMapping());
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping());
             modelBuilder.Configurations.Add(new ProductMapping());
             modelBuilder.Configurations.Add(new ProductDetailMapping());
-            modelBuilder.Configurations.Add(new ReceiptNoteMapping());
-            modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping());
             modelBuilder.Configurations.Add(new SalaryNoteMapping());
             modelBuilder.Configurations.Add(new StockMapping());
             modelBuilder.Configurations.Add(new StockInMapping());
@@ -187,13 +178,10 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new ApWareHouseMapping(schema));
             modelBuilder.Configurations.Add(new CustomerMapping(schema));
             modelBuilder.Configurations.Add(new EmployeeMapping(schema));
-            modelBuilder.Configurations.Add(new IngredientMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping(schema));
             modelBuilder.Configurations.Add(new ProductMapping(schema));
             modelBuilder.Configurations.Add(new ProductDetailMapping(schema));
-            modelBuilder.Configurations.Add(new ReceiptNoteMapping(schema));
-            modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping(schema));
             modelBuilder.Configurations.Add(new SalaryNoteMapping(schema));
             modelBuilder.Configurations.Add(new StockMapping(schema));
             modelBuilder.Configurations.Add(new StockInMapping(schema));
@@ -235,13 +223,10 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<ApWareHouse> ApWareHouses { get; set; }
         public System.Data.Entity.DbSet<Customer> Customers { get; set; }
         public System.Data.Entity.DbSet<Employee> Employees { get; set; }
-        public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; }
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; }
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; }
         public System.Data.Entity.DbSet<Product> Products { get; set; }
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; }
-        public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; }
-        public System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; }
         public System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; }
         public System.Data.Entity.DbSet<Stock> Stocks { get; set; }
         public System.Data.Entity.DbSet<StockIn> StockIns { get; set; }
@@ -262,13 +247,10 @@ namespace Cafocha.Entities
             ApWareHouses = new FakeDbSet<ApWareHouse>("ApwarehouseId");
             Customers = new FakeDbSet<Customer>("CusId");
             Employees = new FakeDbSet<Employee>("EmpId");
-            Ingredients = new FakeDbSet<Ingredient>("IgdId");
             OrderNotes = new FakeDbSet<OrderNote>("OrdernoteId");
             OrderNoteDetails = new FakeDbSet<OrderNoteDetail>("OrdernoteId", "ProductId");
             Products = new FakeDbSet<Product>("ProductId");
             ProductDetails = new FakeDbSet<ProductDetail>("PdetailId");
-            ReceiptNotes = new FakeDbSet<ReceiptNote>("RnId");
-            ReceiptNoteDetails = new FakeDbSet<ReceiptNoteDetail>("RnId", "IgdId");
             SalaryNotes = new FakeDbSet<SalaryNote>("SnId");
             Stocks = new FakeDbSet<Stock>("StoId");
             StockIns = new FakeDbSet<StockIn>("SiId");
@@ -941,10 +923,6 @@ namespace Cafocha.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.FK_dbo.OrderNote_dbo.Employee_emp_id
         /// <summary>
-        /// Child ReceiptNotes where [ReceiptNote].[emp_id] point to this entity (FK_dbo.ReceiptNote_dbo.Employee_emp_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote.FK_dbo.ReceiptNote_dbo.Employee_emp_id
-        /// <summary>
         /// Child SalaryNotes where [SalaryNote].[emp_id] point to this entity (FK_dbo.SalaryNote_dbo.Employee_emp_id)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<SalaryNote> SalaryNotes { get; set; } // SalaryNote.FK_dbo.SalaryNote_dbo.Employee_emp_id
@@ -963,103 +941,8 @@ namespace Cafocha.Entities
         public Employee()
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
-            ReceiptNotes = new System.Collections.Generic.List<ReceiptNote>();
             SalaryNotes = new System.Collections.Generic.List<SalaryNote>();
             WorkingHistories = new System.Collections.Generic.List<WorkingHistory>();
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
-    // Ingredient
-    [Table("Ingredient", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class Ingredient
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"igd_id", Order = 1, TypeName = "varchar")]
-        [Index(@"PK_dbo.Ingredient", 1, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Key]
-        [Display(Name = "Igd ID")]
-        public string IgdId { get; set; } // igd_id (Primary key) (length: 10)
-
-        [Column(@"warehouse_id", Order = 2, TypeName = "varchar")]
-        [Index(@"IX_warehouse_id", 1, IsUnique = false, IsClustered = false)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Display(Name = "Warehouse ID")]
-        public string WarehouseId { get; set; } // warehouse_id (length: 10)
-
-        [Column(@"name", Order = 3, TypeName = "nvarchar")]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(100)]
-        [StringLength(100)]
-        [Display(Name = "Name")]
-        public string Name { get; set; } // name (length: 100)
-
-        [Column(@"info", Order = 4, TypeName = "nvarchar")]
-        [MaxLength(300)]
-        [StringLength(300)]
-        [Display(Name = "Info")]
-        public string Info { get; set; } // info (length: 300)
-
-        [Column(@"usefor", Order = 5, TypeName = "tinyint")]
-        [Required]
-        [Display(Name = "Usefor")]
-        public byte Usefor { get; set; } // usefor
-
-        [Column(@"igd_type", Order = 6, TypeName = "nvarchar")]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(100)]
-        [StringLength(100)]
-        [Display(Name = "Igd type")]
-        public string IgdType { get; set; } // igd_type (length: 100)
-
-        [Column(@"unit_buy", Order = 7, TypeName = "nvarchar")]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(100)]
-        [StringLength(100)]
-        [Display(Name = "Unit buy")]
-        public string UnitBuy { get; set; } // unit_buy (length: 100)
-
-        [Column(@"standard_price", Order = 8, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Standard price")]
-        public decimal StandardPrice { get; set; } // standard_price
-
-        [Column(@"deleted", Order = 9, TypeName = "int")]
-        [Required]
-        [Display(Name = "Deleted")]
-        public int Deleted { get; set; } // deleted
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child ProductDetails where [ProductDetails].[igd_id] point to this entity (FK_dbo.ProductDetails_dbo.Ingredient_igd_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.FK_dbo.ProductDetails_dbo.Ingredient_igd_id
-        /// <summary>
-        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[igd_id] point to this entity (FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent WareHouse pointed by [Ingredient].([WarehouseId]) (FK_dbo.Ingredient_dbo.WareHouse_warehouse_id)
-        /// </summary>
-        [ForeignKey("WarehouseId"), Required] public virtual WareHouse WareHouse { get; set; } // FK_dbo.Ingredient_dbo.WareHouse_warehouse_id
-
-        public Ingredient()
-        {
-            ProductDetails = new System.Collections.Generic.List<ProductDetail>();
-            ReceiptNoteDetails = new System.Collections.Generic.List<ReceiptNoteDetail>();
             InitializePartial();
         }
 
@@ -1381,9 +1264,9 @@ namespace Cafocha.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent Ingredient pointed by [ProductDetails].([IgdId]) (FK_dbo.ProductDetails_dbo.Ingredient_igd_id)
+        /// Parent Stock pointed by [ProductDetails].([IgdId]) (FK_dbo.ProductDetails_dbo.Ingredient)
         /// </summary>
-        [ForeignKey("IgdId"), Required] public virtual Ingredient Ingredient { get; set; } // FK_dbo.ProductDetails_dbo.Ingredient_igd_id
+        [ForeignKey("IgdId"), Required] public virtual Stock Stock { get; set; } // FK_dbo.ProductDetails_dbo.Ingredient
 
         /// <summary>
         /// Parent Product pointed by [ProductDetails].([ProductId]) (FK_dbo.ProductDetails_dbo.Product_product_id)
@@ -1391,127 +1274,6 @@ namespace Cafocha.Entities
         [ForeignKey("ProductId"), Required] public virtual Product Product { get; set; } // FK_dbo.ProductDetails_dbo.Product_product_id
 
         public ProductDetail()
-        {
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
-    // ReceiptNote
-    [Table("ReceiptNote", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class ReceiptNote
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"rn_id", Order = 1, TypeName = "varchar")]
-        [Index(@"PK_dbo.ReceiptNote", 1, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Key]
-        [Display(Name = "Rn ID")]
-        public string RnId { get; set; } // rn_id (Primary key) (length: 10)
-
-        [Column(@"emp_id", Order = 2, TypeName = "varchar")]
-        [Index(@"IX_emp_id", 1, IsUnique = false, IsClustered = false)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Display(Name = "Emp ID")]
-        public string EmpId { get; set; } // emp_id (length: 10)
-
-        [Column(@"inday", Order = 3, TypeName = "date")]
-        [Required]
-        [DataType(DataType.Date)]
-        [Display(Name = "Inday")]
-        public System.DateTime Inday { get; set; } // inday
-
-        [Column(@"total_amount", Order = 4, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Total amount")]
-        public decimal TotalAmount { get; set; } // total_amount
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[rn_id] point to this entity (FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Employee pointed by [ReceiptNote].([EmpId]) (FK_dbo.ReceiptNote_dbo.Employee_emp_id)
-        /// </summary>
-        [ForeignKey("EmpId")] public virtual Employee Employee { get; set; } // FK_dbo.ReceiptNote_dbo.Employee_emp_id
-
-        public ReceiptNote()
-        {
-            ReceiptNoteDetails = new System.Collections.Generic.List<ReceiptNoteDetail>();
-            InitializePartial();
-        }
-
-        partial void InitializePartial();
-    }
-
-    // ReceiptNoteDetails
-    [Table("ReceiptNoteDetails", Schema = "dbo")]
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public partial class ReceiptNoteDetail
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"rn_id", Order = 1, TypeName = "varchar")]
-        [Index(@"IX_rn_id", 1, IsUnique = false, IsClustered = false)]
-        [Index(@"PK_dbo.ReceiptNoteDetails", 1, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Key]
-        [Display(Name = "Rn ID")]
-        public string RnId { get; set; } // rn_id (Primary key) (length: 10)
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"igd_id", Order = 2, TypeName = "varchar")]
-        [Index(@"IX_igd_id", 1, IsUnique = false, IsClustered = false)]
-        [Index(@"PK_dbo.ReceiptNoteDetails", 2, IsUnique = true, IsClustered = true)]
-        [Required(AllowEmptyStrings = true)]
-        [MaxLength(10)]
-        [StringLength(10)]
-        [Key]
-        [Display(Name = "Igd ID")]
-        public string IgdId { get; set; } // igd_id (Primary key) (length: 10)
-
-        [Column(@"quan", Order = 3, TypeName = "float")]
-        [Required]
-        [Display(Name = "Quan")]
-        public double Quan { get; set; } // quan
-
-        [Column(@"item_price", Order = 4, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Item price")]
-        public decimal ItemPrice { get; set; } // item_price
-
-        [Column(@"note", Order = 5, TypeName = "nvarchar")]
-        [MaxLength(1000)]
-        [StringLength(1000)]
-        [Display(Name = "Note")]
-        public string Note { get; set; } // note (length: 1000)
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Ingredient pointed by [ReceiptNoteDetails].([IgdId]) (FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id)
-        /// </summary>
-        [ForeignKey("IgdId"), Required] public virtual Ingredient Ingredient { get; set; } // FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
-
-        /// <summary>
-        /// Parent ReceiptNote pointed by [ReceiptNoteDetails].([RnId]) (FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id)
-        /// </summary>
-        [ForeignKey("RnId"), Required] public virtual ReceiptNote ReceiptNote { get; set; } // FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id
-
-        public ReceiptNoteDetail()
         {
             InitializePartial();
         }
@@ -1681,6 +1443,10 @@ namespace Cafocha.Entities
         // Reverse navigation
 
         /// <summary>
+        /// Child ProductDetails where [ProductDetails].[igd_id] point to this entity (FK_dbo.ProductDetails_dbo.Ingredient)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.FK_dbo.ProductDetails_dbo.Ingredient
+        /// <summary>
         /// Child StockInDetails where [StockInDetails].[sto_id] point to this entity (FK_dbo.StockInDetails_dbo.Stock_sto_id)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<StockInDetail> StockInDetails { get; set; } // StockInDetails.FK_dbo.StockInDetails_dbo.Stock_sto_id
@@ -1698,6 +1464,7 @@ namespace Cafocha.Entities
 
         public Stock()
         {
+            ProductDetails = new System.Collections.Generic.List<ProductDetail>();
             StockInDetails = new System.Collections.Generic.List<StockInDetail>();
             StockOutDetails = new System.Collections.Generic.List<StockOutDetail>();
             InitializePartial();
@@ -1976,16 +1743,8 @@ namespace Cafocha.Entities
         [Display(Name = "Std contain")]
         public double StdContain { get; set; } // std_contain
 
-        // Reverse navigation
-
-        /// <summary>
-        /// Child Ingredients where [Ingredient].[warehouse_id] point to this entity (FK_dbo.Ingredient_dbo.WareHouse_warehouse_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<Ingredient> Ingredients { get; set; } // Ingredient.FK_dbo.Ingredient_dbo.WareHouse_warehouse_id
-
         public WareHouse()
         {
-            Ingredients = new System.Collections.Generic.List<Ingredient>();
             InitializePartial();
         }
 
@@ -2148,25 +1907,6 @@ namespace Cafocha.Entities
         }
     }
 
-    // Ingredient
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class IngredientMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Ingredient>
-    {
-        public IngredientMapping()
-            : this("dbo")
-        {
-        }
-
-        public IngredientMapping(string schema)
-        {
-            Property(x => x.IgdId).IsUnicode(false);
-            Property(x => x.WarehouseId).IsUnicode(false);
-            Property(x => x.Info).IsOptional();
-            Property(x => x.StandardPrice).HasPrecision(19,4);
-
-        }
-    }
-
     // OrderNote
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
     public class OrderNoteMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderNote>
@@ -2242,43 +1982,6 @@ namespace Cafocha.Entities
             Property(x => x.PdetailId).IsUnicode(false);
             Property(x => x.ProductId).IsUnicode(false);
             Property(x => x.IgdId).IsUnicode(false);
-
-        }
-    }
-
-    // ReceiptNote
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class ReceiptNoteMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ReceiptNote>
-    {
-        public ReceiptNoteMapping()
-            : this("dbo")
-        {
-        }
-
-        public ReceiptNoteMapping(string schema)
-        {
-            Property(x => x.RnId).IsUnicode(false);
-            Property(x => x.EmpId).IsOptional().IsUnicode(false);
-            Property(x => x.TotalAmount).HasPrecision(19,4);
-
-        }
-    }
-
-    // ReceiptNoteDetails
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
-    public class ReceiptNoteDetailMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ReceiptNoteDetail>
-    {
-        public ReceiptNoteDetailMapping()
-            : this("dbo")
-        {
-        }
-
-        public ReceiptNoteDetailMapping(string schema)
-        {
-            Property(x => x.RnId).IsUnicode(false);
-            Property(x => x.IgdId).IsUnicode(false);
-            Property(x => x.ItemPrice).HasPrecision(19,4);
-            Property(x => x.Note).IsOptional();
 
         }
     }

@@ -149,7 +149,6 @@
     <Compile Include="BusinessContext\User\CustomerModule.cs" />
     <Compile Include="BusinessContext\User\EmployeeModule.cs" />
     <Compile Include="BusinessContext\User\ReceiptNoteModule.cs" />
-    <Compile Include="BusinessContext\WarehouseWorkspace\IngredientModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\OrderModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModule.cs" />
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
@@ -322,22 +321,6 @@
     </Compile>
     <Compile Include="GUI\Support\PassKeyboardControl.xaml.cs">
       <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\Helper\UnitBuyTrans.cs" />
-    <Compile Include="GUI\IngredientWorkSpace\IngredientPage.xaml.cs">
-      <DependentUpon>IngredientPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\InputNote.xaml.cs">
-      <DependentUpon>InputNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\InputReceiptNote.xaml.cs">
-      <DependentUpon>InputReceiptNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\LiveChartReceiptPage.xaml.cs">
-      <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\IngredientWorkSpace\WareHouseWindow.xaml.cs">
-      <DependentUpon>WareHouseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\WPFMaterialDesign\ButtonsViewModel.cs" />
     <Compile Include="GUI\WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
@@ -591,26 +574,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Support\PassKeyboardControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\IngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\InputNote.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\InputReceiptNote.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\LiveChartReceiptPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\IngredientWorkSpace\WareHouseWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

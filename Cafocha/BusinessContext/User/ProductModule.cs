@@ -121,7 +121,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 foreach (var pd in _pdtList)
                 {
                     pd.ProDe.ProductId = product.ProductId;
-                    pd.ProDe.IgdId = pd.Ingre.IgdId;
+                    pd.ProDe.IgdId = pd.Ingre.StoId;
                     _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
                     _unitofwork.Save();
                 }
@@ -148,7 +148,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         public class PDTemp
         {
             private ProductDetail _pd;
-            private Ingredient _ingre;
+            private Stock _ingre;
 
             public ProductDetail ProDe
             {
@@ -159,7 +159,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 }
             }
 
-            public Ingredient Ingre
+            public Stock Ingre
             {
                 get { return _ingre; }
                 set

@@ -21,7 +21,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     public partial class ProductUpdatePage : Page
     {
         private BusinessModuleLocator _businessModuleLocator;
-        List<Ingredient> _igreList;
+        List<Stock> _igreList;
         List<ProductDetail> _proDe;
         private List<ProductModule.PDTemp> _pdtList;
 
@@ -55,11 +55,11 @@ namespace Cafocha.GUI.AdminWorkSpace
             txtSusggestPrice.Text = String.Format("{0:0.000}", 0);
             txtPrice.Text = String.Format("{0:0.000}", _currentProduct.Price);
 
-            var ing = _businessModuleLocator.IngredientModule.getAllIngredients();
+            var ing = _businessModuleLocator.WarehouseModule.IngredientList;
 
             foreach (var pd in _proDe)
             {
-                var curing = ing.FirstOrDefault(x => x.IgdId.Equals(pd.IgdId));
+                var curing = ing.FirstOrDefault(x => x.StoId.Equals(pd.IgdId));
                 if (curing != null)
                 {
                     _pdtList.Add(new ProductModule.PDTemp { ProDe = pd, Ingre = curing });
@@ -73,7 +73,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         public bool isRaiseIngreShowEvent = false;
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
-            _igreList = _businessModuleLocator.IngredientModule.getAllIngredients().ToList();
+            _igreList = _businessModuleLocator.WarehouseModule.IngredientList;
             lvAvaibleIngredient.ItemsSource = _igreList;
         }
 
@@ -92,7 +92,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void LvAvaibleIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView lv = sender as ListView;
-            var ingre = lv.SelectedItem as Ingredient;
+            var ingre = lv.SelectedItem as Stock;
 
             if (ingre == null)
             {
@@ -101,7 +101,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             if (_pdtList.Count != 0)
             {
-                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
+                var igre = _pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.StoId)).FirstOrDefault();
                 if (igre != null)
                 {
                     MessageBox.Show("This Ingredient is already exist in Product Details List! Please choose another!");
@@ -113,7 +113,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 PdetailId = "",
                 ProductId = _currentProduct.ProductId,
-                IgdId = ingre.IgdId,
+                IgdId = ingre.StoId,
                 Quan = 0,
                 UnitUse = ""
             };
