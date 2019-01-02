@@ -239,6 +239,7 @@ namespace Cafocha.Entities
             Configuration = null;
             Database = null;
 
+            _dictionary = new Dictionary<Type, Object>();
             AdminRes = new FakeDbSet<AdminRe>("AdId");
             ApplicationLogs = new FakeDbSet<ApplicationLog>("Id");
             ApWareHouses = new FakeDbSet<ApWareHouse>("ApwarehouseId");
@@ -260,6 +261,7 @@ namespace Cafocha.Entities
             InitializePartial();
         }
 
+        private Dictionary<Type, Object> _dictionary;
         public int SaveChangesCount { get; private set; }
         public DbSet<AdminRe> AdminRes { get; set; }
         public DbSet<ApplicationLog> ApplicationLogs { get; set; }
@@ -328,7 +330,13 @@ namespace Cafocha.Entities
 
         public DbSet<TEntity> Set<TEntity>() where TEntity : class
         {
-            throw new NotImplementedException();
+            
+            if (!_dictionary.ContainsKey(typeof(TEntity)))
+            {
+                _dictionary[typeof(TEntity)] = new FakeDbSet<TEntity>();
+            }
+
+            return (DbSet<TEntity>) _dictionary[typeof(TEntity)];
         }
 
         public override string ToString()

@@ -35,16 +35,16 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 //            get => _orderTemp.OrderDetailsTemps;
 //        }
 
-        public void addOrUpdateOrderDetail(OrderDetailsTemp orderTempDetail)
-        {
-            var flag = false;
-
-            var item = OrderTemp.OrderDetailsTemps.FirstOrDefault(o => o.ProductId.Equals(orderTempDetail.ProductId));
-
-            if (item != null) OrderTemp.OrderDetailsTemps.Remove(item);
-
-            OrderTemp.OrderDetailsTemps.Add(orderTempDetail);
-        }
+//        public void addOrUpdateOrderDetail(OrderDetailsTemp orderTempDetail)
+//        {
+//            var flag = false;
+//
+//            var item = OrderTemp.OrderDetailsTemps.FirstOrDefault(o => o.ProductId.Equals(orderTempDetail.ProductId));
+//
+//            if (item != null) OrderTemp.OrderDetailsTemps.Remove(item);
+//
+//            OrderTemp.OrderDetailsTemps.Add(orderTempDetail);
+//        }
 
         //This function create a new order temp or update quanity by 1 when click
         public void addProductToOrder(Product pt)
@@ -200,7 +200,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             OrderTemp.SaleValue = Math.Round(SaleValue, 3);
         }
 
-        public bool ConvertTableToOrder(OrderNote newOrder)
+        public bool convertTableToOrder(OrderNote newOrder)
         {
             if (OrderTemp != null)
             {
@@ -247,7 +247,10 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public void clearOrder()
         {
-            OrderTemp.EmpId = (Application.Current.Properties["EmpLogin"] as Employee).EmpId;
+            if (Application.Current != null)
+            {
+                OrderTemp.EmpId = (Application.Current.Properties["EmpLogin"] as Employee).EmpId;
+            }
             OrderTemp.CusId = "CUS0000001";
             OrderTemp.Discount = 0;
             OrderTemp.Ordertime = DateTime.Now;

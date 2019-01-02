@@ -224,7 +224,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
             // convert data and save to database
-            if (_businessModuleLocator.TakingOrderModule.ConvertTableToOrder(newOrder))
+            if (_businessModuleLocator.TakingOrderModule.convertTableToOrder(newOrder))
                 _businessModuleLocator.TakingOrderModule.saveOrderToDB(newOrder);
             else
                 return;
@@ -249,7 +249,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             // input the rest data
             var newOrder = new OrderNote();
             newOrder.TotalPrice = _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice;
-            _businessModuleLocator.TakingOrderModule.ConvertTableToOrder(newOrder);
+            _businessModuleLocator.TakingOrderModule.convertTableToOrder(newOrder);
 
             // printing
             var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator,

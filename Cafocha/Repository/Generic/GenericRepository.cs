@@ -47,7 +47,7 @@ namespace Cafocha.Repository.Generic
 
         private static readonly int ID_SIZE_DBASOWELL = 10;
         internal ILocalContext context;
-        internal DbSet dbSet;
+        internal DbSet<TEntity> dbSet;
 
         public GenericRepository(ILocalContext context)
         {
