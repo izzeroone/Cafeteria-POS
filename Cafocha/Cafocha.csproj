@@ -596,8 +596,6 @@
     <None Include="Entities\EF.Reverse.POCO.ttinclude" />
     <None Include="packages.config" />
     <None Include="GUI\log4net.config" />
-    <None Include="GUI\SerializedData\Order-Report-bc2ea171fd9d4290bd7cf1cc8bba9b6a.pdf" />
-    <None Include="GUI\SerializedData\tableRuntimeHistory.bin" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -621,6 +619,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="dbconfig.txt" />
     <Content Include="Entities\CafochaEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CafochaEntities.cs</LastGenOutput>
@@ -632,6 +631,9 @@
       <DependentUpon>DBCafocha.mdf</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="printerSetting.txt" />
+    <Resource Include="SerializedData\dbconfig.txt" />
+    <Resource Include="SerializedData\printerSetting.txt" />
     <Resource Include="Images\softwarepdate.jpg" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Images\rand5.png" />
@@ -1145,12 +1147,6 @@
     <Resource Include="GUI\Images\rand5.png" />
     <Resource Include="GUI\Images\Search_50px.png" />
     <Resource Include="GUI\Images\softwarepdate.jpg" />
-    <Resource Include="GUI\SerializedData\dbconfig.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="GUI\SerializedData\printerSetting.txt" />
-    <Resource Include="GUI\SerializedData\tableImagePath.txt" />
-    <Resource Include="GUI\SerializedData\tableSize.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

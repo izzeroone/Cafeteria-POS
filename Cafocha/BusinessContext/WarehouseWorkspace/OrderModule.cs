@@ -25,22 +25,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 //            ordernotelist = ordernotelist.Where(x => x.Employee.Manager.Equals(admin.AdId)).ToList();
             return ordernotelist;
         }
-
-        public IEnumerable<OrderNote> getOrdernoteByMonth(int month)
-        {
-            if (month <= 0 || month >= 13) return new List<OrderNote>();
-
-            return _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == month);
-        }
-
         public IEnumerable<OrderNoteDetail> getOrderNoteDetail(string orderNoteID)
         {
             return _unitofwork.OrderDetailsRepository.Get(c => c.OrdernoteId.Equals(orderNoteID));
-        }
-
-        public IEnumerable<OrderNoteDetail> getAllOrderNoteDetails()
-        {
-            return _unitofwork.OrderDetailsRepository.Get(includeProperties: "Product").ToList();
         }
     }
 }

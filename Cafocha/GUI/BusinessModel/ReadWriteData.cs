@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
 
@@ -14,8 +15,10 @@ namespace Cafocha.GUI.BusinessModel
 
         public static string[] ReadPrinterSetting()
         {
-            using (var fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt", FileMode.Open))
+            try
             {
+                var fs = new FileStream(startupProjectPath + "\\printerSetting.txt", FileMode.Open);
+
                 using (var rd = new StreamReader(fs, Encoding.UTF8))
                 {
                     var printer = rd.ReadLine();
@@ -23,15 +26,18 @@ namespace Cafocha.GUI.BusinessModel
 
                     if (result?.Length >= 4) return result;
                 }
-
-                MessageBox.Show("There has no previous setting, so the configuration will set to default!");
-                return null;
             }
+            catch (Exception e)
+            {
+                
+            }
+
+            return new string[] { "Microsoft Print to PDF", "Microsoft Print to PDF", "Microsoft Print to PDF", "Microsoft Print to PDF" };
         }
 
         public static void WritePrinterSetting(string printers)
         {
-            using (var fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt",
+            using (var fs = new FileStream(startupProjectPath + "\\printerSetting.txt",
                 FileMode.Create))
             {
                 using (var sWriter = new StreamWriter(fs, Encoding.UTF8))
@@ -43,8 +49,9 @@ namespace Cafocha.GUI.BusinessModel
 
         public static string ReadDBConfig()
         {
-            using (var fs = new FileStream(startupProjectPath + "\\SerializedData\\dbconfig.txt", FileMode.Open))
+            try
             {
+                var fs = new FileStream(startupProjectPath + "\\dbconfig.txt", FileMode.Open);
                 using (var rd = new StreamReader(fs, Encoding.UTF8))
                 {
                     var dbConfig = rd.ReadLine();
@@ -52,8 +59,9 @@ namespace Cafocha.GUI.BusinessModel
 
                     return dbConfig;
                 }
-
-
+            }
+            catch (Exception e)
+            {
                 return null;
             }
         }
@@ -61,12 +69,19 @@ namespace Cafocha.GUI.BusinessModel
         //ToDo: Need to encrypt config before save to file
         public static void WriteDBConfig(string dbconfig)
         {
-            using (var fs = new FileStream(startupProjectPath + "\\SerializedData\\dbconfig.txt", FileMode.Create))
+            try
             {
-                using (var sWriter = new StreamWriter(fs, Encoding.UTF8))
+                var fs = new FileStream(startupProjectPath + "\\dbconfig.txt", FileMode.Create);
                 {
-                    sWriter.WriteLine(dbconfig);
+                    using (var sWriter = new StreamWriter(fs, Encoding.UTF8))
+                    {
+                        sWriter.WriteLine(dbconfig);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                return;
             }
         }
     }

@@ -57,6 +57,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BusinessContext\EmployeeWorkspace\TakingOrderModuleTests.cs" />
+    <Compile Include="BusinessContext\User\ProductModuleTests.cs" />
+    <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

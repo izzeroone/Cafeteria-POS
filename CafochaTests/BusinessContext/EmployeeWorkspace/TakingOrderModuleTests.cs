@@ -134,6 +134,8 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace.Tests
             _takingOrderModule.loadTotalPrice();
             OrderNote newOrder = new OrderNote();
             var expectPrice = _firstProduct.Price * 2 + _secondProduct.Price;
+
+            //Arrangle
             _takingOrderModule.convertTableToOrder(newOrder);
 
             //Assert
@@ -141,6 +143,28 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace.Tests
             Assert.AreEqual(expectPrice * 10 / 100, newOrder.Vat);
             Assert.AreEqual(expectPrice * 90 / 100, newOrder.SaleValue);
             Assert.AreEqual(2, newOrder.OrderNoteDetails.Count);
+        }
+
+        [TestMethod()]
+        public void saveOrderToDbTest()
+        {
+            //Act
+            _takingOrderModule.OrderTemp = new OrderTemp();
+            _takingOrderModule.addProductToOrder(_firstProduct);
+            _takingOrderModule.addProductToOrder(_firstProduct);
+            _takingOrderModule.addProductToOrder(_secondProduct);
+            _takingOrderModule.loadTotalPrice();
+            OrderNote newOrder = new OrderNote();
+            var expectPrice = _firstProduct.Price * 2 + _secondProduct.Price;
+
+            //Arrangle
+            _takingOrderModule.convertTableToOrder(newOrder);
+            _takingOrderModule.saveOrderToDB(newOrder);
+
+            var order = _repositoryLocator.OrderRepository.Get(o => o.OrdernoteId.Equals(newOrder.OrdernoteId)).FirstOrDefault();
+       
+            //Assert
+            Assert.AreEqual(order, newOrder);
         }
 
         [TestMethod()]
