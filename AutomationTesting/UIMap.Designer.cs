@@ -60,11 +60,11 @@ namespace AutomationTesting
         public void clickOnFirstProduct()
         {
             #region Variable Declarations
-            WpfImage uIItemImage = this.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000001ListItem.UIFruitPlatterText.UIItemImage;
+            WpfImage uIItemImage = this.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000001ListItem.UIAppleTonicText.UIItemImage;
             #endregion
 
-            // Click first image next to 'Fruit Platter' label
-            Mouse.Click(uIItemImage, new Point(96, 39));
+            // Click first image next to 'Apple Tonic' label
+            Mouse.Click(uIItemImage, new Point(67, 38));
         }
         
         /// <summary>
@@ -130,10 +130,10 @@ namespace AutomationTesting
             // Verify that the 'RowCount' property of 'lvData' table equals '1'
             Assert.AreEqual(this.singleItemAssertExpectedValues.UILvDataTableRowCount, uILvDataTable.RowCount, "Should add single item");
 
-            // Verify that the 'FriendlyName' property of 'Fruit Platter' cell equals 'Fruit Platter'
+            // Verify that the 'FriendlyName' property of 'Apple Tonic' cell equals 'Apple Tonic'
             Assert.AreEqual(this.singleItemAssertExpectedValues.UIFruitPlatterCellFriendlyName, uIFruitPlatterCell.FriendlyName, "shouldBeTheFirstItem");
 
-            // Verify that the 'DisplayText' property of 'Fruit Platter' label equals 'Fruit Platter'
+            // Verify that the 'DisplayText' property of 'Apple Tonic' label equals 'Apple Tonic'
             Assert.AreEqual(this.singleItemAssertExpectedValues.UIFruitPlatterTextDisplayText, uIFruitPlatterText.DisplayText, "Click item should be Fruiit Platter");
         }
         
@@ -151,10 +151,10 @@ namespace AutomationTesting
             WpfEdit uITxtTotalEdit = this.UIMainWindowWindow.UIMyFramePane.UIUcOrderCustom.UITxtTotalEdit;
             #endregion
 
-            // Verify that the 'Name' property of 'Fruit Platter' label equals 'Fruit Platter'
+            // Verify that the 'Name' property of 'Apple Tonic' label equals 'Apple Tonic'
             Assert.AreEqual(this.twoItemAssertExpectedValues.UIFruitPlatterTextName, uIFruitPlatterText.Name);
 
-            // Verify that the 'ControlType' property of 'Fruit Platter' cell equals 'Cell'
+            // Verify that the 'ControlType' property of 'Apple Tonic' cell equals 'Cell'
             Assert.AreEqual(this.twoItemAssertExpectedValues.UIFruitPlatterCellControlType, uIFruitPlatterCell.ControlType.ToString());
 
             // Verify that the 'ControlType' property of '2' cell equals 'Cell'
@@ -287,18 +287,19 @@ namespace AutomationTesting
         {
             #region Variable Declarations
             WpfButton uIPayButton = this.UIMainWindowWindow.UIMyFramePane.UIUcOrderCustom.UIPayButton;
-            WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
+            
             #endregion
 
             // Click 'Pay' button
             Mouse.Click(uIPayButton, new Point(56, 22));
-            uIPayButton.WaitForControlReady();
+
             if (this.UIWpfWindow.UIKbInputCustom.WaitForControlReady())
             {
+                WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
                 Mouse.Click(uIBtnGoButton, new Point(38, 32));
-
             }
             // Click 'BtnGo' button
+            
         }
         
         /// <summary>
@@ -308,18 +309,23 @@ namespace AutomationTesting
         {
             #region Variable Declarations
             WpfButton uIPayButton = this.UIMainWindowWindow.UIMyFramePane.UIUcOrderCustom.UIPayButton;
-            WpfEdit uITxtInputValueEdit = this.UIWpfWindow.UIKbInputCustom.UITxtInputValueEdit;
-            WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
             #endregion
 
             // Click 'Pay' button
             Mouse.Click(uIPayButton, new Point(118, 24));
 
-            // Type '30' in 'TxtInputValue' text box
-            uITxtInputValueEdit.Text = this.payLessThanAmountParams.UITxtInputValueEditText;
 
-            // Click 'BtnGo' button
-            Mouse.Click(uIBtnGoButton, new Point(37, 12));
+            if (this.UIWpfWindow.UIKbInputCustom.WaitForControlReady())
+            {
+                WpfEdit uITxtInputValueEdit = this.UIWpfWindow.UIKbInputCustom.UITxtInputValueEdit;
+                WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
+
+                // Type '30' in 'TxtInputValue' text box
+                uITxtInputValueEdit.Text = this.payLessThanAmountParams.UITxtInputValueEditText;
+
+                // Click 'BtnGo' button
+                Mouse.Click(uIBtnGoButton, new Point(37, 12));
+            }
         }
         
         /// <summary>
@@ -342,18 +348,22 @@ namespace AutomationTesting
         {
             #region Variable Declarations
             WpfButton uIPayButton = this.UIMainWindowWindow.UIMyFramePane.UIUcOrderCustom.UIPayButton;
-            WpfEdit uITxtInputValueEdit = this.UIWpfWindow.UIKbInputCustom.UITxtInputValueEdit;
-            WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
             #endregion
 
             // Click 'Pay' button
             Mouse.Click(uIPayButton, new Point(90, 13));
 
-            // Type '200' in 'TxtInputValue' text box
-            uITxtInputValueEdit.Text = this.payMoreThanAmountParams.UITxtInputValueEditText;
+            if (this.UIWpfWindow.UIKbInputCustom.WaitForControlReady())
+            {
+                WpfEdit uITxtInputValueEdit = this.UIWpfWindow.UIKbInputCustom.UITxtInputValueEdit;
+                WpfButton uIBtnGoButton = this.UIWpfWindow.UIKbInputCustom.UIBtnGoButton;
 
-            // Click 'BtnGo' button
-            Mouse.Click(uIBtnGoButton, new Point(54, 45));
+                // Type '200' in 'TxtInputValue' text box
+                uITxtInputValueEdit.Text = this.payMoreThanAmountParams.UITxtInputValueEditText;
+
+                // Click 'BtnGo' button
+                Mouse.Click(uIBtnGoButton, new Point(54, 45));
+            }
         }
         
         /// <summary>
@@ -362,11 +372,11 @@ namespace AutomationTesting
         public void clickOnSecondProduct()
         {
             #region Variable Declarations
-            WpfImage uIItemImage = this.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000002ListItem.UIBreadBasketText.UIItemImage;
+            WpfImage uIItemImage = this.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000002ListItem.UIClassicMilkteaText.UIItemImage;
             #endregion
 
-            // Click first image next to 'Bread Basket' label
-            Mouse.Click(uIItemImage, new Point(88, 43));
+            // Click first image next to 'Classic Milktea' label
+            Mouse.Click(uIItemImage, new Point(49, 53));
         }
         
         /// <summary>
@@ -401,6 +411,46 @@ namespace AutomationTesting
 
             // Click 'Clear' button
             Mouse.Click(uIClearButton, new Point(47, 15));
+        }
+        
+        /// <summary>
+        /// loginAsAdmin - Use 'loginAsAdminParams' to pass parameters into this method.
+        /// </summary>
+        public void loginAsAdmin()
+        {
+            #region Variable Declarations
+            WpfEdit uITxtUsernameEdit = this.UILoginWindow.UITxtUsernameEdit;
+            WpfButton uIItemButton = this.UILoginWindow.UIItemButton;
+            WpfEdit uITxtPassEdit = this.UILoginWindow.UITxtPassEdit;
+            #endregion
+
+            // Launch 'D:\Projects\Cafeteria-POS\Cafocha\bin\Debug\Cafocha.exe'
+            ApplicationUnderTest cafochaApplication = ApplicationUnderTest.Launch(this.loginAsAdminParams.ExePath, this.loginAsAdminParams.AlternateExePath);
+
+            // Type 'admin' in 'txtUsername' text box
+            uITxtUsernameEdit.Text = this.loginAsAdminParams.UITxtUsernameEditText;
+
+            // Type '{Tab}' in 'txtUsername' text box
+            Keyboard.SendKeys(uITxtUsernameEdit, this.loginAsAdminParams.UITxtUsernameEditSendKeys, ModifierKeys.None);
+
+            // Type '{Tab}' in button
+            Keyboard.SendKeys(uIItemButton, this.loginAsAdminParams.UIItemButtonSendKeys, ModifierKeys.None);
+
+            // Type '********' in 'txtPass' text box
+            Keyboard.SendKeys(uITxtPassEdit, this.loginAsAdminParams.UITxtPassEditSendKeys, true);
+        }
+        
+        /// <summary>
+        /// launchAdminWorkSpace
+        /// </summary>
+        public void launchAdminWorkSpace()
+        {
+            #region Variable Declarations
+            WpfButton uIGotoAdminWSButtonButton = this.UIAdminNavWindowWindow.UIItemPane.UIGotoAdminWSButtonButton;
+            #endregion
+
+            // Click 'GotoAdminWSButton' button
+            Mouse.Click(uIGotoAdminWSButtonButton, new Point(74, 19));
         }
         
         #region Properties
@@ -548,6 +598,18 @@ namespace AutomationTesting
             }
         }
         
+        public virtual loginAsAdminParams loginAsAdminParams
+        {
+            get
+            {
+                if ((this.mloginAsAdminParams == null))
+                {
+                    this.mloginAsAdminParams = new loginAsAdminParams();
+                }
+                return this.mloginAsAdminParams;
+            }
+        }
+        
         public UILoginWindow UILoginWindow
         {
             get
@@ -667,6 +729,18 @@ namespace AutomationTesting
                 return this.mUIAllpaymentgrounduptoWindow;
             }
         }
+        
+        public UIAdminNavWindowWindow UIAdminNavWindowWindow
+        {
+            get
+            {
+                if ((this.mUIAdminNavWindowWindow == null))
+                {
+                    this.mUIAdminNavWindowWindow = new UIAdminNavWindowWindow();
+                }
+                return this.mUIAdminNavWindowWindow;
+            }
+        }
         #endregion
         
         #region Fields
@@ -694,6 +768,8 @@ namespace AutomationTesting
         
         private twoProductAssertExpectedValues mtwoProductAssertExpectedValues;
         
+        private loginAsAdminParams mloginAsAdminParams;
+        
         private UILoginWindow mUILoginWindow;
         
         private UIMainWindowWindow mUIMainWindowWindow;
@@ -713,6 +789,8 @@ namespace AutomationTesting
         private UIWpfWindow mUIWpfWindow;
         
         private UIAllpaymentgrounduptoWindow mUIAllpaymentgrounduptoWindow;
+        
+        private UIAdminNavWindowWindow mUIAdminNavWindowWindow;
         #endregion
     }
     
@@ -797,14 +875,14 @@ namespace AutomationTesting
         public int UILvDataTableRowCount = 1;
         
         /// <summary>
-        /// Verify that the 'FriendlyName' property of 'Fruit Platter' cell equals 'Fruit Platter'
+        /// Verify that the 'FriendlyName' property of 'Apple Tonic' cell equals 'Apple Tonic'
         /// </summary>
-        public string UIFruitPlatterCellFriendlyName = "Fruit Platter";
+        public string UIFruitPlatterCellFriendlyName = "Apple Tonic";
         
         /// <summary>
-        /// Verify that the 'DisplayText' property of 'Fruit Platter' label equals 'Fruit Platter'
+        /// Verify that the 'DisplayText' property of 'Apple Tonic' label equals 'Apple Tonic'
         /// </summary>
-        public string UIFruitPlatterTextDisplayText = "Fruit Platter";
+        public string UIFruitPlatterTextDisplayText = "Apple Tonic";
         #endregion
     }
     
@@ -817,12 +895,12 @@ namespace AutomationTesting
         
         #region Fields
         /// <summary>
-        /// Verify that the 'Name' property of 'Fruit Platter' label equals 'Fruit Platter'
+        /// Verify that the 'Name' property of 'Apple Tonic' label equals 'Apple Tonic'
         /// </summary>
-        public string UIFruitPlatterTextName = "Fruit Platter";
+        public string UIFruitPlatterTextName = "Apple Tonic";
         
         /// <summary>
-        /// Verify that the 'ControlType' property of 'Fruit Platter' cell equals 'Cell'
+        /// Verify that the 'ControlType' property of 'Apple Tonic' cell equals 'Cell'
         /// </summary>
         public string UIFruitPlatterCellControlType = "Cell";
         
@@ -965,6 +1043,46 @@ namespace AutomationTesting
         /// Verify that the 'Name' property of '1' cell equals '1'
         /// </summary>
         public string UIItem1CellName = "1";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'loginAsAdmin'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class loginAsAdminParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Launch 'D:\Projects\Cafeteria-POS\Cafocha\bin\Debug\Cafocha.exe'
+        /// </summary>
+        public string ExePath = "D:\\Projects\\Cafeteria-POS\\Cafocha\\bin\\Debug\\Cafocha.exe";
+        
+        /// <summary>
+        /// Launch 'D:\Projects\Cafeteria-POS\Cafocha\bin\Debug\Cafocha.exe'
+        /// </summary>
+        public string AlternateExePath = "D:\\Projects\\Cafeteria-POS\\Cafocha\\bin\\Debug\\Cafocha.exe";
+        
+        /// <summary>
+        /// Type 'admin' in 'txtUsername' text box
+        /// </summary>
+        public string UITxtUsernameEditText = "admin";
+        
+        /// <summary>
+        /// Type '{Tab}' in 'txtUsername' text box
+        /// </summary>
+        public string UITxtUsernameEditSendKeys = "{Tab}";
+        
+        /// <summary>
+        /// Type '{Tab}' in button
+        /// </summary>
+        public string UIItemButtonSendKeys = "{Tab}";
+        
+        /// <summary>
+        /// Type '********' in 'txtPass' text box
+        /// </summary>
+        public string UITxtPassEditSendKeys = "QWwOodIXpSOiF7DgPuhHMs3XiW84RR7gnYlplN8/J3g=";
         #endregion
     }
     
@@ -1239,10 +1357,24 @@ namespace AutomationTesting
                 return this.mUIFruitPlatterText;
             }
         }
+        
+        public UIAppleTonicText UIAppleTonicText
+        {
+            get
+            {
+                if ((this.mUIAppleTonicText == null))
+                {
+                    this.mUIAppleTonicText = new UIAppleTonicText(this);
+                }
+                return this.mUIAppleTonicText;
+            }
+        }
         #endregion
         
         #region Fields
         private UIFruitPlatterText mUIFruitPlatterText;
+        
+        private UIAppleTonicText mUIAppleTonicText;
         #endregion
     }
     
@@ -1254,7 +1386,43 @@ namespace AutomationTesting
                 base(searchLimitContainer)
         {
             #region Search Criteria
-            this.SearchProperties[WpfText.PropertyNames.Name] = "Fruit Platter";
+            this.SearchProperties[WpfText.PropertyNames.Name] = "Apple Tonic";
+            this.WindowTitles.Add("MainWindow");
+            #endregion
+        }
+        
+        #region Properties
+        public WpfImage UIItemImage
+        {
+            get
+            {
+                if ((this.mUIItemImage == null))
+                {
+                    this.mUIItemImage = new WpfImage(this);
+                    #region Search Criteria
+                    this.mUIItemImage.SearchConfigurations.Add(SearchConfiguration.NextSibling);
+                    this.mUIItemImage.WindowTitles.Add("MainWindow");
+                    #endregion
+                }
+                return this.mUIItemImage;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WpfImage mUIItemImage;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIAppleTonicText : WpfText
+    {
+        
+        public UIAppleTonicText(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[WpfText.PropertyNames.Name] = "Apple Tonic";
             this.WindowTitles.Add("MainWindow");
             #endregion
         }
@@ -1307,10 +1475,24 @@ namespace AutomationTesting
                 return this.mUIBreadBasketText;
             }
         }
+        
+        public UIClassicMilkteaText UIClassicMilkteaText
+        {
+            get
+            {
+                if ((this.mUIClassicMilkteaText == null))
+                {
+                    this.mUIClassicMilkteaText = new UIClassicMilkteaText(this);
+                }
+                return this.mUIClassicMilkteaText;
+            }
+        }
         #endregion
         
         #region Fields
         private UIBreadBasketText mUIBreadBasketText;
+        
+        private UIClassicMilkteaText mUIClassicMilkteaText;
         #endregion
     }
     
@@ -1323,6 +1505,42 @@ namespace AutomationTesting
         {
             #region Search Criteria
             this.SearchProperties[WpfText.PropertyNames.Name] = "Bread Basket";
+            this.WindowTitles.Add("MainWindow");
+            #endregion
+        }
+        
+        #region Properties
+        public WpfImage UIItemImage
+        {
+            get
+            {
+                if ((this.mUIItemImage == null))
+                {
+                    this.mUIItemImage = new WpfImage(this);
+                    #region Search Criteria
+                    this.mUIItemImage.SearchConfigurations.Add(SearchConfiguration.NextSibling);
+                    this.mUIItemImage.WindowTitles.Add("MainWindow");
+                    #endregion
+                }
+                return this.mUIItemImage;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WpfImage mUIItemImage;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIClassicMilkteaText : WpfText
+    {
+        
+        public UIClassicMilkteaText(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[WpfText.PropertyNames.Name] = "Classic Milktea";
             this.WindowTitles.Add("MainWindow");
             #endregion
         }
@@ -2418,6 +2636,74 @@ namespace AutomationTesting
         
         #region Fields
         private WinText mUIAllpaymentgrounduptoText;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIAdminNavWindowWindow : WpfWindow
+    {
+        
+        public UIAdminNavWindowWindow()
+        {
+            #region Search Criteria
+            this.SearchProperties[WpfWindow.PropertyNames.Name] = "AdminNavWindow";
+            this.SearchProperties.Add(new PropertyExpression(WpfWindow.PropertyNames.ClassName, "HwndWrapper", PropertyExpressionOperator.Contains));
+            this.WindowTitles.Add("AdminNavWindow");
+            #endregion
+        }
+        
+        #region Properties
+        public UIItemPane UIItemPane
+        {
+            get
+            {
+                if ((this.mUIItemPane == null))
+                {
+                    this.mUIItemPane = new UIItemPane(this);
+                }
+                return this.mUIItemPane;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private UIItemPane mUIItemPane;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIItemPane : WpfPane
+    {
+        
+        public UIItemPane(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[WpfPane.PropertyNames.ClassName] = "Uia.ScrollViewer";
+            this.WindowTitles.Add("AdminNavWindow");
+            #endregion
+        }
+        
+        #region Properties
+        public WpfButton UIGotoAdminWSButtonButton
+        {
+            get
+            {
+                if ((this.mUIGotoAdminWSButtonButton == null))
+                {
+                    this.mUIGotoAdminWSButtonButton = new WpfButton(this);
+                    #region Search Criteria
+                    this.mUIGotoAdminWSButtonButton.SearchProperties[WpfButton.PropertyNames.AutomationId] = "GotoAdminWSButton";
+                    this.mUIGotoAdminWSButtonButton.WindowTitles.Add("AdminNavWindow");
+                    #endregion
+                }
+                return this.mUIGotoAdminWSButtonButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WpfButton mUIGotoAdminWSButtonButton;
         #endregion
     }
 }

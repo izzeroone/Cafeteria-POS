@@ -4,8 +4,8 @@ namespace Cafocha.Entities
 {
     public enum EmployeeRole
     {
-        Counter = 0,
-        Stock = 3
+        Counter = 1,
+        Stock = 2
     }
 
     public partial class Employee

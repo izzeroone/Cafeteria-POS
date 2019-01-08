@@ -49,24 +49,20 @@
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
                             <GridViewColumn Header="ID"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding IgdId}" />
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding StoId}" />
                             <GridViewColumn Header="Name"
-                                            Width="200"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Info"
-                                            Width="150"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="User for"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Usefor}" />
-                            <GridViewColumn Header="Type"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding IgdType}" />
                             <GridViewColumn Header="UnitBuy"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding UnitBuy}" />
-
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding UnitIn}" />
+                            <GridViewColumn Header="StandardPrice"
+                                            Width="120"
+                                            DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

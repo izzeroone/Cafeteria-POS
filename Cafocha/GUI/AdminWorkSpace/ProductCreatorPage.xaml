@@ -49,23 +49,20 @@
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
                             <GridViewColumn Header="ID"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding IgdId}" />
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding StoId}" />
                             <GridViewColumn Header="Name"
-                                            Width="200"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Info"
-                                            Width="150"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="User for"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Usefor}" />
-                            <GridViewColumn Header="Type"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding IgdType}" />
                             <GridViewColumn Header="UnitBuy"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding UnitBuy}" />
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding UnitIn}" />
+                            <GridViewColumn Header="StandardPrice"
+                                            Width="120"
+                                            DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
 
                         </GridView>
                     </ListView.View>
@@ -73,10 +70,14 @@
             </Grid>
 
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="687*"/>
+                    <ColumnDefinition Width="106*"/>
+                </Grid.ColumnDefinitions>
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
-                                          Height="46">
+                                          Height="46" Grid.ColumnSpan="2" Margin="0,0,-0.2,0">
                     <StackPanel Orientation="Horizontal"
                                 Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
@@ -92,9 +93,9 @@
                           Background="#FFED5C5C"
                           Foreground="White"
                           FontWeight="Bold"
-                          Margin="0,50,0,0"
+                          Margin="0,50,-47.2,0"
                           Height="222"
-                          Width="840">
+                          Width="840" SelectionChanged="LvDetails_SelectionChanged" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
@@ -106,7 +107,7 @@
                             <GridViewColumn Header="Name"
                                             Width="200"
                                             DisplayMemberBinding="{Binding Ingre.Name}" />
-                            <GridViewColumn Header="IgdId"
+                            <GridViewColumn Header="StockId"
                                             Width="120"
                                             DisplayMemberBinding="{Binding ProDe.IgdId}" />
                             <GridViewColumn Header="Quantity"

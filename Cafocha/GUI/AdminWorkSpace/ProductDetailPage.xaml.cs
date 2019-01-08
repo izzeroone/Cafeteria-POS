@@ -48,15 +48,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.Items.Add(ProductType.Topping);
             cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
-
-            //init Ingredient Type
-            cboTypeI.Items.Add("All");
-            cboTypeI.Items.Add("Other");
-            cboTypeI.Items.Add("Dry");
-            cboTypeI.Items.Add("Dairy");
-            cboTypeI.Items.Add("Vegetable");
-            cboTypeI.Items.Add("Fee");
-            cboTypeI.SelectedItem = "All";
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -187,43 +178,21 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
         {
             var filter = SearchIBox.Text.Trim();
-            var selectedI = cboTypeI.SelectedIndex;
 
-            if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
-            {
-                if (filter.Length == 0)
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                else
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
+            if (filter.Length == 0)
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
             else
-            {
-                if (filter.Length == 0)
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                else
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
         }
 
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var filter = SearchIBox.Text.Trim();
-            var selectedI = cboTypeI.SelectedIndex;
 
-            if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
-            {
-                if (filter.Length == 0)
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                else
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
+            if (filter.Length == 0)
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
             else
-            {
-                if (filter.Length == 0)
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-                else
-                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
         }
 
         private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -18,7 +18,7 @@ namespace AutomationTesting
     [CodedUITest]
     public class TakingOrderTest
     {
-        public TakingOrderTest()
+        public TakingOrderTest()    
         {
         }
 
@@ -55,6 +55,7 @@ namespace AutomationTesting
            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
         }
 
+        [TestMethod]
         public void addTwoDiffirentItemToOrder()
         {
             this.UIMap.loginAsEmployee();

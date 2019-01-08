@@ -236,12 +236,12 @@
                         <Border CornerRadius="3"
                                 Width="417">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox x:Name="cboTypeI"
+                                <!--<ComboBox x:Name="cboTypeI"
                                           Foreground="Black"
                                           Background="White"
                                           Width="135"
                                           Margin="0,0,20,0"
-                                          SelectionChanged="cboTypeI_SelectionChanged" />
+                                          SelectionChanged="cboTypeI_SelectionChanged" />-->
                                 <!-- <Button x:Name="bntAdd" -->
                                 <!--         Content="Add" -->
                                 <!--         Height="auto" -->
@@ -293,22 +293,16 @@
                         <GridView>
                             <GridViewColumn Header="ID"
                                             Width="90"
-                                            DisplayMemberBinding="{Binding IgdId}" />
+                                            DisplayMemberBinding="{Binding StoId}" />
                             <GridViewColumn Header="Name"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Info"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="Usefor"
-                                            Width="80"
-                                            DisplayMemberBinding="{Binding Usefor}" />
-                            <GridViewColumn Header="IgdType"
-                                            Width="90"
-                                            DisplayMemberBinding="{Binding IgdType}" />
                             <GridViewColumn Header="UnitBuy"
                                             Width="90"
-                                            DisplayMemberBinding="{Binding UnitBuy}" />
+                                            DisplayMemberBinding="{Binding UnitIn}" />
                             <GridViewColumn Header="StandardPrice"
                                             Width="120"
                                             DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />

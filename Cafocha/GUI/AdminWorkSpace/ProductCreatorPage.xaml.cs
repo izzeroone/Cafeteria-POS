@@ -351,5 +351,10 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             txtSusggestPrice.Text = sugprice + "";
         }
+
+        private void LvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

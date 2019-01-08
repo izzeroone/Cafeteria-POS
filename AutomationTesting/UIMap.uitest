@@ -74,11 +74,11 @@
       <WorkItemId>0</WorkItemId>
       <MarkerRegionType>Action</MarkerRegionType>
     </TestStepMarkerAction>
-    <MouseAction UIObjectName="UIMap.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000001ListItem.UIFruitPlatterText.UIItemImage">
+    <MouseAction UIObjectName="UIMap.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000001ListItem.UIAppleTonicText.UIItemImage">
       <ParameterName />
       <ModifierKeys>None</ModifierKeys>
       <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="96" Y="39" />
+      <Location X="67" Y="38" />
       <WheelDirection>0</WheelDirection>
       <ActionType>Click</ActionType>
       <MouseButton>Left</MouseButton>
@@ -526,11 +526,11 @@
       <WorkItemId>0</WorkItemId>
       <MarkerRegionType>Action</MarkerRegionType>
     </TestStepMarkerAction>
-    <MouseAction UIObjectName="UIMap.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000002ListItem.UIBreadBasketText.UIItemImage">
+    <MouseAction UIObjectName="UIMap.UIMainWindowWindow.UITabControlCustom.UILvCategoryDrinkList.UIP000000002ListItem.UIClassicMilkteaText.UIItemImage">
       <ParameterName />
       <ModifierKeys>None</ModifierKeys>
       <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="88" Y="43" />
+      <Location X="49" Y="53" />
       <WheelDirection>0</WheelDirection>
       <ActionType>Click</ActionType>
       <MouseButton>Left</MouseButton>
@@ -587,6 +587,61 @@
       <MouseButton>Left</MouseButton>
     </MouseAction>
     <TestStepMarkerAction Comment="" MarkerInformation="clearButtonClick">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <LaunchApplicationAction>
+      <ParameterName />
+      <FileName>D:\Projects\Cafeteria-POS\Cafocha\bin\Debug\Cafocha.exe</FileName>
+      <AlternateFileName>D:\Projects\Cafeteria-POS\Cafocha\bin\Debug\Cafocha.exe</AlternateFileName>
+    </LaunchApplicationAction>
+    <SetValueAction UIObjectName="UIMap.UILoginWindow.UITxtUsernameEdit">
+      <ParameterName />
+      <Value Encoded="false">admin</Value>
+      <Type>String</Type>
+    </SetValueAction>
+    <SendKeysAction UIObjectName="UIMap.UILoginWindow.UITxtUsernameEdit">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Text Encoded="false">{Tab}</Text>
+    </SendKeysAction>
+    <SendKeysAction UIObjectName="UIMap.UILoginWindow.UIItemButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Text Encoded="false">{Tab}</Text>
+    </SendKeysAction>
+    <SendKeysAction UIObjectName="UIMap.UILoginWindow.UITxtPassEdit">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Text Encoded="true">QWwOodIXpSOiF7DgPuhHMs3XiW84RR7gnYlplN8/J3g=</Text>
+    </SendKeysAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="loginAsAdmin">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIAdminNavWindowWindow.UIItemPane.UIGotoAdminWSButtonButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="74" Y="19" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="launchAdminWorkSpace">
       <ParameterName />
       <StepId>-1</StepId>
       <Direction>Start</Direction>
@@ -733,6 +788,35 @@
                             </UIObject>
                           </Descendants>
                         </UIObject>
+                        <UIObject ControlType="Text" Id="UIAppleTonicText" FriendlyName="Apple Tonic" SpecialControlType="None">
+                          <TechnologyName>UIA</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>MainWindow</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition>
+                            <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                            <PropertyCondition Name="ControlType">Text</PropertyCondition>
+                            <PropertyCondition Name="Name">Apple Tonic</PropertyCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants>
+                            <UIObject ControlType="Image" Id="UIItemImage" FriendlyName="" SpecialControlType="None">
+                              <TechnologyName>UIA</TechnologyName>
+                              <WindowTitles>
+                                <WindowTitle>MainWindow</WindowTitle>
+                              </WindowTitles>
+                              <SearchConfigurations>
+                                <SearchConfiguration>NextTo</SearchConfiguration>
+                              </SearchConfigurations>
+                              <AndCondition>
+                                <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                                <PropertyCondition Name="ControlType">Image</PropertyCondition>
+                              </AndCondition>
+                              <SupportLevel>0</SupportLevel>
+                              <Descendants />
+                            </UIObject>
+                          </Descendants>
+                        </UIObject>
                       </Descendants>
                     </UIObject>
                     <UIObject ControlType="ListItem" Id="UIP000000002ListItem" FriendlyName="P000000002" SpecialControlType="None">
@@ -756,6 +840,35 @@
                             <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
                             <PropertyCondition Name="ControlType">Text</PropertyCondition>
                             <PropertyCondition Name="Name">Bread Basket</PropertyCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants>
+                            <UIObject ControlType="Image" Id="UIItemImage" FriendlyName="" SpecialControlType="None">
+                              <TechnologyName>UIA</TechnologyName>
+                              <WindowTitles>
+                                <WindowTitle>MainWindow</WindowTitle>
+                              </WindowTitles>
+                              <SearchConfigurations>
+                                <SearchConfiguration>NextTo</SearchConfiguration>
+                              </SearchConfigurations>
+                              <AndCondition>
+                                <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                                <PropertyCondition Name="ControlType">Image</PropertyCondition>
+                              </AndCondition>
+                              <SupportLevel>0</SupportLevel>
+                              <Descendants />
+                            </UIObject>
+                          </Descendants>
+                        </UIObject>
+                        <UIObject ControlType="Text" Id="UIClassicMilkteaText" FriendlyName="Classic Milktea" SpecialControlType="None">
+                          <TechnologyName>UIA</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>MainWindow</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition>
+                            <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                            <PropertyCondition Name="ControlType">Text</PropertyCondition>
+                            <PropertyCondition Name="Name">Classic Milktea</PropertyCondition>
                           </AndCondition>
                           <SupportLevel>0</SupportLevel>
                           <Descendants>
@@ -1484,6 +1597,48 @@
               </AndCondition>
               <SupportLevel>1</SupportLevel>
               <Descendants />
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIAdminNavWindowWindow" FriendlyName="AdminNavWindow" SpecialControlType="None" SessionId="788476">
+          <TechnologyName>UIA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>AdminNavWindow</WindowTitle>
+          </WindowTitles>
+          <AndCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+            <PropertyCondition Name="Name">AdminNavWindow</PropertyCondition>
+            <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">HwndWrapper</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Pane" Id="UIItemPane" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>UIA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>AdminNavWindow</WindowTitle>
+              </WindowTitles>
+              <AndCondition>
+                <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                <PropertyCondition Name="ClassName">Uia.ScrollViewer</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIGotoAdminWSButtonButton" FriendlyName="GotoAdminWSButton" SpecialControlType="None">
+                  <TechnologyName>UIA</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>AdminNavWindow</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition>
+                    <PropertyCondition Name="FrameworkId">WPF</PropertyCondition>
+                    <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                    <PropertyCondition Name="AutomationId">GotoAdminWSButton</PropertyCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
             </UIObject>
           </Descendants>
         </TopLevelWindow>
