@@ -12,5 +12,10 @@ namespace Cafocha.Entities
         {
             return new BitmapImage(new Uri(@"/Images/Products/" + filename, UriKind.RelativeOrAbsolute));
         }
+
+        public override string ToString()
+        {
+            return ProductId;
+        }
     }
 }

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafochaTests", "CafochaTest
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CafochaSetup", "CafochaSetup\CafochaSetup.vdproj", "{AF98D0DA-7A73-407B-A4D1-BE57497A429B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationTesting", "AutomationTesting\AutomationTesting.csproj", "{592B980B-2158-4297-B1E7-4613E4075188}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,14 @@ Global
 		{AF98D0DA-7A73-407B-A4D1-BE57497A429B}.Debug|x64.ActiveCfg = Debug
 		{AF98D0DA-7A73-407B-A4D1-BE57497A429B}.Release|Any CPU.ActiveCfg = Release
 		{AF98D0DA-7A73-407B-A4D1-BE57497A429B}.Release|x64.ActiveCfg = Release
+		{592B980B-2158-4297-B1E7-4613E4075188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Debug|x64.Build.0 = Debug|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Release|x64.ActiveCfg = Release|Any CPU
+		{592B980B-2158-4297-B1E7-4613E4075188}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

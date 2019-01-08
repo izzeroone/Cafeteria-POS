@@ -81,6 +81,11 @@
                                            ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="AutomationProperties.Name" Value="{Binding XPath=.}"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
                                 <DockPanel Width="120"
