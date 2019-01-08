@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
 
 namespace Cafocha.GUI.AdminWorkSpace
@@ -18,9 +19,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         private Stock _ingre;
         private List<Stock> allIngre;
         private List<Product> allProduct;
-
         private List<ProductDetail> allProductDetails;
-//        private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
+        private List<ProductModule.PDTemp> allProductDetailsWithName;
+        //        private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
 
         public ProductDetailPage(BusinessModuleLocator businessModuleLocator)
         {
@@ -39,9 +40,11 @@ namespace Cafocha.GUI.AdminWorkSpace
             allProduct = _businessModuleLocator.ProductModule.getAllProduct().ToList();
             lvProduct.ItemsSource = allProduct;
             allProductDetails = _businessModuleLocator.ProductModule.getAllProductDetails().ToList();
-            lvDetails.ItemsSource = allProductDetails;
             allIngre = _businessModuleLocator.WarehouseModule.IngredientList;
             lvIngredient.ItemsSource = allIngre;
+            allProductDetailsWithName = new List<ProductModule.PDTemp>();
+            this.generatorProductDetailsWithName();
+            lvDetails.ItemsSource = allProductDetailsWithName;
 
             cboType.Items.Add(ProductType.All);
             cboType.Items.Add(ProductType.Drink);
@@ -55,7 +58,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             var pro = lvProduct.SelectedItem as Product;
             if (pro == null) return;
 
-            lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails(pro.ProductId);
+            allProductDetails = _businessModuleLocator.ProductModule.getAllProductDetails(pro.ProductId).ToList();
+            this.generatorProductDetailsWithName();
+            lvDetails.ItemsSource = allProductDetailsWithName;
+            lvDetails.Items.Refresh();
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -271,6 +277,15 @@ namespace Cafocha.GUI.AdminWorkSpace
 //            }
 //        }
 
+        private void generatorProductDetailsWithName()
+        {
+            allProductDetailsWithName.Clear();
+            foreach (var pd in allProductDetails)
+            {
+                var curing = allIngre.FirstOrDefault(x => x.StoId == (pd.IgdId));
+                if (curing != null) allProductDetailsWithName.Add(new ProductModule.PDTemp { ProDe = pd, Ingre = curing });
+            }
+        }
         private void refreshListData()
         {
             lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct();

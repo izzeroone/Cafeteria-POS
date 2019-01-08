@@ -16,16 +16,6 @@ namespace Cafocha.GUI
 
             var curAd = Application.Current.Properties["AdLogin"] as AdminRe;
 
-
-            // Control layout depend on logging Admin
-            if (curAd.AdRole == (int) AdminReRole.CafochaAd)
-            {
-//                stpAdpress.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                if (curAd.AdRole == (int) AdminReRole.CafowareAd) stpAsowel.Visibility = Visibility.Collapsed;
-            }
         }
 
 

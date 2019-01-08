@@ -69,10 +69,15 @@
             </Grid>
 
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="419*"/>
+                    <ColumnDefinition Width="288*"/>
+                </Grid.ColumnDefinitions>
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
-                                          Height="46">
+                                          Height="46" Grid.ColumnSpan="3" Margin="0,0,-0.2,0">
                     <StackPanel Orientation="Horizontal"
                                 Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
@@ -90,7 +95,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,0"
                           Height="222"
-                          Width="792">
+                          Width="792" Grid.ColumnSpan="3">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
