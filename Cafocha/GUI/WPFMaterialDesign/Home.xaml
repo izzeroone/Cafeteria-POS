@@ -4,9 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300">
+             mc:Ignorable="d" Width="671.2" Height="146.4">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -48,26 +46,6 @@
             </StackPanel>
         </Grid>
 
-        <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Bottom"
-                                 Margin="32"
-                                 Grid.Row="1">
-            <StackPanel>
-                <Button ToolTip="GitHub"
-                        Click="GitHubButton_OnClick">
-                    <materialDesign:PackIcon Kind="GithubCircle"
-                                             Height="20"
-                                             Width="20" />
-                </Button>
-                <Button ToolTip="Email"
-                        Click="EmailButton_OnClick"
-                        Background="{DynamicResource SecondaryAccentBrush}"
-                        Foreground="{DynamicResource SecondaryAccentForegroundBrush}">
-                    <materialDesign:PackIcon Kind="Email" />
-                </Button>
 
-            </StackPanel>
-        </materialDesign:PopupBox>
     </Grid>
 </UserControl>

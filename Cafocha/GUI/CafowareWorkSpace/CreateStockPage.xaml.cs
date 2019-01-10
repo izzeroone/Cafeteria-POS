@@ -30,6 +30,26 @@ namespace Cafocha.GUI.CafowareWorkSpace
             initComboBox();
         }
 
+        public CreateStockPage(BusinessModuleLocator businessModuleLocator, Stock editStock)
+        {
+            _businessModuleLocator = businessModuleLocator;
+            _stockList = _businessModuleLocator.WarehouseModule.StockList;
+            InitializeComponent();
+            lvStock.ItemsSource = _stockList;
+            initComboBox();
+            _selectedStock = editStock;
+            putStockDataToForm();
+        }
+
+        public CreateStockPage(BusinessModuleLocator businessModuleLocator)
+        {
+            _businessModuleLocator = businessModuleLocator;
+            _stockList = _businessModuleLocator.WarehouseModule.StockList;
+            InitializeComponent();
+            lvStock.ItemsSource = _stockList;
+            initComboBox();
+        }
+
         private void initComboBox()
         {
             cboGroup.Items.Add(StockGroup.All);
@@ -108,39 +128,46 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
             //put data to form
+            putStockDataToForm();
+        }
+
+        private void putStockDataToForm()
+        {
+
+            //put data to form
             txtName.Text = _selectedStock.Name;
             txtInfo.Text = _selectedStock.Info;
 
             switch (_selectedStock.Group)
             {
-                case (int) StockGroup.Ingridient:
+                case (int)StockGroup.Ingridient:
                     cboStockGroup.SelectedItem = StockGroup.Ingridient;
                     break;
-                case (int) StockGroup.Cosmetics:
+                case (int)StockGroup.Cosmetics:
                     cboStockGroup.SelectedItem = StockGroup.Cosmetics;
                     break;
-                case (int) StockGroup.SpaVoucher:
+                case (int)StockGroup.SpaVoucher:
                     cboStockGroup.SelectedItem = StockGroup.SpaVoucher;
                     break;
-                case (int) StockGroup.GymVoucher:
+                case (int)StockGroup.GymVoucher:
                     cboStockGroup.SelectedItem = StockGroup.GymVoucher;
                     break;
-                case (int) StockGroup.ResVoucher:
+                case (int)StockGroup.ResVoucher:
                     cboStockGroup.SelectedItem = StockGroup.ResVoucher;
                     break;
-                case (int) StockGroup.TravVoucher:
+                case (int)StockGroup.TravVoucher:
                     cboStockGroup.SelectedItem = StockGroup.TravVoucher;
                     break;
-                case (int) StockGroup.Food:
+                case (int)StockGroup.Food:
                     cboStockGroup.SelectedItem = StockGroup.Food;
                     break;
-                case (int) StockGroup.Agricultural:
+                case (int)StockGroup.Agricultural:
                     cboStockGroup.SelectedItem = StockGroup.Agricultural;
                     break;
-                case (int) StockGroup.Watch:
+                case (int)StockGroup.Watch:
                     cboStockGroup.SelectedItem = StockGroup.Watch;
                     break;
-                case (int) StockGroup.TopTen:
+                case (int)StockGroup.TopTen:
                     cboStockGroup.SelectedItem = StockGroup.TopTen;
                     break;
             }

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
 using Cafocha.Entities;
+using Cafocha.GUI.CafowareWorkSpace;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
@@ -80,6 +81,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             try
             {
+
                 if (filter.Length == 0)
                 {
                     lvProduct.ItemsSource =
@@ -100,14 +102,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct(filter);
             }
+            lvProduct.Items.Refresh();
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var filter = SearchBox.Text.Trim();
-
-            refreshData(filter);
-        }
 
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -201,81 +198,64 @@ namespace Cafocha.GUI.AdminWorkSpace
                 lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
         }
 
-        private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
+            var page = new CreateStockPage(_businessModuleLocator);
+            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(page);
+
             var filter = SearchIBox.Text.Trim();
-            var selectedI = (sender as ComboBox).SelectedIndex;
 
             if (filter.Length == 0)
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
+            else
+                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+        }
+
+        private void bntEdit_Click(object sender, RoutedEventArgs e)
+        {
+            _ingre = lvIngredient.SelectedItem as Stock;
+
+            if (lvIngredient.SelectedItem == null)
             {
-                if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
-                    lvIngredient.ItemsSource = allIngre;
-                else
-                    lvIngredient.ItemsSource = allIngre;
+                MessageBox.Show("Ingredient must be selected to update! Choose again!");
+                return;
+            }
+
+            var page = new CreateStockPage(_businessModuleLocator);
+            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(page, _ingre);
+
+            lvProduct.UnselectAll();
+            lvProduct.Items.Refresh();
+            lvDetails.UnselectAll();
+            lvDetails.Items.Refresh();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
+        }
+
+        private void bntDel_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvIngredient.SelectedItem == null)
+            {
+                MessageBox.Show("Ingredient must be selected to delete! Choose again!");
+                return;
+            }
+
+            var delIngre = lvIngredient.SelectedItem as Stock;
+            if (delIngre != null)
+            {
+                MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delIngre.Name + "(" + delIngre.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                if (delMess == MessageBoxResult.Yes)
+                {
+                    _businessModuleLocator.WarehouseModule.deleteStock(delIngre);
+                    refreshListData();
+                }
             }
             else
             {
-                if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
-                    lvIngredient.ItemsSource = allIngre.Where(x => x.Name.Contains(filter));
-                else
-                    lvIngredient.ItemsSource = allIngre.Where(x => x.Name.Contains(filter));
+                MessageBox.Show("Please choose ingredient you want to delete and try again!");
             }
         }
-
-//        private void bntAdd_Click(object sender, RoutedEventArgs e)
-//        {
-//            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_businessModuleLocator, null);
-//            _ingreAddOrUpdate.ShowDialog();
-//
-//            lvIngredient.ItemsSource = _businessModuleLocator.IngredientModule.getAllIngredients();
-//            lvIngredient.UnselectAll();
-//            lvIngredient.Items.Refresh();
-//        }
-
-//        private void bntEdit_Click(object sender, RoutedEventArgs e)
-//        {
-//            _ingre = lvIngredient.SelectedItem as Ingredient;
-//
-//            if (lvIngredient.SelectedItem == null)
-//            {
-//                MessageBox.Show("Ingredient must be selected to update! Choose again!");
-//                return;
-//            }
-//
-//            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_businessModuleLocator, _ingre);
-//            _ingreAddOrUpdate.ShowDialog();
-//
-//            lvProduct.UnselectAll();
-//            lvProduct.Items.Refresh();
-//            lvDetails.UnselectAll();
-//            lvDetails.Items.Refresh();
-//            lvIngredient.UnselectAll();
-//            lvIngredient.Items.Refresh();
-//        }
-
-//        private void bntDel_Click(object sender, RoutedEventArgs e)
-//        {
-//            if (lvIngredient.SelectedItem == null)
-//            {
-//                MessageBox.Show("Ingredient must be selected to delete! Choose again!");
-//                return;
-//            }
-//
-//            var delIngre = lvIngredient.SelectedItem as Ingredient;
-//            if (delIngre != null)
-//            {
-//                MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
-//                if (delMess == MessageBoxResult.Yes)
-//                {
-//                    _businessModuleLocator.IngredientModule.deleteIngredient(delIngre);
-//                    refreshListData();
-//                }
-//            }
-//            else
-//            {
-//                MessageBox.Show("Please choose ingredient you want to delete and try again!");
-//            }
-//        }
 
         private void generatorProductDetailsWithName()
         {
@@ -297,6 +277,12 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvDetails.Items.Refresh();
             lvIngredient.UnselectAll();
             lvIngredient.Items.Refresh();
+        }
+
+        private void BntAddPro_Click(object sender, RoutedEventArgs e)
+        {
+            var pup = new ProductCreatorPage(_businessModuleLocator);
+            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
         }
     }
 }

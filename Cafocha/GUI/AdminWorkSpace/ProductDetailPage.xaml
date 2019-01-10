@@ -57,7 +57,6 @@
                                          BorderThickness="0"
                                          MinWidth="200"
                                          VerticalAlignment="Center"
-                                         TextChanged="SearchBox_TextChanged"
                                          GotFocus="SearchBox_GotFocus" />
 
                             </Grid>
@@ -65,9 +64,9 @@
                         </Border>
                         <Border MaxHeight="30"
                                 CornerRadius="3"
-                                Width="234">
+                                Width="143">
                             <StackPanel Orientation="Horizontal"
-                                        Height="auto">
+                                        Height="auto" Margin="0,0,0,0.4">
                                 <ComboBox x:Name="cboType"
                                           Foreground="Black"
                                           Background="White"
@@ -76,6 +75,12 @@
                                           SelectionChanged="cboType_SelectionChanged" />
                             </StackPanel>
                         </Border>
+                        <Button x:Name="bntAddPro"
+                                Content="Add"
+                                Height="auto"
+                                Margin="0,0,20,0"
+                                FontWeight="Bold"
+                                Click="BntAddPro_Click" />
                         <Button x:Name="bntEditPro"
                                 Content="Edit"
                                 Height="auto"
@@ -234,30 +239,24 @@
                         <Border CornerRadius="3"
                                 Width="417">
                             <StackPanel Orientation="Horizontal">
-                                <!--<ComboBox x:Name="cboTypeI"
-                                          Foreground="Black"
-                                          Background="White"
-                                          Width="135"
-                                          Margin="0,0,20,0"
-                                          SelectionChanged="cboTypeI_SelectionChanged" />-->
-                                <!-- <Button x:Name="bntAdd" -->
-                                <!--         Content="Add" -->
-                                <!--         Height="auto" -->
-                                <!--         Margin="0,0,20,0" -->
-                                <!--         FontWeight="Bold" -->
-                                <!--         Click="bntAdd_Click" /> -->
-                                <!-- <Button x:Name="bntEdit" -->
-                                <!--         Content="Edit" -->
-                                <!--         Height="auto" -->
-                                <!--         Margin="0,0,20,0" -->
-                                <!--         FontWeight="Bold" -->
-                                <!--         Click="bntEdit_Click" /> -->
-                                <!-- <Button x:Name="bntDel" -->
-                                <!--         Content="Delete" -->
-                                <!--         Height="auto" -->
-                                <!--         Margin="0,0,50,0" -->
-                                <!--         FontWeight="Bold" -->
-                                <!--         Click="bntDel_Click" /> -->
+                                 <Button x:Name="bntAdd" 
+                                         Content="Add" 
+                                         Height="auto" 
+                                         Margin="0,0,20,0" 
+                                         FontWeight="Bold" 
+                                         Click="bntAdd_Click" /> 
+                                 <Button x:Name="bntEdit" 
+                                         Content="Edit" 
+                                         Height="auto" 
+                                         Margin="0,0,20,0" 
+                                         FontWeight="Bold" 
+                                         Click="bntEdit_Click" /> 
+                                 <Button x:Name="bntDel" 
+                                         Content="Delete" 
+                                         Height="auto" 
+                                         Margin="0,0,50,0" 
+                                         FontWeight="Bold" 
+                                         Click="bntDel_Click" /> 
                             </StackPanel>
                         </Border>
                     </StackPanel>

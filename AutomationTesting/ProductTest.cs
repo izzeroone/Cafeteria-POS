@@ -23,14 +23,39 @@ namespace AutomationTesting
         }
 
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void searchByTypeDrink()
         {
             this.UIMap.loginAsAdmin();
-            this.UIMap.launchAdminWorkSpace();
-            
+            this.UIMap.startAdminWorkSpace();
+            this.UIMap.goToProductInfomation();
+            this.UIMap.chooseDrinkProduct();
+            this.UIMap.assertDrinkProduct();
+            this.UIMap.chooseToppingProduct();
+            this.UIMap.assertToppingProduct();
             // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
         }
 
+
+        [TestMethod]
+        public void searchByTyping()
+        {
+            this.UIMap.loginAsAdmin();
+            this.UIMap.startAdminWorkSpace();
+            this.UIMap.goToProductInfomation();
+            this.UIMap.searchAppleTonic();
+            this.UIMap.assertProductContainAppleInName();
+            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void editProduct()
+        {
+            this.UIMap.loginAsAdmin();
+            this.UIMap.startAdminWorkSpace();
+            this.UIMap.goToProductInfomation();
+            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
+        }
         #region Additional test attributes
 
         // You can use the following additional attributes as you write your tests:

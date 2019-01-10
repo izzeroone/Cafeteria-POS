@@ -57,8 +57,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BusinessContext\EmployeeWorkspace\TakingOrderModuleTests.cs" />
-    <Compile Include="BusinessContext\User\ProductModuleTests.cs" />
-    <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +68,10 @@
       <Name>Cafocha</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="BusinessContext\User\" />
+    <Folder Include="BusinessContext\WarehouseWorkspace\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
