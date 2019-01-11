@@ -333,22 +333,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (currentEmp == null ||
                 currentEmp.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
 
-            if (_businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId != null)
-            {
-                var subemplist = _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId.Split(',');
-
-                for (var i = 0; i < subemplist.Count(); i++)
-                {
-                    if (subemplist[i].Equals("")) continue;
-
-                    if (currentEmp.Emp.EmpId.Equals(subemplist[i])) return;
-                }
-
-                _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId += currentEmp.Emp.EmpId + ",";
-                return;
-            }
-
-            _businessModuleLocator.TakingOrderModule.OrderTemp.SubEmpId += currentEmp.Emp.EmpId + ",";
         }
 
 
@@ -384,7 +368,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = Total;
             _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPriceNonDisc = Math.Round(Total, 3);
-            _businessModuleLocator.TakingOrderModule.OrderTemp.Svc = Math.Round(Svc, 3);
+            Math.Round(Svc, 3);
             _businessModuleLocator.TakingOrderModule.OrderTemp.Vat = Math.Round(Vat, 3);
             _businessModuleLocator.TakingOrderModule.OrderTemp.SaleValue = Math.Round(SaleValue, 3);
 

@@ -106,27 +106,27 @@ namespace Cafocha.GUI.AdminWorkSpace
             var orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                    c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                    c.OrderTime.Year == DateTime.Now.Year).ToList();
             else if (filter == FILL_BY_MONTH)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                        c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                        c.Ordertime.Year == DateTime.Now.Year)
+                        c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                        c.OrderTime.Year == DateTime.Now.Year)
                     .ToList();
             else
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
             decimal count = 0;
             Values.Clear();
             Labels.Clear();
 
             var RevenueList = new Dictionary<string, decimal>();
             foreach (var item in orderNoteWithTime)
-                if (RevenueList.ContainsKey(item.Ordertime.ToString("dd/MM/yyyy")))
-                    RevenueList[item.Ordertime.ToString("dd/MM/yyyy")] =
-                        RevenueList[item.Ordertime.ToString("dd/MM/yyyy")] + item.TotalPrice;
+                if (RevenueList.ContainsKey(item.OrderTime.ToString("dd/MM/yyyy")))
+                    RevenueList[item.OrderTime.ToString("dd/MM/yyyy")] =
+                        RevenueList[item.OrderTime.ToString("dd/MM/yyyy")] + item.TotalPrice;
                 else
-                    RevenueList.Add(item.Ordertime.ToString("dd/MM/yyyy"), item.TotalPrice);
+                    RevenueList.Add(item.OrderTime.ToString("dd/MM/yyyy"), item.TotalPrice);
 
             foreach (var revenue in RevenueList)
             {
@@ -143,15 +143,15 @@ namespace Cafocha.GUI.AdminWorkSpace
             var orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                    c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                    c.OrderTime.Year == DateTime.Now.Year).ToList();
             else if (filter == FILL_BY_MONTH)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                    c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                    c.OrderTime.Year == DateTime.Now.Year).ToList();
             else
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
 
 
             // calculate data
@@ -161,20 +161,20 @@ namespace Cafocha.GUI.AdminWorkSpace
             decimal TotalePrice_nonDiscount1 = 0;
             decimal TotalePrice_nonDiscount2 = 0;
             decimal TotalePrice_nonDiscount3 = 0;
-            foreach (var item in orderNoteWithTime.Where(c => c.Ordertime.Hour >= 0 && c.Ordertime.Hour < 12))
+            foreach (var item in orderNoteWithTime.Where(c => c.OrderTime.Hour >= 0 && c.OrderTime.Hour < 12))
             {
                 TotalPrice1 += item.TotalPrice;
                 TotalePrice_nonDiscount1 += item.TotalPriceNonDisc;
             }
 
-            foreach (var item in orderNoteWithTime.Where(c => c.Ordertime.Hour >= 12 && c.Ordertime.Hour < 18))
+            foreach (var item in orderNoteWithTime.Where(c => c.OrderTime.Hour >= 12 && c.OrderTime.Hour < 18))
             {
                 TotalPrice2 += item.TotalPrice;
                 TotalePrice_nonDiscount2 += item.TotalPriceNonDisc;
             }
 
             foreach (var item in orderNoteWithTime.Where(c =>
-                c.Ordertime.Hour >= 18 && c.Ordertime.Hour <= 23 && c.Ordertime.Minute <= 59))
+                c.OrderTime.Hour >= 18 && c.OrderTime.Hour <= 23 && c.OrderTime.Minute <= 59))
             {
                 TotalPrice3 += item.TotalPrice;
                 TotalePrice_nonDiscount3 += item.TotalPriceNonDisc;
@@ -204,16 +204,16 @@ namespace Cafocha.GUI.AdminWorkSpace
             var orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                    c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                    c.OrderTime.Year == DateTime.Now.Year).ToList();
             else if (filter == FILL_BY_MONTH)
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                        c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month &&
-                        c.Ordertime.Year == DateTime.Now.Year)
+                        c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
+                        c.OrderTime.Year == DateTime.Now.Year)
                     .ToList();
             else
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
+                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
 
 
             decimal count = 0;

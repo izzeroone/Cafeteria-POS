@@ -42,11 +42,7 @@ namespace Cafocha.Entities
 
         public string ProductId { get; set; } // product_id (Primary key) (length: 10)
 
-        public string SelectedStats { get; set; } // SelectedStats (Primary key) (length: 50)
-
         public string Note { get; set; } // note (Primary key) (length: 500)
-
-        public int IsPrinted { get; set; } // is_printed (Primary key)
 
         public int Discount { get; set; } // discount
 

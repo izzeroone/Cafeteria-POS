@@ -19,7 +19,6 @@ namespace Cafocha.Repository.DAL
         private GenericRepository<AdminRe> _adminreRepository;
 
         // business repo
-        private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<ApWareHouse> _apwareHouseRepository;
         private ILocalContext _context;
         private GenericRepository<Customer> _customerRepository;
@@ -36,7 +35,6 @@ namespace Cafocha.Repository.DAL
         private GenericRepository<StockOutDetail> _stockOutDetailsRepository;
         private GenericRepository<StockOut> _stockOutRepository;
         private GenericRepository<Stock> _stockRepository;
-        private GenericRepository<WareHouse> _wareHouseRepository;
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
 
 
@@ -54,28 +52,6 @@ namespace Cafocha.Repository.DAL
         {
             _context = localContext;
         }
-
-
-        public GenericRepository<WareHouse> WareHouseRepository
-        {
-            get
-            {
-                if (_wareHouseRepository == null) _wareHouseRepository = new GenericRepository<WareHouse>(_context);
-
-                return _wareHouseRepository;
-            }
-        }
-
-        public GenericRepository<ApplicationLog> AppLogRepository
-        {
-            get
-            {
-                if (_appLogRepository == null) _appLogRepository = new GenericRepository<ApplicationLog>(_context);
-
-                return _appLogRepository;
-            }
-        }
-
 
         public GenericRepository<OrderNoteDetail> OrderDetailsRepository
         {

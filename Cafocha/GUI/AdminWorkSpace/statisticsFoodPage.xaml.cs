@@ -56,8 +56,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             var orderDetailsWithTime = new List<OrderNoteDetail>();
             if (isfilter)
                 orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get(x =>
-                    x.OrderNote.Ordertime.Year == DpTimeFilter.SelectedDate.Value.Year
-                    && x.OrderNote.Ordertime.Month == DpTimeFilter.SelectedDate.Value.Month).ToList();
+                    x.OrderNote.OrderTime.Year == DpTimeFilter.SelectedDate.Value.Year
+                    && x.OrderNote.OrderTime.Month == DpTimeFilter.SelectedDate.Value.Month).ToList();
             else
                 orderDetailsWithTime = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository.Get().ToList();
 

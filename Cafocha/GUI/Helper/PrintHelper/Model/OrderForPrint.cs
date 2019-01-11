@@ -16,12 +16,9 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public string No { get; set; }
         public string Casher { get; set; }
         public string Customer { get; set; }
-        public int Table { get; set; }
-        public int Pax { get; set; }
         public DateTime Date { get; set; }
         public decimal TotalPriceNonDisc { get; set; }
         public decimal TotalPrice { get; set; }
-        public decimal Svc { get; set; }
         public decimal Vat { get; set; }
         public decimal SaleValue { get; set; }
         public decimal CustomerPay { get; set; }
@@ -40,11 +37,9 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             No = targetOrder.OrdertempId.ToString();
             Casher = targetOrder.EmpId;
             Customer = targetOrder.CusId;
-            Pax = targetOrder.Pax;
             Date = targetOrder.Ordertime;
             TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
             TotalPrice = targetOrder.TotalPrice;
-            Svc = targetOrder.Svc;
             Vat = targetOrder.Vat;
             SaleValue = targetOrder.SaleValue;
             CustomerPay = targetOrder.CustomerPay;
@@ -58,12 +53,9 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             No = targetOrder.OrdernoteId;
             Casher = targetOrder.EmpId;
             Customer = targetOrder.CusId;
-            Pax = targetOrder.Pax;
-            Table = targetOrder.Ordertable;
-            Date = targetOrder.Ordertime;
+            Date = targetOrder.OrderTime;
             TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
             TotalPrice = targetOrder.TotalPrice;
-            Svc = targetOrder.Svc;
             Vat = targetOrder.Vat;
             SaleValue = targetOrder.SaleValue;
             CustomerPay = targetOrder.CustomerPay;
@@ -86,7 +78,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
             // convert
             foreach (var orderDetailsTemp in targetOrderDetails)
             {
-                if (orderDetailsTemp.IsPrinted == 1) continue;
                 OrderDetails.Add(new OrderDetailsForPrint
                 {
                     Quan = orderDetailsTemp.Quan,
@@ -99,8 +90,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
                     ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId)
                         .First().Type,
 
-                    Note = orderDetailsTemp.Note,
-                    SelectedStats = orderDetailsTemp.SelectedStats
+                    Note = orderDetailsTemp.Note
                 });
             }
 

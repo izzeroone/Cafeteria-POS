@@ -61,8 +61,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                 {
                     curStock.Name = stock.Name;
                     curStock.Info = stock.Info;
-                    curStock.UnitIn = stock.UnitIn;
-                    curStock.UnitOut = stock.UnitOut;
+                    curStock.Unit = stock.Unit;
                     curStock.StandardPrice = stock.StandardPrice;
 
                     curStock.ApWareHouse.Contain = stock.ApWareHouse.Contain;
@@ -110,7 +109,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
-                        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
+                        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.Unit);
                         _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }
@@ -129,7 +128,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
-                        wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.UnitOut);
+                        wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.Unit);
                         _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }

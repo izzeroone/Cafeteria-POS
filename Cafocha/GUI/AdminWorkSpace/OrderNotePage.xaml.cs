@@ -111,7 +111,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     else if (filtero.Count != 0 && pickOrderDate.SelectedDate != null)
                     {
                         lvOrderNote.ItemsSource = filtero.Where(x =>
-                            x.Ordertime.ToShortDateString()
+                            x.OrderTime.ToShortDateString()
                                 .Equals(((DateTime) pickOrderDate.SelectedDate).ToShortDateString())).ToList();
                         lvOrderNote.Items.Refresh();
                         lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
@@ -137,7 +137,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     else
                     {
                         lvOrderNote.ItemsSource = _ordernotelist.Where(x =>
-                            x.Ordertime.ToShortDateString()
+                            x.OrderTime.ToShortDateString()
                                 .Equals(((DateTime) pickOrderDate.SelectedDate).ToShortDateString())).ToList();
                         lvOrderNote.Items.Refresh();
                         lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
@@ -167,7 +167,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             if (cboProduct.SelectedValue.Equals("--"))
             {
                 lvOrderNote.ItemsSource = _ordernotelist.Where(x =>
-                    x.Ordertime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
+                    x.OrderTime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
                 lvOrderNote.Items.Refresh();
                 lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
                 lvOrderNoteDetails.Items.Refresh();
@@ -177,7 +177,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 if (filtero.Count != 0)
                 {
                     lvOrderNote.ItemsSource = filtero.Where(x =>
-                        x.Ordertime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
+                        x.OrderTime.ToShortDateString().Equals(((DateTime) pick.SelectedDate).ToShortDateString()));
                     lvOrderNote.Items.Refresh();
                 }
                 else

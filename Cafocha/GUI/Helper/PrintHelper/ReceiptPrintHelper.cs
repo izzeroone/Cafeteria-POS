@@ -228,17 +228,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 Margin = new Thickness(90, 0, 0, 0),
                 Width = 120
             };
-            var tbSVCValue = new TextBlock
-            {
-                Text = string.Format("{0:0.000}", order.Svc),
-                FontFamily = new FontFamily("Century Gothic"),
-                FontSize = 11,
-                Width = 60,
-                TextAlignment = TextAlignment.Right
-            };
-//            stpSVC.Children.Add(tbSVCLable);
-//            stpSVC.Children.Add(tbSVCValue);
-
 
             // VAT
             var stpVAT = new StackPanel
@@ -429,50 +418,7 @@ namespace Cafocha.GUI.Helper.PrintHelper
             }
 
             var rowIndex = 1;
-            if (OrderMode == SETORDER)
-            {
-                var txtProductName = new TextBlock();
-                txtProductName.Width = 115;
-                txtProductName.Text = "SET";
-                txtProductName.FontSize = 11;
-                txtProductName.VerticalAlignment = VerticalAlignment.Top;
-                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
-                txtProductName.Margin = new Thickness(0, 0, 0, 5);
-                Grid.SetRow(txtProductName, rowIndex);
-                Grid.SetColumn(txtProductName, 0);
-                dgDataTable.Children.Add(txtProductName);
-
-                var txtQuan = new TextBlock();
-                txtQuan.Text = Order.Pax.ToString();
-                txtQuan.FontSize = 11;
-                txtQuan.VerticalAlignment = VerticalAlignment.Top;
-                txtQuan.Margin = new Thickness(0, 0, 0, 5);
-                Grid.SetRow(txtQuan, rowIndex);
-                Grid.SetColumn(txtQuan, 1);
-                dgDataTable.Children.Add(txtQuan);
-
-                var txtPrice = new TextBlock();
-                txtPrice.Text = string.Format("{0:0.000}", Order.SaleValue / Order.Pax);
-                txtPrice.FontSize = 11;
-                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
-                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
-                txtPrice.Margin = new Thickness(0, 0, 0, 5);
-                Grid.SetRow(txtPrice, rowIndex);
-                Grid.SetColumn(txtPrice, 2);
-                dgDataTable.Children.Add(txtPrice);
-
-                var txtAmt = new TextBlock();
-                txtAmt.Text = string.Format("{0:0.000}", Order.SaleValue);
-                txtAmt.FontSize = 11;
-                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
-                txtAmt.TextAlignment = TextAlignment.Right;
-                txtAmt.Margin = new Thickness(0, 0, 0, 5);
-                Grid.SetRow(txtAmt, rowIndex);
-                Grid.SetColumn(txtAmt, 3);
-                dgDataTable.Children.Add(txtAmt);
-
-                rowIndex++;
-            }
+           
 
             foreach (var orderItem in listData)
             {

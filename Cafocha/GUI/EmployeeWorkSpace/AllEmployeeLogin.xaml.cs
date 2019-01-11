@@ -584,8 +584,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 orderTemp.TotalPrice = 0;
                 orderTemp.CustomerPay = 0;
                 orderTemp.PayBack = 0;
-                orderTemp.SubEmpId = "";
-                orderTemp.Pax = 0;
                 _businessModuleLocator.TakingOrderModule.OrderTemp = orderTemp;
 
                 ((MainWindow) GetWindow(this)).isOrderOrder = false;

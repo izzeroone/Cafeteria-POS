@@ -68,7 +68,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 {
                     endTime = endTime.AddDays(1);
                     var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
-                        x.Ordertime.CompareTo(startTime) >= 0 && x.Ordertime.CompareTo(endTime) <= 0);
+                        x.OrderTime.CompareTo(startTime) >= 0 && x.OrderTime.CompareTo(endTime) <= 0);
 
 
                     var orderReportList = new List<OrderNoteForReport>();
@@ -79,8 +79,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                             OrdernoteId = order.OrdernoteId,
                             CusId = order.CusId,
                             EmpId = order.EmpId,
-                            Ordertable = order.Ordertable,
-                            Ordertime = order.Ordertime,
+                            OrderTime = order.OrderTime,
                             TotalPrice = order.TotalPrice,
                             CustomerPay = order.CustomerPay,
                             PayBack = order.PayBack,
@@ -158,7 +157,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<OrderNoteForReport>(x => x.Ordertime);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
@@ -316,8 +315,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 {
                     endTime = endTime.AddDays(1);
                     var orderDetailsWithTimeList = unitofwork.OrderDetailsRepository.Get(x =>
-                        x.OrderNote.Ordertime.CompareTo(startTime) >= 0 &&
-                        x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
+                        x.OrderNote.OrderTime.CompareTo(startTime) >= 0 &&
+                        x.OrderNote.OrderTime.CompareTo(endTime) <= 0);
 
 
                     var orderDetailsReportList = new List<OrderNoteDetailsForReport>();
@@ -329,8 +328,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                             ProductId = details.ProductId,
                             ProductName = details.Product.Name,
                             EmpId = details.OrderNote.EmpId,
-                            TableNumber = details.OrderNote.Ordertable,
-                            OrderTime = details.OrderNote.Ordertime,
+                            OrderTime = details.OrderNote.OrderTime,
                             Quan = details.Quan,
                             PayMethod = ((PaymentMethod) details.OrderNote.paymentMethod).ToString()
                         };
@@ -407,16 +405,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                         column.Order(4);
                         column.Width(3);
                         column.HeaderCell("Emp ID");
-                    });
-
-                    columns.AddColumn(column =>
-                    {
-                        column.PropertyName<OrderNoteDetailsForReport>(x => x.TableNumber);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
-                        column.IsVisible(true);
-                        column.Order(5);
-                        column.Width(2);
-                        column.HeaderCell("Table");
                     });
 
                     columns.AddColumn(column =>
@@ -513,8 +501,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 {
                     endTime = endTime.AddDays(1);
                     var orderDetailsWithTimeList = unitofwork.OrderDetailsRepository.Get(x =>
-                        x.OrderNote.Ordertime.CompareTo(startTime) >= 0 &&
-                        x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
+                        x.OrderNote.OrderTime.CompareTo(startTime) >= 0 &&
+                        x.OrderNote.OrderTime.CompareTo(endTime) <= 0);
 
 
                     var orderEntityReportList = new List<OrderEntityForReport>();
@@ -702,7 +690,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 .MainTableDataSource(dataSource =>
                 {
                     var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
-                        x.Ordertime.Month == DateTime.Now.Month && x.Ordertime.Year == DateTime.Now.Year);
+                        x.OrderTime.Month == DateTime.Now.Month && x.OrderTime.Year == DateTime.Now.Year);
 
 
                     var orderReportList = new List<OrderNoteForReport>();
@@ -713,8 +701,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                             OrdernoteId = order.OrdernoteId,
                             CusId = order.CusId,
                             EmpId = order.EmpId,
-                            Ordertable = order.Ordertable,
-                            Ordertime = order.Ordertime,
+                            OrderTime = order.OrderTime,
                             TotalPrice = order.TotalPrice,
                             CustomerPay = order.CustomerPay,
                             PayBack = order.PayBack,
@@ -792,7 +779,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<OrderNoteForReport>(x => x.Ordertime);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
@@ -947,10 +934,10 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.Ordertime.Day == DateTime.Now.Day &&
-                                                                                x.Ordertime.Month ==
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.OrderTime.Day == DateTime.Now.Day &&
+                                                                                x.OrderTime.Month ==
                                                                                 DateTime.Now.Month &&
-                                                                                x.Ordertime.Year == DateTime.Now.Year);
+                                                                                x.OrderTime.Year == DateTime.Now.Year);
 
 
                     var orderReportList = new List<OrderNoteForReport>();
@@ -961,8 +948,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                             OrdernoteId = order.OrdernoteId,
                             CusId = order.CusId,
                             EmpId = order.EmpId,
-                            Ordertable = order.Ordertable,
-                            Ordertime = order.Ordertime,
+                            OrderTime = order.OrderTime,
                             TotalPrice = order.TotalPrice,
                             CustomerPay = order.CustomerPay,
                             PayBack = order.PayBack,
@@ -1040,7 +1026,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<OrderNoteForReport>(x => x.Ordertime);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
@@ -1194,7 +1180,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.Ordertime.Year == DateTime.Now.Year);
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.OrderTime.Year == DateTime.Now.Year);
 
 
                     var orderReportList = new List<OrderNoteForReport>();
@@ -1205,8 +1191,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                             OrdernoteId = order.OrdernoteId,
                             CusId = order.CusId,
                             EmpId = order.EmpId,
-                            Ordertable = order.Ordertable,
-                            Ordertime = order.Ordertime,
+                            OrderTime = order.OrderTime,
                             TotalPrice = order.TotalPrice,
                             CustomerPay = order.CustomerPay,
                             PayBack = order.PayBack,
@@ -1284,7 +1269,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<OrderNoteForReport>(x => x.Ordertime);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);

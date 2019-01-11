@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
-      d:DesignHeight="300"
+      d:DesignHeight="150"
       d:DesignWidth="300"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="Manage Stock"
@@ -78,7 +78,7 @@
                         </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
-                <StackPanel Margin="46,60,0,0">
+                <StackPanel Margin="46,60,0,179">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock"
                                x:Key="TextBlockLabel">
@@ -137,56 +137,19 @@
                                   FontSize="18"
                                   Foreground="White"
                                   Width="215"
-                                  Margin="0,0,100,0"
-                                  SelectionChanged="cboStockGroup_SelectionChanged" />
+                                  Margin="0,0,100,0" />
                     </StackPanel>
-
+                    
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Barter Code: "
+                        <TextBlock
                                    Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBox x:Name="txtBarterCode"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="215"
-                                 Margin="0,0,100,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Barter Name: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBox x:Name="txtBarterName"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="215"
-                                 Margin="0,0,100,0" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Unit In: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <ComboBox x:Name="cboUnitIn"
+                                   Style="{StaticResource ResourceKey=TextBlockLabel}" ><Run Text="Unit "/><Run Text=":"/></TextBlock>
+                        <ComboBox x:Name="cboUnit"
                                   FontSize="18"
                                   Foreground="White"
                                   Width="215"
-                                  Margin="0,0,100,0"
-                                  SelectionChanged="cboUnitIn_SelectionChanged" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Unit Out: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <ComboBox x:Name="cboUnitOut"
-                                  FontSize="18"
-                                  Foreground="White"
-                                  Width="215"
-                                  Margin="0,0,100,0"
-                                  SelectionChanged="cboUnitOut_SelectionChanged" />
+                                  Margin="0,0,100,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal"
@@ -255,7 +218,6 @@
                                 <TextBox Foreground="Black"
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
-                                         KeyDown="SearchIBox_KeyDown"
                                          materialDesign:HintAssist.Hint="Search by Name"
                                          x:Name="SearchIBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
@@ -303,7 +265,7 @@
                 </materialDesign:ColorZone>
             </Grid>
             <Grid Grid.Row="1"
-                  Margin="5,0,0,0">
+                  Margin="5,0,0,182">
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
@@ -341,12 +303,9 @@
                             <GridViewColumn Header="Group"
                                             Width="80"
                                             DisplayMemberBinding="{Binding Group}" />
-                            <GridViewColumn Header="Unit In"
+                            <GridViewColumn Header="Unit"
                                             Width="90"
-                                            DisplayMemberBinding="{Binding UnitIn}" />
-                            <GridViewColumn Header="Unit Out"
-                                            Width="90"
-                                            DisplayMemberBinding="{Binding UnitOut}" />
+                                            DisplayMemberBinding="{Binding Unit}" />
                             <GridViewColumn Header="StandardPrice"
                                             Width="120"
                                             DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />

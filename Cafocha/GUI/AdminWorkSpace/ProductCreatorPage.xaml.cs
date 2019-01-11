@@ -253,7 +253,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _currentProduct.Type = type;
                 _currentProduct.ImageLink = imgname;
                 _currentProduct.Discount = 0;
-                _currentProduct.StdStats = stdstt;
                 _currentProduct.Price = price;
 
                 //C:\Program Files\ITComma\Asowel POS\Project POS\POS\POS

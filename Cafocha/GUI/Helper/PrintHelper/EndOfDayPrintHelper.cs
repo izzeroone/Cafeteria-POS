@@ -557,11 +557,11 @@ namespace Cafocha.GUI.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderDetailsQuery =
-                _cloudPosUnitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From) >= 0
-                                                                    && x.OrderNote.Ordertime.CompareTo(To) <= 0);
+                _cloudPosUnitofwork.OrderDetailsRepository.Get(x => x.OrderNote.OrderTime.CompareTo(From) >= 0
+                                                                    && x.OrderNote.OrderTime.CompareTo(To) <= 0);
             var orderQuery =
-                _cloudPosUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
-                                                             && x.Ordertime.CompareTo(To) <= 0);
+                _cloudPosUnitofwork.OrderRepository.Get(x => x.OrderTime.CompareTo(From) >= 0
+                                                             && x.OrderTime.CompareTo(To) <= 0);
 
 
             // Total Dribnk
@@ -711,8 +711,8 @@ namespace Cafocha.GUI.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderQuery =
-                _cloudPosUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
-                                                             && x.Ordertime.CompareTo(To) <= 0);
+                _cloudPosUnitofwork.OrderRepository.Get(x => x.OrderTime.CompareTo(From) >= 0
+                                                             && x.OrderTime.CompareTo(To) <= 0);
 
             //Total Cash
             var orderCashQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Cash);

@@ -303,20 +303,6 @@ namespace Cafocha.Repository.Generic
                 var cus = entity as Customer;
                 cus.CusId = result;
             }
-            else if (entity is WareHouse)
-            {
-                sign = "WAH";
-                // lấy số thứ tự mới nhất
-                var numberWantToset = (Get().Count() + 1).ToString();
-
-                var blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
-                var result = sign;
-                for (var i = 0; i < blank; i++) result += "0";
-                result += numberWantToset;
-
-                var wh = entity as WareHouse;
-                wh.WarehouseId = result;
-            }
             else if (entity is Product)
             {
                 sign = "P";

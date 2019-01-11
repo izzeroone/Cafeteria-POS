@@ -42,10 +42,8 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             {
                 o.OrdertempId = OrderTemp.OrdertempId;
                 o.ProductId = pt.ProductId;
-                o.SelectedStats = pt.StdStats;
                 o.Note = "";
                 o.Quan = 1;
-                o.IsPrinted = 0;
                 o.Discount = pt.Discount;
 
                 OrderTemp.OrderDetailsTemps.Add(o);
@@ -65,7 +63,6 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             tempdata.StatusItems = OrderTemp.OrderDetailsTemps.ElementAt(index).StatusItems;
             tempdata.Quan = OrderTemp.OrderDetailsTemps.ElementAt(index).Quan;
             tempdata.Note = OrderTemp.OrderDetailsTemps.ElementAt(index).Note;
-            tempdata.IsPrinted = 0;
             return tempdata;
         }
 
@@ -123,7 +120,6 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
             OrderTemp.TotalPrice = Math.Round(TotalWithDiscount, 3);
             OrderTemp.TotalPriceNonDisc = Math.Round(Total, 3);
-            OrderTemp.Svc = 0;
             OrderTemp.Vat = Math.Round(Vat, 3);
             OrderTemp.SaleValue = Math.Round(SaleValue, 3);
         }
@@ -135,15 +131,12 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 newOrder.OrdernoteId = _unitofwork.OrderRepository.AutoGeneteId_DBAsowell(newOrder).OrdernoteId;
                 newOrder.CusId = OrderTemp.CusId;
                 newOrder.EmpId = OrderTemp.EmpId;
-                newOrder.Pax = OrderTemp.Pax;
-                newOrder.Ordertime = OrderTemp.Ordertime;
+                newOrder.OrderTime = OrderTemp.Ordertime;
                 newOrder.TotalPriceNonDisc = OrderTemp.TotalPriceNonDisc;
                 newOrder.TotalPrice = OrderTemp.TotalPrice;
-                newOrder.Svc = OrderTemp.Svc;
                 newOrder.Vat = OrderTemp.Vat;
                 newOrder.SaleValue = OrderTemp.SaleValue;
                 newOrder.Discount = OrderTemp.Discount;
-                newOrder.SubEmpId = OrderTemp.SubEmpId;
             }
             else
             {
@@ -184,14 +177,10 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             OrderTemp.Ordertime = DateTime.Now;
             OrderTemp.TotalPriceNonDisc = 0;
             OrderTemp.SaleValue = 0;
-            OrderTemp.Svc = 0;
             OrderTemp.Vat = 0;
             OrderTemp.TotalPrice = 0;
             OrderTemp.CustomerPay = 0;
             OrderTemp.PayBack = 0;
-            OrderTemp.SubEmpId = "";
-            OrderTemp.Pax = 0;
-            OrderTemp.OrderMode = 0;
             OrderTemp.OrderDetailsTemps.Clear();
         }
 
@@ -221,16 +210,6 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
                 {
                     OrderDetailsTemp.StatusItems = value;
                     OnPropertyChanged("StatusItems");
-                }
-            }
-
-            public string SelectedStats
-            {
-                get => OrderDetailsTemp.SelectedStats;
-                set
-                {
-                    OrderDetailsTemp.SelectedStats = value;
-                    OnPropertyChanged("SelectedStats");
                 }
             }
 

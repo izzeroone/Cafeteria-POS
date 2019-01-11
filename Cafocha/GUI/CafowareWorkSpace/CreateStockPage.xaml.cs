@@ -77,11 +77,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
             cboStockGroup.Items.Add(StockGroup.TopTen);
             cboStockGroup.SelectedIndex = 0;
 
-            cboUnitIn.Items.Add("pcs");
-            cboUnitIn.SelectedItem = "pcs";
-
-            cboUnitOut.Items.Add("pcs");
-            cboUnitOut.SelectedItem = "pcs";
+            cboUnit.Items.Add("pcs");
+            cboUnit.Items.Add("bot");
+            cboUnit.Items.Add("can");
+            cboUnit.Items.Add("ml");
+            cboUnit.SelectedIndex = 0;
         }
 
 
@@ -125,7 +125,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvStock.UnselectAll();
             lvStock.Items.Refresh();
             btnUpdate.Visibility = Visibility.Visible;
-
 
             //put data to form
             putStockDataToForm();
@@ -172,10 +171,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     break;
             }
 
-            txtBarterCode.Text = _selectedStock.BarterCode;
-            txtBarterName.Text = _selectedStock.BarterName;
-            cboUnitIn.SelectedItem = _selectedStock.UnitIn;
-            cboUnitOut.SelectedItem = _selectedStock.UnitOut;
+            cboUnit.SelectedItem = _selectedStock.Unit;
             txtSupplier.Text = _selectedStock.Supplier;
             txtPrice.Text = _selectedStock.StandardPrice.ToString();
         }
@@ -215,29 +211,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
         * Manipulate Search Box
         *********************************/
 
-        private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            var filter = SearchIBox.Text.Trim();
-            var selectedStock = cboGroup.SelectedIndex;
-
-            if (selectedStock < 0 || cboGroup.SelectedValue.Equals(StockGroup.All))
-            {
-                if (filter.Length == 0)
-                    lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));
-                else
-                    lvStock.ItemsSource = _stockList.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
-            else
-            {
-                if (filter.Length == 0)
-                    lvStock.ItemsSource = _stockList.Where(p =>
-                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Deleted.Equals(0));
-                else
-                    lvStock.ItemsSource = _stockList.Where(p =>
-                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
-            }
-        }
-
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var filter = SearchIBox.Text.Trim();
@@ -275,21 +248,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             if (!string.IsNullOrEmpty(e.Text)) e.Handled = !char.IsNumber(e.Text[0]);
         }
 
-        private void cboStockGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //_currentNewStock.Group = (int)cboStockGroup.SelectedItem;
-        }
-
-        private void cboUnitIn_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //_currentNewStock.UnitIn = cboUnitIn.SelectedItem.ToString();
-        }
-
-        private void cboUnitOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //_currentNewStock.UnitOut = cboUnitOut.SelectedItem.ToString();
-        }
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -305,14 +263,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
                 //check info
                 var info = txtInfo.Text.Trim();
-                //check barter code
-                var barterCode = txtBarterCode.Text;
-                //check barter name
-                var barterName = txtBarterName.Text;
 
                 var group = (int) cboStockGroup.SelectedItem;
-                var unitIn = cboUnitIn.SelectedItem.ToString();
-                var unitOut = cboUnitOut.SelectedItem.ToString();
+                var unit = cboUnit.SelectedItem.ToString();
 
                 //check supplier
                 var supplier = txtSupplier.Text;
@@ -336,10 +289,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _currentNewStock.Name = name;
                 _currentNewStock.Info = info;
                 _currentNewStock.Group = group;
-                _currentNewStock.BarterCode = barterCode;
-                _currentNewStock.BarterName = barterName;
-                _currentNewStock.UnitIn = unitIn;
-                _currentNewStock.UnitOut = unitOut;
+                _currentNewStock.Unit = unit;
                 _currentNewStock.Supplier = supplier;
                 _currentNewStock.StandardPrice = price;
 
@@ -369,10 +319,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             txtName.Text = "";
             txtInfo.Text = "";
             cboStockGroup.SelectedItem = StockGroup.Cosmetics;
-            txtBarterCode.Text = "";
-            txtBarterName.Text = "";
-            cboUnitIn.SelectedItem = "pcs";
-            cboUnitOut.SelectedItem = "pcs";
+            cboUnit.SelectedIndex = 0;
             txtSupplier.Text = "";
             txtPrice.Text = "";
 
@@ -394,14 +341,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             //check info
             var info = txtInfo.Text.Trim();
-            //check barter code
-            var barterCode = txtBarterCode.Text;
-            //check barter name
-            var barterName = txtBarterName.Text;
 
             var group = (int) cboStockGroup.SelectedItem;
-            var unitIn = cboUnitIn.SelectedItem.ToString();
-            var unitOut = cboUnitOut.SelectedItem.ToString();
+            var unitIn = cboUnit.SelectedItem.ToString();
 
             //check supplier
             var supplier = txtSupplier.Text;
@@ -413,10 +355,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _selectedStock.Name = name;
             _selectedStock.Info = info;
             _selectedStock.Group = group;
-            _selectedStock.BarterCode = barterCode;
-            _selectedStock.BarterName = barterName;
-            _selectedStock.UnitIn = unitIn;
-            _selectedStock.UnitOut = unitOut;
+            _selectedStock.Unit = unitIn;
             _selectedStock.Supplier = supplier;
             _selectedStock.StandardPrice = price;
 

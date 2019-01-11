@@ -8,7 +8,6 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public string ProductId { get; set; } // product_id (Primary key) (length: 10)
         public string ProductName { get; set; }
         public string EmpId { get; set; }
-        public int TableNumber { get; set; }
         public DateTime OrderTime { get; set; }
         public int Quan { get; set; } // quan
         public decimal TotalPrice { get; set; }

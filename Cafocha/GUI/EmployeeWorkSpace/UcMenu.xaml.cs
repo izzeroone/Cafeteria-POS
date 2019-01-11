@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -161,23 +160,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId)) return;
-
-            if (ordertempcurrenttable.SubEmpId != null)
-            {
-                var subemplist = ordertempcurrenttable.SubEmpId.Split(',');
-
-                for (var i = 0; i < subemplist.Count(); i++)
-                {
-                    if (subemplist[i].Equals("")) continue;
-
-                    if (currentEmp.Emp.EmpId.Equals(subemplist[i])) return;
-                }
-
-                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-                return;
-            }
-
-            ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
