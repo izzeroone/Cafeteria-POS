@@ -32,7 +32,7 @@
                                       VerticalAlignment="Top"
                                       Width="223">
 
-                <TextBlock Text="Login Form"
+                <TextBlock Text="Đăng nhập"
                            FontSize="35"
                            TextAlignment="Center" />
             </materialDesign:ColorZone>
@@ -41,7 +41,7 @@
                        Margin="51,160,0,0"
                        TextWrapping="Wrap"
                        VerticalAlignment="Top"
-                       Text="User Name"
+                       Text="User "
                        FontSize="15" />
             <TextBlock x:Name="txbPass"
                        HorizontalAlignment="Left"
@@ -84,22 +84,22 @@
                     Click="btnLogin_Click">
                 Login
             </Button>
-            <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"
-                    Foreground="Yellow"
-                    x:Name="btnDatabase"
-                    HorizontalAlignment="Left"
-                    Margin="191,89.4,0,0"
-                    VerticalAlignment="Top"
-                    Width="38"
-                    Grid.Row="1"
-                    Height="32"
-                    Click="btnDatabase_Click">
-                <materialDesign:PackIcon Kind="Database"
-                                         Foreground="Black" />
-                <Button.ToolTip>
-                    Database Configuration
-                </Button.ToolTip>
-            </Button>
+            <!-- <Button Style="{DynamicResource MaterialDesignFloatingActionButton}" -->
+            <!--         Foreground="Yellow" -->
+            <!--         x:Name="btnDatabase" -->
+            <!--         HorizontalAlignment="Left" -->
+            <!--         Margin="191,89.4,0,0" -->
+            <!--         VerticalAlignment="Top" -->
+            <!--         Width="38" -->
+            <!--         Grid.Row="1" -->
+            <!--         Height="32" -->
+            <!--         Click="btnDatabase_Click"> -->
+            <!--     <materialDesign:PackIcon Kind="Database" -->
+            <!--                              Foreground="Black" /> -->
+            <!--     <Button.ToolTip> -->
+            <!--         Database Configuration -->
+            <!--     </Button.ToolTip> -->
+            <!-- </Button> -->
             <ProgressBar x:Name="PgbLoginProcess"
                          Style="{StaticResource MaterialDesignCircularProgressBar}"
                          Value="0"

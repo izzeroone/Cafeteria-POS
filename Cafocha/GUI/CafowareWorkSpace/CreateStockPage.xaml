@@ -36,29 +36,25 @@
                                 HorizontalAlignment="Center"
                                 Width="539">
                         <Button x:Name="btnAdd"
-                                Content="Save"
+                                Content="Thêm"
                                 Height="46"
                                 FontWeight="Bold"
-                                FontSize="20"
                                 Margin="0,0,20,0"
                                 Width="142"
                                 Click="btnAdd_Click" />
                         <Button x:Name="btnClear"
                                 Margin="0,0,20,0"
-                                Content="Clear"
+                                Content="Đặt lại"
                                 FontWeight="Bold"
-                                FontSize="20"
                                 Height="46"
                                 Width="136"
                                 Click="btnClear_Click" />
                         <Button x:Name="btnUpdate"
-                                Content="Update"
+                                Content="Cập nhật"
                                 FontWeight="Bold"
-                                FontSize="20"
                                 Height="46"
                                 Width="136"
-                                Click="btnUpdate_Click"
-                                Visibility="Hidden" />
+                                Click="btnUpdate_Click" />
                     </StackPanel>
 
                 </materialDesign:ColorZone>
@@ -139,7 +135,7 @@
                                   Width="215"
                                   Margin="0,0,100,0" />
                     </StackPanel>
-                    
+
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
                         <TextBlock
@@ -245,15 +241,8 @@
                                         Margin="0,0,20,0"
                                         FontWeight="Bold"
                                         Click="bntAdd_Click" />-->
-                                <Button x:Name="bntEdit"
-                                        Content="Edit"
-                                        Height="auto"
-                                        Margin="0,0,20,0"
-                                        FontWeight="Bold"
-                                        Click="bntEdit_Click"
-                                        Width="85" />
                                 <Button x:Name="bntDel"
-                                        Content="Delete"
+                                        Content="Xóa"
                                         Height="auto"
                                         Margin="0,0,50,0"
                                         FontWeight="Bold"
@@ -266,10 +255,14 @@
             </Grid>
             <Grid Grid.Row="1"
                   Margin="5,0,0,182">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="450*"/>
+                    <ColumnDefinition Width="353*"/>
+                </Grid.ColumnDefinitions>
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
-                                          Height="46">
+                                          Height="46" Grid.ColumnSpan="2" Margin="0,0,0.2,0">
                     <StackPanel Orientation="Horizontal"
                                 Margin="20,0,0,0">
                         <TextBlock VerticalAlignment="Center"
@@ -288,7 +281,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           Margin="0,50,0,0"
-                          Width="792">
+                          Width="792" Grid.ColumnSpan="2" SelectionChanged="LvStock_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"

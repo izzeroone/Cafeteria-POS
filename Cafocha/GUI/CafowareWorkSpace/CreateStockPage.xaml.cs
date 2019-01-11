@@ -112,24 +112,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
         }
 
-        private void bntEdit_Click(object sender, RoutedEventArgs e)
-        {
-            _selectedStock = lvStock.SelectedItem as Stock;
-
-            if (lvStock.SelectedItem == null)
-            {
-                MessageBox.Show("Stock must be selected to update! Choose again!");
-                return;
-            }
-
-            lvStock.UnselectAll();
-            lvStock.Items.Refresh();
-            btnUpdate.Visibility = Visibility.Visible;
-
-            //put data to form
-            putStockDataToForm();
-        }
-
         private void putStockDataToForm()
         {
 
@@ -325,11 +307,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             _currentNewStock = new Stock();
             lvStock.Items.Refresh();
-            btnUpdate.Visibility = Visibility.Hidden;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (lvStock.SelectedIndex == -1)
+            {
+                MessageBox.Show("Bạn chưa chọn mặt hàng");
+                return;
+            }
             //check name
             var name = txtName.Text.Trim();
             if (name.Length == 0)
@@ -365,10 +351,16 @@ namespace Cafocha.GUI.CafowareWorkSpace
             MessageBox.Show("Update stock " + _selectedStock.Name + "(" + _selectedStock.StoId + ") successful!");
             clearAllData();
 
-            btnUpdate.Visibility = Visibility.Hidden;
             _selectedStock = null;
             // refesh data
             ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
+        }
+
+        private void LvStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedStock = lvStock.SelectedItem as Stock;
+            //put data to form
+            putStockDataToForm();
         }
     }
 }
