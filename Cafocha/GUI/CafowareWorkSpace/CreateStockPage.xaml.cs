@@ -114,7 +114,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void putStockDataToForm()
         {
-
+            if (_selectedStock == null)
+            {
+                return;
+            }
             //put data to form
             txtName.Text = _selectedStock.Name;
             txtInfo.Text = _selectedStock.Info;
