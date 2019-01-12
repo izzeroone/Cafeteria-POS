@@ -133,6 +133,8 @@
                                   FontSize="18"
                                   Foreground="White"
                                   Width="215"
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="StId"
                                   Margin="0,0,100,0" />
                     </StackPanel>
 
@@ -233,6 +235,8 @@
                                           Background="White"
                                           Width="135"
                                           Margin="0,0,20,0"
+                                          DisplayMemberPath="Name"
+                                          SelectedValuePath="StId"
                                           SelectionChanged="cboGroup_SelectionChanged"
                                           ToolTip="group" />
                                 <!--<Button x:Name="bntAdd"

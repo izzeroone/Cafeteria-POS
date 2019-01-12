@@ -13,40 +13,6 @@ namespace Cafocha.GUI.BusinessModel
 
         private static string ENCRYPT_PHASE = "OMA_ZIO_12312";
 
-        public static string[] ReadPrinterSetting()
-        {
-            try
-            {
-                var fs = new FileStream(startupProjectPath + "\\printerSetting.txt", FileMode.Open);
-
-                using (var rd = new StreamReader(fs, Encoding.UTF8))
-                {
-                    var printer = rd.ReadLine();
-                    var result = printer?.Split(',');
-
-                    if (result?.Length >= 4) return result;
-                }
-            }
-            catch (Exception e)
-            {
-                
-            }
-
-            return new string[] { "Microsoft Print to PDF", "Microsoft Print to PDF", "Microsoft Print to PDF", "Microsoft Print to PDF" };
-        }
-
-        public static void WritePrinterSetting(string printers)
-        {
-            using (var fs = new FileStream(startupProjectPath + "\\printerSetting.txt",
-                FileMode.Create))
-            {
-                using (var sWriter = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    sWriter.WriteLine(printers);
-                }
-            }
-        }
-
         public static string ReadDBConfig()
         {
             try

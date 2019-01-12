@@ -23,7 +23,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
         private readonly OrderNote curOrder;
 
-        private readonly string _receptionPrinter;
         private readonly bool isShowReview;
 
         private IPrintHelper ph;
@@ -36,21 +35,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             type = printType;
             printDlg = new PrintDialog();
 
-            var result = ReadWriteData.ReadPrinterSetting();
-            if (result != null)
-            {
-                _receptionPrinter = result[0];
-
-                if (int.Parse(result[3]) == 1)
-                    isShowReview = true;
-                else
-                    isShowReview = false;
-            }
-            else
-            {
-                _receptionPrinter = "";
-                isShowReview = true;
-            }
         }
 
         public DoPrintHelper(RepositoryLocator unitofwork, int printType, OrderNote currentOrder)
@@ -59,22 +43,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             type = printType;
             curOrder = currentOrder;
             printDlg = new PrintDialog();
-
-            var result = ReadWriteData.ReadPrinterSetting();
-            if (result != null)
-            {
-                _receptionPrinter = result[0];
-
-                if (int.Parse(result[3]) == 1)
-                    isShowReview = true;
-                else
-                    isShowReview = false;
-            }
-            else
-            {
-                _receptionPrinter = "";
-                isShowReview = true;
-            }
         }
 
         public void DoPrint()
@@ -112,32 +80,24 @@ namespace Cafocha.GUI.Helper.PrintHelper
             // Create IDocumentPaginatorSource from FlowDocument
             IDocumentPaginatorSource idpSource = doc;
 
-            if (!isShowReview)
-            {
-                // Call PrintDocument method to send document to printer
-                printDlg.PrintDocument(idpSource.DocumentPaginator, "bill printing");
-            }
-            else
-            {
-                // convert FlowDocument to FixedDocument
-                var paginator = idpSource.DocumentPaginator;
-                var package = Package.Open(new MemoryStream(), FileMode.Create, FileAccess.ReadWrite);
-                var packUri = new Uri("pack://temp.xps");
-                PackageStore.RemovePackage(packUri);
-                PackageStore.AddPackage(packUri, package);
-                var xps = new XpsDocument(package, CompressionOption.NotCompressed, packUri.ToString());
-                XpsDocument.CreateXpsDocumentWriter(xps).Write(paginator);
-                var fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
+            // convert FlowDocument to FixedDocument
+            var paginator = idpSource.DocumentPaginator;
+            var package = Package.Open(new MemoryStream(), FileMode.Create, FileAccess.ReadWrite);
+            var packUri = new Uri("pack://temp.xps");
+            PackageStore.RemovePackage(packUri);
+            PackageStore.AddPackage(packUri, package);
+            var xps = new XpsDocument(package, CompressionOption.NotCompressed, packUri.ToString());
+            XpsDocument.CreateXpsDocumentWriter(xps).Write(paginator);
+            var fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
 
-                var previewWindow = new DocumentViewer
-                {
-                    Document = fdoc
-                };
-                var printpriview = new Window();
-                printpriview.Content = previewWindow;
-                printpriview.Title = "Print Preview";
-                printpriview.Show();
-            }
+            var previewWindow = new DocumentViewer
+            {
+                Document = fdoc
+            };
+            var printpriview = new Window();
+            printpriview.Content = previewWindow;
+            printpriview.Title = "Print Preview";
+            printpriview.Show();
         }
 
         private void CreatePrintHelper()
@@ -145,9 +105,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
             // Create Print Helper
             if (type == Receipt_Printing)
             {
-                if (!string.IsNullOrEmpty(_receptionPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
-
                 var order = new OrderForPrint().GetAndConvertOrder(curOrder);
                 order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
                 ph = new ReceiptPrintHelper
@@ -167,8 +124,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
             if (type == TempReceipt_Printing)
             {
-                if (!string.IsNullOrEmpty(_receptionPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
 
                 var order = new OrderForPrint().GetAndConvertOrder(curOrder);
                 order = order.GetAndConverOrderDetails(curOrder, _unitofwork);
@@ -190,9 +145,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
             if (type == Eod_Printing)
             {
-                if (!string.IsNullOrEmpty(_receptionPrinter))
-                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
-
                 ph = new EndOfDayPrintHelper(_unitofwork);
             }
         }

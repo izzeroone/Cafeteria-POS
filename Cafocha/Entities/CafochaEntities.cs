@@ -53,6 +53,7 @@ namespace Cafocha.Entities
         System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; } // StockInDetails
         System.Data.Entity.DbSet<StockOut> StockOuts { get; set; } // StockOut
         System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; } // StockOutDetails
+        System.Data.Entity.DbSet<StockType> StockTypes { get; set; } // StockType
         System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
         int SaveChanges();
@@ -90,6 +91,7 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; } // StockInDetails
         public System.Data.Entity.DbSet<StockOut> StockOuts { get; set; } // StockOut
         public System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; } // StockOutDetails
+        public System.Data.Entity.DbSet<StockType> StockTypes { get; set; } // StockType
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
         static LocalContext()
@@ -160,6 +162,7 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new StockInDetailMapping());
             modelBuilder.Configurations.Add(new StockOutMapping());
             modelBuilder.Configurations.Add(new StockOutDetailMapping());
+            modelBuilder.Configurations.Add(new StockTypeMapping());
             modelBuilder.Configurations.Add(new WorkingHistoryMapping());
 
             OnModelCreatingPartial(modelBuilder);
@@ -181,6 +184,7 @@ namespace Cafocha.Entities
             modelBuilder.Configurations.Add(new StockInDetailMapping(schema));
             modelBuilder.Configurations.Add(new StockOutMapping(schema));
             modelBuilder.Configurations.Add(new StockOutDetailMapping(schema));
+            modelBuilder.Configurations.Add(new StockTypeMapping(schema));
             modelBuilder.Configurations.Add(new WorkingHistoryMapping(schema));
             OnCreateModelPartial(modelBuilder, schema);
             return modelBuilder;
@@ -224,6 +228,7 @@ namespace Cafocha.Entities
         public System.Data.Entity.DbSet<StockInDetail> StockInDetails { get; set; }
         public System.Data.Entity.DbSet<StockOut> StockOuts { get; set; }
         public System.Data.Entity.DbSet<StockOutDetail> StockOutDetails { get; set; }
+        public System.Data.Entity.DbSet<StockType> StockTypes { get; set; }
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; }
 
         public FakeLocalContext()
@@ -246,6 +251,7 @@ namespace Cafocha.Entities
             StockInDetails = new FakeDbSet<StockInDetail>("SiId", "StoId");
             StockOuts = new FakeDbSet<StockOut>("StockoutId");
             StockOutDetails = new FakeDbSet<StockOutDetail>("StockoutId", "StockId");
+            StockTypes = new FakeDbSet<StockType>("StId");
             WorkingHistories = new FakeDbSet<WorkingHistory>("WhId");
 
             InitializePartial();
@@ -1292,10 +1298,11 @@ namespace Cafocha.Entities
         [Display(Name = "Name")]
         public string Name { get; set; } // name (length: 100)
 
-        [Column(@"group", Order = 4, TypeName = "int")]
-        [Required]
-        [Display(Name = "Group")]
-        public int Group { get; set; } // group
+        [Column(@"st_id", Order = 4, TypeName = "varchar")]
+        [MaxLength(10)]
+        [StringLength(10)]
+        [Display(Name = "St ID")]
+        public string StId { get; set; } // st_id (length: 10)
 
         [Column(@"unit", Order = 5, TypeName = "nvarchar")]
         [Required(AllowEmptyStrings = true)]
@@ -1344,6 +1351,11 @@ namespace Cafocha.Entities
         /// Parent ApWareHouse pointed by [Stock].([ApwarehouseId]) (FK_dbo.Stock_dbo.APWareHouse_apwarehouse_id)
         /// </summary>
         [ForeignKey("ApwarehouseId"), Required] public virtual ApWareHouse ApWareHouse { get; set; } // FK_dbo.Stock_dbo.APWareHouse_apwarehouse_id
+
+        /// <summary>
+        /// Parent StockType pointed by [Stock].([StId]) (FK_dbo.Stock_dbo.StockType_st_id)
+        /// </summary>
+        [ForeignKey("StId")] public virtual StockType StockType { get; set; } // FK_dbo.Stock_dbo.StockType_st_id
 
         public Stock()
         {
@@ -1601,6 +1613,47 @@ namespace Cafocha.Entities
         partial void InitializePartial();
     }
 
+    // StockType
+    [Table("StockType", Schema = "dbo")]
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
+    public partial class StockType
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Column(@"st_id", Order = 1, TypeName = "varchar")]
+        [Index(@"PK__StockTyp__A85E81CF82CF7F6F", 1, IsUnique = true, IsClustered = true)]
+        [Required(AllowEmptyStrings = true)]
+        [MaxLength(10)]
+        [StringLength(10)]
+        [Key]
+        [Display(Name = "St ID")]
+        public string StId { get; set; } // st_id (Primary key) (length: 10)
+
+        [Column(@"name", Order = 2, TypeName = "nvarchar(max)")]
+        [Required(AllowEmptyStrings = true)]
+        [Display(Name = "Name")]
+        public string Name { get; set; } // name
+
+        [Column(@"deleted", Order = 3, TypeName = "int")]
+        [Required]
+        [Display(Name = "Deleted")]
+        public int Deleted { get; set; } // deleted
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child Stocks where [Stock].[st_id] point to this entity (FK_dbo.Stock_dbo.StockType_st_id)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<Stock> Stocks { get; set; } // Stock.FK_dbo.Stock_dbo.StockType_st_id
+
+        public StockType()
+        {
+            Stocks = new System.Collections.Generic.List<Stock>();
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
     // WorkingHistory
     [Table("WorkingHistory", Schema = "dbo")]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
@@ -1849,6 +1902,7 @@ namespace Cafocha.Entities
         {
             Property(x => x.StoId).IsUnicode(false);
             Property(x => x.ApwarehouseId).IsUnicode(false);
+            Property(x => x.StId).IsOptional().IsUnicode(false);
             Property(x => x.StandardPrice).HasPrecision(19,4);
             Property(x => x.Info).IsOptional();
             Property(x => x.Supplier).IsOptional();
@@ -1926,6 +1980,21 @@ namespace Cafocha.Entities
             Property(x => x.StockoutId).IsUnicode(false);
             Property(x => x.StockId).IsUnicode(false);
 
+        }
+    }
+
+    // StockType
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.37.2.0")]
+    public class StockTypeMapping : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<StockType>
+    {
+        public StockTypeMapping()
+            : this("dbo")
+        {
+        }
+
+        public StockTypeMapping(string schema)
+        {
+            Property(x => x.StId).IsUnicode(false);
         }
     }
 

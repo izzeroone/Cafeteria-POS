@@ -35,6 +35,7 @@ namespace Cafocha.Repository.DAL
         private GenericRepository<StockOutDetail> _stockOutDetailsRepository;
         private GenericRepository<StockOut> _stockOutRepository;
         private GenericRepository<Stock> _stockRepository;
+        private GenericRepository<StockType> _stockTypeRepository;
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
 
 
@@ -156,6 +157,15 @@ namespace Cafocha.Repository.DAL
             {
                 if (_stockRepository == null) _stockRepository = new GenericRepository<Stock>(_context);
                 return _stockRepository;
+            }
+        }
+
+        public GenericRepository<StockType> StockTypeRepository
+        {
+            get
+            {
+                if (_stockTypeRepository == null) _stockTypeRepository = new GenericRepository<StockType>(_context);
+                return _stockTypeRepository;
             }
         }
 

@@ -37,7 +37,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         internal bool isOrderOrder;
         internal bool isOrderPrint;
         internal LoginWindow LoginWindow;
-        internal SettingPrinter settingPrinter;
         internal SettingFoodPage st;
 
         private readonly DispatcherTimer WorkTimer;
@@ -66,7 +65,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 en = new Entry();
                 info = new Info();
                 st = new SettingFoodPage(_businessModuleLocator);
-                settingPrinter = new SettingPrinter();
 
                 WorkTimer = new DispatcherTimer();
                 WorkTimer.Tick += WorkTime_Tick;
@@ -266,11 +264,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
-        }
-
-        private void LbiPrinterSetting_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            myFrame.Navigate(settingPrinter);
         }
     }
 }

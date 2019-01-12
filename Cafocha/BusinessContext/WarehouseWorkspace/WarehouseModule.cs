@@ -12,8 +12,8 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         private static readonly string OTHER_PURCHASE_ID = "IGD0000047";
 
         private readonly RepositoryLocator _unitofworkWH;
-
-
+        private List<Stock> _stockList;
+        private List<StockType> _stockTypes;
         public WarehouseModule()
         {
             _unitofworkWH = new RepositoryLocator();
@@ -24,21 +24,44 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             _unitofworkWH = unitofworkWh;
         }
 
-        public List<Stock> StockList { get; set; }
+        public List<Stock> StockList
+        {
+            get {
+                if (_stockList == null)
+                {
+                    loadStock();
+                }
+                return _stockList;
+            }
+        }
+
+        public List<StockType> StockTypes
+        {
+            get
+            {
+                if (_stockTypes == null)
+                {
+                    loadStock();
+                }
+                return _stockTypes;
+            }
+        }
 
         public List<Stock> IngredientList
         {
             get
             {
                 if (StockList == null) loadStock();
-                return StockList.Where(s => s.Group.Equals((int) StockGroup.Ingridient)).ToList();
+                return StockList.Where(s => s.StId.Equals("ST00000001")).ToList();
             }
         }
 
         public void loadStock()
         {
-            StockList = _unitofworkWH.StockRepository
+            _stockList = _unitofworkWH.StockRepository
                 .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
+            _stockTypes = _unitofworkWH.StockTypeRepository
+                .Get(c => c.Deleted.Equals(0)).ToList();
         }
 
         public void updateStock()
