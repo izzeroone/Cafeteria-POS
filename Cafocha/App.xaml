@@ -5,7 +5,6 @@
              xmlns:local="clr-namespace:Cafocha"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="GUI/LoginWindow.xaml">
-    <!-- StartupUri="GUI/LoginWindow.xaml"> -->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

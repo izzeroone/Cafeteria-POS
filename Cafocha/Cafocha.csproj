@@ -343,10 +343,6 @@
     </Compile>
     <Compile Include="Repository\DAL\RepositoryLocator.cs" />
     <Compile Include="Repository\Generic\GenericRepository.cs" />
-    <Compile Include="Repository\Interfaces\IAdminRepository.cs" />
-    <Compile Include="Repository\Interfaces\ICustomerRepository.cs" />
-    <Compile Include="Repository\Interfaces\IEmployeeRepository.cs" />
-    <Compile Include="Repository\Interfaces\IProductRepository.cs" />
     <Compile Include="Security\AESGCM.cs" />
     <Compile Include="Security\AESThenHMAC.cs" />
     <Compile Include="App.xaml.cs">
