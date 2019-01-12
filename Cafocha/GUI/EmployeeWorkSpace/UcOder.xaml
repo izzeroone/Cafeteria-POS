@@ -114,6 +114,7 @@
                           Background="#FFED5C5C"
                           Foreground="#DD322112"
                           FontWeight="Bold">
+
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
                             <GridViewColumn Header="Item"
@@ -130,12 +131,12 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button x:Name="bntDelete"
+                                            <Button x:Name="bntDeleteItem"
                                                     Content="x"
                                                     BorderBrush="DarkGray"
                                                     Background="DarkGray"
                                                     Width="40"
-                                                    Click="bntDelete_Click"
+                                                    Click="bntDeleteItem_Click"
                                                     Margin="0 0 0 0" />
                                             <Button x:Name="bntEdit"
                                                     Width="45"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
@@ -52,7 +53,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
             isUcOrderFormLoading = true;
-            _businessModuleLocator = ((MainWindow) Window.GetWindow(this))._businessModuleLocator;
+            _businessModuleLocator = ((MainWindow) Window.GetWindow(this))?._businessModuleLocator;
             var currentEmpList = Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
 
 
@@ -169,9 +170,21 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             txtTotal.Text = string.Format("{0:0.000}", _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice);
         }
 
-        private void bntDelete_Click(object sender, RoutedEventArgs e)
+        private void bntDeleteItem_Click(object sender, RoutedEventArgs e)
         {
-            ClearTheTable();
+            //            ClearTheTable();
+
+           
+            int index;
+            var dep = (DependencyObject)e.OriginalSource;
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
+            if (dep == null)
+                return;
+            index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
+
+            _businessModuleLocator.TakingOrderModule.deleteOrderDetail(index, true);
+
+            RefreshControl();
         }
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
@@ -374,5 +387,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             txtTotal.Text = string.Format("{0:0.000}", _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice);
         }
+        
     }
 }
