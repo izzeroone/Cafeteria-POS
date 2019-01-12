@@ -637,20 +637,10 @@ namespace Cafocha.Entities
         /// Child Employees where [Employee].[manager] point to this entity (FK_dbo.Employee_dbo.AdminRes_manager)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Employee> Employees { get; set; } // Employee.FK_dbo.Employee_dbo.AdminRes_manager
-        /// <summary>
-        /// Child StockIns where [StockIn].[ad_id] point to this entity (FK_dbo.StockIn_dbo.AdminRes_ad_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<StockIn> StockIns { get; set; } // StockIn.FK_dbo.StockIn_dbo.AdminRes_ad_id
-        /// <summary>
-        /// Child StockOuts where [StockOut].[ad_id] point to this entity (FK_dbo.StockOut_dbo.AdminRes_ad_id)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<StockOut> StockOuts { get; set; } // StockOut.FK_dbo.StockOut_dbo.AdminRes_ad_id
 
         public AdminRe()
         {
             Employees = new System.Collections.Generic.List<Employee>();
-            StockIns = new System.Collections.Generic.List<StockIn>();
-            StockOuts = new System.Collections.Generic.List<StockOut>();
             InitializePartial();
         }
 
@@ -871,6 +861,14 @@ namespace Cafocha.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<SalaryNote> SalaryNotes { get; set; } // SalaryNote.FK_dbo.SalaryNote_dbo.Employee_emp_id
         /// <summary>
+        /// Child StockIns where [StockIn].[emp_id] point to this entity (FK_dbo.StockIn_dbo.AdminRes_ad_id)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<StockIn> StockIns { get; set; } // StockIn.FK_dbo.StockIn_dbo.AdminRes_ad_id
+        /// <summary>
+        /// Child StockOuts where [StockOut].[emp_id] point to this entity (FK_dbo.StockOut_dbo.AdminRes_ad_id)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<StockOut> StockOuts { get; set; } // StockOut.FK_dbo.StockOut_dbo.AdminRes_ad_id
+        /// <summary>
         /// Child WorkingHistories where [WorkingHistory].[emp_id] point to this entity (FK_dbo.WorkingHistory_dbo.Employee_emp_id)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory.FK_dbo.WorkingHistory_dbo.Employee_emp_id
@@ -886,6 +884,8 @@ namespace Cafocha.Entities
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
             SalaryNotes = new System.Collections.Generic.List<SalaryNote>();
+            StockIns = new System.Collections.Generic.List<StockIn>();
+            StockOuts = new System.Collections.Generic.List<StockOut>();
             WorkingHistories = new System.Collections.Generic.List<WorkingHistory>();
             InitializePartial();
         }
@@ -1382,12 +1382,12 @@ namespace Cafocha.Entities
         [Display(Name = "Si ID")]
         public string SiId { get; set; } // si_id (Primary key) (length: 10)
 
-        [Column(@"ad_id", Order = 2, TypeName = "varchar")]
+        [Column(@"emp_id", Order = 2, TypeName = "varchar")]
         [Index(@"IX_ad_id", 1, IsUnique = false, IsClustered = false)]
         [MaxLength(10)]
         [StringLength(10)]
-        [Display(Name = "Ad ID")]
-        public string AdId { get; set; } // ad_id (length: 10)
+        [Display(Name = "Emp ID")]
+        public string EmpId { get; set; } // emp_id (length: 10)
 
         [Column(@"intime", Order = 3, TypeName = "datetime")]
         [Required]
@@ -1411,9 +1411,9 @@ namespace Cafocha.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent AdminRe pointed by [StockIn].([AdId]) (FK_dbo.StockIn_dbo.AdminRes_ad_id)
+        /// Parent Employee pointed by [StockIn].([EmpId]) (FK_dbo.StockIn_dbo.AdminRes_ad_id)
         /// </summary>
-        [ForeignKey("AdId")] public virtual AdminRe AdminRe { get; set; } // FK_dbo.StockIn_dbo.AdminRes_ad_id
+        [ForeignKey("EmpId")] public virtual Employee Employee { get; set; } // FK_dbo.StockIn_dbo.AdminRes_ad_id
 
         public StockIn()
         {
@@ -1503,12 +1503,11 @@ namespace Cafocha.Entities
         [Display(Name = "Stockout ID")]
         public string StockoutId { get; set; } // stockout_id (Primary key) (length: 10)
 
-        [Column(@"ad_id", Order = 2, TypeName = "varchar")]
-        [Index(@"IX_ad_id", 1, IsUnique = false, IsClustered = false)]
+        [Column(@"emp_id", Order = 2, TypeName = "varchar")]
         [MaxLength(10)]
         [StringLength(10)]
-        [Display(Name = "Ad ID")]
-        public string AdId { get; set; } // ad_id (length: 10)
+        [Display(Name = "Emp ID")]
+        public string EmpId { get; set; } // emp_id (length: 10)
 
         [Column(@"outTime", Order = 3, TypeName = "date")]
         [Required]
@@ -1543,9 +1542,9 @@ namespace Cafocha.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent AdminRe pointed by [StockOut].([AdId]) (FK_dbo.StockOut_dbo.AdminRes_ad_id)
+        /// Parent Employee pointed by [StockOut].([EmpId]) (FK_dbo.StockOut_dbo.AdminRes_ad_id)
         /// </summary>
-        [ForeignKey("AdId")] public virtual AdminRe AdminRe { get; set; } // FK_dbo.StockOut_dbo.AdminRes_ad_id
+        [ForeignKey("EmpId")] public virtual Employee Employee { get; set; } // FK_dbo.StockOut_dbo.AdminRes_ad_id
 
         public StockOut()
         {
@@ -1927,7 +1926,7 @@ namespace Cafocha.Entities
         public StockInMapping(string schema)
         {
             Property(x => x.SiId).IsUnicode(false);
-            Property(x => x.AdId).IsOptional().IsUnicode(false);
+            Property(x => x.EmpId).IsOptional().IsUnicode(false);
             Property(x => x.TotalAmount).HasPrecision(19,4);
 
         }
@@ -1964,7 +1963,7 @@ namespace Cafocha.Entities
         public StockOutMapping(string schema)
         {
             Property(x => x.StockoutId).IsUnicode(false);
-            Property(x => x.AdId).IsOptional().IsUnicode(false);
+            Property(x => x.EmpId).IsOptional().IsUnicode(false);
             Property(x => x.Vat).HasPrecision(19,4);
             Property(x => x.TotalAmount).HasPrecision(19,4);
 

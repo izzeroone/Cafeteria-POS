@@ -6,8 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.EmployeeWorkSpace;
+using Cafocha.GUI.Helper.PrintHelper;
 
 namespace Cafocha.GUI.CafowareWorkSpace
 {
@@ -40,7 +42,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList = new List<StockInDetail>();
             _currentStockIn = new StockIn
             {
-                AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
+                EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
                 StockInDetails = _stockInDetailsList
             };
 
@@ -248,14 +250,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
                 _businessModuleLocator.WarehouseModule.addStockIn(_currentStockIn);
 
-
                 _stockInDetailsList = new List<StockInDetail>();
                 lvDataStockIn.ItemsSource = _stockInDetailsList;
                 lvDataStockIn.Items.Refresh();
 
                 _currentStockIn = new StockIn
                 {
-                    AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
+                    EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
                     StockInDetails = _stockInDetailsList
                 };
 
@@ -276,6 +277,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList.Clear();
             lvDataStockIn.Items.Refresh();
             LoadStockInData();
+        }
+
+        private void BntPrint_Click(object sender, RoutedEventArgs e)
+        {
+            var printHelper = new DoPrintHelper(_businessModuleLocator.RepositoryLocator,
+                DoPrintHelper.StockIn_Printing, _currentStockIn);
+            printHelper.DoPrint();
         }
     }
 }

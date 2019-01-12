@@ -18,11 +18,13 @@ namespace Cafocha.GUI.Helper.PrintHelper
         public static readonly int TempReceipt_Printing = 1;
         public static readonly int Receipt_Printing = 5;
         public static readonly int Eod_Printing = 3;
-
+        public static readonly int StockIn_Printing = 6;
+        public static readonly int StockOut_Printing = 7;
         private readonly RepositoryLocator _unitofwork;
 
         private readonly OrderNote curOrder;
-
+        private readonly StockIn _stockIn;
+        private readonly StockOut _stockOut;
 
         private IPrintHelper ph;
         private readonly PrintDialog printDlg;
@@ -41,6 +43,22 @@ namespace Cafocha.GUI.Helper.PrintHelper
             _unitofwork = unitofwork;
             type = printType;
             curOrder = currentOrder;
+            printDlg = new PrintDialog();
+        }
+
+        public DoPrintHelper(RepositoryLocator unitofwork, int printType, StockIn stockIn)
+        {
+            _unitofwork = unitofwork;
+            type = printType;
+            _stockIn = stockIn;
+            printDlg = new PrintDialog();
+        }
+
+        public DoPrintHelper(RepositoryLocator unitofwork, int printType, StockOut stockOut)
+        {
+            _unitofwork = unitofwork;
+            type = printType;
+            _stockOut = stockOut;
             printDlg = new PrintDialog();
         }
 
@@ -141,7 +159,45 @@ namespace Cafocha.GUI.Helper.PrintHelper
                 };
             }
 
+            if (type == StockIn_Printing)
+            {
 
+                var stockIn = new StockInForPrint().getAndConvertStockInForPrint(_stockIn)
+                    .getAndConvertStockInDetailsForPrint(_stockIn, _unitofwork);
+
+                ph = new StockInPrinter()
+                {
+                    Owner = new Owner
+                    {
+                        ImgName = "logo.png",
+                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+                        Phone = "",
+                        PageName = "RECEIPT"
+                    },
+
+                    StockIn = stockIn
+                };
+            }
+
+            if (type == StockOut_Printing)
+            {
+
+                var stockOut = new StockOutForPrint().getAndConvertStockInForPrint(_stockOut)
+                    .getAndConvertStockInDetailsForPrint(_stockOut, _unitofwork);
+
+                ph = new StockOutPrinter()
+                {
+                    Owner = new Owner
+                    {
+                        ImgName = "logo.png",
+                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+                        Phone = "",
+                        PageName = "RECEIPT"
+                    },
+
+                    StockOut = stockOut
+                };
+            }
             if (type == Eod_Printing)
             {
                 ph = new EndOfDayPrintHelper(_unitofwork);

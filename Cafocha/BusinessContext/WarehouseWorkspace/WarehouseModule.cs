@@ -130,7 +130,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
-                        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.Unit);
+                        wareHouse.Contain += details.Quan;
                         _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }
@@ -149,7 +149,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
                     var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
                     if (wareHouse != null)
                     {
-                        wareHouse.Contain -= details.Quan * UnitOutTrans.ToUnitContain(stock.Unit);
+                        wareHouse.Contain -= details.Quan;
                         _unitofworkWH.ApWareHouseRepository.Update(wareHouse);
                     }
                 }

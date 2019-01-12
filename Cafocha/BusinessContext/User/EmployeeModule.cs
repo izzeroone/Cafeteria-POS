@@ -34,7 +34,7 @@ namespace Cafocha.BusinessContext.User
             set => _emploglist = value;
         }
 
-        public EmpLoginList WorkingEmployee
+        public static EmpLoginList WorkingEmployee
         {
             get => _workingEmployee;
             set => _workingEmployee = value;
@@ -222,5 +222,10 @@ namespace Cafocha.BusinessContext.User
         public WorkingHistory EmpWH { get; set; }
 
         public int TimePercent { get; set; }
+
+        public static implicit operator List<object>(EmpLoginList v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

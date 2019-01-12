@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 
@@ -53,7 +54,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             isUcOrderFormLoading = true;
             _businessModuleLocator = ((MainWindow) Window.GetWindow(this))._businessModuleLocator;
-            var currentEmpList = _businessModuleLocator.EmployeeModule.WorkingEmployee;
+            var currentEmpList = EmployeeModule.WorkingEmployee;
 
 
             InitCus_raiseEvent = true;
@@ -137,7 +138,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (!InitCus_raiseEvent)
             {
-                if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
+                if (EmployeeModule.WorkingEmployee.EmpSal == null)
                 {
                     MessageBox.Show("No employee on working! Please try again!");
                     return;
@@ -188,7 +189,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -218,7 +219,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -252,7 +253,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -276,7 +277,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         //ToDo: Set the contain back when the order didn't call any more
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -342,8 +343,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// <param name="productQuan">give back product quantity</param>
         private void checkWorkingAction()
         {
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee == null ||
-                _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
+            if (EmployeeModule.WorkingEmployee == null ||
+                EmployeeModule.WorkingEmployee.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
 
         }
 

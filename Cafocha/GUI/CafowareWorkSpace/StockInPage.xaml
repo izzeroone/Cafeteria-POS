@@ -49,10 +49,10 @@
                     <GridViewColumn Header="Name"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Unit In"
+                    <GridViewColumn Header="Unit"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding UnitIn}" />
-                    <GridViewColumn Header="Std.Price/Unit In"
+                                    DisplayMemberBinding="{Binding Unit}" />
+                    <GridViewColumn Header="Std.Price/Unit"
                                     Width="150"
                                     DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
                 </GridView>
@@ -85,7 +85,7 @@
                     <GridView x:Name="gvDetails">
                         <GridViewColumn Header="Item"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding StockId}" />
+                                        DisplayMemberBinding="{Binding StoId}" />
                         <GridViewColumn Header="Qty"
                                         Width="70">
                             <GridViewColumn.CellTemplate>
@@ -158,15 +158,21 @@
                        Height="33"
                        Width="180"
                        Text="{Binding appResource}" />
+            <Button x:Name="bntPrint"
+                    Content="Print!"
+                    Margin="69,530,598,0"
+                    FontSize="25"
+                    VerticalAlignment="Top"
+                    Height="49" Click="BntPrint_Click" />
             <Button x:Name="bntAdd"
                     Content="Input!"
-                    Margin="199,530,492.4,0"
+                    Margin="280,530,412,0"
                     Click="bntAdd_Click"
                     FontSize="25"
                     VerticalAlignment="Top"
                     Height="49" />
             <Button x:Name="bntDelAll"
-                    Content="Delete"
+                    Content="Clear"
                     Click="bntDelAll_Click"
                     Margin="468,530,223.4,0"
                     FontSize="25"

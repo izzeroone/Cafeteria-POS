@@ -49,10 +49,10 @@
                     <GridViewColumn Header="Name"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Unit Out"
+                    <GridViewColumn Header="Unit"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding UnitOut}" />
-                    <GridViewColumn Header="Std.Price/Unit Out"
+                                    DisplayMemberBinding="{Binding Unit}" />
+                    <GridViewColumn Header="Std.Price/Unit"
                                     Width="150"
                                     DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
                 </GridView>
@@ -96,7 +96,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Price/Unit Out"
+                        <GridViewColumn Header="Price/Unit"
                                         Width="150">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -158,15 +158,21 @@
                        Height="33"
                        Width="180"
                        Text="{Binding appResource}" />
+            <Button x:Name="bntPrint"
+                    Content="Print"
+                    Margin="32,531,651,0"
+                    FontSize="25"
+                    VerticalAlignment="Top"
+                    Height="49" Click="BntPrint_Click" />
             <Button x:Name="bntAdd"
                     Content="Take Out!"
-                    Margin="199,530,470.4,0"
+                    Margin="229,531,441,0"
                     Click="bntAdd_Click"
                     FontSize="25"
                     VerticalAlignment="Top"
-                    Height="49" />
+                    Height="49" RenderTransformOrigin="0.885,0.718" />
             <Button x:Name="bntDelAll"
-                    Content="Delete"
+                    Content="Clear"
                     Click="bntDelAll_Click"
                     Margin="468,530,223.4,0"
                     FontSize="25"

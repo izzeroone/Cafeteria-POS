@@ -153,6 +153,12 @@
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockInDetailForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutForPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockInForPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\StockOutPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\StockInPrinter.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
@@ -266,9 +272,6 @@
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
-      <DependentUpon>SettingFoodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\UcMenu.xaml.cs">
       <DependentUpon>UcMenu.xaml</DependentUpon>
@@ -501,10 +504,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\EmployeeWorkSpace\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
