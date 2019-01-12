@@ -44,11 +44,13 @@
                                 FontWeight="Bold"
                                 Margin="0,0,20,0"
                                 Width="142"
+                                Visibility="Collapsed"
                                 Click="btnAdd_Click" />
                         <Button x:Name="btnClear"
                                 Margin="0,0,20,0"
                                 Content="Đặt lại"
                                 FontWeight="Bold"
+                                Visibility="Collapsed"
                                 Height="46"
                                 Width="136"
                                 Click="btnClear_Click" />
@@ -56,6 +58,7 @@
                                 Content="Cập nhật"
                                 FontWeight="Bold"
                                 Height="46"
+                                Visibility="Collapsed"
                                 Width="136"
                                 Click="btnUpdate_Click" />
                     </StackPanel>
@@ -101,29 +104,28 @@
                         <TextBlock Text="Name: (*)"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}"
                                    Margin="0,0,20,0" />
-                        <TextBox x:Name="txtName"
+                        <TextBlock x:Name="txtName"
                                  FontSize="18"
                                  Foreground="White"
                                  Width="215"
-                                 Margin="0,0,100,0" />
+                                 Margin="0,0,100,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
                         <TextBlock Text="Information: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBox MaxWidth="300"
+                        <TextBlock MaxWidth="300"
                                  Foreground="White"
                                  x:Name="txtInfo"
                                  Height="70"
+                                 IsEnabled="False"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center"
                                  materialDesign:HintAssist.Hint=""
-                                 AcceptsReturn="True"
                                  FontSize="18"
-                                 SpellCheck.IsEnabled="True"
                                  TextWrapping="Wrap"
-                                 VerticalScrollBarVisibility="Auto"
+ 
                                  Width="215"
                                  Margin="0,0,100,0" />
                     </StackPanel>
@@ -132,12 +134,11 @@
                         <TextBlock Text="Group: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <ComboBox x:Name="cboStockGroup"
+                        <TextBlock x:Name="cboStockGroup"
                                   FontSize="18"
                                   Foreground="White"
                                   Width="215"
-                                  DisplayMemberPath="Name"
-                                  SelectedValuePath="StId"
+                                  IsEnabled="False"
                                   Margin="0,0,100,0" />
                     </StackPanel>
 
@@ -146,9 +147,10 @@
                         <TextBlock
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" ><Run Text="Unit "/><Run Text=":"/></TextBlock>
-                        <ComboBox x:Name="cboUnit"
+                        <TextBlock x:Name="cboUnit"
                                   FontSize="18"
                                   Foreground="White"
+                                  IsEnabled="False"
                                   Width="215"
                                   Margin="0,0,100,0" />
                     </StackPanel>
@@ -158,9 +160,10 @@
                         <TextBlock Text="Supplier: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBox x:Name="txtSupplier"
+                        <TextBlock x:Name="txtSupplier"
                                  FontSize="18"
                                  Foreground="White"
+                                 IsEnabled="False"
                                  Width="215"
                                  Margin="0,0,100,0" />
                     </StackPanel>
@@ -170,10 +173,11 @@
                         <TextBlock Text="Price(kVND): (*)"
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBox x:Name="txtPrice"
+                        <TextBlock x:Name="txtPrice"
                                  FontSize="18"
                                  Foreground="White"
                                  Width="220"
+                                 IsEnabled="False"
                                  Margin="0,0,100,0"
                                  PreviewTextInput="NumberOnly_PreviewTextInput" />
                     </StackPanel>
@@ -232,7 +236,7 @@
                         </Border>
                         <Border CornerRadius="3"
                                 Width="417">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,-129.2,0">
                                 <ComboBox x:Name="cboGroup"
                                           Foreground="Black"
                                           Background="White"
@@ -242,19 +246,27 @@
                                           SelectedValuePath="StId"
                                           SelectionChanged="cboGroup_SelectionChanged"
                                           ToolTip="group" />
-                                <!--<Button x:Name="bntAdd"
-                                        Content="Add"
-                                        Height="auto"
-                                        Margin="0,0,20,0"
+                                <Button x:Name="btnAdd2"
+                                        Content="Thêm"
+                                        Height="46"
                                         FontWeight="Bold"
-                                        Click="bntAdd_Click" />-->
+                                        Margin="0,0,20,-6"
+                                        Width="75"
+                                        Click="btnAdd_Click" />
+                                <Button x:Name="btnUpdate2"
+                                        Content="Cập nhật"
+                                        FontWeight="Bold"
+                                        Height="46"
+                                        Margin="0,0,20,-6"
+                                        Width="102"
+                                        Click="btnUpdate_Click" />
                                 <Button x:Name="bntDel"
                                         Content="Xóa"
                                         Height="auto"
-                                        Margin="0,0,50,0"
+                                        Margin="0,0,20,-6"
                                         FontWeight="Bold"
                                         Click="bntDel_Click"
-                                        Width="85" />
+                                        Width="64" />
                             </StackPanel>
                         </Border>
                     </StackPanel>

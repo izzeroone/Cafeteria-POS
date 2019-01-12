@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using log4net;
 
@@ -43,27 +44,21 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _viewStockPage = new ViewStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
 
-
-                if (Application.Current.Properties["AdLogin"] != null)
-                {
-                    var getAdmin = Application.Current.Properties["AdLogin"] as AdminRe;
-                    var adList = _businessModuleLocator.AdminModule.getAdmins().ToList();
-                    curAdmin = adList.FirstOrDefault(x =>
-                        x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
-                    CUserChip.Content = curAdmin.Name;
-                    _createStockPage = new CreateStockPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                    _stockInPage = new StockInPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                    _stockOutPage = new StockOutPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                }
+                CUserChip.Content = EmployeeModule.WorkingEmployee.Emp.Name;
+                _createStockPage = new CreateStockPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
+                _stockInPage = new StockInPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
+                _stockOutPage = new StockOutPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
 
 
                 var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
                 RefreshTimer.Interval = new TimeSpan(0, 1, 0);
                 RefreshTimer.Start();
+
+                ViewStock_PreviewMouseLeftButtonUp(null, null);
             }
             catch (Exception ex)
             {

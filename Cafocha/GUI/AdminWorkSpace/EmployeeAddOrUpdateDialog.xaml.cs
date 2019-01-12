@@ -61,7 +61,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 txtPass.Password = _emp.DecryptedPass;
                 txtCon.Password = _emp.DecryptedPass;
                 txtName.Text = _emp.Name;
-                cboRole.SelectedValue = _emp.EmpRole;
+                cboRole.SelectedValue = (EmployeeRole)_emp.EmpRole;
                 txtBirth.SelectedDate = _emp.Birth;
                 txtAddress.Text = _emp.Addr;
                 txtPhone.Text = _emp.Phone;

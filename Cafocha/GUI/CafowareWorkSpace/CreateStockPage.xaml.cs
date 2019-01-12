@@ -59,14 +59,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     new StockType() { StId = "ALL", Deleted = 0, Name = "All" }
                 };
             cboGroup.ItemsSource = stockGroupList;
-            cboStockGroup.ItemsSource = WarehouseModule.StockTypes; 
-            cboStockGroup.SelectedIndex = 0;
-
-            cboUnit.Items.Add("pcs");
-            cboUnit.Items.Add("bot");
-            cboUnit.Items.Add("can");
-            cboUnit.Items.Add("ml");
-            cboUnit.SelectedIndex = 0;
         }
 
 
@@ -107,10 +99,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
             //put data to form
             txtName.Text = _selectedStock.Name;
             txtInfo.Text = _selectedStock.Info;
-            cboStockGroup.SelectedValue = _selectedStock.StId;
-
-
-            cboUnit.SelectedItem = _selectedStock.Unit;
+            cboStockGroup.Text = WarehouseModule.StockTypes.First(x => x.StId.Equals(_selectedStock.StId)).Name;
+            cboUnit.Text = _selectedStock.Unit;
             txtSupplier.Text = _selectedStock.Supplier;
             txtPrice.Text = _selectedStock.StandardPrice.ToString();
         }
@@ -189,63 +179,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //check name
-                var name = txtName.Text.Trim();
-                if (name.Length == 0)
-                {
-                    MessageBox.Show("Name is not valid!");
-                    txtName.Focus();
-                    return;
-                }
+            var d = new AddOrUpdateStock(_businessModuleLocator, null);
+            d.ShowDialog();
+            
+            clearAllData();
 
-                //check info
-                var info = txtInfo.Text.Trim();
-
-                var group = cboStockGroup.SelectedValue;
-                var unit = cboUnit.SelectedItem.ToString();
-
-                //check supplier
-                var supplier = txtSupplier.Text;
-
-                //check price
-                var price = decimal.Parse(txtPrice.Text.Trim());
-
-
-                var newWareHouse = new ApWareHouse
-                {
-                    ApwarehouseId = "",
-                    Name = "",
-                    Contain = 0,
-                    StdContain = 100
-                };
-
-                _businessModuleLocator.WarehouseModule.insertWarehouse(newWareHouse);
-
-
-                _currentNewStock.ApwarehouseId = newWareHouse.ApwarehouseId;
-                _currentNewStock.Name = name;
-                _currentNewStock.Info = info;
-                _currentNewStock.StId = (string) @group;
-                _currentNewStock.Unit = unit;
-                _currentNewStock.Supplier = supplier;
-                _currentNewStock.StandardPrice = price;
-
-                _businessModuleLocator.WarehouseModule.insertStock(_currentNewStock);
-
-
-                MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId +
-                                ") successful!");
-                clearAllData();
-
-                // refesh data
-                ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Something went wrong. Can not add new stock. Please check your input again!");
-            }
+            // refesh data
+            ((CafowareWindow) Window.GetWindow(this)).Refresh_Tick(null, new EventArgs());
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -257,8 +197,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
             txtName.Text = "";
             txtInfo.Text = "";
-            cboStockGroup.SelectedIndex = 0;
-            cboUnit.SelectedIndex = 0;
             txtSupplier.Text = "";
             txtPrice.Text = "";
 
@@ -274,38 +212,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 return;
             }
             //check name
-            var name = txtName.Text.Trim();
-            if (name.Length == 0)
-            {
-                MessageBox.Show("Name is not valid!");
-                txtName.Focus();
-                return;
-            }
+            var d = new AddOrUpdateStock(_businessModuleLocator, lvStock.SelectedItem as Stock);
+            d.ShowDialog();
 
-            //check info
-            var info = txtInfo.Text.Trim();
-
-            var group = cboStockGroup.SelectedValue;
-            var unitIn = cboUnit.SelectedItem.ToString();
-
-            //check supplier
-            var supplier = txtSupplier.Text;
-
-            //check price
-            var price = decimal.Parse(txtPrice.Text.Trim());
-
-
-            _selectedStock.Name = name;
-            _selectedStock.Info = info;
-            _selectedStock.StId = (string) @group;
-            _selectedStock.Unit = unitIn;
-            _selectedStock.Supplier = supplier;
-            _selectedStock.StandardPrice = price;
-
-            _businessModuleLocator.WarehouseModule.updateStock(_selectedStock);
-
-
-            MessageBox.Show("Update stock " + _selectedStock.Name + "(" + _selectedStock.StoId + ") successful!");
             clearAllData();
 
             _selectedStock = null;
