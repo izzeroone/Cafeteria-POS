@@ -1695,6 +1695,11 @@ namespace Cafocha.Entities
         [Display(Name = "End time")]
         public System.DateTime EndTime { get; set; } // endTime
 
+        [Column(@"is_paid", Order = 6, TypeName = "int")]
+        [Required]
+        [Display(Name = "Is paid")]
+        public int IsPaid { get; set; } // is_paid
+
         // Foreign keys
 
         /// <summary>

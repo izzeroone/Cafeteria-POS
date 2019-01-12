@@ -74,45 +74,39 @@
                                       Width="100"
                                       Margin="0,0,50,0"
                                       VerticalAlignment="Bottom" />
-                            <Button x:Name="bntAdd"
-                                    Content="Add"
+                            <Button x:Name="bntPay"
+                                    Content="Pay"
                                     Height="auto"
                                     Width="100"
                                     Margin="0,0,20,0"
-                                    FontWeight="Bold" />
-                            <Button x:Name="bntEdit"
-                                    Content="Edit"
-                                    Height="auto"
-                                    Width="100"
-                                    Margin="0,0,20,0"
-                                    FontWeight="Bold" />
-                            <Button x:Name="bntDel"
-                                    Content="Delete"
-                                    Height="auto"
-                                    Width="100"
-                                    Margin="0,0,20,0"
-                                    FontWeight="Bold" />
-                            <Button x:Name="BtnOverViewReport"
-                                    Click="BtnOverViewReport_OnClick"
-                                    Width="100"
-                                    Margin="0,0,0,-2"
-                                    ToolTip="Generate Report">
-                                <Image Source="../Icon/Report Card_32px.png"
-                                       Width="30"
-                                       Height="25" />
-                            </Button>
+
+                                    FontWeight="Bold" Click="BntPay_Click" />
+                            <!-- <Button x:Name="BtnOverViewReport" -->
+                            <!--         Click="BtnOverViewReport_OnClick" -->
+                            <!--         Width="100" -->
+                            <!--         Margin="0,0,0,-2" -->
+                            <!--         ToolTip="Generate Report"> -->
+                            <!--     <Image Source="../Icon/Report Card_32px.png" -->
+                            <!--            Width="30" -->
+                            <!--            Height="25" /> -->
+                            <!-- </Button> -->
                         </StackPanel>
                     </Border>
                 </StackPanel>
             </materialDesign:ColorZone>
         </Grid>
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="643*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="712*"/>
+            </Grid.ColumnDefinitions>
             <materialDesign:ColorZone Margin="2,2,0.4,0"
                                       Padding="16"
                                       materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                       CornerRadius="3"
                                       Mode="PrimaryDark"
-                                      Height="46">
+                                      Height="46" Grid.ColumnSpan="3">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="16,0,0,-15.6"
                                VerticalAlignment="Center"
@@ -124,7 +118,7 @@
                 </StackPanel>
             </materialDesign:ColorZone>
             <ListView Name="lvSalary"
-                      Width="auto"
+                      Width="1356"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
                       Background="#FFED5C5C"
@@ -132,7 +126,7 @@
                       FontWeight="Bold"
                       Margin="10,63,0,0"
                       SelectionChanged="lvData_SelectionChanged"
-                      Height="auto">
+                      Height="auto" Grid.ColumnSpan="3">
                 <ListView.View>
                     <GridView x:Name="gvShowDetails">
                         <GridViewColumn Header="Salary_ID"
@@ -160,7 +154,7 @@
                                         Width="150"
                                         DisplayMemberBinding="{Binding ForYear}" />
                         <GridViewColumn Header="Is Paid"
-                                        Width="0"
+                                        Width="100"
                                         DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>
                 </ListView.View>
@@ -217,6 +211,9 @@
                         <GridViewColumn Header="End Time"
                                         Width="180"
                                         DisplayMemberBinding="{Binding EndTime}" />
+                        <GridViewColumn Header="Is Paid"
+                                        Width="180"
+                                        DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>
                 </ListView.View>
             </ListView>

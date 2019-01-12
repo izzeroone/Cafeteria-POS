@@ -76,6 +76,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             if (sln == null)
                 return;
             lvWokingHistory.ItemsSource = WhList.Where(c => c.ResultSalary.Equals(sln.SnId));
+            lvWokingHistory.Items.Refresh();
         }
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -222,5 +223,40 @@ namespace Cafocha.GUI.AdminWorkSpace
             var optionDialog = new ReportSalaryOptionDialog(new SalaryNoteReport(), _businessModuleLocator);
             optionDialog.Show();
         }
+
+        private void BntPay_Click(object sender, RoutedEventArgs e)
+        {
+            var sln = lvSalary.SelectedItem as SalaryNote;
+            if (sln == null)
+            {
+                MessageBox.Show("Bạn chưa chọn lương cho nhân viên");
+                return;
+            }
+            if (sln.IsPaid == 1)
+            {
+                MessageBox.Show("Bạn đã thanh toán cho hóa đơn này");
+                return;
+            }
+            var dialog = MessageBox.Show("Bạn có muốn thanh toán cho nhân viên này", "Thanh toán",
+                MessageBoxButton.YesNo);
+
+            if (dialog == MessageBoxResult.Yes)
+            {
+                _businessModuleLocator.EmployeeModule.paySalaryNote(sln);
+            }
+
+            refresh();
+        }
+
+        private void refresh()
+        {
+            SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository
+                .Get(includeProperties: "Employee,WorkingHistories");
+            WhList = _businessModuleLocator.RepositoryLocator.WorkingHistoryRepository
+                .Get(includeProperties: "Employee");
+            lvSalary.ItemsSource = SalList;
+            lvSalary.Items.Refresh();
+        }
+
     }
 }

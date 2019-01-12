@@ -148,9 +148,9 @@ namespace Cafocha.BusinessContext.User
         {
             var empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
                 sle.EmpId.Equals(_workingEmployee.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
-                sle.ForYear.Equals(DateTime.Now.Year)).FirstOrDefault();
+                sle.ForYear.Equals(DateTime.Now.Year)).LastOrDefault();
 
-            if (empSalaryNote == null)
+            if (empSalaryNote == null || empSalaryNote.IsPaid == 1)
             {
                 empSalaryNote = new SalaryNote
                 {
@@ -193,7 +193,24 @@ namespace Cafocha.BusinessContext.User
             endWorkingRecord();
         }
 
+        public void paySalaryNote(SalaryNote salaryNote)
+        {
+            if (salaryNote.IsPaid == 1)
+            {
+                return;
+            }
 
+            foreach (var workingHistory in salaryNote.WorkingHistories)
+            {
+                workingHistory.IsPaid = 1;
+                _unitofwork.WorkingHistoryRepository.Update(workingHistory);
+            }
+
+            salaryNote.IsPaid = 1;
+            salaryNote.DatePay = DateTime.Now;
+            _unitofwork.SalaryNoteRepository.Update(salaryNote);
+            _unitofwork.Save();
+        }
     }
 
     public class EmpLoginList

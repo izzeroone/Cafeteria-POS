@@ -267,9 +267,6 @@
     <Compile Include="GUI\EmployeeWorkSpace\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml.cs">
-      <DependentUpon>PermissionRequired.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
       <DependentUpon>SettingFoodPage.xaml</DependentUpon>
     </Compile>
@@ -504,10 +501,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\EmployeeWorkSpace\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
