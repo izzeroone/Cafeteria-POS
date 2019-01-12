@@ -52,29 +52,20 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void initComboBox()
         {
-            cboGroup.Items.Add(StockGroup.All);
-            cboGroup.Items.Add(StockGroup.Ingridient);
-            cboGroup.Items.Add(StockGroup.Cosmetics);
-            cboGroup.Items.Add(StockGroup.SpaVoucher);
-            cboGroup.Items.Add(StockGroup.GymVoucher);
-            cboGroup.Items.Add(StockGroup.ResVoucher);
-            cboGroup.Items.Add(StockGroup.TravVoucher);
-            cboGroup.Items.Add(StockGroup.Food);
-            cboGroup.Items.Add(StockGroup.Agricultural);
-            cboGroup.Items.Add(StockGroup.Watch);
-            cboGroup.Items.Add(StockGroup.TopTen);
-            cboGroup.SelectedItem = StockGroup.All;
+            var stockGroups = Enum.GetValues(typeof(StockGroup)).Cast<StockGroup>();
+            foreach(var stockGroup in stockGroups)
+            {
+                cboGroup.Items.Add(stockGroup);
+            }
+            cboGroup.SelectedIndex = cboGroup.Items.Count - 1;
 
-            cboStockGroup.Items.Add(StockGroup.Ingridient);
-            cboStockGroup.Items.Add(StockGroup.Cosmetics);
-            cboStockGroup.Items.Add(StockGroup.SpaVoucher);
-            cboStockGroup.Items.Add(StockGroup.GymVoucher);
-            cboStockGroup.Items.Add(StockGroup.ResVoucher);
-            cboStockGroup.Items.Add(StockGroup.TravVoucher);
-            cboStockGroup.Items.Add(StockGroup.Food);
-            cboStockGroup.Items.Add(StockGroup.Agricultural);
-            cboStockGroup.Items.Add(StockGroup.Watch);
-            cboStockGroup.Items.Add(StockGroup.TopTen);
+            foreach (var stockGroup in stockGroups)
+            {
+                if (stockGroup != StockGroup.All)
+                {
+                    cboStockGroup.Items.Add(stockGroup);
+                }
+            }
             cboStockGroup.SelectedIndex = 0;
 
             cboUnit.Items.Add("pcs");
