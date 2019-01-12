@@ -64,6 +64,7 @@
                                     xmlns:transitions="clr-namespace:MaterialDesignThemes.Wpf.Transitions"
                                     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters">
 
+                    <local:StockGroupConverter x:Key="StockGroupConverter"/>
                     <converters:NotZeroConverter x:Key="NotZeroConverter" />
                     <converters:MyConverter x:Key="MyConverter" />
                     <converters:PercentConverter x:Key="PercentCenverter" />

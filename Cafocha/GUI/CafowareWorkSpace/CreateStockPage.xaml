@@ -7,11 +7,14 @@
       mc:Ignorable="d"
       d:DesignHeight="150"
       d:DesignWidth="300"
+      xmlns:local="clr-namespace:Cafocha.GUI.Converter"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="Manage Stock"
       Height="660"
       Width="1366">
-
+    <Page.Resources>
+        <local:StockGroupConverter x:Key="StockGroupConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="670*" />
@@ -299,7 +302,7 @@
                                             DisplayMemberBinding="{Binding Info}" />
                             <GridViewColumn Header="Group"
                                             Width="80"
-                                            DisplayMemberBinding="{Binding Group}" />
+                                            DisplayMemberBinding="{Binding StId, Converter={StaticResource StockGroupConverter}}" />
                             <GridViewColumn Header="Unit"
                                             Width="90"
                                             DisplayMemberBinding="{Binding Unit}" />
