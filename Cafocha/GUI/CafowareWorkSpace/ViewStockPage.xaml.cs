@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 
 namespace Cafocha.GUI.CafowareWorkSpace
@@ -26,11 +27,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvStock.ItemsSource = stockList;
 
             // init Combobox
-            var stockGroups = Enum.GetValues(typeof(StockGroup)).Cast<StockGroup>();
-            foreach (var stockGroup in stockGroups)
-            {
-                cboGroup.Items.Add(stockGroup);
-            }
+            var stockGroupList
+                = new List<StockType>(WarehouseModule.StockTypes);
+            stockGroupList.Add(new StockType() { StId = "ALL", Deleted = 0, Name = "All" });
+            cboGroup.ItemsSource = stockGroupList;
             cboGroup.SelectedIndex = cboGroup.Items.Count - 1;
 
         }
@@ -57,9 +57,9 @@ namespace Cafocha.GUI.CafowareWorkSpace
             // Dua vao search box va combobox de filter
 
             var filter = SearchIBox.Text.Trim();
-            var selectedStock = cboGroup.SelectedIndex;
+            var selectedGroup = cboGroup.SelectedIndex;
 
-            if (selectedStock < 0 || cboGroup.SelectedValue.Equals(StockGroup.All))
+            if (selectedGroup == cboGroup.Items.Count - 1 || cboGroup.SelectedValue.Equals(StockGroup.All))
             {
                 if (filter.Length == 0)
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));
@@ -70,10 +70,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 if (filter.Length == 0)
                     lvStock.ItemsSource = _stockList.Where(p =>
-                        p.Group.Equals((int)cboGroup.SelectedItem) && p.Deleted.Equals(0));
+                        p.StId.Equals(cboGroup.SelectedValue) && p.Deleted.Equals(0));
                 else
                     lvStock.ItemsSource = _stockList.Where(p =>
-                        p.Group.Equals((int)cboGroup.SelectedItem) && p.Name.ToLower().Contains(filter.ToLower()) && p.Deleted.Equals(0));
+                        p.StId.Equals(cboGroup.SelectedValue) && p.Name.ToLower().Contains(filter.ToLower()) && p.Deleted.Equals(0));
             }
 
         }

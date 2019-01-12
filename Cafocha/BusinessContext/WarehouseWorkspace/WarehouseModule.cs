@@ -11,7 +11,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
     {
         private readonly RepositoryLocator _unitofworkWH;
         private List<Stock> _stockList;
-        private List<StockType> _stockTypes;
+        private static List<StockType> _stockTypes;
         public WarehouseModule()
         {
             _unitofworkWH = new RepositoryLocator();
@@ -33,13 +33,15 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
             }
         }
 
-        public List<StockType> StockTypes
+        public static List<StockType> StockTypes
         {
             get
             {
                 if (_stockTypes == null)
                 {
-                    loadStock();
+                    RepositoryLocator repository = new RepositoryLocator();
+                    _stockTypes = repository.StockTypeRepository
+                        .Get(c => c.Deleted.Equals(0)).ToList();
                 }
                 return _stockTypes;
             }
@@ -58,8 +60,6 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             _stockList = _unitofworkWH.StockRepository
                 .Get(c => c.Deleted.Equals(0), includeProperties: "APWareHouse").ToList();
-            _stockTypes = _unitofworkWH.StockTypeRepository
-                .Get(c => c.Deleted.Equals(0)).ToList();
         }
 
         public void updateStock()

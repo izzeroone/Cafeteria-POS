@@ -152,6 +152,7 @@
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
+    <Compile Include="GUI\Converter\StockGroupConverter.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>

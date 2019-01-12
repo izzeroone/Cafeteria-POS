@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
 
 namespace Cafocha.GUI.CafowareWorkSpace
@@ -53,10 +54,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void initComboBox()
         {
             var stockGroupList
-                = new List<StockType> (_businessModuleLocator.WarehouseModule.StockTypes);
-            stockGroupList.Add(new StockType() {StId = "ALL", Deleted = 0, Name = "All"});
+                = new List<StockType>(WarehouseModule.StockTypes)
+                {
+                    new StockType() { StId = "ALL", Deleted = 0, Name = "All" }
+                };
             cboGroup.ItemsSource = stockGroupList;
-            cboStockGroup.ItemsSource = _businessModuleLocator.WarehouseModule.StockTypes; ;
+            cboStockGroup.ItemsSource = WarehouseModule.StockTypes; 
             cboStockGroup.SelectedIndex = 0;
 
             cboUnit.Items.Add("pcs");
@@ -104,7 +107,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             //put data to form
             txtName.Text = _selectedStock.Name;
             txtInfo.Text = _selectedStock.Info;
-            cboStockGroup.SelectedItem = _selectedStock.StId;
+            cboStockGroup.SelectedValue = _selectedStock.StId;
 
 
             cboUnit.SelectedItem = _selectedStock.Unit;
@@ -200,7 +203,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 //check info
                 var info = txtInfo.Text.Trim();
 
-                var group = (String) cboStockGroup.SelectedItem;
+                var group = cboStockGroup.SelectedValue;
                 var unit = cboUnit.SelectedItem.ToString();
 
                 //check supplier
@@ -224,7 +227,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _currentNewStock.ApwarehouseId = newWareHouse.ApwarehouseId;
                 _currentNewStock.Name = name;
                 _currentNewStock.Info = info;
-                _currentNewStock.StId = group;
+                _currentNewStock.StId = (string) @group;
                 _currentNewStock.Unit = unit;
                 _currentNewStock.Supplier = supplier;
                 _currentNewStock.StandardPrice = price;
@@ -254,7 +257,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
             txtName.Text = "";
             txtInfo.Text = "";
-            cboStockGroup.SelectedItem = StockGroup.Cosmetics;
+            cboStockGroup.SelectedIndex = 0;
             cboUnit.SelectedIndex = 0;
             txtSupplier.Text = "";
             txtPrice.Text = "";
@@ -282,7 +285,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             //check info
             var info = txtInfo.Text.Trim();
 
-            var group = (string) cboStockGroup.SelectedItem;
+            var group = cboStockGroup.SelectedValue;
             var unitIn = cboUnit.SelectedItem.ToString();
 
             //check supplier
@@ -294,7 +297,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
             _selectedStock.Name = name;
             _selectedStock.Info = info;
-            _selectedStock.StId = group;
+            _selectedStock.StId = (string) @group;
             _selectedStock.Unit = unitIn;
             _selectedStock.Supplier = supplier;
             _selectedStock.StandardPrice = price;
