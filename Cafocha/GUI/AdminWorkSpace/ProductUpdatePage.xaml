@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cafocha.GUI.AdminWorkSpace.ProductUpdatePage"
+﻿<Window x:Class="Cafocha.GUI.AdminWorkSpace.ProductUpdatePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,151 +8,10 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="ProductUpdatePage"
       Height="660"
-      Width="1366">
+      Width="600">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.16*" />
-            <ColumnDefinition Width="0.84*" />
-        </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.14*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.8*" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.RowSpan="1">
-                <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                          CornerRadius="3"
-                                          Mode="PrimaryDark"
-                                          Height="46">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="20,0,0,0">
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold">
-                            Available Ingredient
-                        </TextBlock>
-                    </StackPanel>
-                </materialDesign:ColorZone>
-                <ListView Name="lvAvaibleIngredient"
-                          VerticalAlignment="Top"
-                          HorizontalAlignment="Left"
-                          Background="#FFED5C5C"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          Margin="0,50,0,-336"
-                          SelectionChanged="LvAvaibleIngredient_OnSelectionChanged"
-                          Width="792"
-                          Height="334">
-                    <ListView.View>
-                        <GridView x:Name="gvShowDetails">
-                            <GridViewColumn Header="ID"
-                                            Width="90"
-                                            DisplayMemberBinding="{Binding StoId}" />
-                            <GridViewColumn Header="Name"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Header="Info"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="UnitBuy"
-                                            Width="90"
-                                            DisplayMemberBinding="{Binding UnitIn}" />
-                            <GridViewColumn Header="StandardPrice"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="85*"/>
-                    <ColumnDefinition Width="419*"/>
-                    <ColumnDefinition Width="288*"/>
-                </Grid.ColumnDefinitions>
-                <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                          CornerRadius="3"
-                                          Mode="PrimaryDark"
-                                          Height="46" Grid.ColumnSpan="3" Margin="0,0,-0.2,0">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="20,0,0,0">
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold">
-                            Product Details
-                        </TextBlock>
-                    </StackPanel>
-                </materialDesign:ColorZone>
-                <ListView Name="lvDetails"
-                          VerticalAlignment="Top"
-                          HorizontalAlignment="Left"
-                          Background="#FFED5C5C"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          Margin="0,50,0,0"
-                          Height="222"
-                          Width="792" Grid.ColumnSpan="3">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="ID"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding ProDe.PdetailId}" />
-                            <GridViewColumn Header="Product ID"
-                                            Width="0"
-                                            DisplayMemberBinding="{Binding ProDe.ProductId}" />
-                            <GridViewColumn Header="Name"
-                                            Width="200"
-                                            DisplayMemberBinding="{Binding Ingre.Name}" />
-                            <GridViewColumn Header="IgdId"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding ProDe.IgdId}" />
-                            <GridViewColumn Header="Quantity"
-                                            Width="120">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox x:Name="txtQuantity"
-                                                 Text="{Binding ProDe.Quan}"
-                                                 Width="100"
-                                                 PreviewTextInput="NumberOnly_PreviewTextInput"
-                                                 TextChanged="txtQuantity_TextChanged" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="UnitUse"
-                                            Width="170">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <ComboBox x:Name="cboUnitUse"
-                                                      Background="White"
-                                                      Width="80"
-                                                      Foreground="Black"
-                                                      IsReadOnly="True"
-                                                      ItemsSource="{Binding UnitUseT}"
-                                                      SelectedItem="{Binding ProDe.UnitUse}"
-                                                      SelectionChanged="cboUnitUse_SelectionChanged"
-                                                      Margin="0,0,10,0" />
-                                            <Button x:Name="bntDeleteItem"
-                                                    Width="45"
-                                                    BorderBrush="DarkGray"
-                                                    Background="DarkGray"
-                                                    Margin="0 0 0 0"
-                                                    Content="x"
-                                                    Click="BntDeleteItem_OnClick" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="1">
             <Grid Margin="10,0,0,0">
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
@@ -189,7 +48,7 @@
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Name: "
+                        <TextBlock Text="Tên: "
                                    Style="{StaticResource ResourceKey=TextBlockLabel}"
                                    Margin="0,0,20,0" />
                         <TextBox x:Name="txtName"
@@ -200,7 +59,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Information: "
+                        <TextBlock Text="Thông tin chi tiết: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox MaxWidth="300"
@@ -220,7 +79,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Type: "
+                        <TextBlock Text="Loại: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <ComboBox x:Name="cboType"
@@ -231,7 +90,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Image Link: "
+                        <TextBlock Text="Thêm hình: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtImageName"
@@ -250,7 +109,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Discount: "
+                        <TextBlock Text="Giảm giá: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtDiscount"
@@ -262,7 +121,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Suggest Price(kVND): "
+                        <TextBlock Text="Mức giá đề nghị (kVND): "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtSusggestPrice"
@@ -274,7 +133,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Price(kVND): "
+                        <TextBlock Text="Giá (kVND): "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtPrice"
@@ -285,22 +144,22 @@
                                  PreviewTextInput="NumberOnly_PreviewTextInput" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0"
+                                Margin="0,50,0,0"
                                 HorizontalAlignment="Center">
                         <Button x:Name="btnUpdate"
-                                Content="Update"
+                                Content="Cập nhật"
                                 Height="46"
                                 FontWeight="Bold"
                                 FontSize="20"
                                 Margin="0,0,50,0"
-                                Width="100"
+                                Width="130"
                                 Click="btnUpdate_Click" />
                         <Button x:Name="btnClear"
-                                Content="Clear"
+                                Content="Đặt lại"
                                 FontWeight="Bold"
                                 FontSize="20"
                                 Height="46"
-                                Width="100"
+                                Width="130"
                                 Click="btnClear_Click" />
                     </StackPanel>
 
@@ -308,4 +167,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Page>
+</Window>

@@ -112,8 +112,7 @@
                 <TextBlock Text="Promotion" />
                 <ComboBox Foreground="White"
                           x:Name="cbopromotion"
-                          IsEditable="False"
-                          IsEnabled="False"
+                          IsEditable="False" 
                           Width="60" />
                 <TextBlock x:Name="textBlock"
                            HorizontalAlignment="Stretch"
@@ -125,7 +124,7 @@
                            Margin="10,0,0,0" />
             </StackPanel>
             <Button x:Name="bntUpdate"
-                    Content="Update"
+                    Content="Cập nhật"
                     IsEnabled="False"
                     Height="44"
                     Margin="10,0,0,0"

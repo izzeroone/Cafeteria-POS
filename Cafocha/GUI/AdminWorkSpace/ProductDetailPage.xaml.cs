@@ -42,7 +42,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvProduct.ItemsSource = allProduct;
             allProductDetails = _businessModuleLocator.ProductModule.getAllProductDetails().ToList();
             allIngre = _businessModuleLocator.WarehouseModule.IngredientList;
-            lvIngredient.ItemsSource = allIngre;
             allProductDetailsWithName = new List<ProductModule.PDTemp>();
             this.generatorProductDetailsWithName();
             lvDetails.ItemsSource = allProductDetailsWithName;
@@ -67,7 +66,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            SearchIBox.Text = "";
+           
         }
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -149,8 +148,14 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            var pup = new ProductUpdatePage(_businessModuleLocator, curPro);
-            ((AdminWindow) Window.GetWindow(this)).myframe.Navigate(pup);
+            //var pup = new ProductUpdatePage(_businessModuleLocator, curPro);
+            //((AdminWindow) Window.GetWindow(this)).myframe.Navigate(pup);
+
+            ProductUpdatePage productUpdatePage = new ProductUpdatePage(_businessModuleLocator, curPro);
+            productUpdatePage.ShowDialog();
+
+            refreshListData();
+
         }
 
         private void bntDelPro_Click(object sender, RoutedEventArgs e)
@@ -178,85 +183,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             SearchBox.Text = "";
         }
 
-        private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            var filter = SearchIBox.Text.Trim();
-
-            if (filter.Length == 0)
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-            else
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-        }
-
-        private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var filter = SearchIBox.Text.Trim();
-
-            if (filter.Length == 0)
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-            else
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-        }
-
-
-        private void bntAdd_Click(object sender, RoutedEventArgs e)
-        {
-            var page = new CreateStockPage(_businessModuleLocator);
-            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(page);
-
-            var filter = SearchIBox.Text.Trim();
-
-            if (filter.Length == 0)
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
-            else
-                lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
-        }
-
-        private void bntEdit_Click(object sender, RoutedEventArgs e)
-        {
-            _ingre = lvIngredient.SelectedItem as Stock;
-
-            if (lvIngredient.SelectedItem == null)
-            {
-                MessageBox.Show("Ingredient must be selected to update! Choose again!");
-                return;
-            }
-
-            var page = new CreateStockPage(_businessModuleLocator);
-            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(page, _ingre);
-
-            lvProduct.UnselectAll();
-            lvProduct.Items.Refresh();
-            lvDetails.UnselectAll();
-            lvDetails.Items.Refresh();
-            lvIngredient.UnselectAll();
-            lvIngredient.Items.Refresh();
-        }
-
-        private void bntDel_Click(object sender, RoutedEventArgs e)
-        {
-            if (lvIngredient.SelectedItem == null)
-            {
-                MessageBox.Show("Ingredient must be selected to delete! Choose again!");
-                return;
-            }
-
-            var delIngre = lvIngredient.SelectedItem as Stock;
-            if (delIngre != null)
-            {
-                MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delIngre.Name + "(" + delIngre.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
-                if (delMess == MessageBoxResult.Yes)
-                {
-                    _businessModuleLocator.WarehouseModule.deleteStock(delIngre);
-                    refreshListData();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please choose ingredient you want to delete and try again!");
-            }
-        }
-
         private void generatorProductDetailsWithName()
         {
             allProductDetailsWithName.Clear();
@@ -270,19 +196,22 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct();
             lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails();
-            lvIngredient.ItemsSource = _businessModuleLocator.WarehouseModule.IngredientList;
             lvProduct.UnselectAll();
             lvProduct.Items.Refresh();
             lvDetails.UnselectAll();
             lvDetails.Items.Refresh();
-            lvIngredient.UnselectAll();
-            lvIngredient.Items.Refresh();
         }
 
         private void BntAddPro_Click(object sender, RoutedEventArgs e)
         {
-            var pup = new ProductCreatorPage(_businessModuleLocator);
-            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
+            //var pup = new ProductCreatorPage(_businessModuleLocator);
+            //((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
+
+            ProductCreatorPage productCreatorPage = new ProductCreatorPage(_businessModuleLocator);
+            productCreatorPage.ShowDialog();
+
+            refreshListData();
+
         }
     }
 }

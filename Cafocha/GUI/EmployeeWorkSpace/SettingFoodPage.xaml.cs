@@ -36,25 +36,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (bntUpdate.Content.Equals("Update"))
-            {
-                txtName.IsEnabled = true;
-                txtPrice.IsEnabled = true;
-                cbopromotion.IsEnabled = true;
-                bntUpdate.Content = "Save";
-            }
-            else if (bntUpdate.Content.Equals("Save"))
-            {
-                var p = _businessModuleLocator.ProductModule.getProduct(txtID.Text);
-                p.Discount = int.Parse(cbopromotion.SelectedValue.ToString());
-                _businessModuleLocator.ProductModule.updateProduct(p);
+            var p = _businessModuleLocator.ProductModule.getProduct(txtID.Text);
+            p.Discount = int.Parse(cbopromotion.SelectedValue.ToString());
+            _businessModuleLocator.ProductModule.updateProduct(p);
 
-
-                txtName.IsEnabled = false;
-                txtPrice.IsEnabled = false;
-                cbopromotion.IsEnabled = false;
-                bntUpdate.Content = "Update";
-            }
+            MessageBox.Show("Cập nhật thành công");
         }
 
         private void txtPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)

@@ -16,7 +16,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// <summary>
     ///     Interaction logic for ProductUpdatePage.xaml
     /// </summary>
-    public partial class ProductUpdatePage : Page
+    public partial class ProductUpdatePage : Window
     {
         private readonly BusinessModuleLocator _businessModuleLocator;
 
@@ -70,14 +70,14 @@ namespace Cafocha.GUI.AdminWorkSpace
                 if (curing != null) _pdtList.Add(new ProductModule.PDTemp {ProDe = pd, Ingre = curing});
             }
 
-            lvDetails.ItemsSource = _pdtList;
+            
             CalSuggestPrice();
         }
 
         private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
         {
             _igreList = _businessModuleLocator.WarehouseModule.IngredientList;
-            lvAvaibleIngredient.ItemsSource = _igreList;
+            
         }
 
         private void initComboBox()
@@ -121,79 +121,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Add(newPD);
             _pdtList.Add(new ProductModule.PDTemp {ProDe = newPD, Ingre = ingre});
-            lvDetails.ItemsSource = _pdtList;
-            lvDetails.Items.Refresh();
             isRaiseEvent = false;
-        }
-
-        private void BntDeleteItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            var dep = (DependencyObject) e.OriginalSource;
-            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
-
-            if (dep == null)
-                return;
-
-            var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
-
-            if (index < 0)
-                return;
-
-            isRaiseEvent = true;
-            //_currentProduct.ProductDetails.Remove(_pdtList[index].ProDe);
-            _pdtList.RemoveAt(index);
-            CalSuggestPrice();
-            lvDetails.ItemsSource = _pdtList;
-            lvDetails.Items.Refresh();
-            isRaiseEvent = false;
-        }
-
-        private void cboUnitUse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!isRaiseEvent)
-            {
-                var cbo = sender as ComboBox;
-                if (cbo.SelectedItem.Equals("")) return;
-
-                var dep = (DependencyObject) e.OriginalSource;
-                while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
-
-                if (dep == null)
-                    return;
-
-                var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
-                if (index < 0) return;
-
-                isRaiseEvent = true;
-
-                //_currentProduct.ProductDetails.ToList()[index].UnitUse = cbo.SelectedItem.ToString();
-                _pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
-                CalSuggestPrice();
-                isRaiseEvent = false;
-            }
-        }
-
-        private void txtQuantity_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!isRaiseEvent)
-            {
-                var dep = (DependencyObject) e.OriginalSource;
-                while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
-
-                if (dep == null)
-                    return;
-
-                var index = lvDetails.ItemContainerGenerator.IndexFromContainer(dep);
-                if (index < 0) return;
-
-                if ((sender as TextBox).Text.Trim().Equals("") || (sender as TextBox).Text.Trim() == null) return;
-
-                isRaiseEvent = true;
-                //_currentProduct.ProductDetails.ToList()[index].Quan = int.Parse((sender as TextBox).Text.Trim());
-                _pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
-                CalSuggestPrice();
-                isRaiseEvent = false;
-            }
         }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -281,6 +209,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 MessageBox.Show("Something went wrong. Can not update product. Please check again!");
             }
+            Close();
         }
 
         private void btnLinkImg_Click(object sender, RoutedEventArgs e)
@@ -314,11 +243,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             txtSusggestPrice.Text = "";
             txtPrice.Text = "";
 
-            lvDetails.ItemsSource = new List<ProductDetail>();
-            lvDetails.UnselectAll();
-            lvDetails.Items.Refresh();
-            lvAvaibleIngredient.UnselectAll();
-            lvAvaibleIngredient.Items.Refresh();
             _pdtList.Clear();
             isRaiseEvent = false;
         }
