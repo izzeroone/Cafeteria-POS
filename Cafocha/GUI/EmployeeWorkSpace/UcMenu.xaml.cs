@@ -60,7 +60,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (Application.Current.Properties["CurrentEmpWorking"] == null)
             {
-                MessageBox.Show("You should login before");
+                MessageBox.Show("You should startWorking before");
                 return;
             }
 

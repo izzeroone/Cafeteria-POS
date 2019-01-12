@@ -86,22 +86,28 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                if (_emp == null)
+                if (!_businessModuleLocator.EmployeeModule.isUsernameAvaiable(username))
                 {
-                    var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
-
-                    if (newemp != null)
-                    {
-                        MessageBox.Show("Username is already exist! Please try again!");
-                        txtUsername.Focus();
-                        return;
-                    }
+                    MessageBox.Show("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+                    txtName.Focus();
+                    return;
                 }
+//                if (_emp == null)
+//                {
+//                    var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
+//
+//                    if (newemp != null)
+//                    {
+//                        MessageBox.Show("Username is already exist! Please try again!");
+//                        txtUsername.Focus();
+//                        return;
+//                    }
+//                }
 
                 //check pass
                 if (pass.Length == 0 || pass.Length > 50)
                 {
-                    MessageBox.Show("Password is not valid!");
+                    MessageBox.Show("Mật khẩu quá ngắn hoặc quá dài!");
                     txtPass.Focus();
                     return;
                 }
@@ -109,7 +115,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var passcon = txtCon.Password.Trim();
                 if (!passcon.Equals(pass))
                 {
-                    MessageBox.Show("Confirm password is not match!");
+                    MessageBox.Show("Mật khẩu không giống nhau!");
                     txtCon.Focus();
                     return;
                 }
@@ -117,9 +123,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 //check name
                 var namee = txtName.Text.Trim();
-                if (namee.Length == 0 || namee.Length > 50)
+                if (namee.Length == 0 || namee.Length > 50 )
                 {
-                    MessageBox.Show("Name is not valid!");
+                    MessageBox.Show("Tên không hợp lệ!");
                     txtName.Focus();
                     return;
                 }

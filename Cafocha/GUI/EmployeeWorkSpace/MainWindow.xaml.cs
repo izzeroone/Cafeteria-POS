@@ -219,6 +219,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     return;
                 }
 
+                _businessModuleLocator.EmployeeModule.endWorking();
                 Application.Current.Properties["CurrentEmpWorking"] = null;
                 cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }

@@ -23,7 +23,6 @@ namespace Cafocha.GUI.Helper.PrintHelper
 
         private readonly OrderNote curOrder;
 
-        private readonly bool isShowReview;
 
         private IPrintHelper ph;
         private readonly PrintDialog printDlg;

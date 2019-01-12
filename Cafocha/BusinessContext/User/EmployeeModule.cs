@@ -41,6 +41,10 @@ namespace Cafocha.BusinessContext.User
             return _unitofwork.EmployeeRepository.Get(x => x.Manager.Equals(adId) && x.Deleted.Equals(0));
         }
 
+        public bool isUsernameAvaiable(string username)
+        {
+            return _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)) == null;
+        }
         public void updateEmployeePassword(Employee employee, string newPassword)
         {
             employee.Pass = newPassword;
@@ -105,50 +109,67 @@ namespace Cafocha.BusinessContext.User
                 if (emp.Username.Equals(username) && emp.DecryptedPass.Equals(password) ||
                     emp.DecryptedCode.Equals(code))
                 {
-                    var chemp = _emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
-                    if (chemp.Count != 0)
-                    {
-                        MessageBox.Show("This employee is already login!");
-                        return false;
-                    }
-
-                    try
-                    {
-                        var empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
-                            sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
-                            sle.ForYear.Equals(DateTime.Now.Year)).First();
-
-                        Application.Current.Properties["EmpSN"] = empSalaryNote;
-                        var empWorkHistory = new WorkingHistory
-                            {ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId};
-                        Application.Current.Properties["EmpWH"] = empWorkHistory;
-                    }
-                    catch (Exception ex)
-                    {
-                        var empSalary = new SalaryNote
-                        {
-                            EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month,
-                            ForYear = DateTime.Now.Year, IsPaid = 0
-                        };
-                        _unitofwork.SalaryNoteRepository.Insert(empSalary);
-                        _unitofwork.Save();
-                        var empWorkHistory = new WorkingHistory
-                            {ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId};
-                        Application.Current.Properties["EmpWH"] = empWorkHistory;
-                        Application.Current.Properties["EmpSN"] = empSalary;
-                    }
-
-                    _emploglist.Add(new EmpLoginList
-                    {
-                        Emp = emp, EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,
-                        EmpWH = Application.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0
-                    });
-
-                    return true;
-                    //end create
+                    return Login(emp);
                 }
 
             return false;
+        }
+
+        private bool Login(Employee emp)
+        {
+            var chemp = _emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
+            if (chemp.Count != 0)
+            {
+                MessageBox.Show("This employee is already login!");
+                return false;
+            }
+
+            try
+            {
+                var empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
+                    sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
+                    sle.ForYear.Equals(DateTime.Now.Year)).First();
+
+                Application.Current.Properties["EmpSN"] = empSalaryNote;
+                var empWorkHistory = new WorkingHistory
+                    {StartTime = DateTime.Now, ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId};
+                Application.Current.Properties["EmpWH"] = empWorkHistory;
+            }
+            catch (Exception ex)
+            {
+                var empSalary = new SalaryNote
+                {
+                    EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month,
+                    ForYear = DateTime.Now.Year, IsPaid = 0
+                };
+                _unitofwork.SalaryNoteRepository.Insert(empSalary);
+                _unitofwork.Save();
+                var empWorkHistory = new WorkingHistory
+                    {StartTime = DateTime.Now, ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId};
+                Application.Current.Properties["EmpWH"] = empWorkHistory;
+                Application.Current.Properties["EmpSN"] = empSalary;
+            }
+
+            _emploglist.Add(new EmpLoginList
+            {
+                Emp = emp, EmpSal = Application.Current.Properties["EmpSN"] as SalaryNote,
+                EmpWH = Application.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0
+            });
+
+            return true;
+            //end create
+        }
+
+        public void endWorking()
+        {
+            var emp = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+            emp.EmpWH.EndTime = DateTime.Now;
+            _unitofwork.WorkingHistoryRepository.Insert(emp.EmpWH);
+            var workingHour = (emp.EmpWH.EndTime - emp.EmpWH.StartTime).TotalHours;
+            emp.EmpSal.WorkHour += workingHour;
+            emp.EmpSal.SalaryValue += (decimal) (workingHour * emp.Emp.HourWage);
+            _unitofwork.SalaryNoteRepository.Update(emp.EmpSal);
+            _unitofwork.Save();
         }
     }
 }

@@ -614,11 +614,11 @@
       <LastGenOutput>CafochaEntities.cs</LastGenOutput>
     </Content>
     <Content Include="DB\DBCafocha.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DB\DBCafocha_log.ldf">
       <DependentUpon>DBCafocha.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="printerSetting.txt" />
     <Resource Include="SerializedData\dbconfig.txt" />
