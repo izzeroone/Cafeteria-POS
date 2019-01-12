@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.Entities;
 using Cafocha.GUI.BusinessModel;
+using Cafocha.GUI.CafowareWorkSpace;
+using Cafocha.GUI.EmployeeWorkSpace;
 using log4net;
 
 namespace Cafocha.GUI
@@ -19,7 +23,6 @@ namespace Cafocha.GUI
 
         private bool isCodeLoginTurnOn;
         private readonly DispatcherTimer LoadCodeLogin;
-
         public LoginWindow()
         {
             var config = ReadWriteData.ReadDBConfig();
@@ -46,10 +49,7 @@ namespace Cafocha.GUI
             LoadCodeLogin.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
             Closing += Closing_LoginWindos;
-            LoginModule = new LoginModule(this);
         }
-
-        public LoginModule LoginModule { get; }
 
         private void LoadCodeLogin_Tick(object sender, EventArgs e)
         {
@@ -74,42 +74,63 @@ namespace Cafocha.GUI
         {
             if (e.Key == Key.Enter)
             {
-                var username = txtUsername.Text;
-                var pass = txtPass.Password;
-                try
-                {
-                    btnLogin.IsEnabled = false;
-                    PgbLoginProcess.Visibility = Visibility.Visible;
-                    await LoginModule.LoginAsync(username, pass);
-
-                    btnLogin.IsEnabled = true;
-                    PgbLoginProcess.Visibility = Visibility.Collapsed;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                btnLogin_Click(sender, e);
             }
         }
 
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var username = txtUsername.Text.Trim();
-            var pass = txtPass.Password.Trim();
-            try
+            var username = txtUsername.Text;
+            var pass = txtPass.Password;
+            btnLogin.IsEnabled = false;
+            PgbLoginProcess.Visibility = Visibility.Visible;
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
             {
-                btnLogin.IsEnabled = false;
-                PgbLoginProcess.Visibility = Visibility.Visible;
-                await LoginModule.LoginAsync(username, pass);
+                MessageBox.Show("Hey as");
+            }
+            await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(username, pass, null); });
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (_businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.EmpRole == (int)EmployeeRole.Stock)
+                    {
+                        var main = new CafowareWindow();
+                        main.Show();
+                    }
+                    else
+                    {
+                        var main = new MainWindow();
+                        main.Show();
+                    }
 
-                btnLogin.IsEnabled = true;
-                PgbLoginProcess.Visibility = Visibility.Collapsed;
+                    this.Close();
+
+                });
+
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                if (await _businessModuleLocator.AdminModule.login(username, pass))
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        var main = new AdminNavWindow();
+                        main.Show();
+                        this.Close();
+                    });
+
+                }
+                else
+                {
+                    MessageBox.Show("Tên hoặc mật khẩu không chính xác");
+
+                }
             }
+            btnLogin.IsEnabled = true;
+            PgbLoginProcess.Visibility = Visibility.Collapsed;
+
         }
 
         private async void btnLoginCode_Click(object sender, RoutedEventArgs e)
@@ -128,7 +149,15 @@ namespace Cafocha.GUI
             try
             {
                 KbEmpCodeLoginForm.ButtonGoAbleState(false);
-                await LoginModule.LoginByCodeAsync(code);
+                if (await _businessModuleLocator.EmployeeModule.login(null, null, null))
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        var main = new MainWindow();
+                        main.Show();
+                    });
+
+                }
                 KbEmpCodeLoginForm.ButtonGoAbleState(true);
             }
             catch (Exception ex)

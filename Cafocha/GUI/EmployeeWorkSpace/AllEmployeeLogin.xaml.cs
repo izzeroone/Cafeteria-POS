@@ -80,9 +80,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             btnAcceptView.Visibility = Visibility.Collapsed;
             btnAcceptStart.Visibility = Visibility.Collapsed;
             btnAcceptCancel.Visibility = Visibility.Collapsed;
-
             foreach (var e in _businessModuleLocator.EmployeeModule.Emploglist)
             {
+                if (e.EmpWH == null)
+                {
+                    e.TimePercent = 0;
+                    continue;
+                }
                 e.EmpWH.EndTime = DateTime.Now;
                 var h = (e.EmpWH.EndTime - e.EmpWH.StartTime).Hours;
                 var m = (e.EmpWH.EndTime - e.EmpWH.StartTime).Minutes;
@@ -211,8 +215,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     if (_emplog.Emp.DecryptedCode.Equals(code))
                     {
                         Application.Current.Properties["CurrentEmpWorking"] = _emplog;
-                        _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp
-                            .Username;
+                        _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
                         setControl(true);
                         Close();
                     }
@@ -346,8 +349,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         setControl(true);
 
                         if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                            _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp
-                                .Username;
+                            _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
                     }
                     catch (Exception ex)
                     {
@@ -390,8 +392,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                         setControl(true);
 
                         if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                            _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp
-                                .Username;
+                            _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
                     }
                     catch (Exception ex)
                     {
@@ -400,16 +401,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 }
                 else if (_typeshow == 4)
                 {
-                    if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
-                    {
-                        MessageBox.Show("Login fail! Please try again!");
-                        return;
-                    }
-
-                    Application.Current.Properties["CurrentEmpWorking"] = _emplog;
-                    _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
-
-                    Close();
+                    btnAcceptStart_Click(sender, e);
                 }
             }
         }
@@ -433,8 +425,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                 setControl(true);
 
-                if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                    _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
+                    _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
             }
             catch (Exception ex)
             {
@@ -467,8 +459,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                 setControl(true);
 
-                if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                    _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+
+                if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
+                    _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
             }
             catch (Exception ex)
             {
@@ -483,11 +476,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 MessageBox.Show("Login fail! Please try again!");
                 return;
             }
+            else
+            {
+                _businessModuleLocator.EmployeeModule.startWorkingRecord();
+                MessageBox.Show("Wh");
+                _cUser.Content = _emplog.Emp.Username;
+                Close();
+            }
 
-            Application.Current.Properties["CurrentEmpWorking"] = _emplog;
-            _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
-
-            Close();
         }
 
         private void btnAcceptView_Click(object sender, RoutedEventArgs e)
@@ -586,11 +582,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 orderTemp.PayBack = 0;
                 _businessModuleLocator.TakingOrderModule.OrderTemp = orderTemp;
 
-                ((MainWindow) GetWindow(this)).isOrderOrder = false;
-                ((MainWindow) GetWindow(this)).isOrderPrint = false;
-
-
-                Application.Current.Properties["CurrentEmpWorking"] = null;
+                _businessModuleLocator.EmployeeModule.WorkingEmployee = null;
                 _main.Close();
                 var loginWindow = new LoginWindow();
                 Close();
@@ -599,8 +591,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
 
             _cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count + " employee(s) available";
-            if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                _cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+            if (_businessModuleLocator.EmployeeModule.Emploglist != null)
+                _cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
 
             lvLoginList.ItemsSource = _businessModuleLocator.EmployeeModule.Emploglist;
             lvLoginList.Items.Refresh();

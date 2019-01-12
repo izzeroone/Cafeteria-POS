@@ -58,9 +58,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         //ToDo: Need to update the contain in Warehouse database when new order occur
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH == null)
             {
-                MessageBox.Show("You should startWorking before");
+                MessageBox.Show("Bạn nên bắt đầu phiên làm việc trước");
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 _businessModuleLocator.TakingOrderModule.addProductToOrder(it);
                 lbSelected.UnselectAll();
 
-                checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList,
+                checkWorkingAction(_businessModuleLocator.EmployeeModule.WorkingEmployee,
                     _businessModuleLocator.TakingOrderModule.OrderTemp);
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControl();
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.txtDay.Text =

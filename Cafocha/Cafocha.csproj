@@ -143,7 +143,6 @@
     <Compile Include="BusinessContext\BusinessModuleLocator.cs" />
     <Compile Include="BusinessContext\EmployeeWorkspace\TakingOrderModule.cs" />
     <Compile Include="BusinessContext\User\ProductModule.cs" />
-    <Compile Include="BusinessContext\LoginModule.cs" />
     <Compile Include="BusinessContext\MigrationConfiguration.cs" />
     <Compile Include="BusinessContext\User\AdminModule.cs" />
     <Compile Include="BusinessContext\User\CustomerModule.cs" />

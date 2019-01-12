@@ -71,6 +71,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 MessageBox.Show("Something went wrong: \n" + ex.Message);
                 AppLog.Error(ex);
             }
+
         }
 
         private void Refresh_Tick(object sender, EventArgs e)

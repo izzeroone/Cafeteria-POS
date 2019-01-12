@@ -168,10 +168,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
         public void clearOrder()
         {
-            if (Application.Current != null)
-            {
-                OrderTemp.EmpId = (Application.Current.Properties["EmpLogin"] as Employee).EmpId;
-            }
+            OrderTemp.EmpId = (Application.Current.Properties["EmpWorking"] as Employee).EmpId;
             OrderTemp.CusId = "CUS0000001";
             OrderTemp.Discount = 0;
             OrderTemp.Ordertime = DateTime.Now;

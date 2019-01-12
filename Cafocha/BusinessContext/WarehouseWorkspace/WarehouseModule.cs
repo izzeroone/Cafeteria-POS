@@ -9,8 +9,6 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 {
     public class WarehouseModule
     {
-        private static readonly string OTHER_PURCHASE_ID = "IGD0000047";
-
         private readonly RepositoryLocator _unitofworkWH;
         private List<Stock> _stockList;
         private List<StockType> _stockTypes;

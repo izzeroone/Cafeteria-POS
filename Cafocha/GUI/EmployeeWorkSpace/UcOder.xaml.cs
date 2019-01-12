@@ -53,7 +53,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             isUcOrderFormLoading = true;
             _businessModuleLocator = ((MainWindow) Window.GetWindow(this))._businessModuleLocator;
-            var currentEmpList = Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+            var currentEmpList = _businessModuleLocator.EmployeeModule.WorkingEmployee;
 
 
             InitCus_raiseEvent = true;
@@ -137,7 +137,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (!InitCus_raiseEvent)
             {
-                if (Application.Current.Properties["CurrentEmpWorking"] == null)
+                if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
                 {
                     MessageBox.Show("No employee on working! Please try again!");
                     return;
@@ -149,7 +149,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 _businessModuleLocator.TakingOrderModule.OrderTemp.Discount = _businessModuleLocator.CustomerModule
                     .getCustomer(_businessModuleLocator.TakingOrderModule.OrderTemp.CusId).Discount;
                 loadTotalPrice();
-                checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+                checkWorkingAction();
             }
         }
 
@@ -176,7 +176,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -200,13 +200,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
             RefreshControl();
-            checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+            checkWorkingAction();
         }
 
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -240,7 +240,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -258,20 +258,20 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+            checkWorkingAction();
         }
 
         //ToDo: Set the contain back when the order didn't call any more
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpSal == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
             }
 
             ClearTheTable();
-            checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+            checkWorkingAction();
         }
 
         /// <summary>
@@ -328,10 +328,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// </summary>
         /// <param name="orderDetails">The OrderDetails that contain a give back Product</param>
         /// <param name="productQuan">give back product quantity</param>
-        private void checkWorkingAction(EmpLoginList currentEmp)
+        private void checkWorkingAction()
         {
-            if (currentEmp == null ||
-                currentEmp.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee == null ||
+                _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
 
         }
 
@@ -351,7 +351,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = decimal.Parse(txtTotal.Text);
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+            checkWorkingAction();
         }
 
         // FORMAT TOTALPRICE TEXTBOX

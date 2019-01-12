@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -10,6 +9,9 @@ using Cafocha.BusinessContext;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 using log4net;
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
+using ScrollBar = System.Windows.Controls.Primitives.ScrollBar;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
@@ -44,8 +46,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         public MainWindow()
         {
             InitializeComponent();
-            emp = Application.Current.Properties["EmpLogin"] as Employee;
             _businessModuleLocator = new BusinessModuleLocator();
+            emp = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp;
+
             cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             var t = _businessModuleLocator.EmployeeModule.Emploglist;
             isOrderOrder = false;
@@ -69,16 +72,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 WorkTimer = new DispatcherTimer();
                 WorkTimer.Tick += WorkTime_Tick;
                 WorkTimer.Interval = new TimeSpan(0, 0, 1);
-                WorkTimer.Start();
+                WorkTimer.Stop();
 
-                var RefreshTimer = new DispatcherTimer();
-                RefreshTimer.Tick += Refresh_Tick;
-                RefreshTimer.Interval = new TimeSpan(0, 2, 0);
-                RefreshTimer.Start();
-
-                CheckWorkingTimer = new DispatcherTimer();
-                CheckWorkingTimer.Tick += CheckWorking_Tick;
-                CheckWorkingTimer.Interval = new TimeSpan(0, 5, 0);
 
                 Loaded += (sender, args) =>
                 {
@@ -94,16 +89,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
         }
 
-        private void Refresh_Tick(object sender, EventArgs e)
-        {
-            en.ucMenu.IsRefreshMenu = true;
-            en.ucMenu.UcMenu_Loaded(en.ucMenu, null);
-        }
-
         private void WorkTime_Tick(object sender, EventArgs e)
         {
             var nowWH = DateTime.Now;
-            var startWH = (Application.Current.Properties["EmpWH"] as WorkingHistory).StartTime;
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH == null)
+            {
+                return;
+            }
+            var startWH = _businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH.StartTime;
             var timer = nowWH - startWH;
             string fH = "", fm = "", fs = "";
             fH = timer.Hours.ToString();
@@ -115,38 +108,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (timer.Seconds < 10) fs = "0" + timer.Seconds;
 
             txtTimeWk.Text = fH + ":" + fm + ":" + fs;
-        }
-
-        private void CheckWorking_Tick(object sender, EventArgs e)
-        {
-            //check admin
-            if (Application.Current.Properties["AdLogin"] != null)
-            {
-                Application.Current.Properties["AdLogin"] = null;
-
-                if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                    Application.Current.Properties["CurrentEmpWorking"] = null;
-                else if (Application.Current.Properties["CurrentEmpWorking"] == null)
-                    cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-
-                CheckWorkingTimer.Stop();
-                return;
-            }
-
-            //check employee
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
-            {
-                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-            }
-            else if (Application.Current.Properties["CurrentEmpWorking"] != null)
-            {
-                Application.Current.Properties["CurrentEmpWorking"] = null;
-                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-            }
-
-            if (bntEntry.IsEnabled == false) bntEntry.IsEnabled = true;
-
-            CheckWorkingTimer.Stop();
         }
 
         private void bntEntry_Click(object sender, RoutedEventArgs e)
@@ -178,7 +139,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (Application.Current.Properties["AdLogin"] != null) return;
 
-            if (Application.Current.Properties["CurrentEmpWorking"] != null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH != null)
             {
                 MessageBox.Show("It's have some employee on working! Please wait!");
                 return;
@@ -187,44 +148,49 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 4);
             ael.ShowDialog();
 
-            if (CheckWorkingTimer != null) CheckWorkingTimer.Start();
+            if (WorkTimer != null) WorkTimer.Start();
         }
 
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
+        {
+            endWorking();
+        }
+
+        private bool endWorking()
         {
             //check admin
             if (Application.Current.Properties["AdLogin"] != null)
             {
                 Application.Current.Properties["AdLogin"] = null;
 
-                if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                    cUser.Content = (Application.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
-                else if (Application.Current.Properties["CurrentEmpWorking"] == null)
+                if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH != null)
+                    cUser.Content = _businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username;
+                else if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH == null)
                     cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
 
-                return;
+                return false;
             }
 
             //check employee
-            if (Application.Current.Properties["CurrentEmpWorking"] == null)
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH == null)
             {
                 MessageBox.Show("Cannot end working when you are not started working!");
                 cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
-            else if (Application.Current.Properties["CurrentEmpWorking"] != null)
+            else if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH != null)
             {
                 if (_businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps.Count != 0)
                 {
                     MessageBox.Show("You have pending order. Cannot end working!");
-                    return;
+                    return false;
                 }
 
                 _businessModuleLocator.EmployeeModule.endWorking();
-                Application.Current.Properties["CurrentEmpWorking"] = null;
                 cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
             }
 
             if (CheckWorkingTimer != null) CheckWorkingTimer.Stop();
+            return true;
         }
 
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
@@ -248,11 +214,35 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             if (Application.Current.Properties["AdLogin"] != null) return;
 
 
-            if (Application.Current.Properties["CurrentEmpWorking"] != null)
-                MessageBox.Show("You should end working before log out!");
+            if (_businessModuleLocator.EmployeeModule.WorkingEmployee.EmpWH != null)
+            {
+                var dialogResult = MessageBox.Show("Bạn đang trong phiên làm việc.\n Bạn có muốn kết thúc phiên làm việc và đăng xuất!", "Đăng xuất", MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    if (endWorking())
+                    {
 
-            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 3);
-            ael.ShowDialog();
+                        _businessModuleLocator.EmployeeModule.WorkingEmployee = null;
+                        Dispatcher.Invoke(() =>
+                        {
+                            var main = new LoginWindow();
+                            main.Show();
+                            Close();
+                        });
+                    }
+                }
+
+            }
+            else
+            {
+                _businessModuleLocator.EmployeeModule.WorkingEmployee = null;
+                Dispatcher.Invoke(() =>
+                {
+                    var main = new LoginWindow();
+                    main.Show();
+                    Close();
+                });
+            }
         }
 
         private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
