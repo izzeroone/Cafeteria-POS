@@ -28,7 +28,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// </summary>
         internal BusinessModuleLocator _businessModuleLocator;
 
-        internal AllEmployeeLogin ael;
         private readonly DispatcherTimer CheckWorkingTimer;
         internal ChangeThemePage chtm;
 
@@ -145,8 +144,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 return;
             }
 
-            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 4);
-            ael.ShowDialog();
+            _businessModuleLocator.EmployeeModule.startWorkingRecord();
 
             if (WorkTimer != null) WorkTimer.Start();
         }
@@ -197,16 +195,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (Application.Current.Properties["AdLogin"] != null) return;
 
-            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 1);
-            ael.ShowDialog();
+//            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 1);
+//            ael.ShowDialog();
         }
 
         private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
             if (Application.Current.Properties["AdLogin"] != null) return;
 
-            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 2);
-            ael.ShowDialog();
+            var ed = new EmployeeDetail(_businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.Username, _businessModuleLocator);
+            ed.Show();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
@@ -74,8 +75,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 _businessModuleLocator.TakingOrderModule.addProductToOrder(it);
                 lbSelected.UnselectAll();
 
-                checkWorkingAction(_businessModuleLocator.EmployeeModule.WorkingEmployee,
-                    _businessModuleLocator.TakingOrderModule.OrderTemp);
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControl();
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.txtDay.Text =
                     _businessModuleLocator.TakingOrderModule.OrderTemp.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
@@ -155,11 +154,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //{
             //    SearchBox.Text = "";
             //}
-        }
-
-        private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
-        {
-            if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId)) return;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -106,6 +106,7 @@ namespace Cafocha.GUI
                     }
 
                     this.Close();
+                    return;
 
                 });
 

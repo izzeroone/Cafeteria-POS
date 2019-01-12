@@ -100,9 +100,6 @@
                                         Content="End Working"
                                         Click="btnEndWorking_Click" />
                                 <Separator />
-                                <Button x:Name="btnOtherEmp"
-                                        Content="Other Employee"
-                                        Click="btnOtherEmp_Click" />
                                 <Button x:Name="btnEmpDetail"
                                         Content="Details"
                                         Click="btnEmpDetail_Click" />

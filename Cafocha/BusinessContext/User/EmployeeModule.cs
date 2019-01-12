@@ -127,7 +127,7 @@ namespace Cafocha.BusinessContext.User
                         }
                         _workingEmployee = new EmpLoginList();
                         _workingEmployee.Emp = emp;
-                        Application.Current.Properties["EmpWorking"] = emp;
+                                    Application.Current.Properties["EmpWorking"] = WorkingEmployee.Emp;
                         _emploglist.Add(new EmpLoginList
                         {
                             Emp = emp,
@@ -194,5 +194,16 @@ namespace Cafocha.BusinessContext.User
         }
 
 
+    }
+
+    public class EmpLoginList
+    {
+        public Employee Emp { get; set; }
+
+        public SalaryNote EmpSal { get; set; }
+
+        public WorkingHistory EmpWH { get; set; }
+
+        public int TimePercent { get; set; }
     }
 }
