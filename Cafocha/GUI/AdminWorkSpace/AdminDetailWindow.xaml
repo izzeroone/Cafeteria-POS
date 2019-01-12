@@ -84,13 +84,13 @@
                     <Button x:Name="bntUpdate"
                             FontWeight="Bold"
                             Click="bntUpdate_Click">
-                        Update
+                        Cập nhật
                     </Button>
                     <Button x:Name="btnChangePass"
-                            Margin="100,0,0,0"
+                            Margin="50,0,0,0"
                             FontWeight="Bold"
                             Click="btnChangePass_Click">
-                        Change Password
+                        Đổi mật khẩu
                     </Button>
                 </StackPanel>
             </StackPanel>

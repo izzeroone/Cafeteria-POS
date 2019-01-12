@@ -24,7 +24,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             var oldPass = txtPass.Password.Trim();
-            if (!oldPass.Equals(_admin.Pass))
+            if (!oldPass.Equals(_admin.DecryptedPass))
             {
                 MessageBox.Show("Your old password is incorrect!");
                 txtPass.Focus();

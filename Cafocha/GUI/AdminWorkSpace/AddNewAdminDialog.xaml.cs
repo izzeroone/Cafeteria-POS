@@ -56,16 +56,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-//                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
-                var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
-
-                if (newemp != null)
-                {
-                    MessageBox.Show("Username is already exist! Please try again!");
-                    txtUsername.Focus();
-                    return;
-                }
-
                 //check pass
                 if (pass.Length == 0 || pass.Length > 50)
                 {
@@ -101,7 +91,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-                role = (int) cboRole.SelectedValue;
+                role = (int)cboRole.SelectedValue;
 
                 if (role == 0)
                 {
@@ -109,29 +99,51 @@ namespace Cafocha.GUI.AdminWorkSpace
                     return;
                 }
 
-
-                // Adding
-
-
-                var newAd = new AdminRe
+                //                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+                var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
+                if (newemp == null)
                 {
-                    AdId = "",
-                    Username = username,
-                    Pass = pass,
-                    Name = name,
-                    AdRole = role
-                };
+                    // Adding
 
-                _businessModuleLocator.AdminModule.addAdmin(newAd);
+                    var newAd = new AdminRe
+                    {
+                        AdId = "",
+                        Username = username,
+                        Pass = pass,
+                        Name = name,
+                        AdRole = role
+                    };
 
-                MessageBox.Show("Insert " + newAd.Name + "(" + newAd.AdId + ") successful!");
-                Close();
-            }
+                    _businessModuleLocator.AdminModule.addAdmin(newAd);
+
+                    MessageBox.Show("Insert " + newAd.Name + "(" + newAd.AdId + ") successful!");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Username is already exist! Please try again!");
+                    txtUsername.Focus();
+                    return;
+                }
+        }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     "Something went wrong. Can not add or update admin info. Please check the details again!");
             }
+}
+
+        private void checkUser(string username)
+        {
+            var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
+
+            if (newemp != null)
+            {
+                MessageBox.Show("Username is already exist! Please try again!");
+                txtUsername.Focus();
+                return;
+            }
+            return;
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
