@@ -73,8 +73,8 @@
                          Margin="191,7.4,0,0"
                          VerticalAlignment="Top"
                          Width="147"
-                         Grid.Row="1"
-                         KeyDown="txtPass_KeyDown" />
+                         Grid.Row="1"      
+                         KeyDown="txtPass_KeyDown" Password="password" />
             <Button x:Name="btnLogin"
                     HorizontalAlignment="Left"
                     Margin="51,89.4,0,0"

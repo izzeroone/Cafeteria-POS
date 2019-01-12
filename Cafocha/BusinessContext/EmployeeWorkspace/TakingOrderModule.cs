@@ -172,15 +172,15 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             {
                 OrderTemp.EmpId = (Application.Current.Properties["EmpLogin"] as Employee).EmpId;
             }
-            OrderTemp.CusId = "CUS0000001";
-            OrderTemp.Discount = 0;
-            OrderTemp.Ordertime = DateTime.Now;
-            OrderTemp.TotalPriceNonDisc = 0;
-            OrderTemp.SaleValue = 0;
-            OrderTemp.Vat = 0;
-            OrderTemp.TotalPrice = 0;
-            OrderTemp.CustomerPay = 0;
-            OrderTemp.PayBack = 0;
+            //OrderTemp.CusId = "CUS0000001";
+            //OrderTemp.Discount = 0;
+            //OrderTemp.Ordertime = DateTime.Now;
+            //OrderTemp.TotalPriceNonDisc = 0;
+            //OrderTemp.SaleValue = 0;
+            //OrderTemp.Vat = 0;
+            //OrderTemp.TotalPrice = 0;
+            //OrderTemp.CustomerPay = 0;
+            //OrderTemp.PayBack = 0;
             OrderTemp.OrderDetailsTemps.Clear();
         }
 
