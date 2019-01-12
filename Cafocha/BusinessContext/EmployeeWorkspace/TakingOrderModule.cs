@@ -9,9 +9,10 @@ using Cafocha.Repository.DAL;
 
 namespace Cafocha.BusinessContext.EmployeeWorkspace
 {
-    //A class to help manaing order
+    //A class to help managing order
     public class TakingOrderModule
     {
+
         private readonly RepositoryLocator _unitofwork;
 
         public TakingOrderModule()
@@ -85,6 +86,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
 
             return query;
         }
+
 
         public void loadTotalPrice()
         {
@@ -181,6 +183,19 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             OrderTemp.OrderDetailsTemps.Clear();
         }
 
+
+        public void deleteOrderDetail(int index, bool isDone)
+        {
+            if (OrderTemp.OrderDetailsTemps.ElementAt(index).Quan > 1)
+            {
+                OrderTemp.OrderDetailsTemps.ElementAt(index).Quan--;
+            }
+            else
+            {
+                OrderTemp.OrderDetailsTemps.Remove(OrderTemp.OrderDetailsTemps.ElementAt(index));
+            }
+        }
+
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
         {
             public OrderDetailsTemp OrderDetailsTemp { get; set; }
@@ -219,4 +234,5 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             }
         }
     }
+
 }

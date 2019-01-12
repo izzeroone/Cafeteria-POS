@@ -58,6 +58,7 @@
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
                      Width="147"
+                     Text="admin"
                      KeyDown="txtUsername_KeyDown" />
             <Button Margin="343,153,4,15"
                     Width="50"

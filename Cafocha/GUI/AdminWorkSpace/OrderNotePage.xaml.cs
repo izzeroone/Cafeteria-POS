@@ -48,6 +48,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             _ordernotedetailslist = orderdetailsTempList;
             lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
 
+            lvOrderNote.ItemsSource = _ordernotelist;
+
             Loaded += OrderNotePage_Loaded;
         }
 
