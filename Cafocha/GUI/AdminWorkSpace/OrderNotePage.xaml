@@ -130,7 +130,7 @@
                                         DisplayMemberBinding="{Binding Customer.Name}" />
                         <GridViewColumn Header="Order time"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Ordertime}" />
+                                        DisplayMemberBinding="{Binding OrderTime}" />
                         <GridViewColumn Header="Total Price"
                                         Width="150"
                                         DisplayMemberBinding="{Binding TotalPrice,StringFormat=0.000}" />
@@ -184,9 +184,6 @@
                         <GridViewColumn Header="Product"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Product.Name}" />
-                        <GridViewColumn Header="Selected Stats"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding SelectedStats}" />
                         <GridViewColumn Header="Quantity"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Quan}" />
