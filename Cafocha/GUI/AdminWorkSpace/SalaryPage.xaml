@@ -81,15 +81,15 @@
                                     Margin="0,0,20,0"
 
                                     FontWeight="Bold" Click="BntPay_Click" />
-                            <!-- <Button x:Name="BtnOverViewReport" -->
-                            <!--         Click="BtnOverViewReport_OnClick" -->
-                            <!--         Width="100" -->
-                            <!--         Margin="0,0,0,-2" -->
-                            <!--         ToolTip="Generate Report"> -->
-                            <!--     <Image Source="../Icon/Report Card_32px.png" -->
-                            <!--            Width="30" -->
-                            <!--            Height="25" /> -->
-                            <!-- </Button> -->
+                            <Button x:Name="BtnOverViewReport"
+                                    Click="BtnOverViewReport_OnClick"
+                                    Width="100"
+                                    Margin="0,0,0,-2"
+                                    ToolTip="Generate Report">
+                                <Image Source="../Icon/Report Card_32px.png"
+                                       Width="30"
+                                       Height="25" />
+                            </Button>
                         </StackPanel>
                     </Border>
                 </StackPanel>
