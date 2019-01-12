@@ -77,7 +77,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _businessModuleLocator.WarehouseModule.updateStock();
 
             if (isCreateStockRun) _createStockPage.lvStock.Items.Refresh();
-            if (isViewStockRun) _viewStockPage.lvItem.Items.Refresh();
+            if (isViewStockRun) _viewStockPage.Refresh();
             if (isStockInRun) _stockInPage.lvDataStock.Items.Refresh();
             if (isStockOutRun) _stockOutPage.lvDataStock.Items.Refresh();
         }

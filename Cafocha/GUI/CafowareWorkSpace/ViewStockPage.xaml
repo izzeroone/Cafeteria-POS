@@ -19,94 +19,164 @@
 
 
     <Grid>
-        <ListBox Margin="0 8 0 0"
-                 x:Name="lvItem">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel ItemHeight="auto"
-                               ItemWidth="auto" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="materialDesign:PackIconKind">
-                    <materialDesign:Card Width="200"
-                                         Margin="4,4,0,0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="2*" />
-                            </Grid.RowDefinitions>
-                            <Image Width="70"
-                                   Height="90"
-                                   Stretch="Fill" />
-                            <StackPanel Grid.Row="2"
-                                        Margin="10,10,10,10">
-                                <StackPanel Grid.Row="1"
-                                            Orientation="Horizontal">
-                                    <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">
-                                        Name:
-                                    </TextBlock>
-                                    <TextBlock Foreground="White"
-                                               Text="{Binding Name}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="3"
-                                            Orientation="Horizontal"
-                                            Margin="0,0,10,0">
-                                    <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">
-                                        Unit Out:
-                                    </TextBlock>
-                                    <TextBlock Foreground="White"
-                                               Text="{Binding UnitOut}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="3"
-                                            Orientation="Horizontal"
-                                            Margin="0,0,10,0">
-                                    <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">
-                                        Unit In:
-                                    </TextBlock>
-                                    <TextBlock Foreground="White"
-                                               Text="{Binding UnitIn}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="4"
-                                            Orientation="Horizontal">
-                                    <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">
-                                        Std.Price/Unit Buy:
-                                    </TextBlock>
-                                    <TextBlock Foreground="White"
-                                               Text="{Binding StandardPrice, StringFormat=0.000}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="5"
-                                            Orientation="Horizontal">
-                                    <TextBlock Foreground="White"
-                                               Margin="0,0,10,0">
-                                        Contain:
-                                    </TextBlock>
-                                    <TextBlock Foreground="White"
-                                               Text="{Binding ApWareHouse.Contain}" />
-                                </StackPanel>
-                            </StackPanel>
-                            <ProgressBar x:Name="prgcontent"
-                                         Width="150"
-                                         Height="10"
-                                         Minimum="0"
-                                         Maximum="{Binding ApWareHouse.StandardContain}"
-                                         Value="{Binding ApWareHouse.Contain}"
-                                         Style="{StaticResource MyMaterialDesignLinearProgressBar}"
-                                         Grid.Row="6" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Style="{DynamicResource MaterialDesignToolButton}"
+                                        Command="{Binding SearchCommand}"
+                                        x:Name="SearchIButton"
+                                        CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+                                        Height="24"
+                                        Width="24"
+                                        Margin="0,3,0,0"
+                                        VerticalAlignment="Top">
+                <materialDesign:PackIcon Kind="Magnify"
+                                         />
+            </Button>
+            <TextBox Foreground="White"
+                                         Grid.Column="1"
+                                         Margin="5 0 0 0"
+                                         materialDesign:HintAssist.Hint="Search by Name"
+                                         x:Name="SearchIBox"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderThickness="0"
+                                         MinWidth="200"
+                                         VerticalAlignment="Center"
+                                         TextChanged="SearchIBox_TextChanged"
+                                         GotFocus="SearchIBox_GotFocus" />
 
-                        </Grid>
-                    </materialDesign:Card>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        </Grid>
+
+        <ListView Name="lvStock"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          Background="#FFED5C5C"
+                          Foreground="White"
+                          FontWeight="Bold" 
+                  Grid.Row="1"
+                  SelectionChanged="LvStock_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID"
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding StoId}" />
+                    <GridViewColumn Header="Name"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Info"
+                                            Width="150"
+                                            DisplayMemberBinding="{Binding Info}" />
+                    <GridViewColumn Header="Group"
+                                            Width="80"
+                                            DisplayMemberBinding="{Binding Group}" />
+                    <GridViewColumn Header="Unit"
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding Unit}" />
+                    <GridViewColumn Header="StandardPrice"
+                                            Width="120"
+                                            DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
+                    <GridViewColumn Header="Contain"
+                                            Width="120"
+                                            DisplayMemberBinding="{Binding ApWareHouse.Contain}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- <ListBox Margin="0 8 0 0"  -->
+        <!--          x:Name="lvItem">  -->
+        <!--     <ListBox.ItemsPanel>  -->
+        <!--         <ItemsPanelTemplate>  -->
+        <!--             <WrapPanel ItemHeight="auto"  -->
+        <!--                        ItemWidth="auto" />  -->
+        <!--         </ItemsPanelTemplate>  -->
+        <!--     </ListBox.ItemsPanel>  -->
+        <!--     <ListBox.ItemTemplate>  -->
+        <!--         <DataTemplate DataType="materialDesign:PackIconKind">  -->
+        <!--             <materialDesign:Card Width="200"  -->
+        <!--                                  Margin="4,4,0,0">  -->
+        <!--                 <Grid>  -->
+        <!--                     <Grid.RowDefinitions>  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="*" />  -->
+        <!--                         <RowDefinition Height="2*" />  -->
+        <!--                     </Grid.RowDefinitions>  -->
+        <!--                     <Image Width="70"  -->
+        <!--                            Height="90"  -->
+        <!--                            Stretch="Fill" />  -->
+        <!--                     <StackPanel Grid.Row="2"  -->
+        <!--                                 Margin="10,10,10,10">  -->
+        <!--                         <StackPanel Grid.Row="1"  -->
+        <!--                                     Orientation="Horizontal">  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Margin="0,0,10,0">  -->
+        <!--                                 Name:  -->
+        <!--                             </TextBlock>  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Text="{Binding Name}" />  -->
+        <!--                         </StackPanel>  -->
+        <!--                         <StackPanel Grid.Row="3"  -->
+        <!--                                     Orientation="Horizontal"  -->
+        <!--                                     Margin="0,0,10,0">  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Margin="0,0,10,0">  -->
+        <!--                                 Unit Out:  -->
+        <!--                             </TextBlock>  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Text="{Binding UnitOut}" />  -->
+        <!--                         </StackPanel>  -->
+        <!--                         <StackPanel Grid.Row="3"  -->
+        <!--                                     Orientation="Horizontal"  -->
+        <!--                                     Margin="0,0,10,0">  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Margin="0,0,10,0">  -->
+        <!--                                 Unit In:  -->
+        <!--                             </TextBlock>  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Text="{Binding UnitIn}" />  -->
+        <!--                         </StackPanel>  -->
+        <!--                         <StackPanel Grid.Row="4"  -->
+        <!--                                     Orientation="Horizontal">  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Margin="0,0,10,0">  -->
+        <!--                                 Std.Price/Unit Buy:  -->
+        <!--                             </TextBlock>  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Text="{Binding StandardPrice, StringFormat=0.000}" />  -->
+        <!--                         </StackPanel>  -->
+        <!--                         <StackPanel Grid.Row="5"  -->
+        <!--                                     Orientation="Horizontal">  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Margin="0,0,10,0">  -->
+        <!--                                 Contain:  -->
+        <!--                             </TextBlock>  -->
+        <!--                             <TextBlock Foreground="White"  -->
+        <!--                                        Text="{Binding ApWareHouse.Contain}" />  -->
+        <!--                         </StackPanel>  -->
+        <!--                     </StackPanel>  -->
+        <!--                     <ProgressBar x:Name="prgcontent"  -->
+        <!--                                  Width="150"  -->
+        <!--                                  Height="10"  -->
+        <!--                                  Minimum="0"  -->
+        <!--                                  Maximum="{Binding ApWareHouse.StandardContain}"  -->
+        <!--                                  Value="{Binding ApWareHouse.Contain}"  -->
+        <!--                                  Style="{StaticResource MyMaterialDesignLinearProgressBar}"  -->
+        <!--                                  Grid.Row="6" />  -->
+        <!-- -->
+        <!--                 </Grid>  -->
+        <!--             </materialDesign:Card>  -->
+        <!--         </DataTemplate>  -->
+        <!--     </ListBox.ItemTemplate>  -->
+        <!-- </ListBox>  -->
     </Grid>
 </Page>

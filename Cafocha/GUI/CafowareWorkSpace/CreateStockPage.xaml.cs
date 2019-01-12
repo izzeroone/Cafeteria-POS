@@ -206,7 +206,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 if (filter.Length == 0)
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));
                 else
-                    lvStock.ItemsSource = _stockList.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                    lvStock.ItemsSource = _stockList.Where(p => p.Name.ToLower().Contains(filter.ToLower()) && p.Deleted.Equals(0));
             }
             else
             {
@@ -215,7 +215,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                         p.Group.Equals((int) cboGroup.SelectedItem) && p.Deleted.Equals(0));
                 else
                     lvStock.ItemsSource = _stockList.Where(p =>
-                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                        p.Group.Equals((int) cboGroup.SelectedItem) && p.Name.ToLower().Contains(filter.ToLower()) && p.Deleted.Equals(0));
             }
         }
 
