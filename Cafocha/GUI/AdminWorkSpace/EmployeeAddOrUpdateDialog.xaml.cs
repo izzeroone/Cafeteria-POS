@@ -85,13 +85,6 @@ namespace Cafocha.GUI.AdminWorkSpace
                     txtUsername.Focus();
                     return;
                 }
-
-                if (!_businessModuleLocator.EmployeeModule.isUsernameAvaiable(username))
-                {
-                    MessageBox.Show("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
-                    txtName.Focus();
-                    return;
-                }
 //                if (_emp == null)
 //                {
 //                    var newemp = _businessModuleLocator.EmployeeModule.getEmployee(username);
@@ -215,6 +208,12 @@ namespace Cafocha.GUI.AdminWorkSpace
                 // Adding
                 if (_emp.EmpId == null)
                 {
+                    if (!_businessModuleLocator.EmployeeModule.isUsernameAvaiable(username))
+                    {
+                        MessageBox.Show("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+                        txtName.Focus();
+                        return;
+                    }
                     var checkemp = new Employee
                     {
                         EmpId = "",
