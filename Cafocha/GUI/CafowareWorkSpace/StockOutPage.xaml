@@ -118,7 +118,7 @@
                                                 Width="40"
                                                 Click="bntDelete_Click"
                                                 Margin="0 0 0 0" />
-                                        <!--<Button x:Name="bntEdit"
+                                        <Button x:Name="bntEdit"
                                                 Width="45"
                                                 BorderBrush="DarkGray"
                                                 Background="DarkGray"
@@ -130,7 +130,7 @@
                                                        Height="15"
                                                        Width="13" />
                                             </StackPanel>
-                                        </Button>-->
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

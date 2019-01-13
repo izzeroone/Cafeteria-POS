@@ -23,7 +23,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         // Detail
         public IEnumerable<StockInDetail> getStockInDetail(string stockInID)
         {
-            return _unitofworkWH.StockInDetailsRepository.Get(c => c.SiId.Equals(stockInID),includeProperties: "Stock");
+            return _unitofworkWH.StockInDetailsRepository.Get(c => c.StockinId.Equals(stockInID),includeProperties: "Stock");
         }
 
         public IEnumerable<StockOutDetail> getStockOutDetail(string stockOutID)
@@ -168,7 +168,7 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         {
             foreach (var details in stockOut.StockOutDetails)
             {
-                var stock = StockList.FirstOrDefault(x => x.StoId.Equals(details.StockId));
+                var stock = StockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
                 if (stock != null)
                 {
                     var wareHouse = _unitofworkWH.ApWareHouseRepository.GetById(stock.ApwarehouseId);
@@ -186,9 +186,9 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 
         public void addStockIn(StockIn stockIn)
         {
-            stockIn.Intime = DateTime.Now;
-            stockIn.SiId = _unitofworkWH.StockInRepository.AutoGeneteId_DBAsowell(stockIn).SiId;
-            foreach (var stockInDetail in stockIn.StockInDetails) stockInDetail.SiId = stockIn.SiId;
+            stockIn.InTime = DateTime.Now;
+            stockIn.StockinId = _unitofworkWH.StockInRepository.AutoGeneteId_DBAsowell(stockIn).StockinId;
+            foreach (var stockInDetail in stockIn.StockInDetails) stockInDetail.StockinId = stockIn.StockinId;
             _unitofworkWH.StockInRepository.Insert(stockIn);
             _unitofworkWH.Save();
 

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
+using Cafocha.GUI.EmployeeWorkSpace;
 using Cafocha.GUI.Helper.PrintHelper;
 
 namespace Cafocha.GUI.CafowareWorkSpace
@@ -75,10 +76,10 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 var r = new StockOutDetail();
 
-                var foundIteminReceipt = _stockOutDetailsList.FirstOrDefault(c => c.StockId.Equals(stock.StoId));
+                var foundIteminReceipt = _stockOutDetailsList.FirstOrDefault(c => c.StoId.Equals(stock.StoId));
                 if (foundIteminReceipt == null)
                 {
-                    r.StockId = stock.StoId;
+                    r.StoId = stock.StoId;
                     r.Quan = 1;
                     r.ItemPrice = stock.StandardPrice;
                     _stockOutDetailsList.Add(r);
@@ -95,7 +96,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private bool checkWareHouse(Stock stock)
         {
-            var details = _currentStockOut.StockOutDetails.FirstOrDefault(x => x.StockId.Equals(stock.StoId));
+            var details = _currentStockOut.StockOutDetails.FirstOrDefault(x => x.StoId.Equals(stock.StoId));
             var wareHouse = _businessModuleLocator.WarehouseModule.getApWareHouse(stock.ApwarehouseId);
             if (details != null)
             {
@@ -220,7 +221,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             if (_stockOutDetailsList[index].Quan > 1 && !ErrorDetailsItem.Contains(index))
             {
                 r.Quan = _stockOutDetailsList[index].Quan - 1;
-                r.StockId = _stockOutDetailsList[index].StockId;
+                r.StoId = _stockOutDetailsList[index].StoId;
                 r.ItemPrice = _stockOutDetailsList[index].ItemPrice;
                 _stockOutDetailsList[index] = r;
             }
@@ -287,6 +288,38 @@ namespace Cafocha.GUI.CafowareWorkSpace
             var printHelper = new DoPrintHelper(_businessModuleLocator.RepositoryLocator,
                 DoPrintHelper.StockOut_Printing, _currentStockOut);
             printHelper.DoPrint();
+        }
+
+        private void bntEdit_Click(object sender, RoutedEventArgs e)
+        {
+            int index;
+            var r = new StockOutDetail();
+            var dep = (DependencyObject)e.OriginalSource;
+
+            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
+
+            if (dep == null)
+                return;
+            index = lvDataStockOut.ItemContainerGenerator.IndexFromContainer(dep);
+            var inputNote = new InputNote(_stockOutDetailsList[index].Note);
+            if (_stockOutDetailsList[index].Note == null || _stockOutDetailsList[index].Note.Equals("") ||
+                _stockOutDetailsList[index].Note.Equals(inputNote.Note))
+            {
+                if (inputNote.ShowDialog() == true)
+                {
+                    r.Note = inputNote.Note;
+                    r.StoId = _stockOutDetailsList[index].StoId;
+                    r.Quan = _stockOutDetailsList[index].Quan;
+                    r.ItemPrice = _stockOutDetailsList[index].ItemPrice;
+                    _stockOutDetailsList[index] = r;
+                }
+            }
+            else
+            {
+                inputNote.ShowDialog();
+            }
+
+            lvDataStockOut.Items.Refresh();
         }
     }
 }

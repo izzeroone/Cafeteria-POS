@@ -144,7 +144,7 @@
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
-                       Text="Total Price"
+                       Text="Tổng tiền"
                        VerticalAlignment="Top"
                        Height="33"
                        Width="111" />
@@ -159,22 +159,22 @@
                        Width="180"
                        Text="{Binding appResource}" />
             <Button x:Name="bntPrint"
-                    Content="Print!"
-                    Margin="69,530,598,0"
+                    Content="Xem Trước"
+                    Margin="69,530,584,0"
                     FontSize="25"
                     VerticalAlignment="Top"
                     Height="49" Click="BntPrint_Click" />
             <Button x:Name="bntAdd"
-                    Content="Input!"
-                    Margin="280,530,412,0"
+                    Content="Nhập Kho"
+                    Margin="280,530,381,0"
                     Click="bntAdd_Click"
                     FontSize="25"
                     VerticalAlignment="Top"
                     Height="49" />
             <Button x:Name="bntDelAll"
-                    Content="Clear"
+                    Content="Làm Mới"
                     Click="bntDelAll_Click"
-                    Margin="468,530,223.4,0"
+                    Margin="468,530,200,0"
                     FontSize="25"
                     Height="49"
                     VerticalAlignment="Top" />

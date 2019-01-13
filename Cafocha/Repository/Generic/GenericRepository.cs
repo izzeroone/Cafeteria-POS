@@ -401,7 +401,7 @@ namespace Cafocha.Repository.Generic
                 result += numberWantToset;
 
                 var stkIn = entity as StockIn;
-                stkIn.SiId = result;
+                stkIn.StockinId = result;
             }
             else if (entity is ApWareHouse)
             {

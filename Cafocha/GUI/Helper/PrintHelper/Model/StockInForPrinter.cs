@@ -28,7 +28,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
         public StockInForPrint getAndConvertStockInForPrint(StockIn stockIn)
         {
 
-            No = stockIn.SiId;
+            No = stockIn.StockinId;
             Employee = stockIn.EmpId;
             Date = DateTime.Now;
             TotalPrice = stockIn.TotalAmount;

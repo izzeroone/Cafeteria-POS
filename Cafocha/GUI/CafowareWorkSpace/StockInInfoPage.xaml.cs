@@ -21,9 +21,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             public StockInOut(StockIn stockIn)
             {
-                Id = stockIn.SiId;
+                Id = stockIn.StockinId;
                 EmId = stockIn.EmpId;
-                Time = stockIn.Intime;
+                Time = stockIn.InTime;
                 TotalAmount = stockIn.TotalAmount;
                 IsStockIn = true;
             }
@@ -43,9 +43,11 @@ namespace Cafocha.GUI.AdminWorkSpace
             public string EmId { get; set; }
 
 
-            public DateTime Time { get; set; }
+            public System.DateTime Time { get; set; }
 
             public bool IsStockIn { get; set; }
+
+            public string Note { get; set; }
 
 
             public decimal TotalAmount { get; set; }
@@ -74,10 +76,40 @@ namespace Cafocha.GUI.AdminWorkSpace
             InitializeComponent();
 
             Refresh();
-            
+           
             ((INotifyCollectionChanged) lvStockInOut.Items).CollectionChanged += ListView_CollectionChanged;
 
             Loaded += Page_Loaded;
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            _stockInOutList.Clear();
+
+            stockInList = _businessModuleLocator.WarehouseModule.getStockInList();
+            stockOutList = _businessModuleLocator.WarehouseModule.getStockOutList();
+
+            //            stockInDetail = _businessModuleLocator.WarehouseModule.getStockInDetail();
+            //            stockOutDetail = _businessModuleLocator.WarehouseModule.getStockOutDetail();
+
+            foreach (var stockIn in stockInList)
+            {
+                _stockInOutList.Add(new StockInOut(stockIn));
+            }
+
+            foreach (var stockOut in stockOutList)
+            {
+                _stockInOutList.Add(new StockInOut(stockOut));
+            }
+            
+            lvStockInOut.ItemsSource = _stockInOutList.OrderByDescending(x => x.Time).ToList();
+
+            lvStockInOut.Items.Refresh();
         }
 
         private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -253,35 +285,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 //
 //                }
 //            }
-        }
-
-        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            _stockInOutList.Clear();
-
-            stockInList = _businessModuleLocator.WarehouseModule.getStockInList();
-            stockOutList = _businessModuleLocator.WarehouseModule.getStockOutList();
-
-            //            stockInDetail = _businessModuleLocator.WarehouseModule.getStockInDetail();
-            //            stockOutDetail = _businessModuleLocator.WarehouseModule.getStockOutDetail();
-
-            foreach (var stockIn in stockInList)
-            {
-                _stockInOutList.Add(new StockInOut(stockIn));
-            }
-
-            foreach (var stockOut in stockOutList)
-            {
-                _stockInOutList.Add(new StockInOut(stockOut));
-            }
-
-            lvStockInOut.ItemsSource = _stockInOutList;
-
         }
     }
 }

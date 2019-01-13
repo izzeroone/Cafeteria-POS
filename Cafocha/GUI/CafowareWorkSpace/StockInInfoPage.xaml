@@ -12,7 +12,8 @@
       Background="{DynamicResource MaterialDesignPaper}"
       Height="630"
       Width="1366"
-      Title="OrderPage" IsVisibleChanged="Page_IsVisibleChanged">
+      Title="OrderPage" 
+      IsVisibleChanged="Page_IsVisibleChanged">
     <Page.Resources>
         <local1:StockTypeConverter x:Key="StockTypeConverter"/>
     </Page.Resources>
@@ -187,10 +188,10 @@
                                         DisplayMemberBinding="{Binding Quan}" />
                         <GridViewColumn Header="Đơn Giá Thực Tế"
                                         Width="180"
-                                        DisplayMemberBinding="{Binding ItemPrice}" />
+                                        DisplayMemberBinding="{Binding ItemPrice, StringFormat=0.000}" />
                         <GridViewColumn Header="Ghi Chú"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding Stock.Note}" />
+                                        Width="200"
+                                        DisplayMemberBinding="{Binding Note}" />
                     </GridView>
                 </ListView.View>
             </ListView>
