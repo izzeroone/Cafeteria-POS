@@ -21,25 +21,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             InitializeComponent();
 
             _admin = new AdminRe();
-            initControlAdd();
             WindowStyle = WindowStyle.SingleBorderWindow;
             ResizeMode = ResizeMode.NoResize;
         }
-
-        private void initControlAdd()
-        {
-            var roleList = new List<dynamic>
-            {
-                new {role = 1, roleDisplay = "Software Admin"},
-                new {role = 2, roleDisplay = "Asowel Admin"},
-                new {role = 3, roleDisplay = "AdPress Admin"},
-                new {role = 4, roleDisplay = "Higher Admin"}
-            };
-            cboRole.ItemsSource = roleList;
-            cboRole.SelectedValuePath = "role";
-            cboRole.DisplayMemberPath = "roleDisplay";
-        }
-
+       
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
@@ -51,7 +36,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check username
                 if (username.Length == 0 || username.Length > 50)
                 {
-                    MessageBox.Show("Username is not valid!");
+                    MessageBox.Show("Tên tài khoản không hợp lệ!");
                     txtUsername.Focus();
                     return;
                 }
@@ -59,7 +44,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check pass
                 if (pass.Length == 0 || pass.Length > 50)
                 {
-                    MessageBox.Show("Password is not valid!");
+                    MessageBox.Show("Mật khẩu không hợp lệ!");
                     txtPass.Focus();
                     return;
                 }
@@ -67,7 +52,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var passcon = txtCon.Password.Trim();
                 if (!passcon.Equals(pass))
                 {
-                    MessageBox.Show("Confirm password is not match!");
+                    MessageBox.Show("Mật khẩu không khớp!");
                     txtCon.Focus();
                     return;
                 }
@@ -77,25 +62,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var name = txtName.Text.Trim();
                 if (name.Length == 0 || name.Length > 50)
                 {
-                    MessageBox.Show("Name is not valid!");
+                    MessageBox.Show("Tên không hợp lệ!");
                     txtName.Focus();
-                    return;
-                }
-
-                //check role
-                var role = 0;
-
-                if (cboRole.SelectedValue == null)
-                {
-                    MessageBox.Show("Role must be selected!");
-                    return;
-                }
-
-                role = (int)cboRole.SelectedValue;
-
-                if (role == 0)
-                {
-                    MessageBox.Show("Role must be selected!");
                     return;
                 }
 
@@ -104,24 +72,23 @@ namespace Cafocha.GUI.AdminWorkSpace
                 if (newemp == null)
                 {
                     // Adding
-
                     var newAd = new AdminRe
                     {
                         AdId = "",
                         Username = username,
                         Pass = pass,
                         Name = name,
-                        AdRole = role
+                        AdRole = 1
                     };
 
                     _businessModuleLocator.AdminModule.addAdmin(newAd);
 
-                    MessageBox.Show("Insert " + newAd.Name + "(" + newAd.AdId + ") successful!");
+                    MessageBox.Show("Thêm " + newAd.Name + "(" + newAd.AdId + ") thành công!");
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("Username is already exist! Please try again!");
+                    MessageBox.Show("Tên tài khoản đã tồn tại vui lòng đặt tên khác!");
                     txtUsername.Focus();
                     return;
                 }
@@ -129,7 +96,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Something went wrong. Can not add or update admin info. Please check the details again!");
+                    "Đã có lỗi xảy ra, vui lòng kiểm tra lại thông tin nhập hoặc kết nối CSDL!");
             }
 }
 
@@ -139,7 +106,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             if (newemp != null)
             {
-                MessageBox.Show("Username is already exist! Please try again!");
+                MessageBox.Show("Tên tài khoản đã tồn tại, vui lòng nhập tên khác!");
                 txtUsername.Focus();
                 return;
             }

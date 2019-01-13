@@ -203,14 +203,14 @@
     <Compile Include="GUI\AdminWorkSpace\OrderNotePage.xaml.cs">
       <DependentUpon>OrderNotePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\ProductCreatorPage.xaml.cs">
-      <DependentUpon>ProductCreatorPage.xaml</DependentUpon>
+    <Compile Include="GUI\AdminWorkSpace\ProductCreatorDialog.xaml.cs">
+      <DependentUpon>ProductCreatorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\ProductDetailPage.xaml.cs">
       <DependentUpon>ProductDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml.cs">
-      <DependentUpon>ProductUpdatePage.xaml</DependentUpon>
+    <Compile Include="GUI\AdminWorkSpace\ProductUpdateDialog.xaml.cs">
+      <DependentUpon>ProductUpdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\ReportOptionDialog.xaml.cs">
       <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
@@ -414,7 +414,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\ProductCreatorPage.xaml">
+    <Page Include="GUI\AdminWorkSpace\ProductCreatorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -422,7 +422,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\ProductUpdatePage.xaml">
+    <Page Include="GUI\AdminWorkSpace\ProductUpdateDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

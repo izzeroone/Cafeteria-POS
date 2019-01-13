@@ -14,8 +14,6 @@ namespace Cafocha.GUI
         {
             InitializeComponent();
 
-            var curAd = Application.Current.Properties["AdLogin"] as AdminRe;
-
         }
 
 

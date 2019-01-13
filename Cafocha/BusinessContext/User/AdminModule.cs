@@ -49,18 +49,9 @@ namespace Cafocha.BusinessContext.User
 
             var ad = adList.FirstOrDefault(x =>
                 x.Username.Equals(username) && x.DecryptedPass.Equals(password));
-            var adEmp = _unitofwork.EmployeeRepository.Get(x => x.EmpId.Equals("EMP0000003")).FirstOrDefault();
-
-            #region To Be remove
-            var ell = new EmpLoginList();
-            ell.Emp = adEmp;
-            EmployeeModule.WorkingEmployee = ell;
-            Application.Current.Properties["EmpWorking"] = adEmp;
-            #endregion
-
+            
             if (ad != null)
             {
-                Application.Current.Properties["EmpLogin"] = adEmp;
                 Application.Current.Properties["AdLogin"] = ad;
                 return true;
             }

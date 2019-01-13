@@ -91,12 +91,16 @@
             </materialDesign:ColorZone>
         </Grid>
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="690*"/>
+                <ColumnDefinition Width="677*"/>
+            </Grid.ColumnDefinitions>
             <materialDesign:ColorZone Margin="2,2,0.4,0"
                                       Padding="16"
                                       materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                       CornerRadius="3"
                                       Mode="PrimaryDark"
-                                      Height="46">
+                                      Height="46" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="16,0,0,-15.6"
                                VerticalAlignment="Center"
@@ -116,7 +120,7 @@
                       FontWeight="Bold"
                       Margin="10,63,0,0"
                       SelectionChanged="lvOrderNote_SelectionChanged"
-                      Height="auto">
+                      Height="auto" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView x:Name="gvShowDetails">
                         <GridViewColumn Header="ID"

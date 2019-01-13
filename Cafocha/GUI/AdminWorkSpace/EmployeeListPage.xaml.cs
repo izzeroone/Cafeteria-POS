@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,8 +34,8 @@ namespace Cafocha.GUI.AdminWorkSpace
             //            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
             refreshData();
 
-            txtBirth.DisplayDateEnd = new DateTime(DateTime.Now.Year - 16, 12, 31);
-            txtStart.DisplayDateStart = DateTime.Now;
+            txtBirth.Text = "";
+            txtStart.Text = "";
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -44,27 +45,25 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 txtID.Text = "";
                 txtName.Text = "";
-                txtBirth.SelectedDate = new DateTime(1990, 1, 1);
+                txtBirth.Text = "";
                 txtAddress.Text = "";
                 txtHour_wage.Text = "";
                 txtMail.Text = "";
                 txtPhone.Text = "";
-                txtStart.SelectedDate = DateTime.Now;
+                txtStart.Text = "";
                 txtAcount.Text = "";
-                txtPass.Password = "";
                 return;
             }
 
             txtID.Text = emp.EmpId;
             txtName.Text = emp.Name;
-            txtBirth.SelectedDate = emp.Birth;
+            txtBirth.Text = emp.Birth.ToString(CultureInfo.InvariantCulture);
             txtAddress.Text = emp.Addr;
             txtHour_wage.Text = emp.HourWage.ToString();
             txtMail.Text = emp.Email;
             txtPhone.Text = emp.Phone;
-            txtStart.SelectedDate = emp.Startday;
+            txtStart.Text = emp.Startday.ToString(CultureInfo.InvariantCulture);
             txtAcount.Text = emp.Username;
-            txtPass.Password = emp.DecryptedPass;
             switch (emp.EmpRole)
             {
                 case (int) EmployeeRole.Counter:

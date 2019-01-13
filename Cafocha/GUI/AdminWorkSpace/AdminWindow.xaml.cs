@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
+using Cafocha.GUI.CafowareWorkSpace;
 using Cafocha.GUI.Helper.PrintHelper;
 using Cafocha.Repository.DAL;
 using log4net;
@@ -33,6 +34,9 @@ namespace Cafocha.GUI.AdminWorkSpace
         private readonly SalaryPage salarypage;
         private readonly StatisticsWorkingHourPage statisticsWorkingHourPage;
 
+        private readonly ViewStockPage viewStockPage;
+        private readonly StockHistoryPage stockHistoryPage;
+
         public AdminWindow()
         {
             _businessModuleLocator = new BusinessModuleLocator();
@@ -42,10 +46,12 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 var getLoginAdmin = Application.Current.Properties["AdLogin"] as AdminRe;
                 curAdmin = _businessModuleLocator.AdminModule.getAdmin(getLoginAdmin.AdId);
-                if (curAdmin == null) Close();
+                if (curAdmin == null)
+                    Close();
                 cUser.Content = curAdmin.Name;
 
-                if (curAdmin.AdRole == (int) AdminReRole.SoftwareAd) btnCreateAdmin.Visibility = Visibility.Visible;
+                if (curAdmin.AdRole == (int) AdminReRole.SoftwareAd)
+                    btnCreateAdmin.Visibility = Visibility.Visible;
 
                 empListPage = new EmployeeListPage(_businessModuleLocator, curAdmin);
                 salarypage = new SalaryPage(_businessModuleLocator, curAdmin);
@@ -58,6 +64,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 statisticsWorkingHourPage = new StatisticsWorkingHourPage(_businessModuleLocator);
                 homePage = new HomePage(_businessModuleLocator);
                 productCreator = new ProductCreatorPage(_businessModuleLocator);
+
+                viewStockPage = new ViewStockPage(_businessModuleLocator, 
+                                                    _businessModuleLocator.WarehouseModule.StockList);
+                stockHistoryPage = new StockHistoryPage(_businessModuleLocator);
+
                 myframe.Navigate(homePage);
 
                 var RefreshTimer = new DispatcherTimer();
@@ -171,10 +182,21 @@ namespace Cafocha.GUI.AdminWorkSpace
             myframe.Navigate(liveChartReceipt);
         }
 
+        private void bntViewStock_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(viewStockPage);
+        }
+
+        private void bntStockHistory_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(stockHistoryPage);
+        }
+
         private void BtnCreateAdmin_OnClick(object sender, RoutedEventArgs e)
         {
             var newAdminDialog = new AddNewAdminDialog(_businessModuleLocator);
             newAdminDialog.Show();
         }
+
     }
 }

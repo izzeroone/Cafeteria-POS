@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
+using Cafocha.GUI.AdminWorkSpace;
 using Cafocha.GUI.BusinessModel;
 using Cafocha.GUI.CafowareWorkSpace;
 using Cafocha.GUI.EmployeeWorkSpace;
@@ -117,8 +118,8 @@ namespace Cafocha.GUI
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            var main = new AdminNavWindow();
-                            main.Show();
+                            var adminWindow = new AdminWindow();
+                            adminWindow.Show();
                             this.Close();
                         });
 
