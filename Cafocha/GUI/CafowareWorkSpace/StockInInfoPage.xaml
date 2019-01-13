@@ -12,7 +12,7 @@
       Background="{DynamicResource MaterialDesignPaper}"
       Height="630"
       Width="1366"
-      Title="OrderPage">
+      Title="OrderPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Page.Resources>
         <local1:StockTypeConverter x:Key="StockTypeConverter"/>
     </Page.Resources>

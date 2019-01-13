@@ -53,7 +53,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     _businessModuleLocator.WarehouseModule.StockList);
                 _stockOutPage = new StockOutPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
-
+                _stockInInfoPage = new StockInInfoPage(_businessModuleLocator);
 
                 var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
