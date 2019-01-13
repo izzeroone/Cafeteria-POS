@@ -57,12 +57,12 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             txtID.Text = emp.EmpId;
             txtName.Text = emp.Name;
-            txtBirth.Text = emp.Birth.ToString(CultureInfo.InvariantCulture);
+            txtBirth.Text = emp.Birth.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
             txtAddress.Text = emp.Addr;
             txtHour_wage.Text = emp.HourWage.ToString();
             txtMail.Text = emp.Email;
             txtPhone.Text = emp.Phone;
-            txtStart.Text = emp.Startday.ToString(CultureInfo.InvariantCulture);
+            txtStart.Text = emp.Startday.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
             txtAcount.Text = emp.Username;
             switch (emp.EmpRole)
             {

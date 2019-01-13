@@ -160,7 +160,7 @@
                             </Button>
                             <Button Background="SkyBlue"
                                     Click="ProductInfo_onclick"
-                                    ToolTip="Product Infomation">
+                                    ToolTip="Sản Phẩm">
                                 <materialDesign:PackIcon Kind="Food" />
                             </Button>
                             <Button Background="Red"

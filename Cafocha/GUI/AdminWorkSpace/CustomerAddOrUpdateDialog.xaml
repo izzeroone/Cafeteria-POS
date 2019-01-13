@@ -75,7 +75,6 @@
                                                  Width="30"
                                                  Height="30" />
                         <TextBox x:Name="txtPhone"
-                                 Text="{Binding Phone}"
                                  Width="215"
                                  Foreground="White"
                                  FontSize="18"
@@ -89,7 +88,6 @@
                                                  Width="30"
                                                  Height="30" />
                         <TextBox x:Name="txtMail"
-                                 Text="{Binding Email}"
                                  Width="215"
                                  FontSize="18"
                                  Margin="90,0,0,0"
