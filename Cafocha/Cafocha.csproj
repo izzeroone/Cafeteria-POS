@@ -155,6 +155,10 @@
     <Compile Include="GUI\CafowareWorkSpace\AddOrUpdateStock.xaml.cs">
       <DependentUpon>AddOrUpdateStock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml.cs">
+      <DependentUpon>StockInInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Converter\StockTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\StockInDetailForPrint.cs" />
@@ -455,6 +459,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\CafowareWorkSpace\CreateStockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
+using Cafocha.GUI.AdminWorkSpace;
 using log4net;
 
 namespace Cafocha.GUI.CafowareWorkSpace
@@ -23,6 +24,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private readonly StockInPage _stockInPage;
         private readonly StockOutPage _stockOutPage;
         private readonly ViewStockPage _viewStockPage;
+        private readonly StockInInfoPage _stockInInfoPage;
         private readonly AdminRe curAdmin;
 
         private bool isCreateStockRun;
@@ -98,6 +100,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void ViewStock_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_viewStockPage);
+            isViewStockRun = true;
+        }
+
+        private void StockInOutInfo_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(_stockInInfoPage);
             isViewStockRun = true;
         }
 

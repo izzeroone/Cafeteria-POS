@@ -42,30 +42,30 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
-                        <ListBoxItem x:Name="EodReport"
-                                     Content="End of day Report"
+                        <ListBoxItem x:Name="ViewStock"
+                                     Content="Kho"
                                      FontWeight="Bold"
-                                     PreviewMouseLeftButtonUp="EodReport_PreviewMouseLeftButtonUp"
-                                     Foreground="White" Visibility="Collapsed" />
+                                     PreviewMouseLeftButtonUp="ViewStock_PreviewMouseLeftButtonUp"
+                                     Foreground="White" />
                         <ListBoxItem x:Name="CreateStock"
-                                     Content="Manage Stock Info"
+                                     Content="Thông Tin Nguyên Liệu"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="CreateStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
                         <ListBoxItem x:Name="StockIn"
-                                     Content="Stock In"
+                                     Content="Nhập Kho"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="StockIn_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
                         <ListBoxItem x:Name="StockOut"
-                                     Content="Stock Out"
+                                     Content="Xuất Kho"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="StockOut_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
-                        <ListBoxItem x:Name="ViewStock"
-                                     Content="View Stock"
+                        <ListBoxItem x:Name="StockInOutInfo"
+                                     Content="Lịch Sử Kho"
                                      FontWeight="Bold"
-                                     PreviewMouseLeftButtonUp="ViewStock_PreviewMouseLeftButtonUp"
+                                     PreviewMouseLeftButtonUp="StockInOutInfo_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
                     </ListBox>
                 </DockPanel>
