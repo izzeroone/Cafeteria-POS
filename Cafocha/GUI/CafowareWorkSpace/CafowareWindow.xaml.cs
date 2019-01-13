@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
+using Cafocha.GUI.AdminWorkSpace;
 using log4net;
 
 namespace Cafocha.GUI.CafowareWorkSpace
@@ -22,6 +24,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private readonly StockInPage _stockInPage;
         private readonly StockOutPage _stockOutPage;
         private readonly ViewStockPage _viewStockPage;
+        private readonly StockInInfoPage _stockInInfoPage;
         private readonly AdminRe curAdmin;
 
         private bool isCreateStockRun;
@@ -43,27 +46,21 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _viewStockPage = new ViewStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
 
-
-                if (Application.Current.Properties["AdLogin"] != null)
-                {
-                    var getAdmin = Application.Current.Properties["AdLogin"] as AdminRe;
-                    var adList = _businessModuleLocator.AdminModule.getAdmins().ToList();
-                    curAdmin = adList.FirstOrDefault(x =>
-                        x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
-                    CUserChip.Content = curAdmin.Name;
-                    _createStockPage = new CreateStockPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                    _stockInPage = new StockInPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                    _stockOutPage = new StockOutPage(_businessModuleLocator,
-                        _businessModuleLocator.WarehouseModule.StockList);
-                }
-
+                CUserChip.Content = EmployeeModule.WorkingEmployee.Emp.Name;
+                _createStockPage = new CreateStockPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
+                _stockInPage = new StockInPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
+                _stockOutPage = new StockOutPage(_businessModuleLocator,
+                    _businessModuleLocator.WarehouseModule.StockList);
+                _stockInInfoPage = new StockInInfoPage(_businessModuleLocator);
 
                 var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
                 RefreshTimer.Interval = new TimeSpan(0, 1, 0);
                 RefreshTimer.Start();
+
+                ViewStock_PreviewMouseLeftButtonUp(null, null);
             }
             catch (Exception ex)
             {
@@ -103,6 +100,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void ViewStock_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_viewStockPage);
+            isViewStockRun = true;
+        }
+
+        private void StockInOutInfo_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(_stockInInfoPage);
             isViewStockRun = true;
         }
 

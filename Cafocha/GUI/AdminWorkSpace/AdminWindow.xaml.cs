@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper;
 using Cafocha.Repository.DAL;
@@ -89,7 +90,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             Application.Current.Properties["AdLogin"] = null;
             Application.Current.Properties["CurrentEmpWorking"] = null;
-
+            EmployeeModule.WorkingEmployee = null;
             LoginWindow = new LoginWindow();
             Close();
             LoginWindow.Show();
@@ -117,7 +118,10 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void BtnDetails_OnClick(object sender, RoutedEventArgs e)
         {
             var adw = new AdminDetailWindow(_businessModuleLocator, curAdmin);
-            adw.Show();
+            adw.ShowDialog();
+
+            cUser.Content = curAdmin.Name;
+
         }
 
         private void bntCustomer_Click(object sender, RoutedEventArgs e)

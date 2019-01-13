@@ -6,8 +6,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
+using Cafocha.BusinessContext.WarehouseWorkspace;
 using Cafocha.Entities;
+using Cafocha.GUI.CafowareWorkSpace.Helper;
 using Cafocha.GUI.EmployeeWorkSpace;
+using Cafocha.GUI.Helper.PrintHelper;
 
 namespace Cafocha.GUI.CafowareWorkSpace
 {
@@ -20,6 +24,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         internal StockIn _currentStockIn;
         internal List<StockInDetail> _stockInDetailsList;
         private readonly List<Stock> _stockList;
+        internal WarehouseModule _warehouseModule;
 
 
         /*********************************
@@ -40,7 +45,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList = new List<StockInDetail>();
             _currentStockIn = new StockIn
             {
-                AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
+                EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
                 StockInDetails = _stockInDetailsList
             };
 
@@ -230,6 +235,22 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvDataStockIn.Items.Refresh();
         }
 
+        private void UpdateAPWareHouseContain()
+        {
+            foreach (var details in _currentStockIn.StockInDetails)
+            {
+                //var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
+                //if (stock != null)
+                //{
+                //    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
+                //    if (wareHouse != null)
+                //    {
+                //        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
+                //    }
+                //}
+            }
+        }
+
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -246,27 +267,31 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     return;
                 }
 
-                _businessModuleLocator.WarehouseModule.addStockIn(_currentStockIn);
+                _currentStockIn.Intime = DateTime.Now;
+                foreach (var stockInDetail in _currentStockIn.StockInDetails)
+                {
+                    stockInDetail.SiId = _currentStockIn.SiId;
+                }
 
+                //ToDo: Update the contain value in Warehouse database
+                UpdateAPWareHouseContain();
 
                 _stockInDetailsList = new List<StockInDetail>();
                 lvDataStockIn.ItemsSource = _stockInDetailsList;
                 lvDataStockIn.Items.Refresh();
 
-                _currentStockIn = new StockIn
+                _currentStockIn = new StockIn()
                 {
-                    AdId = (Application.Current.Properties["AdLogin"] as AdminRe).AdId,
+                    EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
                     StockInDetails = _stockInDetailsList
                 };
 
 
                 LoadStockInData();
-                MessageBox.Show("Stock in successful!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Something went wrong when trying to input the new StockIn Receipt! May be you should reload this app or call for support!");
+                MessageBox.Show("Something went wrong when trying to input the new StockIn Receipt! May be you should reload this app or call for support!");
             }
         }
 
@@ -276,6 +301,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList.Clear();
             lvDataStockIn.Items.Refresh();
             LoadStockInData();
+        }
+
+        private void BntPrint_Click(object sender, RoutedEventArgs e)
+        {
+            var printHelper = new DoPrintHelper(_businessModuleLocator.RepositoryLocator,
+                DoPrintHelper.StockIn_Printing, _currentStockIn);
+            printHelper.DoPrint();
         }
     }
 }

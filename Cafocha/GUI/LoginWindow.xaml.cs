@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.BusinessModel;
 using Cafocha.GUI.CafowareWorkSpace;
@@ -83,54 +84,60 @@ namespace Cafocha.GUI
         {
             var username = txtUsername.Text;
             var pass = txtPass.Password;
-            btnLogin.IsEnabled = false;
-            PgbLoginProcess.Visibility = Visibility.Visible;
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
-            {
-                MessageBox.Show("Hey as");
-            }
-            await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(username, pass, null); });
-            if (_businessModuleLocator.EmployeeModule.WorkingEmployee != null)
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (_businessModuleLocator.EmployeeModule.WorkingEmployee.Emp.EmpRole == (int)EmployeeRole.Stock)
-                    {
-                        var main = new CafowareWindow();
-                        main.Show();
-                    }
-                    else
-                    {
-                        var main = new MainWindow();
-                        main.Show();
-                    }
 
-                    this.Close();
-                    return;
-
-                });
-
-            }
-            else
+            try
             {
-                if (await _businessModuleLocator.AdminModule.login(username, pass))
+                btnLogin.IsEnabled = false;
+                PgbLoginProcess.Visibility = Visibility.Visible;
+                await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(username, pass, null); });
+                if (EmployeeModule.WorkingEmployee != null)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        var main = new AdminNavWindow();
-                        main.Show();
+                        if (EmployeeModule.WorkingEmployee.Emp.EmpRole == (int)EmployeeRole.Stock)
+                        {
+                            var main = new CafowareWindow();
+                            main.Show();
+                        }
+                        else
+                        {
+                            var main = new MainWindow();
+                            main.Show();
+                        }
+
                         this.Close();
+                        return;
+
                     });
 
                 }
                 else
                 {
-                    MessageBox.Show("Tên hoặc mật khẩu không chính xác");
+                    if (await _businessModuleLocator.AdminModule.login(username, pass))
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            var main = new AdminNavWindow();
+                            main.Show();
+                            this.Close();
+                        });
 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tên hoặc mật khẩu không chính xác");
+
+                    }
                 }
+                btnLogin.IsEnabled = true;
+                PgbLoginProcess.Visibility = Visibility.Collapsed;
             }
-            btnLogin.IsEnabled = true;
-            PgbLoginProcess.Visibility = Visibility.Collapsed;
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+          
 
         }
 
@@ -150,12 +157,26 @@ namespace Cafocha.GUI
             try
             {
                 KbEmpCodeLoginForm.ButtonGoAbleState(false);
-                if (await _businessModuleLocator.EmployeeModule.login(null, null, null))
+                await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(null, null, code); });
+
+                if (EmployeeModule.WorkingEmployee != null)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        var main = new MainWindow();
-                        main.Show();
+                        if (EmployeeModule.WorkingEmployee.Emp.EmpRole == (int)EmployeeRole.Stock)
+                        {
+                            var main = new CafowareWindow();
+                            main.Show();
+                        }
+                        else
+                        {
+                            var main = new MainWindow();
+                            main.Show();
+                        }
+
+                        this.Close();
+                        return;
+
                     });
 
                 }

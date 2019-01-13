@@ -82,14 +82,14 @@
     <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp.pdfa, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itextsharp.pdfa.5.5.12\lib\itextsharp.pdfa.dll</HintPath>
+    <Reference Include="itextsharp.pdfa, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.pdfa.5.5.13\lib\itextsharp.pdfa.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp.xmlworker, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itextsharp.xmlworker.5.5.12\lib\itextsharp.xmlworker.dll</HintPath>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13\lib\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -152,7 +152,20 @@
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
+    <Compile Include="GUI\CafowareWorkSpace\AddOrUpdateStock.xaml.cs">
+      <DependentUpon>AddOrUpdateStock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml.cs">
+      <DependentUpon>StockInInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Converter\StockTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockInDetailForPrint.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutForPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\Model\StockInForPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\StockOutPrinter.cs" />
+    <Compile Include="GUI\Helper\PrintHelper\StockInPrinter.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
@@ -266,12 +279,6 @@
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml.cs">
-      <DependentUpon>PermissionRequired.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml.cs">
-      <DependentUpon>SettingFoodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\UcMenu.xaml.cs">
       <DependentUpon>UcMenu.xaml</DependentUpon>
@@ -447,7 +454,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="GUI\CafowareWorkSpace\AddOrUpdateStock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GUI\CafowareWorkSpace\CreateStockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -504,14 +519,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\EmployeeWorkSpace\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\PermissionRequired.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\EmployeeWorkSpace\SettingFoodPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

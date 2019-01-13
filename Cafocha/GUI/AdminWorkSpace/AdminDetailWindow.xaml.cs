@@ -45,6 +45,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             admin.Name = namee;
             //admin.Employees.Clear();
             _businessModuleLocator.AdminModule.updateAdmin(admin);
+
+            MessageBox.Show("Cập nhật thành công!");
+
+            Close();
         }
 
         private void btnChangePass_Click(object sender, RoutedEventArgs e)
