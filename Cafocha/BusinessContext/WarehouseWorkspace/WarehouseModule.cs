@@ -9,6 +9,31 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
 {
     public class WarehouseModule
     {
+        // Stock In Out
+        public List<StockIn> getStockInList()
+        {
+            return _unitofworkWH.StockInRepository.Get().ToList();
+        }
+
+        public List<StockOut> getStockOutList()
+        {
+            return _unitofworkWH.StockOutRepository.Get().ToList();
+        }
+
+        // Detail
+        public IEnumerable<StockInDetail> getStockInDetail(string stockInID)
+        {
+            return _unitofworkWH.StockInDetailsRepository.Get(c => c.SiId.Equals(stockInID),includeProperties: "Stock");
+        }
+
+        public IEnumerable<StockOutDetail> getStockOutDetail(string stockOutID)
+        {
+            return _unitofworkWH.StockOutDetailsRepository.Get(c => c.StockoutId.Equals(stockOutID),includeProperties: "Stock");
+        }
+
+
+
+
         private readonly RepositoryLocator _unitofworkWH;
         private List<Stock> _stockList;
         private static List<StockType> _stockTypes;

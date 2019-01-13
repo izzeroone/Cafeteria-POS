@@ -152,6 +152,10 @@
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
+    <Compile Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml.cs">
+      <DependentUpon>StockInInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Converter\StockTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
@@ -448,6 +452,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\CafowareWorkSpace\CreateStockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
