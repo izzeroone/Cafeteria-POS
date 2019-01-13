@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Cafocha.GUI.AdminWorkSpace"
         mc:Ignorable="d"
         Title=""
-        Height="412"
+        Height="361.161"
         Width="512"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -27,7 +27,7 @@
             </StackPanel>
         </materialDesign:ColorZone>
 
-        <StackPanel>
+        <StackPanel Margin="0,0,-0.4,0.4">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock"
                        x:Key="TextBlockLabel">
@@ -88,17 +88,6 @@
                              FontSize="18"
                              Foreground="White"
                              Width="215" />
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,20,0,0">
-                    <TextBlock Text="Admin Role:"
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <ComboBox x:Name="cboRole"
-                              Width="215"
-                              FontSize="18"
-                              Foreground="White" />
-
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"

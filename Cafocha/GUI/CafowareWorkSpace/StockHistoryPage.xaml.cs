@@ -13,17 +13,17 @@ using Cafocha.GUI.Helper.PrintHelper.Report;
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    ///     Interaction logic for StockInInfoPage.xaml
+    ///     Interaction logic for StockHistoryPage.xaml
     /// </summary>
-    public partial class StockInInfoPage : Page
+    public partial class StockHistoryPage : Page
     {
         public class StockInOut
         {
             public StockInOut(StockIn stockIn)
             {
-                Id = stockIn.SiId;
-                EmId = stockIn.EmpId;
-                Time = stockIn.Intime;
+                Id = stockIn.StockinId;
+                EmployeeName = stockIn.Employee.Name;
+                Time = stockIn.InTime;
                 TotalAmount = stockIn.TotalAmount;
                 IsStockIn = true;
             }
@@ -31,7 +31,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             public StockInOut(StockOut stockOut)
             {
                 Id = stockOut.StockoutId;
-                EmId = stockOut.EmpId;
+                EmployeeName = stockOut.Employee.Name;
                 Time = stockOut.OutTime;
                 TotalAmount = stockOut.TotalAmount;
                 IsStockIn = false;
@@ -40,12 +40,14 @@ namespace Cafocha.GUI.AdminWorkSpace
             public string Id { get; set; }
 
 
-            public string EmId { get; set; }
+            public string EmployeeName { get; set; }
 
 
-            public DateTime Time { get; set; }
+            public System.DateTime Time { get; set; }
 
             public bool IsStockIn { get; set; }
+
+            public string Note { get; set; }
 
 
             public decimal TotalAmount { get; set; }
@@ -68,16 +70,46 @@ namespace Cafocha.GUI.AdminWorkSpace
 //        private List<StockOutDetail> stockOutDetail;
 
 
-        public StockInInfoPage(BusinessModuleLocator businessModuleLocator)
+        public StockHistoryPage(BusinessModuleLocator businessModuleLocator)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
 
             Refresh();
-            
+           
             ((INotifyCollectionChanged) lvStockInOut.Items).CollectionChanged += ListView_CollectionChanged;
 
             Loaded += Page_Loaded;
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            _stockInOutList.Clear();
+
+            stockInList = _businessModuleLocator.WarehouseModule.getStockInList();
+            stockOutList = _businessModuleLocator.WarehouseModule.getStockOutList();
+
+            //            stockInDetail = _businessModuleLocator.WarehouseModule.getStockInDetail();
+            //            stockOutDetail = _businessModuleLocator.WarehouseModule.getStockOutDetail();
+
+            foreach (var stockIn in stockInList)
+            {
+                _stockInOutList.Add(new StockInOut(stockIn));
+            }
+
+            foreach (var stockOut in stockOutList)
+            {
+                _stockInOutList.Add(new StockInOut(stockOut));
+            }
+            
+            lvStockInOut.ItemsSource = _stockInOutList.OrderByDescending(x => x.Time).ToList();
+
+            lvStockInOut.Items.Refresh();
         }
 
         private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -253,35 +285,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 //
 //                }
 //            }
-        }
-
-        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            _stockInOutList.Clear();
-
-            stockInList = _businessModuleLocator.WarehouseModule.getStockInList();
-            stockOutList = _businessModuleLocator.WarehouseModule.getStockOutList();
-
-            //            stockInDetail = _businessModuleLocator.WarehouseModule.getStockInDetail();
-            //            stockOutDetail = _businessModuleLocator.WarehouseModule.getStockOutDetail();
-
-            foreach (var stockIn in stockInList)
-            {
-                _stockInOutList.Add(new StockInOut(stockIn));
-            }
-
-            foreach (var stockOut in stockOutList)
-            {
-                _stockInOutList.Add(new StockInOut(stockOut));
-            }
-
-            lvStockInOut.ItemsSource = _stockInOutList;
-
         }
     }
 }

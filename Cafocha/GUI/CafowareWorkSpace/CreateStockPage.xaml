@@ -21,174 +21,8 @@
             <ColumnDefinition Width="647*" />
             <ColumnDefinition Width="50*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0"
-              Margin="0,0,109.6,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.14*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.8*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <materialDesign:ColorZone Mode="Standard"
-                                          Height="40"
-                                          CornerRadius="2"
-                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                          Margin="30,0,0,0">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="10,2,10,-8"
-                                HorizontalAlignment="Center"
-                                Width="539">
-                        <Button x:Name="btnAdd"
-                                Content="Thêm"
-                                Height="46"
-                                FontWeight="Bold"
-                                Margin="0,0,20,0"
-                                Width="142"
-                                Visibility="Collapsed"
-                                Click="btnAdd_Click" />
-                        <Button x:Name="btnClear"
-                                Margin="0,0,20,0"
-                                Content="Đặt lại"
-                                FontWeight="Bold"
-                                Visibility="Collapsed"
-                                Height="46"
-                                Width="136"
-                                Click="btnClear_Click" />
-                        <Button x:Name="btnUpdate"
-                                Content="Cập nhật"
-                                FontWeight="Bold"
-                                Height="46"
-                                Visibility="Collapsed"
-                                Width="136"
-                                Click="btnUpdate_Click" />
-                    </StackPanel>
-
-                </materialDesign:ColorZone>
-            </Grid>
-            <Grid Grid.Row="1"
-                  Grid.RowSpan="2">
-                <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                          CornerRadius="3"
-                                          Mode="PrimaryDark"
-                                          Height="46">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="20,0,0,0">
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold">
-                            Information Details
-                        </TextBlock>
-                    </StackPanel>
-                </materialDesign:ColorZone>
-                <StackPanel Margin="46,60,0,179">
-                    <StackPanel.Resources>
-                        <Style TargetType="TextBlock"
-                               x:Key="TextBlockLabel">
-                            <Setter Property="FontSize"
-                                    Value="18" />
-                            <Setter Property="Foreground"
-                                    Value="#FFFFEDBC" />
-                            <Setter Property="FontWeight"
-                                    Value="Bold" />
-                            <Setter Property="Width"
-                                    Value="200" />
-                            <Setter Property="HorizontalAlignment"
-                                    Value="Center" />
-                            <Setter Property="VerticalAlignment"
-                                    Value="Center" />
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Name: (*)"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}"
-                                   Margin="0,0,20,0" />
-                        <TextBlock x:Name="txtName"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="215"
-                                 Margin="0,0,100,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Information: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBlock MaxWidth="300"
-                                 Foreground="White"
-                                 x:Name="txtInfo"
-                                 Height="70"
-                                 IsEnabled="False"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 materialDesign:HintAssist.Hint=""
-                                 FontSize="18"
-                                 TextWrapping="Wrap"
- 
-                                 Width="215"
-                                 Margin="0,0,100,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Group: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBlock x:Name="cboStockGroup"
-                                  FontSize="18"
-                                  Foreground="White"
-                                  Width="215"
-                                  IsEnabled="False"
-                                  Margin="0,0,100,0" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" ><Run Text="Unit "/><Run Text=":"/></TextBlock>
-                        <TextBlock x:Name="cboUnit"
-                                  FontSize="18"
-                                  Foreground="White"
-                                  IsEnabled="False"
-                                  Width="215"
-                                  Margin="0,0,100,0" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Supplier: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBlock x:Name="txtSupplier"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 IsEnabled="False"
-                                 Width="215"
-                                 Margin="0,0,100,0" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                        <TextBlock Text="Price(kVND): (*)"
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBlock x:Name="txtPrice"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="220"
-                                 IsEnabled="False"
-                                 Margin="0,0,100,0"
-                                 PreviewTextInput="NumberOnly_PreviewTextInput" />
-                    </StackPanel>
-
-                </StackPanel>
-            </Grid>
-
-
-        </Grid>
         <Grid Grid.ColumnSpan="3"
-              Margin="559,0,0.4,0">
+              Margin="10,10,0.4,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.078*" />
                 <RowDefinition Height="*" />
@@ -272,8 +106,8 @@
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>
-            <Grid Grid.Row="1"
-                  Margin="5,0,0,182">
+            <Grid
+                  Margin="5,47,0,0.6" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="450*"/>
                     <ColumnDefinition Width="353*"/>
@@ -306,18 +140,21 @@
                             <GridViewColumn Header="ID"
                                             Width="90"
                                             DisplayMemberBinding="{Binding StoId}" />
-                            <GridViewColumn Header="Name"
+                            <GridViewColumn Header="Tên NVL"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Header="Info"
+                            <GridViewColumn Header="Thông tin"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="Group"
+                            <GridViewColumn Header="Loại"
                                             Width="80"
                                             DisplayMemberBinding="{Binding StId, Converter={StaticResource StockGroupConverter}}" />
-                            <GridViewColumn Header="Unit"
+                            <GridViewColumn Header="ĐVT"
                                             Width="90"
                                             DisplayMemberBinding="{Binding Unit}" />
+                            <GridViewColumn Header="Nhà Cung Cấp"
+                                            Width="90"
+                                            DisplayMemberBinding="{Binding Supplier}" />
                             <GridViewColumn Header="StandardPrice"
                                             Width="120"
                                             DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />

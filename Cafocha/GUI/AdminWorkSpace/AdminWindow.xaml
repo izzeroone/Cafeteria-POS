@@ -149,32 +149,45 @@
                                              VerticalAlignment="Bottom">
                         <StackPanel>
                             <Button Background="DarkGreen"
-                                    ToolTip="Employee Infomation"
+                                    ToolTip="Nhân Viên"
                                     Click="EmployeeInfo_onClick">
                                 <materialDesign:PackIcon Kind="AccountCardDetails" />
 
                             </Button>
                             <Button Click="SalaryInfo_onClick"
-                                    ToolTip="Salary">
+                                    ToolTip="Lương">
                                 <materialDesign:PackIcon Kind="Coin" />
                             </Button>
                             <Button Background="SkyBlue"
                                     Click="ProductInfo_onclick"
-                                    ToolTip="Product Infomation">
+                                    ToolTip="Sản Phẩm">
                                 <materialDesign:PackIcon Kind="Food" />
                             </Button>
                             <Button Background="Red"
                                     x:Name="bntCustomer"
                                     Click="bntCustomer_Click"
-                                    ToolTip="Customer Infomation">
+                                    ToolTip="Khách Hàng">
                                 <materialDesign:PackIcon Kind="AccountStar" />
                             </Button>
                             <Button Background="RosyBrown"
                                     x:Name="bntOrder"
                                     Click="bntOrder_Click"
-                                    ToolTip="Order Infomation">
+                                    ToolTip="Lịch Sử Đặt Hàng">
                                 <materialDesign:PackIcon Kind="BookmarkCheck" />
                             </Button>
+                            <Button Background="RoyalBlue"
+                                    x:Name="bntViewStock"
+                                    Click="bntViewStock_Click"
+                                    ToolTip="Kho">
+                                <materialDesign:PackIcon Kind="Database" />
+                            </Button>
+                            <Button Background="SaddleBrown"
+                                    x:Name="bntStockHistory"
+                                    Click="bntStockHistory_Click"
+                                    ToolTip="Lịch Sử Kho">
+                                <materialDesign:PackIcon Kind="DatabaseTick" />
+                            </Button>
+
                             <!-- <Button Background="RosyBrown" -->
                             <!--         x:Name="bntReceipt" -->
                             <!--         Click="bntReceipt_Click" -->

@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "Cafocha\App.config"
 //     Connection String Name: "SqlLocalConnectionString"
-//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=D:\Projects\Cafeteria-POS\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
+//     Connection String:      "data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=C:\Users\Wolfgang\source\repos\Cafeteria-POS3\Cafocha\DB\DBCafocha.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"
 // ------------------------------------------------------------------------------------------------
 // Database Edition        : Express Edition (64-bit)
 // Database Engine Edition : Express
@@ -247,10 +247,10 @@ namespace Cafocha.Entities
             ProductDetails = new FakeDbSet<ProductDetail>("PdetailId");
             SalaryNotes = new FakeDbSet<SalaryNote>("SnId");
             Stocks = new FakeDbSet<Stock>("StoId");
-            StockIns = new FakeDbSet<StockIn>("SiId");
-            StockInDetails = new FakeDbSet<StockInDetail>("SiId", "StoId");
+            StockIns = new FakeDbSet<StockIn>("StockinId");
+            StockInDetails = new FakeDbSet<StockInDetail>("StockinId", "StoId");
             StockOuts = new FakeDbSet<StockOut>("StockoutId");
-            StockOutDetails = new FakeDbSet<StockOutDetail>("StockoutId", "StockId");
+            StockOutDetails = new FakeDbSet<StockOutDetail>("StockoutId", "StoId");
             StockTypes = new FakeDbSet<StockType>("StId");
             WorkingHistories = new FakeDbSet<WorkingHistory>("WhId");
 
@@ -1341,7 +1341,7 @@ namespace Cafocha.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<StockInDetail> StockInDetails { get; set; } // StockInDetails.FK_dbo.StockInDetails_dbo.Stock_sto_id
         /// <summary>
-        /// Child StockOutDetails where [StockOutDetails].[stock_id] point to this entity (FK_dbo.StockOutDetails_dbo.Stock_stock_id)
+        /// Child StockOutDetails where [StockOutDetails].[sto_id] point to this entity (FK_dbo.StockOutDetails_dbo.Stock_stock_id)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<StockOutDetail> StockOutDetails { get; set; } // StockOutDetails.FK_dbo.StockOutDetails_dbo.Stock_stock_id
 
@@ -1373,14 +1373,14 @@ namespace Cafocha.Entities
     public partial class StockIn
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"si_id", Order = 1, TypeName = "varchar")]
+        [Column(@"stockin_id", Order = 1, TypeName = "varchar")]
         [Index(@"PK_dbo.StockIn", 1, IsUnique = true, IsClustered = true)]
         [Required(AllowEmptyStrings = true)]
         [MaxLength(10)]
         [StringLength(10)]
         [Key]
-        [Display(Name = "Si ID")]
-        public string SiId { get; set; } // si_id (Primary key) (length: 10)
+        [Display(Name = "Stockin ID")]
+        public string StockinId { get; set; } // stockin_id (Primary key) (length: 10)
 
         [Column(@"emp_id", Order = 2, TypeName = "varchar")]
         [Index(@"IX_ad_id", 1, IsUnique = false, IsClustered = false)]
@@ -1389,11 +1389,11 @@ namespace Cafocha.Entities
         [Display(Name = "Emp ID")]
         public string EmpId { get; set; } // emp_id (length: 10)
 
-        [Column(@"intime", Order = 3, TypeName = "datetime")]
+        [Column(@"in_time", Order = 3, TypeName = "datetime")]
         [Required]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Intime")]
-        public System.DateTime Intime { get; set; } // intime
+        [Display(Name = "In time")]
+        public System.DateTime InTime { get; set; } // in_time
 
         [Column(@"total_amount", Order = 4, TypeName = "money")]
         [Required]
@@ -1404,7 +1404,7 @@ namespace Cafocha.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child StockInDetails where [StockInDetails].[si_id] point to this entity (FK_dbo.StockInDetails_dbo.StockIn_si_id)
+        /// Child StockInDetails where [StockInDetails].[stockin_id] point to this entity (FK_dbo.StockInDetails_dbo.StockIn_si_id)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<StockInDetail> StockInDetails { get; set; } // StockInDetails.FK_dbo.StockInDetails_dbo.StockIn_si_id
 
@@ -1430,15 +1430,15 @@ namespace Cafocha.Entities
     public partial class StockInDetail
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"si_id", Order = 1, TypeName = "varchar")]
+        [Column(@"stockin_id", Order = 1, TypeName = "varchar")]
         [Index(@"IX_si_id", 1, IsUnique = false, IsClustered = false)]
         [Index(@"PK_dbo.StockInDetails", 1, IsUnique = true, IsClustered = true)]
         [Required(AllowEmptyStrings = true)]
         [MaxLength(10)]
         [StringLength(10)]
         [Key]
-        [Display(Name = "Si ID")]
-        public string SiId { get; set; } // si_id (Primary key) (length: 10)
+        [Display(Name = "Stockin ID")]
+        public string StockinId { get; set; } // stockin_id (Primary key) (length: 10)
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column(@"sto_id", Order = 2, TypeName = "varchar")]
@@ -1462,18 +1462,17 @@ namespace Cafocha.Entities
         [Display(Name = "Item price")]
         public decimal ItemPrice { get; set; } // item_price
 
-        [Column(@"note", Order = 5, TypeName = "nvarchar")]
-        [MaxLength(1000)]
-        [StringLength(1000)]
+        [Column(@"note", Order = 5, TypeName = "ntext")]
+        [MaxLength]
         [Display(Name = "Note")]
-        public string Note { get; set; } // note (length: 1000)
+        public string Note { get; set; } // note (length: 1073741823)
 
         // Foreign keys
 
         /// <summary>
-        /// Parent StockIn pointed by [StockInDetails].([SiId]) (FK_dbo.StockInDetails_dbo.StockIn_si_id)
+        /// Parent StockIn pointed by [StockInDetails].([StockinId]) (FK_dbo.StockInDetails_dbo.StockIn_si_id)
         /// </summary>
-        [ForeignKey("SiId"), Required] public virtual StockIn StockIn { get; set; } // FK_dbo.StockInDetails_dbo.StockIn_si_id
+        [ForeignKey("StockinId"), Required] public virtual StockIn StockIn { get; set; } // FK_dbo.StockInDetails_dbo.StockIn_si_id
 
         /// <summary>
         /// Parent Stock pointed by [StockInDetails].([StoId]) (FK_dbo.StockInDetails_dbo.Stock_sto_id)
@@ -1509,24 +1508,13 @@ namespace Cafocha.Entities
         [Display(Name = "Emp ID")]
         public string EmpId { get; set; } // emp_id (length: 10)
 
-        [Column(@"outTime", Order = 3, TypeName = "date")]
+        [Column(@"out_time", Order = 3, TypeName = "datetime")]
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Out time")]
-        public System.DateTime OutTime { get; set; } // outTime
+        public System.DateTime OutTime { get; set; } // out_time
 
-        [Column(@"Vat", Order = 4, TypeName = "money")]
-        [Required]
-        [DataType(DataType.Currency)]
-        [Display(Name = "Vat")]
-        public decimal Vat { get; set; } // Vat
-
-        [Column(@"discount", Order = 5, TypeName = "int")]
-        [Required]
-        [Display(Name = "Discount")]
-        public int Discount { get; set; } // discount
-
-        [Column(@"total_amount", Order = 6, TypeName = "money")]
+        [Column(@"total_amount", Order = 4, TypeName = "money")]
         [Required]
         [DataType(DataType.Currency)]
         [Display(Name = "Total amount")]
@@ -1572,37 +1560,43 @@ namespace Cafocha.Entities
         public string StockoutId { get; set; } // stockout_id (Primary key) (length: 10)
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(@"stock_id", Order = 2, TypeName = "varchar")]
+        [Column(@"sto_id", Order = 2, TypeName = "varchar")]
         [Index(@"IX_stock_id", 1, IsUnique = false, IsClustered = false)]
         [Index(@"PK_dbo.StockOutDetails", 2, IsUnique = true, IsClustered = true)]
         [Required(AllowEmptyStrings = true)]
         [MaxLength(10)]
         [StringLength(10)]
         [Key]
-        [Display(Name = "Stock ID")]
-        public string StockId { get; set; } // stock_id (Primary key) (length: 10)
+        [Display(Name = "Sto ID")]
+        public string StoId { get; set; } // sto_id (Primary key) (length: 10)
 
-        [Column(@"discount", Order = 3, TypeName = "int")]
-        [Required]
-        [Display(Name = "Discount")]
-        public int Discount { get; set; } // discount
-
-        [Column(@"quan", Order = 4, TypeName = "int")]
+        [Column(@"quan", Order = 3, TypeName = "int")]
         [Required]
         [Display(Name = "Quan")]
         public int Quan { get; set; } // quan
 
-        // Foreign keys
+        [Column(@"item_price", Order = 4, TypeName = "money")]
+        [Required]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Item price")]
+        public decimal ItemPrice { get; set; } // item_price
 
-        /// <summary>
-        /// Parent Stock pointed by [StockOutDetails].([StockId]) (FK_dbo.StockOutDetails_dbo.Stock_stock_id)
-        /// </summary>
-        [ForeignKey("StockId"), Required] public virtual Stock Stock { get; set; } // FK_dbo.StockOutDetails_dbo.Stock_stock_id
+        [Column(@"note", Order = 5, TypeName = "ntext")]
+        [MaxLength]
+        [Display(Name = "Note")]
+        public string Note { get; set; } // note (length: 1073741823)
+
+        // Foreign keys
 
         /// <summary>
         /// Parent StockOut pointed by [StockOutDetails].([StockoutId]) (FK_dbo.StockOutDetails_dbo.StockOut_stockout_id)
         /// </summary>
         [ForeignKey("StockoutId"), Required] public virtual StockOut StockOut { get; set; } // FK_dbo.StockOutDetails_dbo.StockOut_stockout_id
+
+        /// <summary>
+        /// Parent Stock pointed by [StockOutDetails].([StoId]) (FK_dbo.StockOutDetails_dbo.Stock_stock_id)
+        /// </summary>
+        [ForeignKey("StoId"), Required] public virtual Stock Stock { get; set; } // FK_dbo.StockOutDetails_dbo.Stock_stock_id
 
         public StockOutDetail()
         {
@@ -1925,7 +1919,7 @@ namespace Cafocha.Entities
 
         public StockInMapping(string schema)
         {
-            Property(x => x.SiId).IsUnicode(false);
+            Property(x => x.StockinId).IsUnicode(false);
             Property(x => x.EmpId).IsOptional().IsUnicode(false);
             Property(x => x.TotalAmount).HasPrecision(19,4);
 
@@ -1943,7 +1937,7 @@ namespace Cafocha.Entities
 
         public StockInDetailMapping(string schema)
         {
-            Property(x => x.SiId).IsUnicode(false);
+            Property(x => x.StockinId).IsUnicode(false);
             Property(x => x.StoId).IsUnicode(false);
             Property(x => x.ItemPrice).HasPrecision(19,4);
             Property(x => x.Note).IsOptional();
@@ -1964,7 +1958,6 @@ namespace Cafocha.Entities
         {
             Property(x => x.StockoutId).IsUnicode(false);
             Property(x => x.EmpId).IsOptional().IsUnicode(false);
-            Property(x => x.Vat).HasPrecision(19,4);
             Property(x => x.TotalAmount).HasPrecision(19,4);
 
         }
@@ -1982,7 +1975,9 @@ namespace Cafocha.Entities
         public StockOutDetailMapping(string schema)
         {
             Property(x => x.StockoutId).IsUnicode(false);
-            Property(x => x.StockId).IsUnicode(false);
+            Property(x => x.StoId).IsUnicode(false);
+            Property(x => x.ItemPrice).HasPrecision(19,4);
+            Property(x => x.Note).IsOptional();
 
         }
     }

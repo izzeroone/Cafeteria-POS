@@ -40,7 +40,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var namee = txtName.Text.Trim();
             if (namee.Length == 0 || namee.Length > 50)
             {
-                MessageBox.Show("Name is not valid!");
+                MessageBox.Show("Tên không hợp lệ!");
                 txtName.Focus();
                 return;
             }
@@ -49,7 +49,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var phone = txtPhone.Text.Trim();
             if (phone.Length == 0 || phone.Length > 20)
             {
-                MessageBox.Show("Phone is not valid!");
+                MessageBox.Show("Số điện thoại không hợp lệ!");
                 txtPhone.Focus();
                 return;
             }
@@ -58,7 +58,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var email = txtMail.Text.Trim();
             if (!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
             {
-                MessageBox.Show("Email is not valid!");
+                MessageBox.Show("Email không hợp lệ!");
                 txtMail.Focus();
                 return;
             }
@@ -67,7 +67,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var discount = int.Parse(txtDiscount.Text.Trim());
             if (discount < 0 || discount > 100)
             {
-                MessageBox.Show("Discount value is not valid!");
+                MessageBox.Show("Giá trị giảm giá không hợp lệ!");
                 txtDiscount.Focus();
                 return;
             }
@@ -86,7 +86,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 _businessModuleLocator.CustomerModule.insertCustomer(checkcus);
 
-                MessageBox.Show("Insert " + checkcus.Name + "(" + checkcus.CusId + ") successful!");
+                MessageBox.Show("Thêm " + checkcus.Name + "(" + checkcus.CusId + ") thành công!");
                 Close();
             }
             else //update
@@ -99,7 +99,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 _businessModuleLocator.CustomerModule.updateCustomer(_cus);
 
-                MessageBox.Show("Update " + _cus.Name + "(" + _cus.CusId + ") successful!");
+                MessageBox.Show("Cập nhật " + _cus.Name + "(" + _cus.CusId + ") thành công!");
                 Close();
             }
         }

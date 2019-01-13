@@ -13,19 +13,19 @@ namespace Cafocha.BusinessContext.User
     {
         private static List<EmpLoginList> _emploglist = new List<EmpLoginList>();
         private static EmpLoginList _workingEmployee;
-        private List<Employee> _employee = new List<Employee>();
+        private List<Employee> _employeeList = new List<Employee>();
         private readonly RepositoryLocator _unitofwork;
 
         public EmployeeModule()
         {
             _unitofwork = new RepositoryLocator();
-            _employee = getEmployees().ToList();
+            _employeeList = getEmployees().ToList();
         }
 
         public EmployeeModule(RepositoryLocator unitofwork)
         {
             _unitofwork = unitofwork;
-            _employee = getEmployees().ToList();
+            _employeeList = getEmployees().ToList();
         }
 
         public List<EmpLoginList> Emploglist
@@ -102,10 +102,10 @@ namespace Cafocha.BusinessContext.User
         public void deleteEmployee(Employee employee)
         {
             employee.Deleted = 1;
-            updateemployee(employee);
+            updateEmployee(employee);
         }
 
-        public void updateemployee(Employee employee)
+        public void updateEmployee(Employee employee)
         {
             _unitofwork.EmployeeRepository.Update(employee);
             _unitofwork.Save();
@@ -115,14 +115,14 @@ namespace Cafocha.BusinessContext.User
         {
             await Task.Run(() =>
             {
-                foreach (var emp in _employee)
+                foreach (var emp in _employeeList)
                     if (emp.Username.Equals(username) && emp.DecryptedPass.Equals(password) ||
                         emp.DecryptedCode.Equals(code))
                     {
                         var chemp = _emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
                         if (chemp.Count != 0)
                         {
-                            MessageBox.Show("This employee is already login!");
+                            MessageBox.Show("Nhân viên này đã đăng nhập!");
                             return false;
                         }
                         _workingEmployee = new EmpLoginList();

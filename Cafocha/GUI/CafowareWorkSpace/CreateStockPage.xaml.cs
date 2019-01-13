@@ -39,7 +39,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvStock.ItemsSource = _stockList;
             initComboBox();
             _selectedStock = editStock;
-            putStockDataToForm();
         }
 
         public CreateStockPage(BusinessModuleLocator businessModuleLocator)
@@ -88,21 +87,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     lvStock.ItemsSource = _stockList.Where(x =>
                         x.StId.Equals(item) && x.Name.Contains(filter));
             }
-        }
-
-        private void putStockDataToForm()
-        {
-            if (_selectedStock == null)
-            {
-                return;
-            }
-            //put data to form
-            txtName.Text = _selectedStock.Name;
-            txtInfo.Text = _selectedStock.Info;
-            cboStockGroup.Text = WarehouseModule.StockTypes.First(x => x.StId.Equals(_selectedStock.StId)).Name;
-            cboUnit.Text = _selectedStock.Unit;
-            txtSupplier.Text = _selectedStock.Supplier;
-            txtPrice.Text = _selectedStock.StandardPrice.ToString();
         }
 
         private void bntDel_Click(object sender, RoutedEventArgs e)
@@ -195,11 +179,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void clearAllData()
         {
-            txtName.Text = "";
-            txtInfo.Text = "";
-            txtSupplier.Text = "";
-            txtPrice.Text = "";
-
             _currentNewStock = new Stock();
             lvStock.Items.Refresh();
         }
@@ -225,8 +204,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private void LvStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _selectedStock = lvStock.SelectedItem as Stock;
-            //put data to form
-            putStockDataToForm();
         }
     }
 }

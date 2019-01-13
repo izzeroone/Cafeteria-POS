@@ -235,29 +235,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
             lvDataStockIn.Items.Refresh();
         }
 
-        private void UpdateAPWareHouseContain()
-        {
-            foreach (var details in _currentStockIn.StockInDetails)
-            {
-                //var stock = _stockList.FirstOrDefault(x => x.StoId.Equals(details.StoId));
-                //if (stock != null)
-                //{
-                //    ApWareHouse wareHouse = _unitofwork.ApWareHouseRepository.GetById(stock.ApwarehouseId);
-                //    if (wareHouse != null)
-                //    {
-                //        wareHouse.Contain += details.Quan * UnitInTrans.ToUnitContain(stock.UnitOut);
-                //    }
-                //}
-            }
-        }
-
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ErrorDetailsItem.Count != 0)
                 {
-                    MessageBox.Show("Something is not correct. Please check all your input again!");
+                    MessageBox.Show("Lỗi, xin kiểm tra lại dữ liệu đầu vào");
                     return;
                 }
 
@@ -266,15 +250,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     MessageBox.Show("You have to choose the stock you want to put in");
                     return;
                 }
-
-                _currentStockIn.Intime = DateTime.Now;
-                foreach (var stockInDetail in _currentStockIn.StockInDetails)
-                {
-                    stockInDetail.SiId = _currentStockIn.SiId;
-                }
-
-                //ToDo: Update the contain value in Warehouse database
-                UpdateAPWareHouseContain();
+                
+                _businessModuleLocator.WarehouseModule.addStockIn(_currentStockIn);
 
                 _stockInDetailsList = new List<StockInDetail>();
                 lvDataStockIn.ItemsSource = _stockInDetailsList;
@@ -286,8 +263,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     StockInDetails = _stockInDetailsList
                 };
 
-
                 LoadStockInData();
+                MessageBox.Show("Stock out successful!");
             }
             catch (Exception ex)
             {

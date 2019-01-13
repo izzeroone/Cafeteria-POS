@@ -43,7 +43,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Model
                 StockOutDetails.Add(new StockOutDetailForPrint()
                 {
                     
-                    Name = unitofwork.StockRepository.Get(p => p.StoId == strockInDetail.StockId)
+                    Name = unitofwork.StockRepository.Get(p => p.StoId == strockInDetail.StoId)
                         .First().Name,
                     Price = strockInDetail.ItemPrice,
                     Quan = strockInDetail.Quan,

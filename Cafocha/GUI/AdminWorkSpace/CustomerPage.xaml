@@ -110,6 +110,7 @@
                              FontSize="18"
                              Foreground="White"
                              Width="215"
+                             IsReadOnly="True"
                              Margin="0,0,100,0" />
                     <StackPanel Orientation="Horizontal" />
                 </StackPanel>
@@ -128,6 +129,7 @@
                                      Foreground="White"
                                      FontSize="18"
                                      Margin="90,0,0,0"
+                                    IsReadOnly="True"
                                      materialDesign:TransitionAssist.DisableTransitions="True" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -137,6 +139,7 @@
                                                      Height="30" />
                             <TextBox x:Name="txtMail"
                                      Text="{Binding Email}"
+                                     IsReadOnly="True"
                                      Width="215"
                                      FontSize="18"
                                      Margin="90,0,0,0"
@@ -149,17 +152,20 @@
                             Margin="15,20,0,0">
                     <TextBlock Text="Discount"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <ComboBox Foreground="White"
-                              x:Name="cbodiscount"
-                              IsEditable="False"
-                              IsEnabled="False"
-                              Width="60" />
+                    <TextBox x:Name="txtDiscount"
+                                     Text="{Binding Discount}"
+                                     IsReadOnly="True"
+                                     Width="215"
+                                     FontSize="18"
+                                     Margin="0,0,0,0"
+                                     Foreground="White" />
                     <TextBlock x:Name="textBlock"
                                HorizontalAlignment="Stretch"
                                TextWrapping="Wrap"
                                Foreground="White"
                                Text="%"
-                               VerticalAlignment="Stretch"
+                               VerticalAlignment="Bottom"
+                               TextAlignment="Center"
                                Width="19"
                                Height="24"
                                Margin="0,0,0,0" />

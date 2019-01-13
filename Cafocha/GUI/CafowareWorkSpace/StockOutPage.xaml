@@ -85,7 +85,7 @@
                     <GridView x:Name="gvDetails">
                         <GridViewColumn Header="Item"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding StockId}" />
+                                        DisplayMemberBinding="{Binding StoId}" />
                         <GridViewColumn Header="Qty"
                                         Width="70">
                             <GridViewColumn.CellTemplate>
@@ -118,7 +118,7 @@
                                                 Width="40"
                                                 Click="bntDelete_Click"
                                                 Margin="0 0 0 0" />
-                                        <!--<Button x:Name="bntEdit"
+                                        <Button x:Name="bntEdit"
                                                 Width="45"
                                                 BorderBrush="DarkGray"
                                                 Background="DarkGray"
@@ -130,7 +130,7 @@
                                                        Height="15"
                                                        Width="13" />
                                             </StackPanel>
-                                        </Button>-->
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -167,7 +167,7 @@
             <Button x:Name="bntAdd"
                     Content="Take Out!"
                     Margin="229,531,441,0"
-                    Click="bntAdd_Click"
+                    Click="bntTakeOut_Click"
                     FontSize="25"
                     VerticalAlignment="Top"
                     Height="49" RenderTransformOrigin="0.885,0.718" />

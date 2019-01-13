@@ -23,7 +23,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             InitializeComponent();
             allcus = _businessModuleLocator.CustomerModule.getAllCustomer().ToList();
             lvDataCustomer.ItemsSource = allcus;
-            for (var i = 0; i <= 100; i++) cbodiscount.Items.Add(i.ToString());
         }
 
         private void lvDataCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -35,7 +34,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 txtName.Text = "";
                 txtMail.Text = "";
                 txtPhone.Text = "";
-                cbodiscount.SelectedIndex = 0;
+                txtDiscount.Text = "0";
                 return;
             }
 
@@ -43,7 +42,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             txtName.Text = ctm.Name;
             txtMail.Text = ctm.Email;
             txtPhone.Text = ctm.Phone;
-            cbodiscount.SelectedItem = ctm.Discount.ToString();
+            txtDiscount.Text = ctm.Discount.ToString();
         }
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)

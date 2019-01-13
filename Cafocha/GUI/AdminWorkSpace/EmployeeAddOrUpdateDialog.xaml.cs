@@ -251,7 +251,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                     _emp.HourWage = hourwage;
                     _emp.EmpCode = code;
 
-                    _businessModuleLocator.EmployeeModule.updateemployee(_emp);
+                    _businessModuleLocator.EmployeeModule.updateEmployee(_emp);
 
                     MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
                     Close();
