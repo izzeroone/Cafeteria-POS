@@ -25,7 +25,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         /*********************************
          * Form Manipulate
          *********************************/
-
+          
 
         private readonly List<int> ErrorDetailsItem = new List<int>();
 
