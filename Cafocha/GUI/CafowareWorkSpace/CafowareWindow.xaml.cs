@@ -24,7 +24,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         private readonly StockInPage _stockInPage;
         private readonly StockOutPage _stockOutPage;
         private readonly ViewStockPage _viewStockPage;
-        private readonly StockInInfoPage _stockInInfoPage;
+        private readonly StockHistoryPage _stockHistoryPage;
         private readonly AdminRe curAdmin;
 
         private bool isCreateStockRun;
@@ -53,7 +53,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                     _businessModuleLocator.WarehouseModule.StockList);
                 _stockOutPage = new StockOutPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
-                _stockInInfoPage = new StockInInfoPage(_businessModuleLocator);
+                _stockHistoryPage = new StockHistoryPage(_businessModuleLocator);
 
                 var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
@@ -105,7 +105,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void StockInOutInfo_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            myFrame.Navigate(_stockInInfoPage);
+            myFrame.Navigate(_stockHistoryPage);
             isViewStockRun = true;
         }
 

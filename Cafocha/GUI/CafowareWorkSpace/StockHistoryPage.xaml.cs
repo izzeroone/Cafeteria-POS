@@ -13,16 +13,16 @@ using Cafocha.GUI.Helper.PrintHelper.Report;
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    ///     Interaction logic for StockInInfoPage.xaml
+    ///     Interaction logic for StockHistoryPage.xaml
     /// </summary>
-    public partial class StockInInfoPage : Page
+    public partial class StockHistoryPage : Page
     {
         public class StockInOut
         {
             public StockInOut(StockIn stockIn)
             {
                 Id = stockIn.StockinId;
-                EmId = stockIn.EmpId;
+                EmployeeName = stockIn.Employee.Name;
                 Time = stockIn.InTime;
                 TotalAmount = stockIn.TotalAmount;
                 IsStockIn = true;
@@ -31,7 +31,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             public StockInOut(StockOut stockOut)
             {
                 Id = stockOut.StockoutId;
-                EmId = stockOut.EmpId;
+                EmployeeName = stockOut.Employee.Name;
                 Time = stockOut.OutTime;
                 TotalAmount = stockOut.TotalAmount;
                 IsStockIn = false;
@@ -40,7 +40,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             public string Id { get; set; }
 
 
-            public string EmId { get; set; }
+            public string EmployeeName { get; set; }
 
 
             public System.DateTime Time { get; set; }
@@ -70,7 +70,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 //        private List<StockOutDetail> stockOutDetail;
 
 
-        public StockInInfoPage(BusinessModuleLocator businessModuleLocator)
+        public StockHistoryPage(BusinessModuleLocator businessModuleLocator)
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();

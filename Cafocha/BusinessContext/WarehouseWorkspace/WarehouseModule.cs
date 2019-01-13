@@ -12,12 +12,12 @@ namespace Cafocha.BusinessContext.WarehouseWorkspace
         // Stock In Out
         public List<StockIn> getStockInList()
         {
-            return _unitofworkWH.StockInRepository.Get().ToList();
+            return _unitofworkWH.StockInRepository.Get(includeProperties: "Employee").ToList();
         }
 
         public List<StockOut> getStockOutList()
         {
-            return _unitofworkWH.StockOutRepository.Get().ToList();
+            return _unitofworkWH.StockOutRepository.Get(includeProperties: "Employee").ToList();
         }
 
         // Detail
