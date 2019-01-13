@@ -202,8 +202,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["AdLogin"] != null) return;
+            //if (Application.Current.Properties["AdLogin"] != null)
+            //    return;
 
+
+            //if (Application.Current.Properties["CurrentEmpWorking"] != null)
+            //    MessageBox.Show("You should end working before log out!");
+
+            //var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 3);
+            //ael.ShowDialog();
+            Application.Current.Properties["AdLogin"] = null;
 
             if (EmployeeModule.WorkingEmployee.EmpWH != null)
             {

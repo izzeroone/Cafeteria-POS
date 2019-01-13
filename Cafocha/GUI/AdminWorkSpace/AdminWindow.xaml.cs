@@ -118,7 +118,10 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void BtnDetails_OnClick(object sender, RoutedEventArgs e)
         {
             var adw = new AdminDetailWindow(_businessModuleLocator, curAdmin);
-            adw.Show();
+            adw.ShowDialog();
+
+            cUser.Content = curAdmin.Name;
+
         }
 
         private void bntCustomer_Click(object sender, RoutedEventArgs e)

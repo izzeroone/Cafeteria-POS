@@ -65,7 +65,7 @@ namespace Cafocha.BusinessContext.User
 
         public Employee getEmployee(string username)
         {
-            return _unitofwork.EmployeeRepository.Get(e => e.Username.Equals(username)).First();
+            return _unitofwork.EmployeeRepository.Get(e => e.Username.Equals(username)).FirstOrDefault();
         }
 
         public IEnumerable<WorkingHistory> getWorkingHistoryOfEmployee(Employee employee, int month, int year)
