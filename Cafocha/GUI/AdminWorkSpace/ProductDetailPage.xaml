@@ -7,20 +7,18 @@
       xmlns:local="clr-namespace:Cafocha.GUI.EmployeeWorkSpace"
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local1="clr-namespace:Cafocha.GUI.Converter"
       Title="ProductPage"
       Height="660"
       Width="1366">
-
+    <Page.Resources>
+        <local1:ProductTypeConverter x:Key="ProductTypeConverter"/>
+    </Page.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.98*" />
-            <ColumnDefinition Width="1.02*" />
-        </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.14*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="0.8*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <materialDesign:ColorZone Mode="Standard"
@@ -117,75 +115,28 @@
                           Foreground="White"
                           FontWeight="Bold"
                           Margin="0,50,0,0"
-                          SelectionChanged="lvData_SelectionChanged"
-                          Width="669">
+                          SelectionChanged="lvData_SelectionChanged">
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
                             <GridViewColumn Header="ID"
-                                            Width="100"
+                                            Width="200"
                                             DisplayMemberBinding="{Binding ProductId}" />
                             <GridViewColumn Header="Name"
-                                            Width="150"
+                                            Width="300"
                                             DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Info"
-                                            Width="100"
+                                            Width="300"
                                             DisplayMemberBinding="{Binding Info}" />
                             <GridViewColumn Header="Price"
-                                            Width="100"
+                                            Width="150"
                                             DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
                             <GridViewColumn Header="Type"
-                                            Width="80"
-                                            DisplayMemberBinding="{Binding Type}" />
+                                            Width="100"
+                                            DisplayMemberBinding="{Binding Type, Converter={StaticResource ProductTypeConverter}}" />
                             <GridViewColumn Header="Discount"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Discount}" />
 
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                          CornerRadius="3"
-                                          Mode="PrimaryDark"
-                                          Height="46">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="20,0,0,0">
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="16"
-                                   FontWeight="Bold">
-                            Details
-                        </TextBlock>
-                    </StackPanel>
-                </materialDesign:ColorZone>
-                <ListView Name="lvDetails"
-                          VerticalAlignment="Top"
-                          HorizontalAlignment="Left"
-                          Background="#FFED5C5C"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          Margin="0,50,0,0">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="ID"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding ProDe.PdetailId}" />
-                            <GridViewColumn Header="Product ID"
-                                            Width="0"
-                                            DisplayMemberBinding="{Binding ProDe.ProductId}" />
-                            <GridViewColumn Header="Name"
-                                            Width="200"
-                                            DisplayMemberBinding="{Binding Ingre.Name}" />
-                            <GridViewColumn Header="IgdId"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding ProDe.IgdId}" />
-                            <GridViewColumn Header="Quantity"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding ProDe.Quan}" />
-                            <GridViewColumn Header="UnitUse"
-                                            Width="120"
-                                            DisplayMemberBinding="{Binding ProDe.UnitUse}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

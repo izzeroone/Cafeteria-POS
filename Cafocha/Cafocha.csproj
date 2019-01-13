@@ -158,6 +158,7 @@
     <Compile Include="GUI\CafowareWorkSpace\StockInInfoPage.xaml.cs">
       <DependentUpon>StockInInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Converter\ProductTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
     <Compile Include="GUI\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />

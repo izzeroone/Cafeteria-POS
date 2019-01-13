@@ -44,7 +44,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             allIngre = _businessModuleLocator.WarehouseModule.IngredientList;
             allProductDetailsWithName = new List<ProductModule.PDTemp>();
             this.generatorProductDetailsWithName();
-            lvDetails.ItemsSource = allProductDetailsWithName;
 
             cboType.Items.Add(ProductType.All);
             cboType.Items.Add(ProductType.Drink);
@@ -60,8 +59,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             allProductDetails = _businessModuleLocator.ProductModule.getAllProductDetails(pro.ProductId).ToList();
             this.generatorProductDetailsWithName();
-            lvDetails.ItemsSource = allProductDetailsWithName;
-            lvDetails.Items.Refresh();
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -195,11 +192,8 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void refreshListData()
         {
             lvProduct.ItemsSource = _businessModuleLocator.ProductModule.getAllProduct();
-            lvDetails.ItemsSource = _businessModuleLocator.ProductModule.getAllProductDetails();
             lvProduct.UnselectAll();
             lvProduct.Items.Refresh();
-            lvDetails.UnselectAll();
-            lvDetails.Items.Refresh();
         }
 
         private void BntAddPro_Click(object sender, RoutedEventArgs e)

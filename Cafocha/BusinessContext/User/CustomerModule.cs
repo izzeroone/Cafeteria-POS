@@ -35,7 +35,7 @@ namespace Cafocha.BusinessContext.User
 
         public void updateCustomer(Customer customer)
         {
-            _unitofwork.CustomerRepository.Insert(customer);
+            _unitofwork.CustomerRepository.Update(customer);
             _unitofwork.Save();
         }
 

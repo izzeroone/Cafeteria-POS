@@ -65,7 +65,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_businessModuleLocator, ctm);
+            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_businessModuleLocator, lvDataCustomer.SelectedItem as Customer);
             _cusAddOrUpdate.ShowDialog();
             lvDataCustomer.UnselectAll();
             lvDataCustomer.Items.Refresh();
