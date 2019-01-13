@@ -236,21 +236,46 @@ namespace Cafocha.GUI.CafowareWorkSpace
             LoadStockOutData();
         }
 
-        private void bntAdd_Click(object sender, RoutedEventArgs e)
+        private void bntTakeOut_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ErrorDetailsItem.Count != 0)
                 {
-                    MessageBox.Show("Something is not correct. Please check all your input again!");
+                    MessageBox.Show("Lỗi, xin kiểm tra lại dữ liệu đầu vào");
                     return;
                 }
 
                 if (_currentStockOut.StockOutDetails.Count == 0)
                 {
-                    MessageBox.Show("You have to choose the stock you want to take out");
+                    MessageBox.Show("Chưa chọn NVL cần xuất!");
                     return;
                 }
+
+                // Check stock amount
+                var errorStock = new List<string>();
+                foreach (var stockOutDetail in _currentStockOut.StockOutDetails)
+                {
+                    try
+                    {
+                        Stock stock = _businessModuleLocator.WarehouseModule.StockList.Single(s => s.StoId.Equals(stockOutDetail.StoId));
+
+                        if (stockOutDetail.Quan > stock.ApWareHouse.Contain)
+                        {
+                           errorStock.Add(stockOutDetail.StoId);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        errorStock.Add(stockOutDetail.StoId);
+                    }
+                }
+                if (errorStock.Count > 0)
+                {
+                    MessageBox.Show("Số lượng các sản phẩm sau không đủ trong kho: " + errorStock.Aggregate((i, j) => i + ", " + j));
+                    return;
+                }
+
 
                 _businessModuleLocator.WarehouseModule.addStockOut(_currentStockOut);
 
@@ -266,12 +291,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
                 LoadStockOutData();
-                MessageBox.Show("Stock out successful!");
+                MessageBox.Show("Xuất thành công!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Something went wrong when trying to input the new StockOut Receipt! May be you should reload this app or call for support!");
+                    "Lỗi xuất kho, vui lòng kiểm tra lại kết nối hoặc dữ liệu đầu vào");
             }
         }
 

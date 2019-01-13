@@ -241,7 +241,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 if (ErrorDetailsItem.Count != 0)
                 {
-                    MessageBox.Show("Something is not correct. Please check all your input again!");
+                    MessageBox.Show("Lỗi, xin kiểm tra lại dữ liệu đầu vào");
                     return;
                 }
 
