@@ -6,10 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.Helper.PrintHelper;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.EmployeeWorkSpace;
-using Cafocha.GUI.Helper.PrintHelper;
 
 namespace Cafocha.GUI.CafowareWorkSpace
 {

@@ -12,7 +12,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     /// <summary>
     ///     Interaction logic for statisticsFoodPage.xaml
     /// </summary>
-    public partial class statisticsFoodPage : Page
+    public partial class StatisticsFoodPage : Page
     {
         private readonly BusinessModuleLocator _businessModuleLocator;
 
@@ -21,7 +21,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private readonly ChartValues<int> Values;
 
 
-        public statisticsFoodPage(BusinessModuleLocator businessModuleLocator)
+        public StatisticsFoodPage(BusinessModuleLocator businessModuleLocator)
         {
             // init data
             _businessModuleLocator = businessModuleLocator;

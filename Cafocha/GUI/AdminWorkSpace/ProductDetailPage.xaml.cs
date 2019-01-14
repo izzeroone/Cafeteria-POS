@@ -145,11 +145,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 return;
             }
 
-            //var pup = new ProductUpdatePage(_businessModuleLocator, curPro);
+            //var pup = new ProductUpdateDialog(_businessModuleLocator, curPro);
             //((AdminWindow) Window.GetWindow(this)).myframe.Navigate(pup);
 
-            ProductUpdatePage productUpdatePage = new ProductUpdatePage(_businessModuleLocator, curPro);
-            productUpdatePage.ShowDialog();
+            ProductUpdateDialog productUpdateDialog = new ProductUpdateDialog(_businessModuleLocator, curPro);
+            productUpdateDialog.ShowDialog();
 
             refreshListData();
 
@@ -198,11 +198,11 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void BntAddPro_Click(object sender, RoutedEventArgs e)
         {
-            //var pup = new ProductCreatorPage(_businessModuleLocator);
+            //var pup = new ProductCreatorDialog(_businessModuleLocator);
             //((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
 
-            ProductCreatorPage productCreatorPage = new ProductCreatorPage(_businessModuleLocator);
-            productCreatorPage.ShowDialog();
+            ProductCreatorDialog productCreatorDialog = new ProductCreatorDialog(_businessModuleLocator);
+            productCreatorDialog.ShowDialog();
 
             refreshListData();
 

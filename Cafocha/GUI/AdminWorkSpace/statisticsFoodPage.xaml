@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cafocha.GUI.AdminWorkSpace.statisticsFoodPage"
+﻿<Page x:Class="Cafocha.GUI.AdminWorkSpace.StatisticsFoodPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Background="{DynamicResource MaterialDesignPaper}"
@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:wpfMaterialDesign="clr-namespace:Cafocha.GUI.WPFMaterialDesign"
+      xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf"
       mc:Ignorable="d"
       d:DesignHeight="300"
       d:DesignWidth="300"
@@ -27,8 +28,8 @@
                         Margin="0,16,0,-0.4"
                         VerticalAlignment="Center"
                         Text="MMM-yyyy"
-                        wpfMaterialDesign:DatePickerCalendar.IsMonthYear="True"
-                        wpfMaterialDesign:DatePickerDateFormat.DateFormat="MMM-yyyy"
+                        wpf:DatePickerCalendar.IsMonthYear="True"
+                        wpf:DatePickerDateFormat.DateFormat="MMM-yyyy"
                         Width="151"
                         SelectedDateChanged="DpTimeFilter_OnSelectedDateChanged" />
 

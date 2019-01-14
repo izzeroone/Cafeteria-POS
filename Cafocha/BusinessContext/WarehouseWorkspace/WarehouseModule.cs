@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cafocha.Entities;
-using Cafocha.GUI.CafowareWorkSpace.Helper;
 using Cafocha.Repository.DAL;
 
 namespace Cafocha.BusinessContext.WarehouseWorkspace

@@ -5,8 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.Helper.PrintHelper.Report;
 using Cafocha.Entities;
-using Cafocha.GUI.Helper.PrintHelper.Report;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {

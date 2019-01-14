@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 using Cafocha.BusinessContext;
-using Cafocha.GUI.Helper.PrintHelper.Report;
+using Cafocha.BusinessContext.Helper.PrintHelper.Report;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Cafocha.GUI.AdminWorkSpace

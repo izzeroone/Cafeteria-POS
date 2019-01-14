@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cafocha.GUI.AdminNavWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAJA=</HashCode>
+      <FileName>GUI\AdminNavWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.LoginWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAgAAAIAAAAAgAAAEAIAQAAACAAAIgAAAAAAAAg=</HashCode>
+      <FileName>GUI\LoginWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Helper.PrintHelper.Model.OrderEntityForReport" Collapsed="true">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAAAAAAAQAACAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderEntityForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.Helper.PrintHelper.Model.OrderNoteDetailsForReport" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAEAAAAAAAAAEAAACAAAAAAQAAAAABAAAAIAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.Helper.PrintHelper.Model.OrderNoteForReport" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAEAgBCAEAAAAQAAAAAAAAAAACAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderNoteForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.Helper.PrintHelper.Model.ReceiptEntityForReport" Collapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAAAAAAAQAACAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\ReceiptEntityForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.Helper.PrintHelper.Report.OrderNoteReport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAQgAAAAAAAAIAAgAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Report\OrderNoteReport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.AddNewAdminDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAACAEAAAAAAAAAAIAAAAAAABAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\AddNewAdminDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.AdminChangePass" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\AdminChangePass.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.AdminDetailWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIAAAEAAAAAUAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\AdminDetailWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.AdminWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gISQAIKCAAiIAkAEkAAgEIACQAAAADEIKQAAAACCAAs=</HashCode>
+      <FileName>GUI\AdminWorkSpace\AdminWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.CustomerAddOrUpdateDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAABEABAABIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\CustomerAddOrUpdateDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.CustomerPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAABEAAAAACAAAgAIAAAAAAAAQg=</HashCode>
+      <FileName>GUI\AdminWorkSpace\CustomerPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.EmployeeAddOrUpdateDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAQCAAAAAAAAAAAAAgAFMAAQIAAAAQAAAAAAAIAYAQ=</HashCode>
+      <FileName>GUI\AdminWorkSpace\EmployeeAddOrUpdateDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.EmployeeListPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgAAAAAAAAAAFAAABEAAAAAEAAAAABAAAAIAAAQg=</HashCode>
+      <FileName>GUI\AdminWorkSpace\EmployeeListPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.HomePage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAjAAEgCBAAQAAAQAEaEAAEFAAAAAAAAggYAAAEA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\HomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.OrderNotePage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABACgAAAACIAAAAACAAGIDAAAAEEECAAAACAAAAAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\OrderNotePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.ProductCreatorPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBACCAAAgEAoAAEAAAAAEggAAAAAIAAAQEACAhAAAAI=</HashCode>
+      <FileName>GUI\AdminWorkSpace\ProductCreatorDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.ProductDetailPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAQAAAgAAAAEEAAhBEAAAQAACIgAAAAAIAIAAEAQ=</HashCode>
+      <FileName>GUI\AdminWorkSpace\ProductDetailPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.ProductUpdatePage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBACCAAAhEAoAAEAAAAAEggAAAgAJAAAQEACABAAAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\ProductUpdateDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.ReportOptionDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAQABAAAAIACgMCAAAAAAAAAAAAAQAAAAAgA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\ReportOptionDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.SalaryPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAUAAQQAAIAAEAAAAEAAAgAAAAAAAgIAAAAABAgA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\SalaryPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.StatisticsFoodPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAwAAEAABAAAAAAAAEAAAAAEAAAAAAAAgAAAAAEA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\StatisticsFoodPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.StatisticsWorkingHourPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAwAAEAABAAAAAIAAEAAAAAEAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GUI\AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.AdminWorkSpace.StockHistoryPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAigAAAABAAAJAAAAAGIAABQAAEECAABACAAAQAAQ=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\StockHistoryPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.AddOrUpdateStock" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAiAAAFAAAAAEAAAAAEAAAAAIAIAAAAAAAAAAAAAI=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\AddOrUpdateStock.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.CafowareWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgAIAECIAQAAAAEgQFAAQQCAAAAEAgBAAAAAIgAI=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\CafowareWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.CreateStockPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiEAAFAAAAAEAAAAAEAAAAAIAoAAAAAAAAIAAAAo=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\CreateStockPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.StockInPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IADAACBAQAAAAAQAAAAAGAQQAAAAACAEAAAAAIAAAAA=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\StockInPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.StockOutPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAABAQCAAAAwAAAAAGBQYAAAAACAAAAAAAIAAAAA=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\StockOutPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.CafowareWorkSpace.ViewStockPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAABAAAAAAgAAEAAAAAAAoAAAABAAAIAAAAg=</HashCode>
+      <FileName>GUI\CafowareWorkSpace\ViewStockPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Converter.ProductTypeConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Converter\ProductTypeConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Converter.StockGroupConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Converter\StockGroupConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Converter.StockTypeConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\Converter\StockTypeConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.ChangeThemePage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\ChangeThemePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.DeleteConfirmDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQgAAAAAAAAAAAMAEAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.EmployeeChangePass" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\EmployeeChangePass.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.EmployeeDetail" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAQAAIABAAAAFAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.ShowWH" Collapsed="true">
+    <Position X="11" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.ShowWHData" Collapsed="true">
+    <Position X="12.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.Entry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\EntryPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.Info" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\InfoPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.InputNote" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\InputNote.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.InputTheRestOrderInfoDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAFAAAAAAAAAAAAACAAAAAACAAAAIAAgAAAAAAAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\InputTheRestOrderInfoDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACgACAACBAgABAAIAEAAAQAgAAACAURQAAIIAAAI=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.UcMenu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQAAAABAAAAAAAAAADEAAEQAAAAAQAAAAAAAQBAAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\UcMenu.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.EmployeeWorkSpace.UcOder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACoggAMghAAQgAAIAEABgAAAAIBCAAQAIBACEgAA=</HashCode>
+      <FileName>GUI\EmployeeWorkSpace\UcOder.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Support.FloatKeyboardControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAABAAAAAAAAAgAQEAgAAIAAACAAAAAAABA=</HashCode>
+      <FileName>GUI\Support\FloatKeyboardControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Support.KeyboardControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAABAAAAAAAAAgAQAAgAAAAAACAFAAAAABA=</HashCode>
+      <FileName>GUI\Support\KeyboardControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.GUI.Support.PassKeyboardControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAIAAAAgAQAAgAAAAAECgFAAAAABA=</HashCode>
+      <FileName>GUI\Support\PassKeyboardControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.ButtonsViewModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACCQAAQBQABkAAAQAQAggCAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>WPFMaterialDesign\ButtonsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.DatePickerCalendar" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgCAABAACAAAAAAAABEAiAAQAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\DatePickerCalendar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.DatePickerDateFormat" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAADAAAAAAAADBAAgAYAAAAAAAQAAAgAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\DatePickerCalendar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.FEExten" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\DatePickerCalendar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.GUI.WPFMaterialDesign.Home" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAABAAAg=</HashCode>
+      <FileName>WPFMaterialDesign\Home.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.PaletteSelectorViewModel" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACAAQAAAAMAAAAAAEAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>WPFMaterialDesign\PaletteSelectorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.WPFMaterialDesign.Palette" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\UcPalette.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Cafocha.GUI.WPFMaterialDesign.UcPaletteSelector" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\UcPaletteSelector.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MaterialDesignThemes.Wpf.Domain.NotifyPropertyChangedExtension" Collapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Cafocha.GUI.Helper.PrintHelper.Report.IListPdfReport" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAQgAAAAAAAAIAAgAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Report\IListPdfReport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
