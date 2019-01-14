@@ -107,15 +107,15 @@
 
                             <StackPanel>
                                 <Button x:Name="btnCreateAdmin"
-                                        Content="Create Admin"
+                                        Content="Tạo Quản lý"
                                         Click="BtnCreateAdmin_OnClick"
                                         Visibility="Collapsed" />
                                 <Button x:Name="btnDetails"
-                                        Content="Details"
+                                        Content="Thông Tin"
                                         Click="BtnDetails_OnClick" />
                                 <Separator />
                                 <Button x:Name="bntLogout"
-                                        Content="Log out"
+                                        Content="Đăng Xuất"
                                         Click="bntLogout_Click" />
                             </StackPanel>
                         </materialDesign:PopupBox>

@@ -21,7 +21,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Personal Infomation
+                    Thông tin Quản lý
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -59,8 +59,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="UserName: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Tên đăng nhập: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="143" />
                     <TextBox Text="{Binding Username}"
                              x:Name="txtUsername"
                              Width="215"
@@ -71,8 +71,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="Name: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Tên: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="136" />
                     <TextBox x:Name="txtName"
                              FontSize="18"
                              Foreground="White"
@@ -108,7 +108,7 @@
                            VerticalAlignment="Center"
                            FontSize="18"
                            FontWeight="Bold">
-                    Employee List
+                    Danh sách nhân viên
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -125,13 +125,13 @@
                     <GridViewColumn Header="ID"
                                     Width="200"
                                     DisplayMemberBinding="{Binding EmpId}" />
-                    <GridViewColumn Header="Name"
+                    <GridViewColumn Header="Tên"
                                     Width="200"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Birth"
+                    <GridViewColumn Header="Ngày sinh"
                                     Width="200"
                                     DisplayMemberBinding="{Binding Birth,StringFormat=yyyy-MM-dd}" />
-                    <GridViewColumn Header="UserName"
+                    <GridViewColumn Header="Tên đăng nhập"
                                     Width="200"
                                     DisplayMemberBinding="{Binding Username}" />
                 </GridView>

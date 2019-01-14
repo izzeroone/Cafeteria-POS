@@ -45,8 +45,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             var roleList = new List<dynamic>
             {
-                new {role = EmployeeRole.Counter, roleDisplay = "Counter"},
-                new {role = EmployeeRole.Stock, roleDisplay = "Stock"}
+                new {role = EmployeeRole.Counter, roleDisplay = "Bán hàng"},
+                new {role = EmployeeRole.Stock, roleDisplay = "thủ kho"}
             };
             cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";
@@ -81,7 +81,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check username
                 if (username.Length == 0 || username.Length > 50)
                 {
-                    MessageBox.Show("Username is not valid!");
+                    MessageBox.Show("Điền tên đăng nhập!");
                     txtUsername.Focus();
                     return;
                 }
@@ -128,7 +128,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 if (cboRole.SelectedValue == null)
                 {
-                    MessageBox.Show("Role must be selected!");
+                    MessageBox.Show("Chọn loại nhân viên!");
                     return;
                 }
 
@@ -138,14 +138,14 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check birth
                 if (txtBirth.SelectedDate == null)
                 {
-                    MessageBox.Show("Birth must be selected!");
+                    MessageBox.Show("Chọn ngày sinh!");
                     return;
                 }
 
                 var birth = txtBirth.SelectedDate.Value;
                 if (DateTime.Now.Year - birth.Year < 17)
                 {
-                    MessageBox.Show("Employee's age must higher than 17!");
+                    MessageBox.Show("Tuổi của nhân viên phải lơn hơn 17 tuổi!");
                     return;
                 }
 
@@ -154,7 +154,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var addr = txtAddress.Text;
                 if (addr.Length > 200)
                 {
-                    MessageBox.Show("Address is not valid!");
+                    MessageBox.Show("Điền thông tin địa chỉ!");
                     txtAddress.Focus();
                     return;
                 }
@@ -163,7 +163,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var phone = txtPhone.Text;
                 if (phone.Length > 20)
                 {
-                    MessageBox.Show("Phone is not valid!");
+                    MessageBox.Show("Điền số điện thoại!");
                     txtPhone.Focus();
                     return;
                 }
@@ -172,7 +172,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var email = txtMail.Text;
                 if (!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
                 {
-                    MessageBox.Show("Email is not valid!");
+                    MessageBox.Show("Điền địa chỉ Email!");
                     txtMail.Focus();
                     return;
                 }
@@ -180,7 +180,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 //check start day
                 if (txtStartDay.SelectedDate == null)
                 {
-                    MessageBox.Show("Start Day must be selected!");
+                    MessageBox.Show("Chọn ngày bắt đầu làm việc!");
                     return;
                 }
 
@@ -190,7 +190,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var hourwage = int.Parse(txtHour_wage.Text.Trim());
                 if (hourwage <= 0 || hourwage >= int.MaxValue)
                 {
-                    MessageBox.Show("Hour wage is not valid! Hour wage must be greater than 0 and lesser than " +
+                    MessageBox.Show("Điền lương nhân viên (theo giờ)!" +
                                     int.MaxValue);
                     txtHour_wage.Focus();
                     return;
@@ -200,7 +200,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var code = txtCode.Password.Trim();
                 if (code.Length < 4)
                 {
-                    MessageBox.Show("Employee code should be stronger!");
+                    MessageBox.Show("Mã Code của nhân viên quá ngắn!");
                     txtCode.Focus();
                     return;
                 }
@@ -234,7 +234,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                     _businessModuleLocator.EmployeeModule.insertEmployee(checkemp);
 
-                    MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
+                    MessageBox.Show("Thêm " + checkemp.Name + "(" + checkemp.EmpId + ") Thành công!");
                     Close();
                 }
                 else //Updating
@@ -253,14 +253,14 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                     _businessModuleLocator.EmployeeModule.updateEmployee(_emp);
 
-                    MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
+                    MessageBox.Show("Cập nhật " + _emp.Name + "(" + _emp.EmpId + ") thành công!");
                     Close();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Something went wrong. Can not add or update employee. Please check the details again!");
+                    "Xảy ra lỗi vui lòng kiểm tra hoặc thực hiện lại:!");
             }
         }
 

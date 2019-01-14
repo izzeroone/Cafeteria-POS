@@ -49,7 +49,7 @@
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
                                          KeyDown="SearchBox_KeyDown"
-                                         materialDesign:HintAssist.Hint="Search by Name"
+                                         materialDesign:HintAssist.Hint="Tìm theo tên"
                                          x:Name="SearchBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
@@ -74,19 +74,19 @@
                             </StackPanel>
                         </Border>
                         <Button x:Name="bntAddPro"
-                                Content="Add"
+                                Content="Thêm"
                                 Height="auto"
                                 Margin="0,0,20,0"
                                 FontWeight="Bold"
                                 Click="BntAddPro_Click" />
                         <Button x:Name="bntEditPro"
-                                Content="Edit"
+                                Content="Chỉnh sửa"
                                 Height="auto"
                                 Margin="0,0,20,0"
                                 FontWeight="Bold"
                                 Click="bntEditPro_Click" />
                         <Button x:Name="bntDelPro"
-                                Content="Delete"
+                                Content="Xóa"
                                 Height="auto"
                                 Margin="0,0,50,0"
                                 FontWeight="Bold"
@@ -104,7 +104,7 @@
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
                                    FontWeight="Bold">
-                            Product
+                            Sản phẩm
                         </TextBlock>
                     </StackPanel>
                 </materialDesign:ColorZone>
@@ -121,19 +121,19 @@
                             <GridViewColumn Header="ID"
                                             Width="200"
                                             DisplayMemberBinding="{Binding ProductId}" />
-                            <GridViewColumn Header="Name"
+                            <GridViewColumn Header="Tên"
                                             Width="300"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Header="Info"
+                            <GridViewColumn Header="Thông tin"
                                             Width="300"
                                             DisplayMemberBinding="{Binding Info}" />
-                            <GridViewColumn Header="Price"
+                            <GridViewColumn Header="Giá"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
-                            <GridViewColumn Header="Type"
+                            <GridViewColumn Header="Loại"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Type, Converter={StaticResource ProductTypeConverter}}" />
-                            <GridViewColumn Header="Discount"
+                            <GridViewColumn Header="Giảm giá"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Discount}" />
 

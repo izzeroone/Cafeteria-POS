@@ -147,7 +147,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var name = txtName.Text.Trim();
                 if (name.Length == 0)
                 {
-                    MessageBox.Show("Name is not valid!");
+                    MessageBox.Show("Điền tên sản phẩm!");
                     txtName.Focus();
                     return;
                 }
@@ -162,7 +162,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var imgname = txtImageName.Text.Trim();
                 if (imgname.Length == 0)
                 {
-                    MessageBox.Show("Please choose a image to continue!");
+                    MessageBox.Show("Chọn hình cho sản phẩm!");
                     btnLinkImg.Focus();
                     return;
                 }
@@ -201,13 +201,13 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 _businessModuleLocator.ProductModule.updateProduct(_currentProduct, _proDe, _pdtList);
 
-                MessageBox.Show("Update product " + _currentProduct.Name + "(" + _currentProduct.ProductId +
-                                ") successful!");
+                MessageBox.Show("Cập nhật sản phẩm " + _currentProduct.Name + "(" + _currentProduct.ProductId +
+                                ") Thành công!");
                 ClearAllData();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not update product. Please check again!");
+                MessageBox.Show("Không thể cập nhật sản phẩm! Hãy kiểm tra và thực hiện lại");
             }
             Close();
         }

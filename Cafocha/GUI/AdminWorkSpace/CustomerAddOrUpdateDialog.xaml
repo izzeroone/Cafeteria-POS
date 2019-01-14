@@ -21,7 +21,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Personal Infomation
+                    Thông tin khách hàng
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -56,7 +56,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Name: "
+                <TextBlock Text="Tên: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
                          FontSize="18"
@@ -98,7 +98,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Discount"
+                <TextBlock Text="Giảm giá"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox Foreground="White"
                          x:Name="txtDiscount"
@@ -124,7 +124,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Button x:Name="bntAddnew"
-                    Content="Save"
+                    Content="Lưu"
                     Width="121"
                     Height="Auto"
                     FontSize="18"
@@ -132,7 +132,7 @@
                     Margin="0,0,0,0"
                     Click="bntAddnew_Click" />
             <Button x:Name="bntCancel"
-                    Content="Cancel"
+                    Content="Hủy"
                     Height="Auto"
                     Margin="100,0,0,0"
                     Width="121"

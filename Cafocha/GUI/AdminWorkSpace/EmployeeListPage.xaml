@@ -28,7 +28,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Employee List
+                    Danh sách nhân viên
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -47,13 +47,13 @@
                     <GridViewColumn Header="ID"
                                     Width="100"
                                     DisplayMemberBinding="{Binding EmpId}" />
-                    <GridViewColumn Header="Name"
+                    <GridViewColumn Header="Tên"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Birth"
+                    <GridViewColumn Header="Ngày sinh"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
-                    <GridViewColumn Header="UserName"
+                    <GridViewColumn Header="Tên đăng nhập"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Username}" />
                 </GridView>
@@ -73,7 +73,7 @@
                                HorizontalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18">
-                        Personal Infomation
+                        Thông tin nhân viên
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -107,7 +107,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Name: "
+                    <TextBlock Text="Tên: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtName"
                              FontSize="18"
@@ -116,7 +116,7 @@
                              IsReadOnly="True"
                              Margin="0,0,100,0" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Birth: "
+                        <TextBlock Text="Ngày sinh: "
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtBirth"
                              Width="214"
@@ -130,8 +130,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Address: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Địa chỉ: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="125" />
                     <TextBox MaxWidth="300"
                              Foreground="White"
                              x:Name="txtAddress"
@@ -178,8 +178,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Start day: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Ngày làm việc: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="128" />
                     <TextBox x:Name="txtStart"
                              Width="214"
                              FontSize="18"
@@ -188,8 +188,8 @@
                              VerticalAlignment="Center"
                              IsReadOnly="True"
                              HorizontalAlignment="Center" />
-                    <TextBlock Text="Hour wage: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Lương theo giờ: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="146" />
                    
                     <TextBox x:Name="txtHour_wage"
                              Width="214"
@@ -203,7 +203,7 @@
 
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Role: "
+                    <TextBlock Text="Loại: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtRole"
                              Width="214"
@@ -236,7 +236,7 @@
                 </StackPanel.Resources>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,360,-0.4,203">
-                    <TextBlock Text="UserName"
+                    <TextBlock Text="Tên đăng nhập"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtAcount"
                              Width="214"
@@ -255,7 +255,7 @@
                         VerticalAlignment="Bottom"
                         Margin="118,0,127,38">
                 <Button x:Name="bntAddnew"
-                        Content="Addnew"
+                        Content="Thêm"
                         Width="121"
                         Height="Auto"
                         FontSize="18"
@@ -263,7 +263,7 @@
                         Margin="0,0,0,0"
                         Click="bntAddnew_Click" />
                 <Button x:Name="bntUpdate"
-                        Content="Update"
+                        Content="Cập nhật"
                         Height="Auto"
                         Margin="100,0,0,0"
                         Width="121"
@@ -271,7 +271,7 @@
                         FontWeight="Bold"
                         Click="bntUpdate_Click" />
                 <Button x:Name="bntDel"
-                        Content="Delete"
+                        Content="Xóa"
                         Height="Auto"
                         Margin="100,0,0,0"
                         Width="121"

@@ -48,7 +48,7 @@
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
                                      KeyDown="SearchBox_KeyDown"
-                                     materialDesign:HintAssist.Hint="Search"
+                                     materialDesign:HintAssist.Hint="Tìm kiếm"
                                      x:Name="SearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      BorderThickness="0"
@@ -113,7 +113,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="30">
-                        Salary Note
+                        Phiếu lương
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -129,31 +129,31 @@
                       Height="auto" Grid.ColumnSpan="3">
                 <ListView.View>
                     <GridView x:Name="gvShowDetails">
-                        <GridViewColumn Header="Salary_ID"
+                        <GridViewColumn Header="ID"
                                         Width="100"
                                         DisplayMemberBinding="{Binding SnId}" />
-                        <GridViewColumn Header="Employee_ID"
+                        <GridViewColumn Header="ID Nhân viên"
                                         Width="150"
                                         DisplayMemberBinding="{Binding EmpId}" />
-                        <GridViewColumn Header="Employee Name"
+                        <GridViewColumn Header="Tên Nhân viên"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Employee.Name}" />
-                        <GridViewColumn Header="date pay"
+                        <GridViewColumn Header="Ngày trả"
                                         Width="150"
                                         DisplayMemberBinding="{Binding DatePay}" />
-                        <GridViewColumn Header="Salary Value"
+                        <GridViewColumn Header="Số Lương"
                                         Width="150"
                                         DisplayMemberBinding="{Binding SalaryValue,StringFormat=0.000}" />
-                        <GridViewColumn Header="Work Hour"
+                        <GridViewColumn Header="Số giờ làm việc"
                                         Width="150"
                                         DisplayMemberBinding="{Binding WorkHour}" />
-                        <GridViewColumn Header="For Month"
+                        <GridViewColumn Header="Theo tháng"
                                         Width="150"
                                         DisplayMemberBinding="{Binding ForMonth}" />
-                        <GridViewColumn Header="For Years"
+                        <GridViewColumn Header="Theo năm"
                                         Width="150"
                                         DisplayMemberBinding="{Binding ForYear}" />
-                        <GridViewColumn Header="Is Paid"
+                        <GridViewColumn Header="Đã trả"
                                         Width="100"
                                         DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>
@@ -178,7 +178,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="32">
-                        Working History
+                        Lịch sử làm việc
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -193,25 +193,25 @@
                       Height="auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="WH ID"
+                        <GridViewColumn Header="ID"
                                         Width="100"
                                         DisplayMemberBinding="{Binding WhId}" />
-                        <GridViewColumn Header="Employee_ID"
+                        <GridViewColumn Header="ID Nhân viên"
                                         Width="150"
                                         DisplayMemberBinding="{Binding EmpId}" />
-                        <GridViewColumn Header="Employee Name"
+                        <GridViewColumn Header="Tên Nhân viên"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Employee.Name}" />
-                        <GridViewColumn Header="Result Salary"
+                        <GridViewColumn Header="Tiền Lương"
                                         Width="150"
                                         DisplayMemberBinding="{Binding ResultSalary}" />
-                        <GridViewColumn Header="Start Time"
+                        <GridViewColumn Header="Thời gian bắt đầu"
                                         Width="180"
                                         DisplayMemberBinding="{Binding StartTime}" />
-                        <GridViewColumn Header="End Time"
+                        <GridViewColumn Header="Thời gian kết thúc"
                                         Width="180"
                                         DisplayMemberBinding="{Binding EndTime}" />
-                        <GridViewColumn Header="Is Paid"
+                        <GridViewColumn Header="Đã trả"
                                         Width="180"
                                         DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>

@@ -141,7 +141,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var curPro = lvProduct.SelectedItem as Product;
             if (curPro == null)
             {
-                MessageBox.Show("Please choose exactly which product you want to update!");
+                MessageBox.Show("Chọn sản phẩm muốn chỉnh sửa!");
                 return;
             }
 
@@ -160,14 +160,14 @@ namespace Cafocha.GUI.AdminWorkSpace
             var delPro = lvProduct.SelectedItem as Product;
             if (delPro == null)
             {
-                MessageBox.Show("Please choose exactly which product you want to delete!");
+                MessageBox.Show("Chọn sản phẩm muốn xóa!");
                 return;
             }
 
             var delMess =
                 MessageBox.Show(
-                    "This action will delete all following product details! Do you want to delete " + delPro.Name +
-                    "(" + delPro.ProductId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                    "Sản phẩm " + delPro.Name +
+                    "(" + delPro.ProductId + ") sẽ bị xóa khỏi danh sách?", "Cảnh báo! Bạn có muốn xóa?", MessageBoxButton.YesNo);
             if (delMess == MessageBoxResult.Yes)
             {
                 _businessModuleLocator.ProductModule.deleteProduct(delPro);

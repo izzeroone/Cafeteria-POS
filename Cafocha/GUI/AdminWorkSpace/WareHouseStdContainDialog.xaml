@@ -43,8 +43,8 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal"
                         Margin="10,20,0,0">
-                <TextBlock Text="Standard Contain (g):"
-                           Width="170"
+                <TextBlock Text="Số lượng tiêu chuẩn (g):"
+                           Width="195"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtStdContain"
                          Width="150"
@@ -60,13 +60,12 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Button x:Name="btnOk"
-                        Content="Ok"
+                        Content="Đồng ý"
                         Height="Auto"
-                        Width="75"
                         Margin="0,0,50,0"
                         Click="btnOk_Click" />
                 <Button x:Name="btnCancel"
-                        Content="Cancel"
+                        Content="Hủy"
                         Height="Auto"
                         Width="75"
                         Click="btnCancel_Click" />
