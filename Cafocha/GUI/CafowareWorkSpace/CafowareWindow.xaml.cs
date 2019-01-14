@@ -111,8 +111,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Properties["AdLogin"] = null;
-            Application.Current.Properties["EmpLogin"] = null;
+            _businessModuleLocator.EmployeeModule.Emploglist.Clear();
             _loginWindow = new LoginWindow();
             Close();
             _loginWindow.Show();
