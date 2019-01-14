@@ -80,7 +80,7 @@
                                 FontSize="18"
                                 Foreground="White"
                                 HorizontalAlignment="Left"
-                                materialDesign:HintAssist.Hint="Pick Date" />
+                                materialDesign:HintAssist.Hint="Chọn Ngày" />
                 </StackPanel>
             </StackPanel>
 

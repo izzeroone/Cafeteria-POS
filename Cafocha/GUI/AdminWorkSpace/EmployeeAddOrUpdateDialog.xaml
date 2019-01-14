@@ -144,7 +144,7 @@
                                 FontSize="18"
                                 Foreground="White"
                                 HorizontalAlignment="Left"
-                                materialDesign:HintAssist.Hint="Pick Date"
+                                materialDesign:HintAssist.Hint="Chọn Ngày"
                                 SelectedDateChanged="TxtBirth_OnSelectedDateChanged" />
                     <materialDesign:PackIcon Margin="10,0,0,0"
                                              x:Name="IcBirthValid"
@@ -234,7 +234,7 @@
                             FontSize="18"
                             Foreground="White"
                             HorizontalAlignment="Left"
-                            materialDesign:HintAssist.Hint="Pick Date" />
+                            materialDesign:HintAssist.Hint="Chọn Ngày" />
                 <TextBlock Text="Hour wage: "
                            Margin="130,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
