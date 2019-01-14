@@ -171,7 +171,7 @@
                        Height="33"
                        Width="111" Visibility="Collapsed" Grid.Row="1" />
             <Button x:Name="bntPrint"
-                Content="In Phiếu"
+                Content="Xem trước"
                 Margin="47,515,514,0"
                 FontSize="25"
                 VerticalAlignment="Top"

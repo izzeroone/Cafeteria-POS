@@ -93,7 +93,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
             if (lvStock.SelectedItem == null)
             {
-                MessageBox.Show("Stock must be selected to delete! Choose again!");
+                MessageBox.Show("Chưa chọn nguyên vật liệu!");
                 return;
             }
 
@@ -102,8 +102,8 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 var delMess =
                     MessageBox.Show(
-                        "This action will delete all following stock details! Do you want to delete " + delStock.Name +
-                        "(" + delStock.StoId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                        "Bạn có muốn xóa " + delStock.Name +
+                        "(" + delStock.StoId + ")?", "Cảnh báo? Bạn có chắc chắn", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
                     _businessModuleLocator.WarehouseModule.deleteStock(delStock);
@@ -115,7 +115,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             else
             {
-                MessageBox.Show("Please choose stock you want to delete and try again!");
+                MessageBox.Show("Bạn chưa chọn nguyên vật liệu để xóa");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
         {
             if (lvStock.SelectedIndex == -1)
             {
-                MessageBox.Show("Bạn chưa chọn mặt hàng");
+                MessageBox.Show("Bạn chưa chọn nguyên vật liệu");
                 return;
             }
             //check name

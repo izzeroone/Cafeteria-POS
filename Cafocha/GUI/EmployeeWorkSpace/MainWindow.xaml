@@ -42,7 +42,7 @@
                              SelectedIndex="0"
                              PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
                         <ListBoxItem x:Name="lbiEODReport"
-                                     Content="End Of Day Report"
+                                     Content="Báo cáo cuối ngày"
                                      FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="LbiEODReport_OnPreviewMouseLeftButtonUp" />
@@ -133,12 +133,12 @@
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
                                     Foreground="DeepSkyBlue"
-                                    Width="100"
+                                    Width="110"
                                     Click="bntEntry_Click"
                                     FontSize="18"
-                                    ToolTip="Entry Page (for ordering)">
+                                    ToolTip="Đặt hàng">
 
-                                Entry
+                                Đặt hàng
 
                             </Button>
                             <TextBlock Foreground="White"

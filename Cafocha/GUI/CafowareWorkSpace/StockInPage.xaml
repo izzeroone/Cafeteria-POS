@@ -74,7 +74,7 @@
                                HorizontalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18">
-                        Stock Info Details
+                        Thông tin nhập kho
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>

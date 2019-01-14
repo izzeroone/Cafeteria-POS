@@ -25,12 +25,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
             CboPaymentMethod.ItemsSource = new List<string>
             {
-                "Cash",
-                "Cheque",
-                "Deferred",
-                "International",
-                "Credit",
-                "OnAcount"
+                "Tiền mặt",
+                "Thẻ tín dụng",
             };
 
             CboPaymentMethod.SelectedIndex = 0;
@@ -54,7 +50,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (string.IsNullOrEmpty(_payMethod))
             {
-                MessageBox.Show("please choose Payment Method!");
+                MessageBox.Show("Bạn chưa chọn phương thức thanh toán!");
                 return;
             }
 
@@ -84,7 +80,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
                 if (cusPay < currentOrder.TotalPrice)
                 {
-                    MessageBox.Show("All payment ground up to higher number!");
+                    MessageBox.Show("Số tiền không đủ!");
                     return;
                 }
 
@@ -95,7 +91,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Incorrect input!");
+                MessageBox.Show("Nhập không hợp lệ!");
             }
         }
 

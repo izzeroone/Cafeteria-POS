@@ -57,7 +57,7 @@
                                 <TextBox Foreground="Black"
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
-                                         materialDesign:HintAssist.Hint="Search by Name"
+                                         materialDesign:HintAssist.Hint="Tìm kiếm theo tên"
                                          x:Name="SearchIBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
@@ -121,7 +121,7 @@
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
                                    FontWeight="Bold">
-                            <Run Text="Stock"
+                            <Run Text="Nguyên vật liệu"
                                  FontWeight="Bold"
                                  FontSize="16" />
                         </TextBlock>
@@ -134,7 +134,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           Margin="0,50,0,0"
-                          Width="792" Grid.ColumnSpan="2" SelectionChanged="LvStock_SelectionChanged">
+                          Width="882" Grid.ColumnSpan="2" SelectionChanged="LvStock_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
@@ -155,8 +155,8 @@
                             <GridViewColumn Header="Nhà Cung Cấp"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Supplier}" />
-                            <GridViewColumn Header="StandardPrice"
-                                            Width="120"
+                            <GridViewColumn Header="Đơn giá tiêu chuẩn"
+                                            Width="200"
                                             DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
                         </GridView>
                     </ListView.View>

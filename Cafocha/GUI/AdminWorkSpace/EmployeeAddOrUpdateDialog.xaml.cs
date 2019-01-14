@@ -208,7 +208,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 // Adding
                 if (_emp.EmpId == null)
                 {
-                    if (!_businessModuleLocator.EmployeeModule.isUsernameAvaiable(username))
+                    if (_businessModuleLocator.EmployeeModule.isUsernameAvaiable(username))
                     {
                         MessageBox.Show("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
                         txtName.Focus();

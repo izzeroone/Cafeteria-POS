@@ -18,6 +18,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class UcOrder : UserControl
     {
+        private static string NO_EMPLOY_WORKING_DIALOG = "Chưa có nhân viên đang làm việc. Vui lòng thử lại";
         private BusinessModuleLocator _businessModuleLocator;
         private Employee currentEmp;
 
@@ -157,7 +158,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 if (EmployeeModule.WorkingEmployee == null)
                 {
-                    MessageBox.Show("No employee on working! Please try again!");
+                    MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                     return;
                 }
 
@@ -208,7 +209,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
@@ -238,7 +239,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
@@ -270,7 +271,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
@@ -295,7 +296,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 

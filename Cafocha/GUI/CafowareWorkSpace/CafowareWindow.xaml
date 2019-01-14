@@ -48,7 +48,7 @@
                                      PreviewMouseLeftButtonUp="ViewStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
                         <ListBoxItem x:Name="CreateStock"
-                                     Content="Thông Tin Nguyên Liệu"
+                                     Content="Thông Tin Nguyên Vật Liệu"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="CreateStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
@@ -101,7 +101,7 @@
 
                             <StackPanel>
                                 <Button x:Name="bntLogout"
-                                        Content="Log out"
+                                        Content="Đăng xuất"
                                         Click="bntLogout_Click" />
                             </StackPanel>
                         </materialDesign:PopupBox>
@@ -112,7 +112,7 @@
                                    Margin="0,-3"
                                    TextAlignment="Center"
                                    Width="239">
-                            Warehouse
+                            Kho
                         </TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>

@@ -155,9 +155,5 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             //    SearchBox.Text = "";
             //}
         }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
     }
 }

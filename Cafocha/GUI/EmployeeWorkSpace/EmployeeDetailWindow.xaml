@@ -38,7 +38,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Personal Infomation
+                    Thông tin cá nhân
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -63,7 +63,7 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal"
                         Margin="30,20,0,0">
-                <TextBlock Text="Name: "
+                <TextBlock Text="Tên: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
                          FontSize="18"
@@ -72,7 +72,7 @@
                          Width="215" />
                 <StackPanel Orientation="Horizontal"
                             Margin="100,0,0,0">
-                    <TextBlock Text="Birth: "
+                    <TextBlock Text="Ngày sinh: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <DatePicker SelectedDate="{Binding Birth, StringFormat=dd/MM/yyyy}"
                                 x:Name="txtBirth"
@@ -86,7 +86,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="30,20,0,0">
-                <TextBlock Text="Address: "
+                <TextBlock Text="Địa chỉ: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox MaxWidth="300"
                          Foreground="White"
@@ -134,14 +134,14 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="30,20,0,0">
-                <TextBlock Text="Start day: "
+                <TextBlock Text="Ngày vào làm: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBlock x:Name="txtStartDay"
                            FontSize="18"
                            Text="{Binding Startday, StringFormat=dd/MM/yyyy}"
                            Foreground="White"
                            Width="215" />
-                <TextBlock Text="Hour wage: "
+                <TextBlock Text="Lương giờ"
                            Margin="100,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBlock x:Name="txtHour_wage"
@@ -153,7 +153,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="30,20,0,0">
                 <Button x:Name="btn"
-                        Content="Change Password"
+                        Content="Đổi mật khẩu"
                         Height="Auto"
                         Margin="450,0,0,0"
                         Click="btn_Click" />
@@ -169,7 +169,7 @@
                            VerticalAlignment="Center"
                            FontSize="18"
                            FontWeight="Bold">
-                    Working History
+                    Lịch sử làm việc
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -177,23 +177,10 @@
                   Margin="0,356,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150"
-                                    Header="Time Percent">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
-                                             Value="{Binding TimePercent}"
-                                             Maximum="100"
-                                             Width="45"
-                                             Height="45"
-                                             IsIndeterminate="True" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Work Time"
+                    <GridViewColumn Header="Thời gian làm việc"
                                     Width="150"
                                     DisplayMemberBinding="{Binding WorkTime}" />
-                    <GridViewColumn Header="Date"
+                    <GridViewColumn Header="Ngày"
                                     Width="200"
                                     DisplayMemberBinding="{Binding WorkDate, StringFormat=yyyy-MM-dd}" />
                 </GridView>

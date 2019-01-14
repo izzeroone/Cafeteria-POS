@@ -64,7 +64,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                MessageBox.Show("Đã có lổi xảy ra: \n" + ex.Message);
                 AppLog.Error(ex);
             }
         }

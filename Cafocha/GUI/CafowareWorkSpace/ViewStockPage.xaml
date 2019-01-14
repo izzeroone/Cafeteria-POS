@@ -49,7 +49,7 @@
                 <TextBox Foreground="White"
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
-                                         materialDesign:HintAssist.Hint="Search by Name"
+                                         materialDesign:HintAssist.Hint="Tìm theo tên"
                                          x:Name="SearchIBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
@@ -82,25 +82,25 @@
                   SelectionChanged="LvStock_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID"
+                    <GridViewColumn Header="Mã"
                                             Width="90"
                                             DisplayMemberBinding="{Binding StoId}" />
-                    <GridViewColumn Header="Name"
+                    <GridViewColumn Header="Tên"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Info"
+                    <GridViewColumn Header="Thông tin"
                                             Width="150"
                                             DisplayMemberBinding="{Binding Info}" />
-                    <GridViewColumn Header="Group"
+                    <GridViewColumn Header="Loại"
                                             Width="80"
                                             DisplayMemberBinding="{Binding StId, Converter={StaticResource StockGroupConverter}}" />
-                    <GridViewColumn Header="Unit"
+                    <GridViewColumn Header="DVT"
                                             Width="90"
                                             DisplayMemberBinding="{Binding Unit}" />
-                    <GridViewColumn Header="StandardPrice"
+                    <GridViewColumn Header="Đơn giá"
                                             Width="120"
                                             DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
-                    <GridViewColumn Header="Contain"
+                    <GridViewColumn Header="Tồn kho"
                                             Width="120"
                                             DisplayMemberBinding="{Binding ApWareHouse.Contain}" />
                 </GridView>
