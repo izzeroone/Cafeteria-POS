@@ -80,7 +80,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                MessageBox.Show("Xảy ra lỗi vui lòng kiểm tra hoặc thực hiện lại: \n" + ex.Message);
                 AppLog.Error(ex);
             }
 

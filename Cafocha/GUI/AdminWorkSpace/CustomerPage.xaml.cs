@@ -60,7 +60,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             if (lvDataCustomer.SelectedItem == null)
             {
-                MessageBox.Show("Custoer must be selected to update! Choose again!");
+                MessageBox.Show("Chọn khách hàng muốn cập nhật!");
                 return;
             }
 
@@ -74,15 +74,15 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             if (lvDataCustomer.SelectedItem == null)
             {
-                MessageBox.Show("Customer must be selected to delete! Choose again!");
+                MessageBox.Show("Chọn khách hàng muốn xóa!");
                 return;
             }
 
             var delCus = lvDataCustomer.SelectedItem as Customer;
             if (delCus != null)
             {
-                var delMess = MessageBox.Show("Do you want to delete " + delCus.Name + "(" + delCus.CusId + ")?",
-                    "Warning! Are you sure?", MessageBoxButton.YesNo);
+                var delMess = MessageBox.Show("Bạn có muốn xóa " + delCus.Name + "(" + delCus.CusId + ") khỏi danh sách?",
+                    "Cảnh báo!?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
                     _businessModuleLocator.CustomerModule.deleteCustomer(delCus);
@@ -94,7 +94,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             else
             {
-                MessageBox.Show("Please choose customer you want to delete and try again!");
+                MessageBox.Show("Chọn khách hàng muốn xóa!");
             }
         }
     }

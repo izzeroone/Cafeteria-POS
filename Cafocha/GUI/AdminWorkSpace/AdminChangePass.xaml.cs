@@ -26,7 +26,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var oldPass = txtPass.Password.Trim();
             if (!oldPass.Equals(_admin.DecryptedPass))
             {
-                MessageBox.Show("Your old password is incorrect!");
+                MessageBox.Show("Mật khẩu cũ không đúng!");
                 txtPass.Focus();
                 return;
             }
@@ -34,7 +34,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var newPass = txtNewPass.Password.Trim();
             if (newPass.Length == 0 || newPass.Length > 50)
             {
-                MessageBox.Show("New password is not valid!");
+                MessageBox.Show("Nhập mật khẩu mới!");
                 txtNewPass.Focus();
                 return;
             }
@@ -42,14 +42,14 @@ namespace Cafocha.GUI.AdminWorkSpace
             var passcon = txtConNew.Password.Trim();
             if (!passcon.Equals(newPass))
             {
-                MessageBox.Show("Confirm new password is not match!");
+                MessageBox.Show("Mật khẩu mới không giống!");
                 txtConNew.Focus();
                 return;
             }
 
             _admin.Pass = newPass;
             _businessModuleLocator.AdminModule.updateAdmin(_admin);
-            MessageBox.Show("Your password was changed!");
+            MessageBox.Show("Mật khẩu đã được thay đổi!");
             Close();
         }
 

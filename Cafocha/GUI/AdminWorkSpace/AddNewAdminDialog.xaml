@@ -22,7 +22,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    New Admin Infomation
+                    Thông tin Quản lý
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -50,8 +50,8 @@
                         Margin="30,40,30,0">
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="UserName: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Tên đăng nhập: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="165" />
                     <TextBox
                         x:Name="txtUsername"
                         Width="215"
@@ -62,8 +62,8 @@
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="Password: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Mật khẩu: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="164" />
                     <PasswordBox x:Name="txtPass"
                                  FontSize="18"
                                  Foreground="White"
@@ -72,8 +72,8 @@
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="Confirm: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Nhập lại mật khẩu: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="165" />
                     <PasswordBox x:Name="txtCon"
                                  FontSize="18"
                                  Foreground="White"
@@ -82,8 +82,8 @@
 
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">
-                    <TextBlock Text="Name: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock Text="Tên: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" Width="165" />
                     <TextBox x:Name="txtName"
                              FontSize="18"
                              Foreground="White"
@@ -96,14 +96,14 @@
                             FontWeight="Bold"
                             Width="100"
                             Click="BtnAdd_OnClick">
-                        Save
+                        Lưu
                     </Button>
                     <Button x:Name="btnCancel"
                             Margin="100,0,0,0"
                             FontWeight="Bold"
                             Width="100"
                             Click="BtnCancel_OnClick">
-                        Cancel
+                        Hủy
                     </Button>
                 </StackPanel>
             </StackPanel>

@@ -49,7 +49,7 @@
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
                                      KeyDown="txtSearchBox_KeyDown"
-                                     materialDesign:HintAssist.Hint="Search by Name"
+                                     materialDesign:HintAssist.Hint="Tìm kiếm theo Tên"
                                      x:Name="txtSearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      BorderThickness="0"
@@ -126,22 +126,22 @@
                         <GridViewColumn Header="ID"
                                         Width="100"
                                         DisplayMemberBinding="{Binding OrdernoteId}" />
-                        <GridViewColumn Header="Employee"
+                        <GridViewColumn Header="Nhân viên"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Employee.Name}" />
-                        <GridViewColumn Header="Customer"
+                        <GridViewColumn Header="Khách hàng"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Customer.Name}" />
-                        <GridViewColumn Header="Order time"
+                        <GridViewColumn Header="Thời gian"
                                         Width="150"
                                         DisplayMemberBinding="{Binding OrderTime}" />
-                        <GridViewColumn Header="Total Price"
+                        <GridViewColumn Header="Thành tiền"
                                         Width="150"
                                         DisplayMemberBinding="{Binding TotalPrice,StringFormat=0.000}" />
-                        <GridViewColumn Header="Customer Pay"
-                                        Width="150"
+                        <GridViewColumn Header="Khách hàng thanh toán"
+                                        Width="180"
                                         DisplayMemberBinding="{Binding CustomerPay,StringFormat=0.000}" />
-                        <GridViewColumn Header="PayBack"
+                        <GridViewColumn Header="Tiền trả lại"
                                         Width="150"
                                         DisplayMemberBinding="{Binding PayBack,StringFormat=0.000}" />
 
@@ -167,7 +167,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="32">
-                        Order Note Details
+                        Chi tiết đơn hàng
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -185,13 +185,13 @@
                         <GridViewColumn Header="ID"
                                         Width="100"
                                         DisplayMemberBinding="{Binding OrdernoteId}" />
-                        <GridViewColumn Header="Product"
+                        <GridViewColumn Header="Sản phẩm"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Product.Name}" />
-                        <GridViewColumn Header="Quantity"
+                        <GridViewColumn Header="Số lượng"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Quan}" />
-                        <GridViewColumn Header="Note"
+                        <GridViewColumn Header="Ghi chú"
                                         Width="180"
                                         DisplayMemberBinding="{Binding Note}" />
                     </GridView>

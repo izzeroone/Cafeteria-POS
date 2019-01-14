@@ -36,7 +36,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Personal Infomation
+                    Thông tin nhân viên
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -61,7 +61,7 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Username:"
+                <TextBlock Text="Tên đăng nhập:"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtUsername"
                          FontSize="18"
@@ -76,7 +76,7 @@
                                          Kind="Alert"
                                          Foreground="#FFC13E17"
                                          Visibility="Hidden" />
-                <TextBlock Text="Password: "
+                <TextBlock Text="Mật khẩu: "
                            Margin="90,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <PasswordBox x:Name="txtPass"
@@ -94,7 +94,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Name: "
+                <TextBlock Text="Tên: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
                          FontSize="18"
@@ -111,7 +111,7 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="90,0,0,0">
                     <TextBlock x:Name="txbCon"
-                               Text="Confirm Password:"
+                               Text="Nhập lại mật khẩu:"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <PasswordBox x:Name="txtCon"
                                  Width="215"
@@ -129,7 +129,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Employee Role:"
+                <TextBlock Text="Loại nhân viên:"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <ComboBox x:Name="cboRole"
                           Width="215"
@@ -137,7 +137,7 @@
                           Foreground="White" />
                 <StackPanel Orientation="Horizontal"
                             Margin="130,0,0,0">
-                    <TextBlock Text="Birth: "
+                    <TextBlock Text="Ngày sinh: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <DatePicker x:Name="txtBirth"
                                 Width="215"
@@ -157,7 +157,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Address: "
+                <TextBlock Text="Địa chỉ: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox MaxWidth="300"
                          Foreground="White"
@@ -227,7 +227,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="15,20,0,0">
-                <TextBlock Text="Start Day: "
+                <TextBlock Text="Ngày làm viêc: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <DatePicker x:Name="txtStartDay"
                             Width="215"
@@ -235,7 +235,7 @@
                             Foreground="White"
                             HorizontalAlignment="Left"
                             materialDesign:HintAssist.Hint="Pick Date" />
-                <TextBlock Text="Hour wage: "
+                <TextBlock Text="Lương theo giờ: "
                            Margin="130,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtHour_wage"
@@ -278,7 +278,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Button x:Name="btnAddNew"
-                        Content="Save"
+                        Content="Lưu"
                         Width="121"
                         Height="Auto"
                         FontSize="18"
@@ -286,7 +286,7 @@
                         Margin="0,0,0,0"
                         Click="btnAddNew_Click" />
                 <Button x:Name="btnCancel"
-                        Content="Cancel"
+                        Content="Hủy"
                         Width="121"
                         Height="Auto"
                         FontSize="18"

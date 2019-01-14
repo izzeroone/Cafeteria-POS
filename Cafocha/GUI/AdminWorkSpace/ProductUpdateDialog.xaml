@@ -22,7 +22,7 @@
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="16"
                                    FontWeight="Bold">
-                            <Run Text="Information"
+                            <Run Text="Thông tin sản phẩm"
                                  FontWeight="Bold"
                                  FontSize="16" />
                         </TextBlock>

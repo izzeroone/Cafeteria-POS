@@ -37,7 +37,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var namee = txtName.Text.Trim();
             if (namee.Length == 0 || namee.Length > 50)
             {
-                MessageBox.Show("Name is not valid!");
+                MessageBox.Show("Nhập tên!");
                 txtName.Focus();
                 return;
             }

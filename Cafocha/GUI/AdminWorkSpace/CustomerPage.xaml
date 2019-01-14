@@ -28,7 +28,7 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Customer List
+                    Danh sách khách hàng
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -47,10 +47,10 @@
                     <GridViewColumn Header="ID"
                                     Width="100"
                                     DisplayMemberBinding="{Binding CusId}" />
-                    <GridViewColumn Header="Name"
+                    <GridViewColumn Header="Tên"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Phone"
+                    <GridViewColumn Header="Số điện thoại"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Phone}" />
                 </GridView>
@@ -70,7 +70,7 @@
                                HorizontalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18">
-                        Personal Infomation
+                        Thông tin khách hàng
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -104,7 +104,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Name: "
+                    <TextBlock Text="Tên: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtName"
                              FontSize="18"
@@ -150,7 +150,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="15,20,0,0">
-                    <TextBlock Text="Discount"
+                    <TextBlock Text="Giảm giá"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtDiscount"
                                      Text="{Binding Discount}"
@@ -179,7 +179,7 @@
                         VerticalAlignment="Bottom"
                         Margin="125,0,122.6,229.4">
                 <Button x:Name="bntAddnew"
-                        Content="Addnew"
+                        Content="Tạo mới"
                         Width="121"
                         Height="Auto"
                         FontSize="18"
@@ -187,7 +187,7 @@
                         Margin="0,0,0,0"
                         Click="bntAddnew_Click" />
                 <Button x:Name="bntUpdate"
-                        Content="Update"
+                        Content="Cập nhật"
                         Height="Auto"
                         Margin="100,0,0,0"
                         Width="121"
@@ -195,7 +195,7 @@
                         FontWeight="Bold"
                         Click="bntUpdate_Click" />
                 <Button x:Name="bntDel"
-                        Content="Delete"
+                        Content="Xóa"
                         Height="Auto"
                         Margin="100,0,0,0"
                         Width="121"

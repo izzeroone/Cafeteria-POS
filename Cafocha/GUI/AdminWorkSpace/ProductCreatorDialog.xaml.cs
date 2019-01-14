@@ -63,7 +63,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
 
-            cboStatus.Items.Add("Drink");
+            cboStatus.Items.Add("Thức uống");
             cboStatus.Items.Add("Starter");
             cboStatus.Items.Add("Main");
             cboStatus.Items.Add("Dessert");
@@ -125,7 +125,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var name = txtName.Text.Trim();
                 if (name.Length == 0)
                 {
-                    MessageBox.Show("Name is not valid!");
+                    MessageBox.Show("Điền tên sản phẩm!");
                     txtName.Focus();
                     return;
                 }
@@ -140,7 +140,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var imgname = txtImageName.Text.Trim();
                 if (imgname.Length == 0)
                 {
-                    MessageBox.Show("Please choose a image to continue!");
+                    MessageBox.Show("Chọn hình cho sản phẩm!");
                     btnLinkImg.Focus();
                     return;
                 }
@@ -157,7 +157,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 {
                     if (string.IsNullOrEmpty(txtSusggestPrice.Text.Trim()))
                     {
-                        MessageBox.Show("Price is not valid!");
+                        MessageBox.Show("Thêm giá cho sản phẩm");
                         txtPrice.Focus();
                         return;
                     }
@@ -191,8 +191,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                     if (File.Exists(destinationFile))
                     {
-                        var mess = MessageBox.Show("This product's image is already exist! Do you want to replace it?",
-                            "Warning!", MessageBoxButton.YesNo);
+                        var mess = MessageBox.Show("Hình này đã có ở sản phẩm khác bạn có muốn thêm?",
+                            "Cảnh báo!", MessageBoxButton.YesNo);
                         if (mess == MessageBoxResult.Yes)
                         {
                             File.Delete(destinationFile);
@@ -200,7 +200,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                         else
                         {
                             MessageBox.Show(
-                                "Please choose another image for this product or rename new image and try again!");
+                                "Hãy chọn tấm hình khác và thử lại!");
                             return;
                         }
                     }
@@ -214,8 +214,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 _businessModuleLocator.ProductModule.insertProduct(_currentProduct, _pdtList);
 
-                MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId +
-                                ") successful!");
+                MessageBox.Show("Thêm sản phẩm " + _currentProduct.Name + "(" + _currentProduct.ProductId +
+                                ") Thành công!");
                 ClearAllData();
             }
             catch (Exception ex)
