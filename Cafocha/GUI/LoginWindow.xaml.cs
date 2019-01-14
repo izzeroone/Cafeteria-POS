@@ -90,11 +90,11 @@ namespace Cafocha.GUI
                 btnLogin.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
                 await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(username, pass, null); });
-                if (EmployeeModule.WorkingEmployee != null)
+                if (_businessModuleLocator.EmployeeModule.Emploglist.Count != 0)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        if (EmployeeModule.WorkingEmployee.Emp.EmpRole == (int)EmployeeRole.Stock)
+                        if (_businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpRole == (int)EmployeeRole.Stock)
                         {
                             var main = new CafowareWindow();
                             main.Show();
@@ -135,7 +135,6 @@ namespace Cafocha.GUI
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                throw;
             }
           
 
@@ -150,7 +149,7 @@ namespace Cafocha.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Incorrect input!");
+                MessageBox.Show("Không hợp lệ!");
                 return;
             }
 
@@ -159,7 +158,7 @@ namespace Cafocha.GUI
                 KbEmpCodeLoginForm.ButtonGoAbleState(false);
                 await Task.Run(async () => { await _businessModuleLocator.EmployeeModule.login(null, null, code); });
 
-                if (EmployeeModule.WorkingEmployee != null)
+                if (_businessModuleLocator.EmployeeModule.Emploglist.Count != 0)
                 {
                     this.Dispatcher.Invoke(() =>
                     {

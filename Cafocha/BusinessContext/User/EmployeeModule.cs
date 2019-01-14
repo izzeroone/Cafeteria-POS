@@ -36,9 +36,31 @@ namespace Cafocha.BusinessContext.User
 
         public static EmpLoginList WorkingEmployee
         {
-            get => _workingEmployee;
-            set => _workingEmployee = value;
+            get
+            {
+                foreach (var employee in _emploglist)
+                {
+                    if (employee.IsStartWorking.Equals(true))
+                    {
+                        return employee;
+                    }
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    foreach (var employee in _emploglist)
+                    {
+                        employee.IsStartWorking = false;
+                    }
+                }
+            }
+            
         }
+
         public IEnumerable<Employee> getEmployees()
         {
             return _unitofwork.EmployeeRepository.Get(x => x.Deleted == 0);
@@ -115,7 +137,7 @@ namespace Cafocha.BusinessContext.User
         {
             await Task.Run(() =>
             {
-                foreach (var emp in _employeeList)
+                foreach (var emp in getEmployees())
                     if (emp.Username.Equals(username) && emp.DecryptedPass.Equals(password) ||
                         emp.DecryptedCode.Equals(code))
                     {
@@ -125,12 +147,12 @@ namespace Cafocha.BusinessContext.User
                             MessageBox.Show("Nhân viên này đã đăng nhập!");
                             return false;
                         }
-                        _workingEmployee = new EmpLoginList();
-                        _workingEmployee.Emp = emp;
-                                    Application.Current.Properties["EmpWorking"] = WorkingEmployee.Emp;
+
+                         Application.Current.Properties["EmpWorking"] = emp;
                         _emploglist.Add(new EmpLoginList
                         {
                             Emp = emp,
+                            IsStartWorking = false,
                             TimePercent = 0
                         });
 
@@ -144,17 +166,38 @@ namespace Cafocha.BusinessContext.User
             return false;
         }
 
-        public void startWorkingRecord()
+        public async Task<bool> logout(string username, string password, string code)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var emp in _employeeList)
+                    if (emp.Username.Equals(username) && emp.DecryptedPass.Equals(password) ||
+                        emp.DecryptedCode.Equals(code))
+                    {
+                        var chemp = _emploglist.FirstOrDefault(x => x.Emp.EmpId.Equals(emp.EmpId));
+                        _emploglist.Remove(chemp);
+
+                        return true;
+                    }
+
+                return false;
+            });
+
+
+            return false;
+        }
+
+        public void startWorkingRecord(EmpLoginList emm)
         {
             var empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
-                sle.EmpId.Equals(_workingEmployee.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
+                sle.EmpId.Equals(emm.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
                 sle.ForYear.Equals(DateTime.Now.Year)).LastOrDefault();
 
             if (empSalaryNote == null || empSalaryNote.IsPaid == 1)
             {
                 empSalaryNote = new SalaryNote
                 {
-                    EmpId = _workingEmployee.Emp.EmpId,
+                    EmpId = emm.Emp.EmpId,
                     SalaryValue = 0,
                     WorkHour = 0,
                     ForMonth = DateTime.Now.Month,
@@ -168,29 +211,26 @@ namespace Cafocha.BusinessContext.User
             _unitofwork.Save();
             var empWorkHistory = new WorkingHistory
                 { StartTime = DateTime.Now, ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
-            _workingEmployee.EmpWH = empWorkHistory;
-            _workingEmployee.EmpSal = empSalaryNote;
+            emm.EmpWH = empWorkHistory;
+            emm.EmpSal = empSalaryNote;
+            emm.IsStartWorking = true;
         }
 
-        public void endWorkingRecord()
+        public void endWorkingRecord(EmpLoginList emm)
         {
-            _workingEmployee.EmpWH.EndTime = DateTime.Now;
-            _unitofwork.WorkingHistoryRepository.Insert(_workingEmployee.EmpWH);
+            emm.EmpWH.EndTime = DateTime.Now;
+            _unitofwork.WorkingHistoryRepository.Insert(emm.EmpWH);
             _unitofwork.Save();
 
-            var workingHour = (_workingEmployee.EmpWH.EndTime - _workingEmployee.EmpWH.StartTime).TotalHours;
-            _workingEmployee.EmpSal.WorkHour += workingHour;
-            _workingEmployee.EmpSal.SalaryValue += (decimal)(workingHour * _workingEmployee.Emp.HourWage);
-            _unitofwork.SalaryNoteRepository.Update(_workingEmployee.EmpSal);
+            var workingHour = (emm.EmpWH.EndTime - emm.EmpWH.StartTime).TotalHours;
+            emm.EmpSal.WorkHour += workingHour;
+            emm.EmpSal.SalaryValue += (decimal)(workingHour * emm.Emp.HourWage);
+            _unitofwork.SalaryNoteRepository.Update(emm.EmpSal);
             _unitofwork.Save();
 
-            _workingEmployee.EmpWH = null;
-            _workingEmployee.EmpSal = null;
-        }
-
-        public void endWorking()
-        {
-            endWorkingRecord();
+            emm.EmpWH = null;
+            emm.EmpSal = null;
+            emm.IsStartWorking = false;
         }
 
         public void paySalaryNote(SalaryNote salaryNote)
@@ -222,6 +262,8 @@ namespace Cafocha.BusinessContext.User
         public WorkingHistory EmpWH { get; set; }
 
         public int TimePercent { get; set; }
+
+        public bool IsStartWorking { get; set; }
 
         public static implicit operator List<object>(EmpLoginList v)
         {

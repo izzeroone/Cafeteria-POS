@@ -45,9 +45,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             InitializeComponent();
             _businessModuleLocator = new BusinessModuleLocator();
-            emp = EmployeeModule.WorkingEmployee.Emp;
+            emp = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp;
 
-            cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
+            updateStatus();
             var t = _businessModuleLocator.EmployeeModule.Emploglist;
             isOrderOrder = false;
             isOrderPrint = false;
@@ -89,7 +89,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void WorkTime_Tick(object sender, EventArgs e)
         {
             var nowWH = DateTime.Now;
-            if (EmployeeModule.WorkingEmployee.EmpWH == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
                 return;
             }
@@ -129,119 +129,49 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnStartWorking_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["AdLogin"] != null) return;
-
-            if (EmployeeModule.WorkingEmployee.EmpWH != null)
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 4);
+            t.ShowDialog();
+            if (EmployeeModule.WorkingEmployee != null)
             {
-                MessageBox.Show("Có ai đó đang sử dụng!");
-                return;
+                if (WorkTimer != null) WorkTimer.Start();
             }
-
-            _businessModuleLocator.EmployeeModule.startWorkingRecord();
-            cUser.Content = "Đang làm việc";
-            if (WorkTimer != null) WorkTimer.Start();
         }
 
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
         {
-            endWorking();
+            if (_businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps.Count != 0)
+            {
+                MessageBox.Show("Bạn đang có đơn hàng, không thể kết thúc phiên làm việc");
+                return;
+            }
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 5);
+            t.ShowDialog();
+            if (EmployeeModule.WorkingEmployee == null)
+            {
+                if (WorkTimer != null) WorkTimer.Stop();
+            }
         }
 
-        private bool endWorking()
+
+        private void btnLoginAnother_Click(object sender, RoutedEventArgs e)
         {
-            //check admin
-            if (Application.Current.Properties["AdLogin"] != null)
-            {
-                Application.Current.Properties["AdLogin"] = null;
-
-                if (EmployeeModule.WorkingEmployee.EmpWH != null)
-                    cUser.Content = EmployeeModule.WorkingEmployee.Emp.Username;
-                else if (EmployeeModule.WorkingEmployee.EmpWH == null)
-                    cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-
-                return false;
-            }
-
-            //check employee
-            if (EmployeeModule.WorkingEmployee.EmpWH == null)
-            {
-                MessageBox.Show("Cannot end working when you are not started working!");
-                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-            }
-            else if (EmployeeModule.WorkingEmployee.EmpWH != null)
-            {
-                if (_businessModuleLocator.TakingOrderModule.OrderTemp.OrderDetailsTemps.Count != 0)
-                {
-                    MessageBox.Show("Bạn đang có đơn hàng, không thể kết thúc phiên làm việc");
-                    return false;
-                }
-
-                _businessModuleLocator.EmployeeModule.endWorking();
-                cUser.Content = _businessModuleLocator.EmployeeModule.Emploglist.Count() + " employee(s) available";
-            }
-
-            if (CheckWorkingTimer != null) CheckWorkingTimer.Stop();
-            return true;
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 1);
+            t.ShowDialog();
+            if (WorkTimer != null) WorkTimer.Start();
         }
 
-        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current.Properties["AdLogin"] != null) return;
-
-//            var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 1);
-//            ael.ShowDialog();
-        }
 
         private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
-            if (Application.Current.Properties["AdLogin"] != null) return;
-
-            var ed = new EmployeeDetail(EmployeeModule.WorkingEmployee.Emp.Username, _businessModuleLocator);
-            ed.Show();
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 2);
+            t.ShowDialog();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            //if (Application.Current.Properties["AdLogin"] != null)
-            //    return;
-
-
-            //if (Application.Current.Properties["CurrentEmpWorking"] != null)
-            //    MessageBox.Show("You should end working before log out!");
-
-            //var ael = new AllEmployeeLogin((MainWindow) GetWindow(this), _businessModuleLocator, cUser, 3);
-            //ael.ShowDialog();
-            Application.Current.Properties["AdLogin"] = null;
-
-            if (EmployeeModule.WorkingEmployee.EmpWH != null)
-            {
-                var dialogResult = MessageBox.Show("Bạn đang trong phiên làm việc.\n Bạn có muốn kết thúc phiên làm việc và đăng xuất!", "Đăng xuất", MessageBoxButton.YesNo);
-                if (dialogResult == MessageBoxResult.Yes)
-                {
-                    if (endWorking())
-                    {
-
-                        EmployeeModule.WorkingEmployee = null;
-                        Dispatcher.Invoke(() =>
-                        {
-                            var main = new LoginWindow();
-                            main.Show();
-                            Close();
-                        });
-                    }
-                }
-
-            }
-            else
-            {
-                EmployeeModule.WorkingEmployee = null;
-                Dispatcher.Invoke(() =>
-                {
-                    var main = new LoginWindow();
-                    main.Show();
-                    Close();
-                });
-            }
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 3);
+            t.ShowDialog();
+           
         }
 
         private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -254,6 +184,22 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
+        }
+
+        private void updateStatus()
+        {
+
+            if (EmployeeModule.WorkingEmployee != null)
+            {
+                cUser.Content = "Đang làm việc";
+            }
+            else
+            {
+                cUser.Content = String.Format("Hiện có {0} nhân viên",
+                    _businessModuleLocator.EmployeeModule.Emploglist.Count);
+                ;
+            }
+
         }
     }
 }

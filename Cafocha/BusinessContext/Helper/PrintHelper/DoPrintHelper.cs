@@ -127,9 +127,9 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     Owner = new Owner
                     {
                         ImgName = "logo.png",
-                        Address = "Address: f.7th, Abc Building, 101 St.Vo Van Ngan, w.Thu Duc, HCM City, Viet Nam",
-                        Phone = "",
-                        PageName = "RECEIPT"
+                        Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
+                        Phone = "038.123.456",
+                        PageName = "Hóa đơn"
                     },
 
                     Order = order
@@ -148,9 +148,9 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     Owner = new Owner
                     {
                         ImgName = "logo.png",
-                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "",
-                        PageName = "RECEIPT"
+                        Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
+                        Phone = "038.123.456",
+                        PageName = "Hóa đơn"
                     },
 
                     Order = order
@@ -168,9 +168,9 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     Owner = new Owner
                     {
                         ImgName = "logo.png",
-                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "",
-                        PageName = "RECEIPT"
+                        Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
+                        Phone = "038.123.456",
+                        PageName = "Hóa đơn"
                     },
 
                     StockIn = stockIn
@@ -188,9 +188,9 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     Owner = new Owner
                     {
                         ImgName = "logo.png",
-                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "",
-                        PageName = "RECEIPT"
+                        Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
+                        Phone = "038.123.456",
+                        PageName = "Hóa đơn"
                     },
 
                     StockOut = stockOut

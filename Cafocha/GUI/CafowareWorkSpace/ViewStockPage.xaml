@@ -17,6 +17,7 @@
     <Page.Resources>
         <converter:StockGroupConverter x:Key="StockGroupConverter"/>
         <converters:IngredientMaxProgressBarConverter x:Key="IngredientMaxProgressBarConverter" />
+
     </Page.Resources>
 
 

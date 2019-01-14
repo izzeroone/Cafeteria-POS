@@ -46,7 +46,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _viewStockPage = new ViewStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
 
-                CUserChip.Content = EmployeeModule.WorkingEmployee.Emp.Name;
+                CUserChip.Content = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.Name;
                 _createStockPage = new CreateStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
                 _stockInPage = new StockInPage(_businessModuleLocator,
@@ -111,8 +111,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Properties["AdLogin"] = null;
-            Application.Current.Properties["EmpLogin"] = null;
+            _businessModuleLocator.EmployeeModule.Emploglist.Clear();
             _loginWindow = new LoginWindow();
             Close();
             _loginWindow.Show();

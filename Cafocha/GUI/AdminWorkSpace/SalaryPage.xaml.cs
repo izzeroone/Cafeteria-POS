@@ -98,19 +98,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var filter = SearchBox.Text.Trim();
-
-            if (filter.Length != 0)
-            {
-                SalList = SalList.Where(x => x.Employee.Name.Contains(filter));
-                lvSalary.ItemsSource = SalList;
-            }
-            else
-            {
-                SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository
-                    .Get(includeProperties: "Employee,WorkingHistories");
-                lvSalary.ItemsSource = SalList;
-            }
+            SearchBox_KeyDown(sender, null);
         }
 
         private void cboMonth_SelectionChanged(object sender, SelectionChangedEventArgs e)

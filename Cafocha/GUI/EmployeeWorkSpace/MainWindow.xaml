@@ -89,18 +89,21 @@
 
                             <StackPanel>
                                 <Button x:Name="btnStartWorking"
-                                        Content="Start Working"
+                                        Content="Bắt đầu làm việc"
                                         Click="btnStartWorking_Click" />
                                 <Button x:Name="btnEndWorking"
-                                        Content="End Working"
+                                        Content="Kết thúc làm việc"
                                         Click="btnEndWorking_Click" />
                                 <Separator />
+                                <Button x:Name="btnLoginAnother"
+                                        Content="Đăng nhập mới"
+                                        Click="btnLoginAnother_Click" />
                                 <Button x:Name="btnEmpDetail"
-                                        Content="Details"
+                                        Content="Chi tiết nhân viên"
                                         Click="btnEmpDetail_Click" />
                                 <Separator />
                                 <Button x:Name="bntLogout"
-                                        Content="Log out"
+                                        Content="Đăng xuất"
                                         Click="bntLogout_Click" />
                             </StackPanel>
                         </materialDesign:PopupBox>
