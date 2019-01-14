@@ -86,6 +86,7 @@
                                       Margin="5,0,0,0"
                                       SelectedValuePath="EmpId"
                                       DisplayMemberPath="Name" 
+                                      IsSynchronizedWithCurrentItem="True"
                                       SelectionChanged="CboEmployee_SelectionChanged"
                                       GotKeyboardFocus="CboEmployee_GotKeyboardFocus"
                                       GotMouseCapture="CboEmployee_GotMouseCapture">
