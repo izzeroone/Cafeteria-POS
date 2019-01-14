@@ -82,9 +82,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
 
             // fill chart at first time
-            ColumnChartDatafilling(FILL_ALL);
-            ChartDataFilling(FILL_ALL);
-            ChartDataFillingByTime(FILL_ALL);
+            ColumnChartDatafilling();
+            ChartDataFilling();
+            ChartDataFillingByTime();
         }
 
         public Func<ChartPoint, string> PointLabel { get; set; }
@@ -103,36 +103,23 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public void RefreshHome()
         {
-            
-
-            ColumnChartDatafilling(FILL_ALL);
-            ChartDataFilling(FILL_ALL);
-            ChartDataFillingByTime(FILL_ALL);
+            ColumnChartDatafilling();
+            ChartDataFilling();
+            ChartDataFillingByTime();
         }
 
-        private void ColumnChartDatafilling(int filter)
+        private void ColumnChartDatafilling()
         {
-            var orderNoteWithTime = new List<OrderNote>();
+            // filter data
+            var startDate = dpStartDay.SelectedDate.Value;
+            var endDate = dpEndDay.SelectedDate.Value;
 
-            if (filter == FILL_BY_DAY)
-            {
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                        c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                        c.OrderTime.Year == DateTime.Now.Year)
-                    .ToList();
-            }
-            else if (filter == FILL_BY_MONTH)
-            {
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                        c.OrderTime.Month == DateTime.Now.Month && c.OrderTime.Year == DateTime.Now.Year)
-                    .ToList();
-            }
-            else
-            {
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
+            startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 23, 59, 59);
+            endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 23, 59, 59);
 
-            }
+
+            var orderNoteWithTime = new List<OrderNote>(_businessModuleLocator.RepositoryLocator.OrderRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
 
 
             decimal count = 0;
@@ -158,19 +145,9 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public static bool IsInTimeRange(DateTime obj, DateTime timeRangeFrom, DateTime timeRangeTo)
         {
-            TimeSpan time = obj.TimeOfDay, t1From = timeRangeFrom.TimeOfDay, t1To = timeRangeTo.TimeOfDay;
+            long time = obj.Ticks, t1From = timeRangeFrom.Ticks, t1To = timeRangeTo.Ticks;
 
-            // if the time from is smaller than the time to, just filter by range
-            if (t1From <= t1To)
-            {
-                return time >= t1From && time <= t1To;
-            }
-
-            // time from is greater than time to so two time intervals have to be created: one {timeFrom-12AM) and another one {12AM to timeTo}
-            TimeSpan t2From = TimeSpan.MinValue, t2To = t1To;
-            t1To = TimeSpan.MaxValue;
-
-            return (time >= t1From && time <= t1To) || (time >= t2From && time <= t2To);
+            return time >= t1From && time <= t1To;
         }
 
         public static bool IsInTimeRange(DateTime? datePay, DateTime startDate, DateTime endDate)
@@ -180,19 +157,20 @@ namespace Cafocha.GUI.AdminWorkSpace
             return IsInTimeRange(UpdatedTime, startDate, endDate);
         }
 
-        private void ChartDataFillingByTime(int a)
+        private void ChartDataFillingByTime()
         {
             // filter data
-
             var startDate = dpStartDay.SelectedDate.Value;
             var endDate = dpEndDay.SelectedDate.Value;
+
+            startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 23, 59, 59);
+            endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 23, 59, 59);
 
 
             var orderNoteWithTime = new List<OrderNote>(_businessModuleLocator.RepositoryLocator.OrderRepository.Get().ToList()
                 .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
-
-            var stockInWithTime = new List<StockIn>(_businessModuleLocator.RepositoryLocator.StockInRepository.Get().ToList()
-                .Where(obj => IsInTimeRange(obj.InTime,startDate,endDate)).ToList());
+            var stockInWithTime = new List<StockIn>(_businessModuleLocator.RepositoryLocator.StockInRepository.Get().ToList());
+            stockInWithTime = stockInWithTime.Where(obj => IsInTimeRange(obj.InTime,startDate,endDate)).ToList();
             var stockOutWithTime = new List<StockOut>(_businessModuleLocator.RepositoryLocator.StockOutRepository.Get().ToList()
                 .Where(obj => IsInTimeRange(obj.OutTime, startDate, endDate)).ToList());
             var salaryNoteWithTime = new List<SalaryNote>(_businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get().ToList()
@@ -228,15 +206,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
 
             txtTotalBills.Text = orderNoteWithTime.Count().ToString();
-            txtSaleValue.Text = string.Format("{0:0.000}",
-                TotalePrice_nonDiscountSang + TotalePrice_nonDiscountChieu + TotalePrice_nonDiscountToi);
+
             txtDiscounts.Text = string.Format("{0:0.000}",
                 TotalePrice_nonDiscountSang + TotalePrice_nonDiscountChieu + TotalePrice_nonDiscountToi -
                 (TotalPriceSang + TotalPriceChieu + TotalPriceToi));
-
-
-            txtReceivables.Text = string.Format("{0:0.000}", TotalPriceSang + TotalPriceChieu + TotalPriceToi);
-            txtRevenue.Text = string.Format("{0:0.000}", TotalPriceSang + TotalPriceChieu + TotalPriceToi);
 
             var totalStockIn = (decimal)0;
             foreach (var stockIn in stockInWithTime)
@@ -250,7 +223,11 @@ namespace Cafocha.GUI.AdminWorkSpace
                 totalSalary += salary.SalaryValue;
             }
             txtTotalSalary.Text = string.Format("{0:0.000}", totalSalary);
-            
+
+            var totalReceive = TotalPriceSang + TotalPriceChieu + TotalPriceToi;
+            txtReceivables.Text = string.Format("{0:0.000}", totalReceive);
+            txtProfit.Text = string.Format("{0:0.000}", totalReceive - totalStockIn - totalSalary);
+
 
             // binding
             FirstPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPriceSang) };
@@ -264,21 +241,18 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
 
-        private void ChartDataFilling(int filter)
+        private void ChartDataFilling()
         {
-            var orderNoteWithTime = new List<OrderNote>();
-            if (filter == FILL_BY_DAY)
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                    c.OrderTime.Year == DateTime.Now.Year).ToList();
-            else if (filter == FILL_BY_MONTH)
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                        c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                        c.OrderTime.Year == DateTime.Now.Year)
-                    .ToList();
-            else
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
+            // filter data
+            var startDate = dpStartDay.SelectedDate.Value;
+            var endDate = dpEndDay.SelectedDate.Value;
+
+            startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 23, 59, 59);
+            endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 23, 59, 59);
+
+
+            var orderNoteWithTime = new List<OrderNote>(_businessModuleLocator.RepositoryLocator.OrderRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
 
 
             decimal count = 0;
@@ -305,34 +279,12 @@ namespace Cafocha.GUI.AdminWorkSpace
             var selectedSeries = (PieSeries)chartpoint.SeriesView;
             selectedSeries.PushOut = 8;
         }
-
-
-        private void RdToday_OnClick(object sender, RoutedEventArgs e)
-        {
-            ChartDataFillingByTime(1);
-            ChartDataFilling(1);
-            ColumnChartDatafilling(1);
-        }
-
-        private void RdAll_OnClick(object sender, RoutedEventArgs e)
-        {
-            ChartDataFillingByTime(0);
-            ChartDataFilling(0);
-            ColumnChartDatafilling(0);
-        }
-
-        private void RdMonth_OnClick(object sender, RoutedEventArgs e)
-        {
-            ChartDataFillingByTime(2);
-            ChartDataFilling(2);
-            ColumnChartDatafilling(2);
-        }
         
         private void TxtStartDay_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChartDataFillingByTime(2);
-            ChartDataFilling(2);
-            ColumnChartDatafilling(2);
+            ChartDataFillingByTime();
+            ChartDataFilling();
+            ColumnChartDatafilling();
         }
     }
 }

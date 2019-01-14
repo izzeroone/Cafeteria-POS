@@ -51,26 +51,26 @@
                     <!-- </RadioButton> -->
                     <TextBlock 
                         Text=" Ngày bắt đầu:  "
-                        Foreground="White"
+                        Foreground="Gray"
                         FontWeight="Bold"
                         FontSize="20"
                         HorizontalAlignment="Center"/>
                     <DatePicker x:Name="dpStartDay"
                             Width="215"
                             FontSize="18"
-                            Foreground="White"
+                            Foreground="LightGray"
                             HorizontalAlignment="Left" />
                 
                     <TextBlock 
                         Text="   -    Ngày Kết Thúc:  "
-                        Foreground="White"
+                        Foreground="Gray"
                         FontWeight="Bold"
                         FontSize="20"
                         HorizontalAlignment="Center"/>
                     <DatePicker x:Name="dpEndDay"
                             Width="215"
                             FontSize="18"
-                            Foreground="White"
+                            Foreground="LightGray"
                             HorizontalAlignment="Left" />
                 
                 </StackPanel>
@@ -86,7 +86,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="1"
-                              Header="Filter by Employee"
+                              Header="Thống Kê Theo Nhân Viên"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
                         <lvc:PieChart
@@ -103,7 +103,7 @@
                         </lvc:PieChart>
                     </GroupBox>
                     <GroupBox Grid.Row="0"
-                              Header="Filter by time in day"
+                              Header="Thống Kê Theo Giờ Trong Ngày"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
                         <lvc:PieChart
@@ -150,10 +150,10 @@
                                 FontWeight="Bold"
                                 FontSize="20"
                                 HorizontalAlignment="Center">
-                                Revenue
+                                Lợi Nhuận
                             </TextBlock>
                             <Border HorizontalAlignment="Center">
-                                <TextBlock x:Name="txtRevenue"
+                                <TextBlock x:Name="txtProfit"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"
                                            FontSize="50" />
@@ -161,15 +161,6 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center">
-                            <StackPanel>
-                                <TextBlock Foreground="White"
-                                           FontWeight="Bold"
-                                           FontSize="20"><Run Text="Doanh Số Bán"/></TextBlock>
-                                <TextBlock x:Name="txtSaleValue"
-                                           Foreground="OrangeRed"
-                                           FontWeight="Bold"
-                                           FontSize="20" />
-                            </StackPanel>
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
@@ -196,6 +187,17 @@
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
                                            FontSize="20">
+                                    Doanh Thu
+                                </TextBlock>
+                                <TextBlock x:Name="txtReceivables"
+                                           FontWeight="Bold"
+                                           Foreground="OrangeRed"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="20">
                                     Tổng Chi Kho
                                 </TextBlock>
                                 <TextBlock x:Name="txtTotalStockIn"
@@ -210,17 +212,6 @@
                                     Tổng Chi Lương
                                 </TextBlock>
                                 <TextBlock x:Name="txtTotalSalary"
-                                           FontWeight="Bold"
-                                           Foreground="OrangeRed"
-                                           FontSize="20" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock Foreground="White"
-                                           FontWeight="Bold"
-                                           FontSize="20">
-                                    Tổng Thu
-                                </TextBlock>
-                                <TextBlock x:Name="txtReceivables"
                                            FontWeight="Bold"
                                            Foreground="OrangeRed"
                                            FontSize="20" />
