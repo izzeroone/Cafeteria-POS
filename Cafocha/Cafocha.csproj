@@ -302,32 +302,6 @@
     <Compile Include="GUI\Support\PassKeyboardControl.xaml.cs">
       <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\WPFMaterialDesign\ButtonsViewModel.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\MyConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\NonPercentConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\NotZeroConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\PercentConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\ArcEndPointConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\ArcSizeConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\LargeArcConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\LocalEx.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformCentreConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\DatePickerCalendar.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WPFMaterialDesign\PaletteSelectorViewModel.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\Transitions\TransitionAssist.cs" />
-    <Compile Include="GUI\WPFMaterialDesign\UcPalette.xaml.cs">
-      <DependentUpon>UcPalette.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\WPFMaterialDesign\UcPaletteSelector.xaml.cs">
-      <DependentUpon>UcPaletteSelector.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Repository\DAL\RepositoryLocator.cs" />
     <Compile Include="Repository\Generic\GenericRepository.cs" />
     <Compile Include="BusinessContext\Security\AESGCM.cs" />
@@ -348,6 +322,32 @@
     <Compile Include="Entities\CustomEntities\PaymentMethod.cs" />
     <Compile Include="Entities\CustomEntities\Product.cs" />
     <Compile Include="Entities\CustomEntities\ProductType.cs" />
+    <Compile Include="WPFMaterialDesign\ButtonsViewModel.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\MyConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\NonPercentConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\NotZeroConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\PercentConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\ArcEndPointConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\ArcSizeConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\LargeArcConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\LocalEx.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformCentreConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
+    <Compile Include="WPFMaterialDesign\DatePickerCalendar.cs" />
+    <Compile Include="WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="WPFMaterialDesign\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPFMaterialDesign\PaletteSelectorViewModel.cs" />
+    <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
+    <Compile Include="WPFMaterialDesign\UcPalette.xaml.cs">
+      <DependentUpon>UcPalette.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPFMaterialDesign\UcPaletteSelector.xaml.cs">
+      <DependentUpon>UcPaletteSelector.xaml</DependentUpon>
+    </Compile>
     <Page Include="GUI\AdminNavWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -520,15 +520,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\WPFMaterialDesign\Home.xaml">
+    <Page Include="WPFMaterialDesign\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\WPFMaterialDesign\UcPalette.xaml">
+    <Page Include="WPFMaterialDesign\UcPalette.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\WPFMaterialDesign\UcPaletteSelector.xaml">
+    <Page Include="WPFMaterialDesign\UcPaletteSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
