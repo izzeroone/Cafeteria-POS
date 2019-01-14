@@ -40,7 +40,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
             Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null,
             string includeProperties = "")
         {
-            return _unitofwork.ProductRepository.Get(filter, orderBy, includeProperties);
+            return _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0), orderBy, includeProperties);
         }
 
         public Product getProduct(string productID)
