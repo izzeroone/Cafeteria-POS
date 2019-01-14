@@ -187,6 +187,25 @@ namespace Cafocha.BusinessContext.User
             return false;
         }
 
+        public void logoutSync(string username, string password, string code, Action<bool> action)
+        {
+            Task.Run(() =>
+            {
+                bool a = false;
+
+                foreach (var emp in _employeeList)
+                    if (emp.Username.Equals(username) && emp.DecryptedPass.Equals(password) ||
+                        emp.DecryptedCode.Equals(code))
+                    {
+                        var chemp = _emploglist.FirstOrDefault(x => x.Emp.EmpId.Equals(emp.EmpId));
+                        _emploglist.Remove(chemp);
+
+                        a = true;
+                    }
+                action(a);
+            });
+        }
+
         public void startWorkingRecord(EmpLoginList emm)
         {
             var empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>

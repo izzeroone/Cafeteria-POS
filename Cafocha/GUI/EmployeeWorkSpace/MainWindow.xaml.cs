@@ -170,7 +170,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
             logout();
-           
+
+        }
+
+        private void logout()
+        {
+            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 3);
+            t.ShowDialog();
         }
 
         private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -183,12 +189,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             var printer = new DoPrintHelper(_businessModuleLocator.RepositoryLocator, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
-        }
-
-        private void logout()
-        {
-            var t = new AllEmployeeLogin(this, _businessModuleLocator, cUser, 3);
-            t.ShowDialog();
         }
 
         private void updateStatus()

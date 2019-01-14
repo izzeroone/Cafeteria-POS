@@ -212,12 +212,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             var t = lvLoginList.SelectedItem as EmpLoginList;
+            _emplog = t;
             if (_emplog == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
-            _emplog = t;
             if (Width <= 500)
             {
                 IsShow = false;
