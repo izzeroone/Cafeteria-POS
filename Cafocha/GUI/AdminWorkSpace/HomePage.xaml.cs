@@ -31,6 +31,15 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
+
+            dpStartDay.SelectedDate = new DateTime(1990, 1, 1);
+            dpEndDay.SelectedDate = DateTime.UtcNow.AddHours((TimeZoneInfo.Local.BaseUtcOffset.Hours));
+
+            dpEndDay.SelectedDate = DateTime.Now;
+
+            dpStartDay.SelectedDateChanged += TxtStartDay_OnSelectedDateChanged;
+            dpEndDay.SelectedDateChanged += TxtStartDay_OnSelectedDateChanged;
+
             // init datasource for Time PieChart
             SeriesCollectionTime = new SeriesCollection();
             PriceList = new List<decimal>();
@@ -55,7 +64,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             SeriesCollection = new SeriesCollection();
             EmpPieSeries = new List<PieSeries>();
             foreach (var item in _businessModuleLocator.EmployeeModule.getEmployees())
-                EmpPieSeries.Add(new PieSeries {Title = item.EmpId + ": " + item.Name});
+                EmpPieSeries.Add(new PieSeries { Title = item.EmpId + ": " + item.Name });
             foreach (var item in EmpPieSeries) SeriesCollection.Add(item);
 
             //init datasource for ColumnChart
@@ -94,7 +103,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         public void RefreshHome()
         {
-            rdAll.IsChecked = true;
+            
 
             ColumnChartDatafilling(FILL_ALL);
             ChartDataFilling(FILL_ALL);
@@ -104,18 +113,28 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void ColumnChartDatafilling(int filter)
         {
             var orderNoteWithTime = new List<OrderNote>();
+
             if (filter == FILL_BY_DAY)
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                    c.OrderTime.Year == DateTime.Now.Year).ToList();
-            else if (filter == FILL_BY_MONTH)
+            {
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
                         c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
                         c.OrderTime.Year == DateTime.Now.Year)
                     .ToList();
+            }
+            else if (filter == FILL_BY_MONTH)
+            {
+                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
+                        c.OrderTime.Month == DateTime.Now.Month && c.OrderTime.Year == DateTime.Now.Year)
+                    .ToList();
+            }
             else
+            {
                 orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
                     .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
+
+            }
+
+
             decimal count = 0;
             Values.Clear();
             Labels.Clear();
@@ -137,67 +156,113 @@ namespace Cafocha.GUI.AdminWorkSpace
             DataContext = this;
         }
 
-        private void ChartDataFillingByTime(int filter)
+        public static bool IsInTimeRange(DateTime obj, DateTime timeRangeFrom, DateTime timeRangeTo)
+        {
+            TimeSpan time = obj.TimeOfDay, t1From = timeRangeFrom.TimeOfDay, t1To = timeRangeTo.TimeOfDay;
+
+            // if the time from is smaller than the time to, just filter by range
+            if (t1From <= t1To)
+            {
+                return time >= t1From && time <= t1To;
+            }
+
+            // time from is greater than time to so two time intervals have to be created: one {timeFrom-12AM) and another one {12AM to timeTo}
+            TimeSpan t2From = TimeSpan.MinValue, t2To = t1To;
+            t1To = TimeSpan.MaxValue;
+
+            return (time >= t1From && time <= t1To) || (time >= t2From && time <= t2To);
+        }
+
+        public static bool IsInTimeRange(DateTime? datePay, DateTime startDate, DateTime endDate)
+        {
+            DateTime UpdatedTime = datePay ?? DateTime.Now;
+
+            return IsInTimeRange(UpdatedTime, startDate, endDate);
+        }
+
+        private void ChartDataFillingByTime(int a)
         {
             // filter data
-            var orderNoteWithTime = new List<OrderNote>();
-            if (filter == FILL_BY_DAY)
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                    c.OrderTime.Year == DateTime.Now.Year).ToList();
-            else if (filter == FILL_BY_MONTH)
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository.Get(c =>
-                    c.OrderTime.Day == DateTime.Now.Day && c.OrderTime.Month == DateTime.Now.Month &&
-                    c.OrderTime.Year == DateTime.Now.Year).ToList();
-            else
-                orderNoteWithTime = _businessModuleLocator.RepositoryLocator.OrderRepository
-                    .Get(c => c.OrderTime.Year == DateTime.Now.Year).ToList();
+
+            var startDate = dpStartDay.SelectedDate.Value;
+            var endDate = dpEndDay.SelectedDate.Value;
 
 
+            var orderNoteWithTime = new List<OrderNote>(_businessModuleLocator.RepositoryLocator.OrderRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
+
+            var stockInWithTime = new List<StockIn>(_businessModuleLocator.RepositoryLocator.StockInRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.InTime,startDate,endDate)).ToList());
+            var stockOutWithTime = new List<StockOut>(_businessModuleLocator.RepositoryLocator.StockOutRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.OutTime, startDate, endDate)).ToList());
+            var salaryNoteWithTime = new List<SalaryNote>(_businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.DatePay, startDate, endDate)).ToList());
+
+            
             // calculate data
-            decimal TotalPrice1 = 0;
-            decimal TotalPrice2 = 0;
-            decimal TotalPrice3 = 0;
-            decimal TotalePrice_nonDiscount1 = 0;
-            decimal TotalePrice_nonDiscount2 = 0;
-            decimal TotalePrice_nonDiscount3 = 0;
+            decimal TotalPriceSang = 0;
+            decimal TotalPriceChieu = 0;
+            decimal TotalPriceToi = 0;
+
+            decimal TotalePrice_nonDiscountSang = 0;
+            decimal TotalePrice_nonDiscountChieu = 0;
+            decimal TotalePrice_nonDiscountToi = 0;
+
             foreach (var item in orderNoteWithTime.Where(c => c.OrderTime.Hour >= 0 && c.OrderTime.Hour < 12))
             {
-                TotalPrice1 += item.TotalPrice;
-                TotalePrice_nonDiscount1 += item.TotalPriceNonDisc;
+                TotalPriceSang += item.TotalPrice;
+                TotalePrice_nonDiscountSang += item.TotalPriceNonDisc;
             }
 
             foreach (var item in orderNoteWithTime.Where(c => c.OrderTime.Hour >= 12 && c.OrderTime.Hour < 18))
             {
-                TotalPrice2 += item.TotalPrice;
-                TotalePrice_nonDiscount2 += item.TotalPriceNonDisc;
+                TotalPriceChieu += item.TotalPrice;
+                TotalePrice_nonDiscountChieu += item.TotalPriceNonDisc;
             }
 
             foreach (var item in orderNoteWithTime.Where(c =>
                 c.OrderTime.Hour >= 18 && c.OrderTime.Hour <= 23 && c.OrderTime.Minute <= 59))
             {
-                TotalPrice3 += item.TotalPrice;
-                TotalePrice_nonDiscount3 += item.TotalPriceNonDisc;
+                TotalPriceToi += item.TotalPrice;
+                TotalePrice_nonDiscountToi += item.TotalPriceNonDisc;
             }
 
-            txtRevenue.Text = string.Format("{0:0.000}", TotalPrice1 + TotalPrice2 + TotalPrice3);
-            txtReceivables.Text = string.Format("{0:0.000}", TotalPrice1 + TotalPrice2 + TotalPrice3);
             txtTotalBills.Text = orderNoteWithTime.Count().ToString();
             txtSaleValue.Text = string.Format("{0:0.000}",
-                TotalePrice_nonDiscount1 + TotalePrice_nonDiscount2 + TotalePrice_nonDiscount3);
+                TotalePrice_nonDiscountSang + TotalePrice_nonDiscountChieu + TotalePrice_nonDiscountToi);
             txtDiscounts.Text = string.Format("{0:0.000}",
-                TotalePrice_nonDiscount1 + TotalePrice_nonDiscount2 + TotalePrice_nonDiscount3 -
-                (TotalPrice1 + TotalPrice2 + TotalPrice3));
+                TotalePrice_nonDiscountSang + TotalePrice_nonDiscountChieu + TotalePrice_nonDiscountToi -
+                (TotalPriceSang + TotalPriceChieu + TotalPriceToi));
+
+
+            txtReceivables.Text = string.Format("{0:0.000}", TotalPriceSang + TotalPriceChieu + TotalPriceToi);
+            txtRevenue.Text = string.Format("{0:0.000}", TotalPriceSang + TotalPriceChieu + TotalPriceToi);
+
+            var totalStockIn = (decimal)0;
+            foreach (var stockIn in stockInWithTime)
+            {
+                totalStockIn += stockIn.TotalAmount;
+            }
+            txtTotalStockIn.Text = string.Format("{0:0.000}", totalStockIn);
+            var totalSalary = (decimal)0;
+            foreach (var salary in salaryNoteWithTime)
+            {
+                totalSalary += salary.SalaryValue;
+            }
+            txtTotalSalary.Text = string.Format("{0:0.000}", totalSalary);
+            
+
             // binding
-            FirstPieSeries.Values = new ChartValues<ObservableValue> {new ObservableValue((double) TotalPrice1)};
+            FirstPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPriceSang) };
             FirstPieSeries.DataLabels = true;
 
-            SecondPieSeries.Values = new ChartValues<ObservableValue> {new ObservableValue((double) TotalPrice2)};
+            SecondPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPriceChieu) };
             SecondPieSeries.DataLabels = true;
 
-            ThirdPieSeries.Values = new ChartValues<ObservableValue> {new ObservableValue((double) TotalPrice3)};
+            ThirdPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPriceToi) };
             ThirdPieSeries.DataLabels = true;
         }
+
 
         private void ChartDataFilling(int filter)
         {
@@ -223,7 +288,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 var empId = data[0];
 
                 foreach (var item2 in orderNoteWithTime.Where(c => c.EmpId.Equals(empId))) count += item2.TotalPrice;
-                itemserie.Values = new ChartValues<ObservableValue> {new ObservableValue((double) count)};
+                itemserie.Values = new ChartValues<ObservableValue> { new ObservableValue((double)count) };
                 itemserie.DataLabels = true;
                 count = 0;
             }
@@ -231,13 +296,13 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
-            var chart = (PieChart) chartpoint.ChartView;
+            var chart = (PieChart)chartpoint.ChartView;
 
             //clear selected slice.
             foreach (PieSeries series in chart.Series)
                 series.PushOut = 0;
 
-            var selectedSeries = (PieSeries) chartpoint.SeriesView;
+            var selectedSeries = (PieSeries)chartpoint.SeriesView;
             selectedSeries.PushOut = 8;
         }
 
@@ -257,6 +322,13 @@ namespace Cafocha.GUI.AdminWorkSpace
         }
 
         private void RdMonth_OnClick(object sender, RoutedEventArgs e)
+        {
+            ChartDataFillingByTime(2);
+            ChartDataFilling(2);
+            ColumnChartDatafilling(2);
+        }
+        
+        private void TxtStartDay_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             ChartDataFillingByTime(2);
             ChartDataFilling(2);
