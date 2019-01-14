@@ -320,7 +320,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbPayBackLable = new TextBlock
             {
-                Text = "Tiền thối:",
+                Text = "Tiền trả lại:",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,

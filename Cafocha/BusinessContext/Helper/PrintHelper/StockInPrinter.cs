@@ -59,7 +59,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
             // Head Text
             var blkHeadText = new BlockUIContainer();
-            Generate_HeadText(blkHeadText, "Stock In");
+            Generate_HeadText(blkHeadText, "Phiếu nhập kho");
 
             // Info Text
             var blkInfoText = new BlockUIContainer();
@@ -114,74 +114,6 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
 
         /// <summary>
-        ///     Create the Foot Section of Receipt
-        /// </summary>
-        /// <param name="blkFootText"></param>
-        private void Generate_FootText(BlockUIContainer blkFootText)
-        {
-            // Main stackPanel of Foot Text
-            var stpFootText = new StackPanel();
-
-
-            var stpExp = new StackPanel();
-            var txtExp = new TextBlock
-            {
-                Text = "receipt is available only in one month.",
-                FontSize = 11,
-                FontFamily = new FontFamily("Century Gothic"),
-                FontWeight = FontWeights.UltraBold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 0)
-            };
-            stpExp.Children.Add(txtExp);
-
-
-            var stpThank = new StackPanel();
-            var txtThank = new TextBlock
-            {
-                Text = "Thank you!",
-                FontSize = 11,
-                FontFamily = new FontFamily("Century Gothic"),
-                FontWeight = FontWeights.UltraBold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 0)
-            };
-            stpThank.Children.Add(txtThank);
-
-            var stpSeeAgain = new StackPanel();
-            var txtSeeAgain = new TextBlock
-            {
-                Text = "See You Again!",
-                FontSize = 11,
-                FontFamily = new FontFamily("Century Gothic"),
-                FontWeight = FontWeights.UltraBold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 0)
-            };
-            stpSeeAgain.Children.Add(txtSeeAgain);
-
-            var rand = new Random();
-            var stpEmo = new StackPanel();
-            var imgEmo = new Image();
-            var bimg = new BitmapImage();
-            bimg.BeginInit();
-            bimg.UriSource = new Uri(startupProjectPath + "\\Images\\rand" + rand.Next(5) + ".png", UriKind.Absolute);
-            bimg.EndInit();
-            imgEmo.Source = bimg;
-            imgEmo.HorizontalAlignment = HorizontalAlignment.Center;
-            imgEmo.Margin = new Thickness(125, 0, 0, 0);
-            stpEmo.Children.Add(imgEmo);
-
-
-            stpFootText.Children.Add(stpExp);
-            stpFootText.Children.Add(stpThank);
-            stpFootText.Children.Add(stpSeeAgain);
-            stpFootText.Children.Add(stpEmo);
-
-            blkFootText.Child = stpFootText;
-        }
-
-        /// <summary>
         ///     Create the summary section of Receipt
         /// </summary>
         /// <param name="blkTableText"></param>
@@ -206,7 +138,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbTotalPriceLable = new TextBlock
             {
-                Text = "Total Amount " + "(" + moneyUnit + "):",
+                Text = "Thành tiền " + "(" + moneyUnit + "):",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
@@ -248,7 +180,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                 if (i == 0)
                 {
                     var firstCol = new ColumnDefinition();
-                    firstCol.Width = new GridLength(120);
+                    firstCol.Width = new GridLength(90);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
@@ -256,7 +188,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                 if (i == 1)
                 {
                     var secondCol = new ColumnDefinition();
-                    secondCol.Width = new GridLength(30);
+                    secondCol.Width = new GridLength(60);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }

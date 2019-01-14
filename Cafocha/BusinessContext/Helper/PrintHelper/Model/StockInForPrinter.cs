@@ -60,9 +60,9 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
         {
             return new Dictionary<string, string>
             {
-                {"No", No},
-                {"Date", Date.ToString()},
-                {"Employee", Employee},
+                {"Số", No},
+                {"Ngày", Date.ToString()},
+                {"Nhân viên", Employee},
             };
         }
 
@@ -70,11 +70,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
         {
             return new[]
             {
-                "Name",
-                "Qty",
-                "Price",
-                "TPrice",
-                "Note"
+                "Tên",
+                "Số lượng",
+                "Đơn giá",
+                "Thành tiền",
+                "Ghi chú"
             };
         }
     }

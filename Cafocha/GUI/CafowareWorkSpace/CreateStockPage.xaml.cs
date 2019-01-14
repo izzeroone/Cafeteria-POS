@@ -73,7 +73,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             
             if (filter.Length == 0)
             {
-                if (all || (sender as ComboBox).SelectedValue.Equals(StockGroup.All))
+                if (all)
                     lvStock.ItemsSource = _stockList;
                 else
                     lvStock.ItemsSource =
@@ -81,7 +81,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             else
             {
-                if (all|| (sender as ComboBox).SelectedValue.Equals(StockGroup.All))
+                if (all)
                     lvStock.ItemsSource = _stockList.Where(x => x.Name.Contains(filter));
                 else
                     lvStock.ItemsSource = _stockList.Where(x =>
@@ -129,7 +129,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             var filter = SearchIBox.Text.Trim();
             var selectedStock = cboGroup.SelectedIndex;
 
-            if (selectedStock < 0 || cboGroup.SelectedValue.Equals(StockGroup.All))
+            if (selectedStock < 0)
             {
                 if (filter.Length == 0)
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));

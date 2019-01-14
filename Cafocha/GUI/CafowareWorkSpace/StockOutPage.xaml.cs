@@ -280,7 +280,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
                 _businessModuleLocator.WarehouseModule.addStockOut(_currentStockOut);
-
+                MessageBoxResult rsltMessageBox = MessageBox.Show("Đã thêm phiếu xuất thành công!\nBạn có muốn in phiếu xuất?",
+                    "",
+                    MessageBoxButton.YesNo);
+                if (rsltMessageBox == MessageBoxResult.Yes)
+                    print();
                 _stockOutDetailsList = new List<StockOutDetail>();
                 lvDataStockOut.ItemsSource = _stockOutDetailsList;
                 lvDataStockOut.Items.Refresh();
@@ -293,11 +297,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
 
                 LoadStockOutData();
-                MessageBoxResult rsltMessageBox = MessageBox.Show("Đã thêm phiếu xuất thành công!\nBạn có muốn in phiếu xuất?",
-                    "",
-                    MessageBoxButton.YesNo);
-                if (rsltMessageBox == MessageBoxResult.Yes)
-                    print();
+
             }
             catch (Exception ex)
             {

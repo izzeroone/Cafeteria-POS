@@ -174,7 +174,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             var stpHeader = new StackPanel();
             var tbHeader = new TextBlock
             {
-                Text = "Sales Totals",
+                Text = "Doanh số bán hàng",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 FontSize = 13,
                 Margin = new Thickness(0, 5, 0, 5),
@@ -304,7 +304,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             var stpHeader = new StackPanel();
             var tbHeader = new TextBlock
             {
-                Text = "Payment and Refund Totals",
+                Text = "Thanh toán và trả tiền",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 FontSize = 12,
                 Margin = new Thickness(0, 5, 0, 5),
@@ -434,7 +434,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             var stpHeader = new StackPanel();
             var tbHeader = new TextBlock
             {
-                Text = "Receipt Totals",
+                Text = "Tổng hóa đơn",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 FontSize = 12,
                 Margin = new Thickness(0, 5, 0, 5),
@@ -572,11 +572,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
             var alcoholCal = new MyPairValue
             {
-                Title = "Count",
+                Title = "Số lượng",
                 Count = orderDetailsAlcoholQuery.Count(),
                 Amount = alcoholTotalAmount
             };
-            result.Add("Total Drink", new List<MyPairValue>
+            result.Add("Đồ uống", new List<MyPairValue>
             {
                 alcoholCal
             });
@@ -590,11 +590,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
             var beverageCal = new MyPairValue
             {
-                Title = "Count",
+                Title = "Số lượng",
                 Count = orderDetailsBeverageQuery.Count(),
                 Amount = beverageTotalAmount
             };
-            result.Add("Total Topping", new List<MyPairValue>
+            result.Add("Topping", new List<MyPairValue>
             {
                 beverageCal
             });
@@ -607,11 +607,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                 foodTotalAmount += orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
             var foodCal = new MyPairValue
             {
-                Title = "Count",
+                Title = "Số lượng",
                 Count = orderDetailsFoodQuery.Count(),
                 Amount = foodTotalAmount
             };
-            result.Add("Total Dessert", new List<MyPairValue>
+            result.Add("Đồ ngọt", new List<MyPairValue>
             {
                 foodCal
             });
@@ -625,11 +625,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                     orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
             var otherCal = new MyPairValue
             {
-                Title = "Count",
+                Title = "Số lượng",
                 Count = orderDetailsOtherQuery.Count(),
                 Amount = otherTotalAmount
             };
-            result.Add("Total Other", new List<MyPairValue>
+            result.Add("Khác", new List<MyPairValue>
             {
                 otherCal
             });
@@ -642,7 +642,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                 totalAmount += orderDetails.Quan * orderDetails.Product.Price * (100 - orderDetails.Discount) / 100;
             var orderTotalCal = new MyPairValue
             {
-                Title = "Orders",
+                Title = "Đơn hàng",
                 Amount = totalAmount,
                 Count = orderQuery.Count()
             };
@@ -677,12 +677,12 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
             var DiscTotalCal = new MyPairValue
             {
-                Title = "Discount",
+                Title = "Giảm giá",
                 Amount = totalDisc,
                 Count = countDisc
             };
 
-            result.Add("SubTotal", new List<MyPairValue>
+            result.Add("Tổng số phụ", new List<MyPairValue>
             {
                 orderTotalCal,
                 VATTotalCal,
@@ -695,11 +695,11 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             foreach (var order in orderQuery) total += order.TotalPrice;
             var totalCal = new MyPairValue
             {
-                Title = "Orders",
+                Title = "Đơn hàng",
                 Amount = total,
                 Count = orderQuery.Count()
             };
-            result.Add("Total", new List<MyPairValue>
+            result.Add("Tổng", new List<MyPairValue>
             {
                 totalCal
             });
@@ -720,63 +720,14 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             foreach (var order in orderCashQuery) cashTotalAmount += order.TotalPrice;
             var cashCal = new MyPairValue
             {
-                Title = "Orders",
+                Title = "Đơn hàng",
                 Count = orderCashQuery.Count(),
                 Amount = cashTotalAmount
             };
-            result.Add("Cash", new List<MyPairValue>
+            result.Add("Tiền mặt", new List<MyPairValue>
             {
                 cashCal
             });
-
-
-            //Total Cheque
-            var orderChequeQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Cheque);
-            decimal chequeTotalAmount = 0;
-            foreach (var order in orderChequeQuery) chequeTotalAmount += order.TotalPrice;
-            var chequeCal = new MyPairValue
-            {
-                Title = "Orders",
-                Count = orderChequeQuery.Count(),
-                Amount = chequeTotalAmount
-            };
-            result.Add("Cheque", new List<MyPairValue>
-            {
-                chequeCal
-            });
-
-
-            //Total Deferred
-            var orderDeferredQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Deferred);
-            decimal deferredTotalAmount = 0;
-            foreach (var order in orderDeferredQuery) deferredTotalAmount += order.TotalPrice;
-            var defferedCal = new MyPairValue
-            {
-                Title = "Orders",
-                Count = orderDeferredQuery.Count(),
-                Amount = deferredTotalAmount
-            };
-            result.Add("Deferred", new List<MyPairValue>
-            {
-                defferedCal
-            });
-
-
-            //Total International(Visa)
-            var orderInterQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.International);
-            decimal interTotalAmount = 0;
-            foreach (var order in orderInterQuery) interTotalAmount += order.TotalPrice;
-            var interCal = new MyPairValue
-            {
-                Title = "Orders",
-                Count = orderInterQuery.Count(),
-                Amount = interTotalAmount
-            };
-            result.Add("International(Visa)", new List<MyPairValue>
-            {
-                interCal
-            });
-
 
             //Total Credit
             var orderCreditQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.Credit);
@@ -784,30 +735,15 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             foreach (var order in orderCreditQuery) creditTotalAmount += order.TotalPrice;
             var creditCal = new MyPairValue
             {
-                Title = "Orders",
+                Title = "Đơn hàng",
                 Count = orderCreditQuery.Count(),
                 Amount = creditTotalAmount
             };
-            result.Add("Credit", new List<MyPairValue>
+            result.Add("Thẻ", new List<MyPairValue>
             {
                 creditCal
             });
 
-
-            //Total OnAcount
-            var orderOnAcountQuery = orderQuery.Where(x => x.paymentMethod == (int) PaymentMethod.OnAcount);
-            decimal onAcountTotalAmount = 0;
-            foreach (var order in orderOnAcountQuery) onAcountTotalAmount += order.TotalPrice;
-            var onAcountCal = new MyPairValue
-            {
-                Title = "Orders",
-                Count = orderOnAcountQuery.Count(),
-                Amount = onAcountTotalAmount
-            };
-            result.Add("On Account", new List<MyPairValue>
-            {
-                onAcountCal
-            });
 
 
             return result;

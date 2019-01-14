@@ -59,7 +59,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             var filter = SearchIBox.Text.Trim();
             var selectedGroup = cboGroup.SelectedIndex;
 
-            if (selectedGroup == cboGroup.Items.Count - 1 || cboGroup.SelectedValue.Equals(StockGroup.All))
+            if (selectedGroup == cboGroup.Items.Count - 1)
             {
                 if (filter.Length == 0)
                     lvStock.ItemsSource = _stockList.Where(p => p.Deleted.Equals(0));

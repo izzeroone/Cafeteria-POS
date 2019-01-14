@@ -255,6 +255,12 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 
                 _businessModuleLocator.WarehouseModule.addStockIn(_currentStockIn);
 
+                MessageBoxResult rsltMessageBox = MessageBox.Show("Đã thêm phiếu nhập thành công!\nBạn có muốn in phiếu nhập?",
+                    "",
+                    MessageBoxButton.YesNo);
+                if (rsltMessageBox == MessageBoxResult.Yes)
+                    print();
+
                 _stockInDetailsList = new List<StockInDetail>();
                 lvDataStockIn.ItemsSource = _stockInDetailsList;
                 lvDataStockIn.Items.Refresh();
@@ -268,11 +274,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 
                 LoadStockInData();
 
-                MessageBoxResult rsltMessageBox = MessageBox.Show("Đã thêm phiếu nhập thành công!\nBạn có muốn in phiếu nhập?",
-                    "",
-                    MessageBoxButton.YesNo);
-                if (rsltMessageBox == MessageBoxResult.Yes)
-                    print();
             }
             catch (Exception ex)
             {

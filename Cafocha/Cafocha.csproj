@@ -222,7 +222,6 @@
       <DependentUpon>ERD.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
-    <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
     <Compile Include="GUI\CafowareWorkSpace\AddOrUpdateStock.xaml.cs">
       <DependentUpon>AddOrUpdateStock.xaml</DependentUpon>
