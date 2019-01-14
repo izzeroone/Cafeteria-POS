@@ -74,12 +74,12 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             Generate_TablePayAndRefundText(blkTablePayAndRefundText);
 
 
-            // Table Receipt Total Text
-            var blkTableReceiptText = new BlockUIContainer
-            {
-                Margin = new Thickness(0, 10, 0, 0)
-            };
-            Generate_TableReceiptText(blkTableReceiptText);
+//            // Table Receipt Total Text
+//            var blkTableReceiptText = new BlockUIContainer
+//            {
+//                Margin = new Thickness(0, 10, 0, 0)
+//            };
+//            Generate_TableReceiptText(blkTableReceiptText);
 
 
             //// Add Paragraph to Section
@@ -87,7 +87,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             sec.Blocks.Add(blkHeadText);
             sec.Blocks.Add(blkTableTotalSalesText);
             sec.Blocks.Add(blkTablePayAndRefundText);
-            sec.Blocks.Add(blkTableReceiptText);
+//            sec.Blocks.Add(blkTableReceiptText);
 
 
             // Add Section to FlowDocument
@@ -120,7 +120,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             var stpPageName = new StackPanel();
             var txtPageName = new TextBlock
             {
-                Text = "END OF DAY REPORT",
+                Text = "Báo cáo cuối ngày",
                 FontSize = 13,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
@@ -131,7 +131,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
             var txtFrom = new TextBlock
             {
-                Text = "From: " + From.ToShortDateString(),
+                Text = "Từ: " + From.ToShortDateString(),
                 FontSize = 11,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
@@ -141,7 +141,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
             var txtTo = new TextBlock
             {
-                Text = "To: " + To.ToShortDateString(),
+                Text = "Đến: " + To.ToShortDateString(),
                 FontSize = 11,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
