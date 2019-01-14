@@ -109,8 +109,8 @@
             <Grid
                   Margin="5,47,0,0.6" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="450*"/>
-                    <ColumnDefinition Width="353*"/>
+                    <ColumnDefinition Width="954*"/>
+                    <ColumnDefinition Width="397*"/>
                 </Grid.ColumnDefinitions>
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
@@ -133,8 +133,8 @@
                           Background="#FFED5C5C"
                           Foreground="White"
                           FontWeight="Bold"
-                          Margin="0,50,0,0"
-                          Width="882" Grid.ColumnSpan="2" SelectionChanged="LvStock_SelectionChanged">
+                          Margin="0,49,0,0"
+                          Width="954" SelectionChanged="LvStock_SelectionChanged" Height="553">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
