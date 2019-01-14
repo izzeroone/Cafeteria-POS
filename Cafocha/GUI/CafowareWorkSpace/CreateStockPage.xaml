@@ -153,7 +153,7 @@
                                             Width="90"
                                             DisplayMemberBinding="{Binding Unit}" />
                             <GridViewColumn Header="Nhà Cung Cấp"
-                                            Width="90"
+                                            Width="150"
                                             DisplayMemberBinding="{Binding Supplier}" />
                             <GridViewColumn Header="StandardPrice"
                                             Width="120"
