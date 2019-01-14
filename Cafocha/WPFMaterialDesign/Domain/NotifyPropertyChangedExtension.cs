@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Cafocha.GUI.WPFMaterialDesign.Domain
+namespace MaterialDesignThemes.Wpf.Domain
 {
     public static class NotifyPropertyChangedExtension
     {

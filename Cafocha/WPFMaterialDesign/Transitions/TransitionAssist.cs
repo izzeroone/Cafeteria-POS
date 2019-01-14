@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 
-namespace MaterialDesignThemes.Wpf.Transitionssdfsedfewfwe
-{
-    /// <summary>
+/// <summary>
     ///     Allows transitions to be disabled where supported.
     /// </summary>
     public static class TransitionAssist
@@ -30,4 +28,3 @@ namespace MaterialDesignThemes.Wpf.Transitionssdfsedfewfwe
             return (bool) element.GetValue(DisableTransitionsProperty);
         }
     }
-}

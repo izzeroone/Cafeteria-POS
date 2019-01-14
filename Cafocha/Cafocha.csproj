@@ -256,9 +256,6 @@
     <Compile Include="GUI\EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml.cs">
-      <DependentUpon>DeleteConfirmDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\EmployeeChangePass.xaml.cs">
       <DependentUpon>EmployeeChangePass.xaml</DependentUpon>
     </Compile>
@@ -283,8 +280,8 @@
     <Compile Include="GUI\EmployeeWorkSpace\UcMenu.xaml.cs">
       <DependentUpon>UcMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EmployeeWorkSpace\UcOder.xaml.cs">
-      <DependentUpon>UcOder.xaml</DependentUpon>
+    <Compile Include="GUI\EmployeeWorkSpace\UcOrder.xaml.cs">
+      <DependentUpon>UcOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="BusinessContext\Helper\PrintHelper\DoPrintHelper.cs" />
     <Compile Include="BusinessContext\Helper\PrintHelper\EndOfDayPrintHelper.cs" />
@@ -464,10 +461,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\EmployeeWorkSpace\DeleteConfirmDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\EmployeeWorkSpace\EmployeeChangePass.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -500,7 +493,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\EmployeeWorkSpace\UcOder.xaml">
+    <Page Include="GUI\EmployeeWorkSpace\UcOrder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -551,6 +544,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
     <None Include="Entities\EF.Reverse.POCO.Core.ttinclude" />
     <None Include="Entities\EF.Reverse.POCO.ttinclude" />
     <None Include="packages.config" />

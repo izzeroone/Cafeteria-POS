@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Cafocha.GUI.WPFMaterialDesign.Domain;
+using MaterialDesignThemes.Wpf.Domain;
 
-namespace Cafocha.GUI.WPFMaterialDesign
+namespace MaterialDesignThemes.Wpf
 {
     public class ButtonsViewModel : INotifyPropertyChanged
     {

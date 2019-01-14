@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Calendar = System.Windows.Controls.Calendar;
 
-namespace Cafocha.GUI.WPFMaterialDesign
+namespace MaterialDesignThemes.Wpf
 {
     public class DatePickerCalendar
     {

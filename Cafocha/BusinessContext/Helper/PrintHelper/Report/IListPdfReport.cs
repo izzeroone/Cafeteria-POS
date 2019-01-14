@@ -2,7 +2,7 @@
 using Cafocha.Repository.DAL;
 using PdfRpt.Core.Contracts;
 
-namespace Cafocha.GUI.Helper.PrintHelper.Report
+namespace Cafocha.BusinessContext.Helper.PrintHelper.Report
 {
     public interface IListPdfReport
     {

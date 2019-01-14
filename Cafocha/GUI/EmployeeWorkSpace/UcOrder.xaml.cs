@@ -14,9 +14,9 @@ using Cafocha.Entities;
 namespace Cafocha.GUI.EmployeeWorkSpace
 {
     /// <summary>
-    ///     Interaction logic for UcOder.xaml
+    ///     Interaction logic for UcOrder.xaml
     /// </summary>
-    public partial class UcOder : UserControl
+    public partial class UcOrder : UserControl
     {
         private BusinessModuleLocator _businessModuleLocator;
         private Employee currentEmp;
@@ -42,7 +42,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private readonly bool isUnCheckChair = false;
 
 
-        public UcOder()
+        public UcOrder()
         {
             InitializeComponent();
 

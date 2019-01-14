@@ -1,4 +1,4 @@
-﻿namespace Cafocha.GUI.Helper.PrintHelper.Model
+﻿namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
 {
     public class OrderEntityForReport
     {

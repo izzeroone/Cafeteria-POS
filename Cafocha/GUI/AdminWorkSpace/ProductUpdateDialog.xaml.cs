@@ -14,9 +14,9 @@ using Microsoft.Win32;
 namespace Cafocha.GUI.AdminWorkSpace
 {
     /// <summary>
-    ///     Interaction logic for ProductUpdatePage.xaml
+    ///     Interaction logic for ProductUpdateDialog.xaml
     /// </summary>
-    public partial class ProductUpdatePage : Window
+    public partial class ProductUpdateDialog : Window
     {
         private readonly BusinessModuleLocator _businessModuleLocator;
 
@@ -36,7 +36,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private readonly string startupProjectPath =
             Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
-        public ProductUpdatePage(BusinessModuleLocator businessModuleLocator, Product pro)
+        public ProductUpdateDialog(BusinessModuleLocator businessModuleLocator, Product pro)
         {
             _businessModuleLocator = businessModuleLocator;
             _currentProduct = pro;

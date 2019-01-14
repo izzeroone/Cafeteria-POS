@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cafocha.GUI.WPFMaterialDesign
+namespace Cafocha.WPFMaterialDesign
 {
     /// <summary>
     ///     Interaction logic for Palette.xaml

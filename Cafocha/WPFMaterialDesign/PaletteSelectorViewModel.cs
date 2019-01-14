@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using MaterialDesignColors;
-using MaterialDesignThemes.Wpf;
 
-namespace Cafocha.GUI.WPFMaterialDesign
+namespace MaterialDesignThemes.Wpf
 {
     public class PaletteSelectorViewModel
     {

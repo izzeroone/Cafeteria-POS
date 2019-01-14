@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Cafocha.BusinessContext.Helper.PrintHelper.Report;
+using Cafocha.BusinessContext.Helper.PrintHelper.Model;
 using Cafocha.Entities;
-using Cafocha.GUI.Helper.PrintHelper.Model;
 using Cafocha.Repository.DAL;
 using PdfRpt.Core.Contracts;
 using PdfRpt.FluentInterface;
 
-namespace Cafocha.GUI.Helper.PrintHelper.Report
+namespace Cafocha.BusinessContext.Helper.PrintHelper.Report
 {
     /// <summary>
     ///     Create Report about Order(income) in specific time
@@ -27,7 +26,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.PageSize(PdfPageSize.A4);
                     doc.DocumentMetadata(new DocumentMetadata
                     {
-                        Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
+                        Author = "Cafocha", Application = "Cafocha POS", Keywords = "IList Rpt.",
                         Subject = "Report", Title = "Order Report"
                     });
                     doc.Compression(new CompressionSettings

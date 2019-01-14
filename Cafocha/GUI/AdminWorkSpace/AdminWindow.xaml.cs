@@ -29,7 +29,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private LiveChartReceiptPage liveChartReceipt;
         internal LoginWindow LoginWindow;
         private readonly OrderNotePage ordernotepage;
-        private readonly ProductCreatorPage productCreator;
+        private readonly ProductCreatorDialog productCreator;
         private readonly ProductDetailPage productdetals;
         private readonly SalaryPage salarypage;
         private readonly StatisticsWorkingHourPage statisticsWorkingHourPage;
@@ -63,7 +63,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 FoodPage = new StatisticsFoodPage(_businessModuleLocator);
                 statisticsWorkingHourPage = new StatisticsWorkingHourPage(_businessModuleLocator);
                 homePage = new HomePage(_businessModuleLocator);
-                productCreator = new ProductCreatorPage(_businessModuleLocator);
+                productCreator = new ProductCreatorDialog(_businessModuleLocator);
 
                 viewStockPage = new ViewStockPage(_businessModuleLocator, 
                                                     _businessModuleLocator.WarehouseModule.StockList);

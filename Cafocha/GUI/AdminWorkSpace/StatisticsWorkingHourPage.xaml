@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:wpfMaterialDesign="clr-namespace:Cafocha.GUI.WPFMaterialDesign"
+      xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf"
       mc:Ignorable="d"
       d:DesignHeight="300"
       d:DesignWidth="300"
@@ -26,8 +27,8 @@
             <DatePicker Margin="0,16,0,-0.4"
                         x:Name="DpTimeFilter"
                         Text="MMM-yyyy"
-                        wpfMaterialDesign:DatePickerCalendar.IsMonthYear="True"
-                        wpfMaterialDesign:DatePickerDateFormat.DateFormat="MMM-yyyy"
+                        wpf:DatePickerCalendar.IsMonthYear="True"
+                        wpf:DatePickerDateFormat.DateFormat="MMM-yyyy"
                         SelectedDateChanged="DpTimeFilter_OnSelectedDateChanged"
                         Width="151" />
         </StackPanel>
