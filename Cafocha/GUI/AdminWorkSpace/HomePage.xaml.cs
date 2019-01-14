@@ -73,7 +73,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             {
                 new ColumnSeries
                 {
-                    Title = "revenue",
+                    Title = "Lợi Nhuận",
                     Values = Values
                 }
             };
@@ -121,23 +121,48 @@ namespace Cafocha.GUI.AdminWorkSpace
             var orderNoteWithTime = new List<OrderNote>(_businessModuleLocator.RepositoryLocator.OrderRepository.Get().ToList()
                 .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
 
+            var salaryNoteWithTime = new List<SalaryNote>(_businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get().ToList()
+                .Where(obj => IsInTimeRange(obj.DatePay, startDate, endDate)).ToList());
+            var stockInWithTime = new List<StockIn>(_businessModuleLocator.RepositoryLocator.StockInRepository.Get().ToList());
+            stockInWithTime = stockInWithTime.Where(obj => IsInTimeRange(obj.InTime, startDate, endDate)).ToList();
 
             decimal count = 0;
             Values.Clear();
             Labels.Clear();
 
-            var RevenueList = new Dictionary<string, decimal>();
+            var ProfitList = new Dictionary<string, decimal>();
             foreach (var item in orderNoteWithTime)
-                if (RevenueList.ContainsKey(item.OrderTime.ToString("dd/MM/yyyy")))
-                    RevenueList[item.OrderTime.ToString("dd/MM/yyyy")] =
-                        RevenueList[item.OrderTime.ToString("dd/MM/yyyy")] + item.TotalPrice;
-                else
-                    RevenueList.Add(item.OrderTime.ToString("dd/MM/yyyy"), item.TotalPrice);
-
-            foreach (var revenue in RevenueList)
             {
-                Labels.Add(revenue.Key);
-                Values.Add(revenue.Value);
+                if (ProfitList.ContainsKey(item.OrderTime.ToString("dd/MM/yyyy")))
+                    ProfitList[item.OrderTime.ToString("dd/MM/yyyy")] = ProfitList[item.OrderTime.ToString("dd/MM/yyyy")] + item.TotalPrice;
+                else
+                    ProfitList.Add(item.OrderTime.ToString("dd/MM/yyyy"), item.TotalPrice);
+            }
+
+            foreach (var item in salaryNoteWithTime)
+            {
+                if (item.DatePay != null)
+                {
+                    DateTime time = item.DatePay ?? DateTime.Now;
+                    if (ProfitList.ContainsKey(time.ToString("dd/MM/yyyy")))
+                        ProfitList[time.ToString("dd/MM/yyyy")] = ProfitList[time.ToString("dd/MM/yyyy")] - item.SalaryValue;
+                    else
+                        ProfitList.Add(time.ToString("dd/MM/yyyy"), - item.SalaryValue);
+                }
+            }
+
+            foreach (var item in stockInWithTime)
+            {
+                if (ProfitList.ContainsKey(item.InTime.ToString("dd/MM/yyyy")))
+                    ProfitList[item.InTime.ToString("dd/MM/yyyy")] = ProfitList[item.InTime.ToString("dd/MM/yyyy")] - item.TotalAmount;
+                else
+                    ProfitList.Add(item.InTime.ToString("dd/MM/yyyy"), - item.TotalAmount);
+            }
+
+            foreach (var profit in ProfitList)
+            {
+                Labels.Add(profit.Key);
+                Values.Add(profit.Value);
             }
 
             DataContext = this;
@@ -171,8 +196,8 @@ namespace Cafocha.GUI.AdminWorkSpace
                 .Where(obj => IsInTimeRange(obj.OrderTime, startDate, endDate)).ToList());
             var stockInWithTime = new List<StockIn>(_businessModuleLocator.RepositoryLocator.StockInRepository.Get().ToList());
             stockInWithTime = stockInWithTime.Where(obj => IsInTimeRange(obj.InTime,startDate,endDate)).ToList();
-            var stockOutWithTime = new List<StockOut>(_businessModuleLocator.RepositoryLocator.StockOutRepository.Get().ToList()
-                .Where(obj => IsInTimeRange(obj.OutTime, startDate, endDate)).ToList());
+//            var stockOutWithTime = new List<StockOut>(_businessModuleLocator.RepositoryLocator.StockOutRepository.Get().ToList()
+//                .Where(obj => IsInTimeRange(obj.OutTime, startDate, endDate)).ToList());
             var salaryNoteWithTime = new List<SalaryNote>(_businessModuleLocator.RepositoryLocator.SalaryNoteRepository.Get().ToList()
                 .Where(obj => IsInTimeRange(obj.DatePay, startDate, endDate)).ToList());
 

@@ -86,7 +86,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="1"
-                              Header="Thống Kê Theo Nhân Viên"
+                              Header="Thống Kê Doanh Thu Theo Nhân Viên"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
                         <lvc:PieChart
@@ -103,7 +103,7 @@
                         </lvc:PieChart>
                     </GroupBox>
                     <GroupBox Grid.Row="0"
-                              Header="Thống Kê Theo Giờ Trong Ngày"
+                              Header="Thống Kê Doanh Thu Theo Giờ Trong Ngày"
                               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                               FontWeight="Bold">
                         <lvc:PieChart
@@ -129,7 +129,6 @@
                                         Foreground="OrangeRed"
                                         Grid.Row="1"
                                         Series="{Binding SerieColumnChart}">
-
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Usage"
                                       LabelFormatter="{Binding Formatter,StringFormat=0:000}" />
