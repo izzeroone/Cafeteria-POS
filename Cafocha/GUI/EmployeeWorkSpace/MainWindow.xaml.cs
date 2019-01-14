@@ -81,7 +81,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                 Closing += (sender, args) =>
                 {
                     WorkTimer.Stop();
-                    _businessModuleLocator.RepositoryLocator.Dispose();
+//                    _businessModuleLocator.RepositoryLocator.Dispose();
                 };
             }
         }
