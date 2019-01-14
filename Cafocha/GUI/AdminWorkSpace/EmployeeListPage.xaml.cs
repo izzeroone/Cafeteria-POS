@@ -105,7 +105,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             if (lvDataEmployee.SelectedItem == null)
             {
-                MessageBox.Show("Employee must be selected to delete! Choose again!");
+                MessageBox.Show("Bạn chưa chọn nhân viên để xóa!");
                 return;
             }
 
@@ -122,7 +122,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             }
             else
             {
-                MessageBox.Show("Please choose employee you want to delete and try again!");
+                MessageBox.Show("Bạn chưa chọn nhân viên để xóa!");
             }
         }
 

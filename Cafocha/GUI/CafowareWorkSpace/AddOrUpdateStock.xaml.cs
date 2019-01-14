@@ -90,7 +90,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 var name = txtName.Text.Trim();
                 if (name.Length == 0)
                 {
-                    MessageBox.Show("Name is not valid!");
+                    MessageBox.Show("Tên không hợp lệ!");
                     txtName.Focus();
                     return;
                 }
@@ -130,15 +130,15 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _businessModuleLocator.WarehouseModule.insertStock(_currentNewStock);
 
 
-                MessageBox.Show("Add new stock " + _currentNewStock.Name + "(" + _currentNewStock.StoId +
-                                ") successful!");
+                MessageBox.Show("Thêm nguyên vật liệu " + _currentNewStock.Name + "(" + _currentNewStock.StoId +
+                                ") thành công!");
                 this.Close();
 
                 // refesh data
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add new stock. Please check your input again!");
+                MessageBox.Show("Không thể thêm nguyên vật liệu");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             var name = txtName.Text.Trim();
             if (name.Length == 0)
             {
-                MessageBox.Show("Name is not valid!");
+                MessageBox.Show("Tên không hợp lệ!");
                 txtName.Focus();
                 return;
             }
@@ -193,7 +193,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _businessModuleLocator.WarehouseModule.updateStock(_selectedStock);
 
 
-            MessageBox.Show("Update stock " + _selectedStock.Name + "(" + _selectedStock.StoId + ") successful!");
+            MessageBox.Show("Cập nhật nguyên vật liệu " + _selectedStock.Name + "(" + _selectedStock.StoId + ") thành công!");
             this.Close();
         }
     }
