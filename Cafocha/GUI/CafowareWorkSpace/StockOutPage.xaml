@@ -13,10 +13,10 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="557*" />
-            <ColumnDefinition Width="810*" />
+            <ColumnDefinition Width="653*" />
+            <ColumnDefinition Width="714*" />
         </Grid.ColumnDefinitions>
-        <materialDesign:ColorZone Margin="2,2,10,0"
+        <materialDesign:ColorZone Margin="2,2,10.8,0"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
                                   Mode="PrimaryDark"
@@ -27,12 +27,12 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
                            FontSize="18">
-                    Stock List
+                    Danh Sách Nguyên Vật Liệu
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvDataStock"
-                  Width="541"
+                  Width="642"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="#FFED5C5C"
@@ -46,31 +46,39 @@
                     <GridViewColumn Header="ID"
                                     Width="100"
                                     DisplayMemberBinding="{Binding StoId}" />
-                    <GridViewColumn Header="Name"
+                    <GridViewColumn Header="Tên Nguyên Liệu"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Unit"
-                                    Width="150"
+                    <GridViewColumn Header="Đơn Vị"
+                                    Width="100"
                                     DisplayMemberBinding="{Binding Unit}" />
-                    <GridViewColumn Header="Std.Price/Unit"
-                                    Width="150"
+                    <GridViewColumn Header="Đơn Giá"
+                                    Width="120"
                                     DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
+                    <GridViewColumn Header="Nhà Cung Cấp"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Supplier}" />
+
                 </GridView>
             </ListView.View>
         </ListView>
         <Grid x:Name="EmployeeInfo"
               Grid.Column="1"
-              Margin="10.2,3,-9.6,-2.6">
+              Margin="9.2,3,-9.6,-2.6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="307*"/>
+            </Grid.RowDefinitions>
 
             <materialDesign:ColorZone Height="44"
-                                      Mode="PrimaryDark">
+                                      Mode="PrimaryDark" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal"
                             Margin="20,0,0,0">
                     <TextBlock VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18">
-                        Stock Out Details
+                        Danh Sách Xuất Kho
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -79,15 +87,19 @@
                       Background="#FFED5C5C"
                       Foreground="White"
                       FontWeight="Bold"
-                      Height="340"
-                      Margin="10,49,9.6,0">
+                      Height="448"
+                      Margin="10,33,10,0" 
+                      Grid.Row="1">
                 <ListView.View>
                     <GridView x:Name="gvDetails">
-                        <GridViewColumn Header="Item"
-                                        Width="90"
+                        <GridViewColumn Header="ID"
+                                        Width="100"
                                         DisplayMemberBinding="{Binding StoId}" />
-                        <GridViewColumn Header="Qty"
-                                        Width="70">
+                        <GridViewColumn Header="Tên Nguyên Liệu"
+                                        Width="180"
+                                        DisplayMemberBinding="{Binding Stock.Name}" />
+                        <GridViewColumn Header="Số Lượng"
+                                        Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="txtQuan"
@@ -96,17 +108,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Price/Unit"
-                                        Width="150">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="txtItemPrice"
-                                             Text="{Binding ItemPrice,StringFormat=0.000}"
-                                             TextChanged="txtItemPrice_TextChanged" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Edit"
+                        <GridViewColumn Header="Tùy Chỉnh"
                                         Width="90">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -140,54 +142,54 @@
             </ListView>
             <TextBlock x:Name="textBlock"
                        HorizontalAlignment="Left"
-                       Margin="10,416,0,0"
+                       Margin="10,399.7,0,0"
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
                        Text="Total Price"
                        VerticalAlignment="Top"
                        Height="33"
-                       Width="111" />
+                       Width="111" Visibility="Collapsed" Grid.Row="1" />
             <TextBlock x:Name="txtTotalPrice"
                        HorizontalAlignment="Left"
-                       Margin="158,416,0,0"
+                       Margin="158,399.7,0,0"
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
                        VerticalAlignment="Top"
                        Height="33"
                        Width="180"
-                       Text="{Binding appResource}" />
-            <Button x:Name="bntPrint"
-                    Content="Print"
-                    Margin="32,531,651,0"
-                    FontSize="25"
-                    VerticalAlignment="Top"
-                    Height="49" Click="BntPrint_Click" />
-            <Button x:Name="bntAdd"
-                    Content="Take Out!"
-                    Margin="229,531,441,0"
-                    Click="bntTakeOut_Click"
-                    FontSize="25"
-                    VerticalAlignment="Top"
-                    Height="49" RenderTransformOrigin="0.885,0.718" />
-            <Button x:Name="bntDelAll"
-                    Content="Clear"
-                    Click="bntDelAll_Click"
-                    Margin="468,530,223.4,0"
-                    FontSize="25"
-                    Height="49"
-                    VerticalAlignment="Top" />
+                       Text="{Binding appResource}" Visibility="Collapsed" Grid.Row="1" />
             <TextBlock x:Name="txtCurrencyUnit"
                        HorizontalAlignment="Left"
-                       Margin="372,416,0,0"
+                       Margin="372,399.7,0,0"
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
                        Text="VND"
                        VerticalAlignment="Top"
                        Height="33"
-                       Width="111" />
+                       Width="111" Visibility="Collapsed" Grid.Row="1" />
+            <Button x:Name="bntPrint"
+                Content="Xem trước"
+                Margin="47,515,514,0"
+                FontSize="25"
+                VerticalAlignment="Top"
+                Height="49" Click="BntPrint_Click" Grid.Row="1" />
+            <Button x:Name="bntAdd"
+                Content="Xuất Kho!"
+                Margin="220,515,328,0"
+                Click="bntTakeOut_Click"
+                FontSize="25"
+                VerticalAlignment="Top"
+                Height="49" RenderTransformOrigin="0.885,0.718" Grid.Row="1" />
+            <Button x:Name="bntDelAll"
+                Content="Làm Mới"
+                Click="bntDelAll_Click"
+                Margin="406,515,163,0"
+                FontSize="25"
+                Height="49"
+                VerticalAlignment="Top" Grid.Row="1" />
         </Grid>
     </Grid>
 </Page>

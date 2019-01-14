@@ -18,6 +18,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
     /// </summary>
     public partial class UcOrder : UserControl
     {
+        private static string NO_EMPLOY_WORKING_DIALOG = "Chưa có nhân viên đang làm việc. Vui lòng thử lại";
         private BusinessModuleLocator _businessModuleLocator;
         private Employee currentEmp;
 
@@ -54,7 +55,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             isUcOrderFormLoading = true;
             _businessModuleLocator = ((MainWindow) Window.GetWindow(this))._businessModuleLocator;
-            var currentEmpList = EmployeeModule.WorkingEmployee;
 
 
             InitCus_raiseEvent = true;
@@ -64,17 +64,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             wp.Children.Clear();
             lvData.ItemsSource = new List<TakingOrderModule.OrderDetails_Product_Joiner>();
 
-
-            if (currentEmpList != null)
-            {
-                currentEmp = currentEmpList.Emp;
-
-                if (currentEmp != null) bntPay.IsEnabled = true;
-            }
-
             LoadCustomerOwner();
+            LoadWorkingEmployee();
             txtTotal.Text = "";
-            txtTotal.IsEnabled = true;
+            txtTotal.IsEnabled = false;
             isUcOrderFormLoading = false;
         }
 
@@ -134,13 +127,38 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             InitCus_raiseEvent = false;
         }
 
+        private void LoadWorkingEmployee()
+        {
+            var prevSelected = cboEmployee.SelectedIndex;
+            var empLogin =
+                _businessModuleLocator.EmployeeModule.Emploglist.Where(x => x.IsStartWorking && x.Emp.EmpRole == (int)EmployeeRole.Counter == true);
+            var t = new List<Employee>();
+            foreach (var emp in empLogin)
+            {
+                t.Add(emp.Emp);
+            }
+            cboEmployee.ItemsSource = t;
+            cboEmployee.Items.Refresh();
+            cboCustomers.MouseEnter += (sender, args) => { cboCustomers.Background.Opacity = 100; };
+            cboCustomers.MouseLeave += (sender, args) => { cboCustomers.Background.Opacity = 0; };
+            if (prevSelected == -1 && t.Count() != 0)
+            {
+                cboEmployee.SelectedItem = 0;
+            }
+            else
+            {
+                cboEmployee.SelectedItem = prevSelected;
+            }
+            InitCus_raiseEvent = false;
+        }
+
         private void CboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!InitCus_raiseEvent)
             {
-                if (EmployeeModule.WorkingEmployee.EmpSal == null)
+                if (EmployeeModule.WorkingEmployee == null)
                 {
-                    MessageBox.Show("No employee on working! Please try again!");
+                    MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                     return;
                 }
 
@@ -189,9 +207,9 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
@@ -219,15 +237,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
-
-            var newOrderDetails = new List<OrderDetailsTemp>();
-
+            _businessModuleLocator.TakingOrderModule.OrderTemp.EmpId = cboEmployee.SelectedIndex != -1 ? cboEmployee.SelectedValue.ToString() : EmployeeModule.WorkingEmployee.Emp.EmpId;
 
             // input the rest data
             var newOrder = new OrderNote();
@@ -253,11 +269,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
+
+            _businessModuleLocator.TakingOrderModule.OrderTemp.EmpId = cboEmployee.SelectedIndex != -1 ? cboEmployee.SelectedValue.ToString() : EmployeeModule.WorkingEmployee.Emp.EmpId;
 
             // input the rest data
             var newOrder = new OrderNote();
@@ -274,12 +292,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             checkWorkingAction();
         }
 
-        //ToDo: Set the contain back when the order didn't call any more
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
-                MessageBox.Show("No employee on working! Please try again!");
+                MessageBox.Show(NO_EMPLOY_WORKING_DIALOG);
                 return;
             }
 
@@ -343,8 +360,8 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         /// <param name="productQuan">give back product quantity</param>
         private void checkWorkingAction()
         {
-            if (EmployeeModule.WorkingEmployee == null ||
-                EmployeeModule.WorkingEmployee.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
+//            if (EmployeeModule.WorkingEmployee == null ||
+//                EmployeeModule.WorkingEmployee.Emp.EmpId.Equals(_businessModuleLocator.TakingOrderModule.OrderTemp.EmpId)) return;
 
         }
 
@@ -374,18 +391,34 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             var txtTotal = sender as TextBox;
 
             var Total = _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice;
-            var SaleValue = Total;
-            var Svc = Total * 5 / 100;
-            var Vat = (Total + Total * 5 / 100) * 10 / 100;
-            Total = Total + Total * 5 / 100 + (Total + Total * 5 / 100) * 10 / 100;
+//            var SaleValue = Total;
+//            var Svc = Total * 5 / 100;
+//            var Vat = (Total + Total * 5 / 100) * 10 / 100;
+//            Total = Total + Total * 5 / 100 + (Total + Total * 5 / 100) * 10 / 100;
 
             _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice = Total;
-            _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPriceNonDisc = Math.Round(Total, 3);
-            Math.Round(Svc, 3);
-            _businessModuleLocator.TakingOrderModule.OrderTemp.Vat = Math.Round(Vat, 3);
-            _businessModuleLocator.TakingOrderModule.OrderTemp.SaleValue = Math.Round(SaleValue, 3);
+//            _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPriceNonDisc = Math.Round(Total, 3);
+//            Math.Round(Svc, 3);
+//            _businessModuleLocator.TakingOrderModule.OrderTemp.Vat = Math.Round(Vat, 3);
+//            _businessModuleLocator.TakingOrderModule.OrderTemp.SaleValue = Math.Round(SaleValue, 3);
 
             txtTotal.Text = string.Format("{0:0.000}", _businessModuleLocator.TakingOrderModule.OrderTemp.TotalPrice);
+        }
+
+        private void CboEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _businessModuleLocator.TakingOrderModule.OrderTemp.EmpId = cboEmployee.SelectedValue.ToString();
+        }
+
+
+        private void CboEmployee_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            LoadWorkingEmployee();
+        }
+
+        private void CboEmployee_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            LoadWorkingEmployee();
         }
     }
 }

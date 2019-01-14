@@ -108,7 +108,7 @@
                 <TextBlock Margin="16"
                            TextWrapping="Wrap"
                            VerticalAlignment="Center">
-                    This is your current palette. But palettes can be changed at runtime.
+                    Đây là màu chủ đạo của bạn. Thứ có thể thay đổi.
                 </TextBlock>
             </DockPanel>
         </wpf:Card>

@@ -23,32 +23,56 @@
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Right">
-                    <RadioButton x:Name="rdAll"
-                                 Foreground="White"
-                                 GroupName="FilterByTime"
-                                 FontSize="14"
-                                 FontWeight="Bold"
-                                 IsChecked="True"
-                                 Click="RdAll_OnClick">
-                        All
-                    </RadioButton>
-                    <RadioButton x:Name="rdToday"
-                                 Foreground="White"
-                                 FontWeight="Bold"
-                                 FontSize="14"
-                                 GroupName="FilterByTime"
-                                 Click="RdToday_OnClick">
-                        Today
-                    </RadioButton>
-                    <RadioButton x:Name="rdMonth"
-                                 Foreground="White"
-                                 FontWeight="Bold"
-                                 FontSize="14"
-                                 Click="RdMonth_OnClick"
-                                 GroupName="FilterByTime">
-                        Month
-                    </RadioButton>
+                            HorizontalAlignment="Left">
+                    <!-- <RadioButton x:Name="rdAll" -->
+                    <!--              Foreground="White" -->
+                    <!--              GroupName="FilterByTime" -->
+                    <!--              FontSize="14" -->
+                    <!--              FontWeight="Bold" -->
+                    <!--              IsChecked="True" -->
+                    <!--              Click="RdAll_OnClick"> -->
+                    <!--     All -->
+                    <!-- </RadioButton> -->
+                    <!-- <RadioButton x:Name="rdToday" -->
+                    <!--              Foreground="White" -->
+                    <!--              FontWeight="Bold" -->
+                    <!--              FontSize="14" -->
+                    <!--              GroupName="FilterByTime" -->
+                    <!--              Click="RdToday_OnClick"> -->
+                    <!--     Today -->
+                    <!-- </RadioButton> -->
+                    <!-- <RadioButton x:Name="rdMonth" -->
+                    <!--              Foreground="White" -->
+                    <!--              FontWeight="Bold" -->
+                    <!--              FontSize="14" -->
+                    <!--              Click="RdMonth_OnClick" -->
+                    <!--              GroupName="FilterByTime"> -->
+                    <!--     Month -->
+                    <!-- </RadioButton> -->
+                    <TextBlock 
+                        Text=" Ngày bắt đầu:  "
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="20"
+                        HorizontalAlignment="Center"/>
+                    <DatePicker x:Name="dpStartDay"
+                            Width="215"
+                            FontSize="18"
+                            Foreground="White"
+                            HorizontalAlignment="Left" />
+                
+                    <TextBlock 
+                        Text="   -    Ngày Kết Thúc:  "
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="20"
+                        HorizontalAlignment="Center"/>
+                    <DatePicker x:Name="dpEndDay"
+                            Width="215"
+                            FontSize="18"
+                            Foreground="White"
+                            HorizontalAlignment="Left" />
+                
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
@@ -140,9 +164,7 @@
                             <StackPanel>
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
-                                           FontSize="20">
-                                    Sale Value
-                                </TextBlock>
+                                           FontSize="20"><Run Text="Doanh Số Bán"/></TextBlock>
                                 <TextBlock x:Name="txtSaleValue"
                                            Foreground="OrangeRed"
                                            FontWeight="Bold"
@@ -152,7 +174,7 @@
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
                                            FontSize="20">
-                                    Total Bills
+                                    Tổng Hóa Đơn
                                 </TextBlock>
                                 <TextBlock x:Name="txtTotalBills"
                                            FontWeight="Bold"
@@ -163,7 +185,7 @@
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
                                            FontSize="20">
-                                    Discounts
+                                    Tổng Khấu Trừ
                                 </TextBlock>
                                 <TextBlock x:Name="txtDiscounts"
                                            FontWeight="Bold"
@@ -174,7 +196,29 @@
                                 <TextBlock Foreground="White"
                                            FontWeight="Bold"
                                            FontSize="20">
-                                    Total Receivables
+                                    Tổng Chi Kho
+                                </TextBlock>
+                                <TextBlock x:Name="txtTotalStockIn"
+                                           FontWeight="Bold"
+                                           Foreground="OrangeRed"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="20">
+                                    Tổng Chi Lương
+                                </TextBlock>
+                                <TextBlock x:Name="txtTotalSalary"
+                                           FontWeight="Bold"
+                                           Foreground="OrangeRed"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="20">
+                                    Tổng Thu
                                 </TextBlock>
                                 <TextBlock x:Name="txtReceivables"
                                            FontWeight="Bold"

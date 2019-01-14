@@ -15,8 +15,6 @@
         WindowState="Maximized">
 
     <StackPanel Orientation="Horizontal">
-
-
         <Grid x:Name="gNormalLoginForm"
               Width="400">
             <Grid.RowDefinitions>
@@ -41,13 +39,13 @@
                        Margin="51,160,0,0"
                        TextWrapping="Wrap"
                        VerticalAlignment="Top"
-                       Text="User "
+                       Text="Tên đăng nhập "
                        FontSize="15" />
             <TextBlock x:Name="txbPass"
                        HorizontalAlignment="Left"
                        Margin="51,10.4,0,0"
                        TextWrapping="Wrap"
-                       Text="Password"
+                       Text="Mật khẩu"
                        VerticalAlignment="Top"
                        Grid.Row="1"
                        FontSize="15" />
@@ -80,10 +78,9 @@
                     HorizontalAlignment="Left"
                     Margin="51,89.4,0,0"
                     VerticalAlignment="Top"
-                    Width="75"
                     Grid.Row="1"
                     Click="btnLogin_Click">
-                Login
+                Đăng nhập
             </Button>
             <!-- <Button Style="{DynamicResource MaterialDesignFloatingActionButton}" -->
             <!--         Foreground="Yellow" -->

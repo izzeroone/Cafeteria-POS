@@ -38,7 +38,7 @@
                                  Grid.Column="1"
                                  Margin="5 0 0 0"
                                  KeyDown="Search_OnKeyDown"
-                                 materialDesign:HintAssist.Hint="Search"
+                                 materialDesign:HintAssist.Hint="Tìm kiếm"
                                  x:Name="SearchBox"
                                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                  BorderThickness="0"
@@ -51,7 +51,7 @@
         </materialDesign:ColorZone>
         <dragablz:TabablzControl x:Name="tabControl"
                                  Background="DarkGray"
-                                 Margin="0,0,0,45" SelectionChanged="TabControl_SelectionChanged">
+                                 Margin="0,0,0,45">
             <!--Beverages-->
             <TabItem x:Name="ItemBeverages"
                      GotFocus="TabItem_GotFocus">
@@ -60,7 +60,7 @@
                         <Image Source="..\Icon\icons8_Cocktail_32px_2.png"
                                Height="25"
                                Width="25" />
-                        <TextBlock Text="Drink"
+                        <TextBlock Text="Đồ uống"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
                     </StackPanel>
@@ -115,7 +115,7 @@
                         <Image Source="..\Icon\Cake_32px.png"
                                Height="25"
                                Width="25" />
-                        <TextBlock Text="Dessert"
+                        <TextBlock Text="Đồ ngọt"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
                     </StackPanel>
@@ -214,7 +214,7 @@
                         <Image Source="..\Icon\icons8_Hashtag_32px.png"
                                Height="25"
                                Width="25" />
-                        <TextBlock Text="Other"
+                        <TextBlock Text="Khác"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
                     </StackPanel>

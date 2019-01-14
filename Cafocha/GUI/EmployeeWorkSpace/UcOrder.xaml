@@ -15,7 +15,7 @@
                 <TextBlock FontSize="14"
                            FontWeight="Bold"
                            Margin="0,0,5,0"
-                           Text="Order Details" />
+                           Text="Chi tiết đơn hàng" />
                 <materialDesign:PackIcon
                     x:Name="IconStatus"
                     HorizontalAlignment="Right"
@@ -61,7 +61,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontFamily="Segoe WP Black"
-                                       Text="Customers:"
+                                       Text="Khách hàng:"
                                        Foreground="Black"
                                        Margin="2" />
                             <ComboBox FontFamily="Segoe WP Black"
@@ -75,13 +75,34 @@
                                 </ComboBox.Background>
                             </ComboBox>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe WP Black"
+                                       Text="Nhân viên:"
+                                       Foreground="Black"
+                                       Margin="2" />
+                            <ComboBox FontFamily="Segoe WP Black"
+                                      x:Name="cboEmployee"
+                                      Width="130"
+                                      Margin="5,0,0,0"
+                                      SelectedValuePath="EmpId"
+                                      DisplayMemberPath="Name" 
+                                      IsSynchronizedWithCurrentItem="True"
+                                      SelectionChanged="CboEmployee_SelectionChanged"
+                                      GotKeyboardFocus="CboEmployee_GotKeyboardFocus"
+                                      GotMouseCapture="CboEmployee_GotMouseCapture">
+                                <ComboBox.Background>
+                                    <SolidColorBrush Color="White"
+                                                     Opacity="0" />
+                                </ComboBox.Background>
+                            </ComboBox>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,5,0,0">
                             <TextBlock FontFamily="Segoe WP Black"
-                                       Text="Total Bill:"
+                                       Text="Thành tiền:"
                                        Foreground="Black"
                                        Margin="2"
-                                       Width="62" />
+                                       Width="69" />
                             <TextBox FontFamily="Segoe WP Black"
                                      x:Name="txtTotal"
                                      Foreground="Black"
@@ -117,16 +138,16 @@
 
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
-                            <GridViewColumn Header="Item"
+                            <GridViewColumn Header="Sản phẩm"
                                             Width="100"
                                             DisplayMemberBinding="{Binding ProductName}" />
-                            <GridViewColumn Header="Amt"
+                            <GridViewColumn Header="Số lượng"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Quan}" />
-                            <GridViewColumn Header="Price"
+                            <GridViewColumn Header="Đơn giá"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
-                            <GridViewColumn Header="Edit"
+                            <GridViewColumn Header="Chỉnh sửa"
                                             Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

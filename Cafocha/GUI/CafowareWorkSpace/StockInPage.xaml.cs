@@ -44,7 +44,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockInDetailsList = new List<StockInDetail>();
             _currentStockIn = new StockIn
             {
-                EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
+                EmpId = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpId,
                 StockInDetails = _stockInDetailsList
             };
 
@@ -79,6 +79,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             if (foundIteminReceipt == null)
             {
                 r.StoId = stock.StoId;
+                r.Stock = stock;
                 r.Quan = 1;
                 r.ItemPrice = stock.StandardPrice;
                 _stockInDetailsList.Add(r);
@@ -115,7 +116,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 if (textboxQuan.Text == null || textboxQuan.Text.Length == 0)
                 {
-                    MessageBox.Show("The quantity of Input Stock can not be blank!");
+                    MessageBox.Show("Số lượng không thể để trống!");
                     if (!ErrorDetailsItem.Contains(index))
                         ErrorDetailsItem.Add(index);
                     return;
@@ -129,7 +130,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong when try to calculate the input data. Please check your input");
+                MessageBox.Show("Có lỗi xảy ra khi tính số tiền!");
                 if (!ErrorDetailsItem.Contains(index))
                     ErrorDetailsItem.Add(index);
             }
@@ -153,7 +154,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 if (textboxItemPrice.Text == null || textboxItemPrice.Text.Length == 0)
                 {
-                    MessageBox.Show("The Price of Input Stock can not be blank!");
+                    MessageBox.Show("Thành tiền không thể để trống!");
                     if (!ErrorDetailsItem.Contains(index))
                         ErrorDetailsItem.Add(index);
                     return;
@@ -167,7 +168,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong when try to calculate the input data. Please check your input");
+                MessageBox.Show("Có lỗi xảy ra khi tính số tiền!");
                 if (!ErrorDetailsItem.Contains(index))
                     ErrorDetailsItem.Add(index);
             }
@@ -188,6 +189,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             {
                 r.Quan = _stockInDetailsList[index].Quan - 1;
                 r.StoId = _stockInDetailsList[index].StoId;
+                r.Stock = _stockInDetailsList[index].Stock;
                 r.ItemPrice = _stockInDetailsList[index].ItemPrice;
                 _stockInDetailsList[index] = r;
             }
@@ -221,6 +223,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 {
                     r.Note = inputNote.Note;
                     r.StoId = _stockInDetailsList[index].StoId;
+                    r.Stock = _stockInDetailsList[index].Stock;
                     r.Quan = _stockInDetailsList[index].Quan;
                     r.ItemPrice = _stockInDetailsList[index].ItemPrice;
                     _stockInDetailsList[index] = r;
@@ -246,7 +249,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
                 if (_currentStockIn.StockInDetails.Count == 0)
                 {
-                    MessageBox.Show("You have to choose the stock you want to put in");
+                    MessageBox.Show("Bạn chưa chọn NVL cần nhập!");
                     return;
                 }
                 
@@ -258,16 +261,22 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
                 _currentStockIn = new StockIn()
                 {
-                    EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
+                    EmpId = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpId,
                     StockInDetails = _stockInDetailsList
                 };
 
+                
                 LoadStockInData();
-                MessageBox.Show("Stock out successful!");
+
+                MessageBoxResult rsltMessageBox = MessageBox.Show("Đã thêm phiếu nhập thành công!\nBạn có muốn in phiếu nhập?",
+                    "",
+                    MessageBoxButton.YesNo);
+                if (rsltMessageBox == MessageBoxResult.Yes)
+                    print();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong when trying to input the new StockIn Receipt! May be you should reload this app or call for support!");
+                MessageBox.Show("Lỗi nhập kho, vui lòng kiểm tra lại kết nối hoặc dữ liệu đầu vào");
             }
         }
 
@@ -280,6 +289,11 @@ namespace Cafocha.GUI.CafowareWorkSpace
         }
 
         private void BntPrint_Click(object sender, RoutedEventArgs e)
+        {
+            print();
+        }
+
+        private void print()
         {
             var printHelper = new DoPrintHelper(_businessModuleLocator.RepositoryLocator,
                 DoPrintHelper.StockIn_Printing, _currentStockIn);

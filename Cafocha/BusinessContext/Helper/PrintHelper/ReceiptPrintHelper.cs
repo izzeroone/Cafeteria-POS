@@ -117,22 +117,22 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
 
             var stpExp = new StackPanel();
-            var txtExp = new TextBlock
-            {
-                Text = "receipt is available only in one month.",
-                FontSize = 11,
-                FontFamily = new FontFamily("Century Gothic"),
-                FontWeight = FontWeights.UltraBold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 0)
-            };
-            stpExp.Children.Add(txtExp);
+//            var txtExp = new TextBlock
+//            {
+//                Text = "receipt is available only in one month.",
+//                FontSize = 11,
+//                FontFamily = new FontFamily("Century Gothic"),
+//                FontWeight = FontWeights.UltraBold,
+//                HorizontalAlignment = HorizontalAlignment.Center,
+//                Margin = new Thickness(0, 0, 0, 0)
+//            };
+//            stpExp.Children.Add(txtExp);
 
 
             var stpThank = new StackPanel();
             var txtThank = new TextBlock
             {
-                Text = "Thank you!",
+                Text = "Cảm ơn!",
                 FontSize = 11,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
@@ -144,7 +144,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             var stpSeeAgain = new StackPanel();
             var txtSeeAgain = new TextBlock
             {
-                Text = "See You Again!",
+                Text = "Hẹn gặp lại!",
                 FontSize = 11,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
@@ -195,7 +195,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbSaleValueLable = new TextBlock
             {
-                Text = "Sale Value:",
+                Text = "Giá bán:",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
@@ -212,22 +212,6 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             stpSaleValue.Children.Add(tbSaleValueLable);
             stpSaleValue.Children.Add(tbSaleValueValue);
-
-
-            // Service Charge
-            var stpSVC = new StackPanel
-            {
-                Orientation = Orientation.Horizontal
-            };
-            var tbSVCLable = new TextBlock
-            {
-                Text = "SVC (5%):",
-                FontFamily = new FontFamily("Century Gothic"),
-                FontSize = 12,
-                FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(90, 0, 0, 0),
-                Width = 120
-            };
 
             // VAT
             var stpVAT = new StackPanel
@@ -254,6 +238,30 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             stpVAT.Children.Add(tbVATLable);
             stpVAT.Children.Add(tbVATValue);
 
+            // Discount
+            var stpDiscount = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+            var tbDiscountLable = new TextBlock
+            {
+                Text = "Giảm giá " + "(" + moneyUnit + "):",
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 12,
+                FontWeight = FontWeights.UltraBold,
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
+            };
+            var tbDiscountValue = new TextBlock
+            {
+                Text = string.Format("-{0:0.000}", order.TotalPriceNonDisc - order.TotalPrice),
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 11,
+                Width = 60,
+                TextAlignment = TextAlignment.Right
+            };
+            stpDiscount.Children.Add(tbDiscountLable);
+            stpDiscount.Children.Add(tbDiscountValue);
 
             // Total Price
             var stpTotalPrice = new StackPanel
@@ -262,7 +270,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbTotalPriceLable = new TextBlock
             {
-                Text = "Total Amount " + "(" + moneyUnit + "):",
+                Text = "Thành tiền " + "(" + moneyUnit + "):",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
@@ -287,7 +295,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbCustomerPayLable = new TextBlock
             {
-                Text = "Customer Pay:",
+                Text = "Khách trả :",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
@@ -312,7 +320,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
             };
             var tbPayBackLable = new TextBlock
             {
-                Text = "Change:",
+                Text = "Tiền thối:",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
@@ -332,8 +340,8 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
 
             stpSummary.Children.Add(stpSaleValue);
-            stpSummary.Children.Add(stpSVC);
             stpSummary.Children.Add(stpVAT);
+            stpSummary.Children.Add(stpDiscount);
             stpSummary.Children.Add(stpTotalPrice);
             stpSummary.Children.Add(stpCustomerPay);
             stpSummary.Children.Add(stpPayBack);
@@ -557,14 +565,14 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
 
             var txtAddress = new TextBlock
             {
-                Text = "ADDRESS:  " + address,
+                Text = "Địa chỉ:  " + address,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 10,
                 FontWeight = FontWeights.UltraBold
             };
             var txtPhone = new TextBlock
             {
-                Text = "PHONE:  " + owner.Phone,
+                Text = "Số điện thoại:  " + owner.Phone,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 10,
                 Margin = new Thickness(0, 0, 0, 5),

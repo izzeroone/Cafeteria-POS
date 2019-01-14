@@ -151,10 +151,10 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
         {
             return new Dictionary<string, string>
             {
-                {"No", No},
-                {"Date", Date.ToString()},
-                {"Casher", Casher},
-                {"Customer", Customer}
+                {"Số hóa đơn", No},
+                {"Thời gian", Date.ToString()},
+                {"Nhân viên", Casher},
+                {"Khách hàng", Customer}
             };
         }
 
@@ -162,10 +162,10 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
         {
             return new[]
             {
-                "Product Price",
-                "Qty",
-                "Price",
-                "Amt"
+                "Sản phẩm",
+                "Số lượng",
+                "Đơn giá",
+                "Thành tiền"
             };
         }
     }

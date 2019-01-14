@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace Cafocha.GUI.AdminWorkSpace
     {
         private readonly BusinessModuleLocator _businessModuleLocator;
         private readonly List<OrderNoteDetail> _ordernotedetailslist;
-        private readonly List<OrderNote> _ordernotelist;
+        private List<OrderNote> _ordernotelist;
         private List<Product> _proList;
         private List<OrderNote> filtero = new List<OrderNote>();
 
@@ -28,7 +29,8 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-            _ordernotelist = _businessModuleLocator.OrderModule.getOrdernoteList().ToList();
+            _ordernotelist = _businessModuleLocator.RepositoryLocator.OrderRepository
+                .Get(includeProperties: "Employee,Customer").ToList();
             _ordernotedetailslist = _businessModuleLocator.RepositoryLocator.OrderDetailsRepository
                 .Get(includeProperties: "Product").ToList();
             var orderdetailsTempList = new List<OrderNoteDetail>();
@@ -151,14 +153,24 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void txtSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            txtSearchBox_KeyDown(sender, null);
         }
 
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-        }
+            var filter = txtSearchBox.Text.Trim();
 
-        private void lvOrderNoteDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            if (filter.Length != 0)
+            {
+                _ordernotelist = _ordernotelist.Where(x => Regex.IsMatch(x.Customer.Name, filter, RegexOptions.IgnoreCase) || Regex.IsMatch(x.Employee.Name, filter, RegexOptions.IgnoreCase)).ToList();
+                lvOrderNote.ItemsSource = _ordernotelist;
+            }
+            else
+            {
+                _ordernotelist = _businessModuleLocator.RepositoryLocator.OrderRepository
+                    .Get(includeProperties: "Employee,Customer").ToList();
+                lvOrderNote.ItemsSource = _ordernotelist;
+            }
         }
 
         private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
