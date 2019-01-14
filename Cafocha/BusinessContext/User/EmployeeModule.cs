@@ -36,9 +36,31 @@ namespace Cafocha.BusinessContext.User
 
         public static EmpLoginList WorkingEmployee
         {
-            get => _workingEmployee;
-            set => _workingEmployee = value;
+            get
+            {
+                foreach (var employee in _emploglist)
+                {
+                    if (employee.IsStartWorking.Equals(true))
+                    {
+                        return employee;
+                    }
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    foreach (var employee in _emploglist)
+                    {
+                        employee.IsStartWorking = false;
+                    }
+                }
+            }
+            
         }
+
         public IEnumerable<Employee> getEmployees()
         {
             return _unitofwork.EmployeeRepository.Get(x => x.Deleted == 0);
@@ -222,6 +244,8 @@ namespace Cafocha.BusinessContext.User
         public WorkingHistory EmpWH { get; set; }
 
         public int TimePercent { get; set; }
+
+        public bool IsStartWorking { get; set; }
 
         public static implicit operator List<object>(EmpLoginList v)
         {
