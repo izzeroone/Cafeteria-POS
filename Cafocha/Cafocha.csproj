@@ -239,6 +239,9 @@
     <Compile Include="BusinessContext\Helper\PrintHelper\Model\StockInForPrinter.cs" />
     <Compile Include="BusinessContext\Helper\PrintHelper\StockOutPrinter.cs" />
     <Compile Include="BusinessContext\Helper\PrintHelper\StockInPrinter.cs" />
+    <Compile Include="GUI\EmployeeWorkSpace\AllEmployeeLogin.xaml.cs">
+      <DependentUpon>AllEmployeeLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
@@ -520,6 +523,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\EmployeeWorkSpace\AllEmployeeLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

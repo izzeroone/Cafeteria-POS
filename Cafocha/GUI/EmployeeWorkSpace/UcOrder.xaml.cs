@@ -138,7 +138,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         {
             if (!InitCus_raiseEvent)
             {
-                if (EmployeeModule.WorkingEmployee.EmpSal == null)
+                if (EmployeeModule.WorkingEmployee == null)
                 {
                     MessageBox.Show("No employee on working! Please try again!");
                     return;
@@ -189,7 +189,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -219,7 +219,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -253,7 +253,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;
@@ -277,7 +277,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         //ToDo: Set the contain back when the order didn't call any more
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpSal == null)
+            if (EmployeeModule.WorkingEmployee == null)
             {
                 MessageBox.Show("No employee on working! Please try again!");
                 return;

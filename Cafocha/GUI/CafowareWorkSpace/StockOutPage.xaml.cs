@@ -44,7 +44,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
             _stockOutDetailsList = new List<StockOutDetail>();
             _currentStockOut = new StockOut
             {
-                EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
+                EmpId = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpId,
                 StockOutDetails = _stockOutDetailsList
             };
 
@@ -285,7 +285,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
                 _currentStockOut = new StockOut
                 {
-                    EmpId = EmployeeModule.WorkingEmployee.Emp.EmpId,
+                    EmpId = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpId,
                     StockOutDetails = _stockOutDetailsList
                 };
 

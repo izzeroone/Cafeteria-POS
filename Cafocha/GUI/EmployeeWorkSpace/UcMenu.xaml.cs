@@ -59,7 +59,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         //ToDo: Need to update the contain in Warehouse database when new order occur
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (EmployeeModule.WorkingEmployee.EmpWH == null)
+            if (EmployeeModule.WorkingEmployee== null)
             {
                 MessageBox.Show("Bạn nên bắt đầu phiên làm việc trước");
                 return;

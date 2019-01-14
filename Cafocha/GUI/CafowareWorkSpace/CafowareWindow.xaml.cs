@@ -46,7 +46,7 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _viewStockPage = new ViewStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
 
-                CUserChip.Content = EmployeeModule.WorkingEmployee.Emp.Name;
+                CUserChip.Content = _businessModuleLocator.EmployeeModule.Emploglist[0].Emp.Name;
                 _createStockPage = new CreateStockPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
                 _stockInPage = new StockInPage(_businessModuleLocator,
