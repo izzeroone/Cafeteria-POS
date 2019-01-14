@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cafocha.Entities.LocalContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIECgQBQACBQAAAAAAAAggAAmoBBAAAABAEAAEAAAAQ=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.LocalContextFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.FakeLocalContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIESgQBQAGBABEAEAAIAghAAiABAAAQAgAEAAGAAAAQ=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.FakeDbSet&lt;TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AKIKAAAABAAAAgAgAAAABAAACIBYAEAAAAAAAMAEgAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.FakeDbAsyncQueryProvider&lt;TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAgACAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.FakeDbAsyncEnumerable&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.FakeDbAsyncEnumerator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAgABAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.AdminRe" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACAAAAQAABAAAQAgAAQACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.ApWareHouse" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAIAAAAAAAAAQAgAAAAEAAIAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.Customer" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAQAAACAAAAAAAAAAEAQAAAAAAAAAAgAAIAAACAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.Employee" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAwFACCwAAgAAAQAgFCSAAABABAEAAAEAIEAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.OrderNote" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEAAAAEAECAAAABAEAgBiAACAAAQAAAAgAAAAAACQA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.OrderNoteDetail" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgBAAAAAIAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.Product" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAAQAAAAAEAAAAkoQAAAAAAAAAAwACAEAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.ProductDetail" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIACAAAAAAAAAAAAAAAAAAAAACAAAAAEAABAAAACAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.SalaryNote" Collapsed="true">
+    <Position X="12.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AICAAAAAAAAAAAAAAAAAgCBACAAAAQAYAAAAAEAACAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.Stock" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAgAAAAABAAIAAIAAAkAQIAAAAAAACIAEAAEQAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockIn" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAhAAAAAAQAAAAAAAAACAACAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockInDetail" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAABAAAAAAAAAAAAAAAgAAAAAAAAAFAIAEAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockOut" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAABQAAABAAAAACAACAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockOutDetail" Collapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAABAAAAAAAAAAAAAAAgABAAAAAAAFAAAEAQAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockType" Collapsed="true">
+    <Position X="6.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAEAQAgAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.WorkingHistory" Collapsed="true">
+    <Position X="12.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAgAAAAAAAAAgAACAAKAAgAQAAAAAAAgAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.AdminReMapping" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.ApWareHouseMapping" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.CustomerMapping" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.EmployeeMapping" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.OrderNoteMapping" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.OrderNoteDetailMapping" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.ProductMapping" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.ProductDetailMapping" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.SalaryNoteMapping" Collapsed="true">
+    <Position X="14.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockMapping" Collapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockInMapping" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockInDetailMapping" Collapsed="true">
+    <Position X="6.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockOutMapping" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockOutDetailMapping" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.StockTypeMapping" Collapsed="true">
+    <Position X="9.25" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.WorkingHistoryMapping" Collapsed="true">
+    <Position X="14.75" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.Entities.OrderDetailsTemp" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAQAAAAAAAAAIAAEAAAAgAACAAAAAgBgAAEAIAA=</HashCode>
+      <FileName>Entities\CustomEntities\OrderDetailTemp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.Entities.OrderTemp" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAECAAAABAEAgBCAAAAACQAAABgAAAAAACAA=</HashCode>
+      <FileName>Entities\CustomEntities\OrderTemp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Cafocha.Entities.ILocalContext" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAESgQBQAEBABEAEAAAAghAAiABAAAAAgAEAAEAAAAQ=</HashCode>
+      <FileName>Entities\CafochaEntities.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Cafocha.Entities.AdminReRole" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CustomEntities\AdminRe.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Cafocha.Entities.EmployeeRole" Collapsed="true">
+    <Position X="2.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CustomEntities\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Cafocha.Entities.PaymentMethod" Collapsed="true">
+    <Position X="4" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAIBAACAAAAAAABAAAIAAIAAAAAAAAA=</HashCode>
+      <FileName>Entities\CustomEntities\PaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Cafocha.Entities.ProductType" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAIAAgAAAAAA=</HashCode>
+      <FileName>Entities\CustomEntities\ProductType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

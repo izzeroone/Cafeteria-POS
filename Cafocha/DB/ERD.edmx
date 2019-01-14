@@ -1,0 +1,1181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBCafochaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminRes">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="varchar(max)" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ad_role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="APWareHouse">
+          <Key>
+            <PropertyRef Name="apwarehouse_id" />
+          </Key>
+          <Property Name="apwarehouse_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="contain" Type="float" />
+          <Property Name="std_contain" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="cus_id" />
+          </Key>
+          <Property Name="cus_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="emp_code" Type="varchar(max)" />
+          <Property Name="manager" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="varchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="birth" Type="date" Nullable="false" />
+          <Property Name="startday" Type="date" Nullable="false" />
+          <Property Name="hour_wage" Type="int" Nullable="false" />
+          <Property Name="addr" Type="nvarchar" MaxLength="200" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="emp_role" Type="int" Nullable="false" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderNote">
+          <Key>
+            <PropertyRef Name="ordernote_id" />
+          </Key>
+          <Property Name="ordernote_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="pay_method" Type="int" Nullable="false" />
+          <Property Name="sale_value" Type="money" Nullable="false" />
+          <Property Name="total_price_non_disc" Type="money" Nullable="false" />
+          <Property Name="Vat" Type="money" Nullable="false" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="cus_id" Type="varchar" MaxLength="10" />
+          <Property Name="emp_id" Type="varchar" MaxLength="10" />
+          <Property Name="order_time" Type="datetime" Nullable="false" />
+          <Property Name="total_price" Type="money" Nullable="false" />
+          <Property Name="customer_pay" Type="money" Nullable="false" />
+          <Property Name="pay_back" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderNoteDetails">
+          <Key>
+            <PropertyRef Name="ordernote_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="ordernote_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="product_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="quan" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="info" Type="nvarchar" MaxLength="100" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+          <Property Name="image_link" Type="nvarchar(max)" />
+          <Property Name="Discount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalaryNote">
+          <Key>
+            <PropertyRef Name="sn_id" />
+          </Key>
+          <Property Name="sn_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="emp_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="date_pay" Type="datetime" />
+          <Property Name="salary_value" Type="money" Nullable="false" />
+          <Property Name="work_hour" Type="float" Nullable="false" />
+          <Property Name="for_month" Type="int" Nullable="false" />
+          <Property Name="for_year" Type="int" Nullable="false" />
+          <Property Name="is_paid" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="sto_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="apwarehouse_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="st_id" Type="varchar" MaxLength="10" />
+          <Property Name="unit" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="standard_price" Type="money" Nullable="false" />
+          <Property Name="info" Type="nvarchar" MaxLength="500" />
+          <Property Name="supplier" Type="nvarchar" MaxLength="500" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockIn">
+          <Key>
+            <PropertyRef Name="stockin_id" />
+          </Key>
+          <Property Name="stockin_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="emp_id" Type="varchar" MaxLength="10" />
+          <Property Name="in_time" Type="datetime" Nullable="false" />
+          <Property Name="total_amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockInDetails">
+          <Key>
+            <PropertyRef Name="stockin_id" />
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="stockin_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="sto_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="quan" Type="float" Nullable="false" />
+          <Property Name="item_price" Type="money" Nullable="false" />
+          <Property Name="note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="StockOut">
+          <Key>
+            <PropertyRef Name="stockout_id" />
+          </Key>
+          <Property Name="stockout_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="emp_id" Type="varchar" MaxLength="10" />
+          <Property Name="out_time" Type="datetime" Nullable="false" />
+          <Property Name="total_amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockOutDetails">
+          <Key>
+            <PropertyRef Name="stockout_id" />
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="stockout_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="sto_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="quan" Type="int" Nullable="false" />
+          <Property Name="item_price" Type="money" Nullable="false" />
+          <Property Name="note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="StockType">
+          <Key>
+            <PropertyRef Name="st_id" />
+          </Key>
+          <Property Name="st_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkingHistory">
+          <Key>
+            <PropertyRef Name="wh_id" />
+          </Key>
+          <Property Name="wh_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="result_salary" Type="varchar" MaxLength="10" />
+          <Property Name="emp_id" Type="varchar" MaxLength="10" />
+          <Property Name="startTime" Type="datetime" Nullable="false" />
+          <Property Name="endTime" Type="datetime" Nullable="false" />
+          <Property Name="is_paid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Employee_dbo_AdminRes_manager">
+          <End Role="AdminRes" Type="Self.AdminRes" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdminRes">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNote_dbo_Customer_cus_id">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="cus_id" />
+            </Principal>
+            <Dependent Role="OrderNote">
+              <PropertyRef Name="cus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNote_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="OrderNote">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id">
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="1" />
+          <End Role="OrderNoteDetails" Type="Self.OrderNoteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderNote">
+              <PropertyRef Name="ordernote_id" />
+            </Principal>
+            <Dependent Role="OrderNoteDetails">
+              <PropertyRef Name="ordernote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNoteDetails_dbo_Product_product_id">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderNoteDetails" Type="Self.OrderNoteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="OrderNoteDetails">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SalaryNote_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="SalaryNote" Type="Self.SalaryNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="SalaryNote">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id">
+          <End Role="APWareHouse" Type="Self.APWareHouse" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APWareHouse">
+              <PropertyRef Name="apwarehouse_id" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="apwarehouse_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Stock_dbo_StockType_st_id">
+          <End Role="StockType" Type="Self.StockType" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockType">
+              <PropertyRef Name="st_id" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="st_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockIn_dbo_AdminRes_ad_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="StockIn" Type="Self.StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockInDetails_dbo_Stock_sto_id">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockInDetails" Type="Self.StockInDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="StockInDetails">
+              <PropertyRef Name="sto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockInDetails_dbo_StockIn_si_id">
+          <End Role="StockIn" Type="Self.StockIn" Multiplicity="1" />
+          <End Role="StockInDetails" Type="Self.StockInDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockIn">
+              <PropertyRef Name="stockin_id" />
+            </Principal>
+            <Dependent Role="StockInDetails">
+              <PropertyRef Name="stockin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOut_dbo_AdminRes_ad_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="StockOut" Type="Self.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOutDetails_dbo_Stock_stock_id">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockOutDetails" Type="Self.StockOutDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="StockOutDetails">
+              <PropertyRef Name="sto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOutDetails_dbo_StockOut_stockout_id">
+          <End Role="StockOut" Type="Self.StockOut" Multiplicity="1" />
+          <End Role="StockOutDetails" Type="Self.StockOutDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="stockout_id" />
+            </Principal>
+            <Dependent Role="StockOutDetails">
+              <PropertyRef Name="stockout_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_WorkingHistory_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="WorkingHistory" Type="Self.WorkingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="WorkingHistory">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary">
+          <End Role="SalaryNote" Type="Self.SalaryNote" Multiplicity="0..1" />
+          <End Role="WorkingHistory" Type="Self.WorkingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryNote">
+              <PropertyRef Name="sn_id" />
+            </Principal>
+            <Dependent Role="WorkingHistory">
+              <PropertyRef Name="result_salary" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBCafochaModelStoreContainer">
+          <EntitySet Name="AdminRes" EntityType="Self.AdminRes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APWareHouse" EntityType="Self.APWareHouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderNote" EntityType="Self.OrderNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderNoteDetails" EntityType="Self.OrderNoteDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalaryNote" EntityType="Self.SalaryNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockIn" EntityType="Self.StockIn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInDetails" EntityType="Self.StockInDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockOut" EntityType="Self.StockOut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockOutDetails" EntityType="Self.StockOutDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockType" EntityType="Self.StockType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkingHistory" EntityType="Self.WorkingHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Employee_dbo_AdminRes_manager" Association="Self.FK_dbo_Employee_dbo_AdminRes_manager">
+            <End Role="AdminRes" EntitySet="AdminRes" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNote_dbo_Customer_cus_id" Association="Self.FK_dbo_OrderNote_dbo_Customer_cus_id">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="OrderNote" EntitySet="OrderNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNote_dbo_Employee_emp_id" Association="Self.FK_dbo_OrderNote_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="OrderNote" EntitySet="OrderNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id" Association="Self.FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id">
+            <End Role="OrderNote" EntitySet="OrderNote" />
+            <End Role="OrderNoteDetails" EntitySet="OrderNoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNoteDetails_dbo_Product_product_id" Association="Self.FK_dbo_OrderNoteDetails_dbo_Product_product_id">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderNoteDetails" EntitySet="OrderNoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SalaryNote_dbo_Employee_emp_id" Association="Self.FK_dbo_SalaryNote_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="SalaryNote" EntitySet="SalaryNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id" Association="Self.FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id">
+            <End Role="APWareHouse" EntitySet="APWareHouse" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Stock_dbo_StockType_st_id" Association="Self.FK_dbo_Stock_dbo_StockType_st_id">
+            <End Role="StockType" EntitySet="StockType" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockIn_dbo_AdminRes_ad_id" Association="Self.FK_dbo_StockIn_dbo_AdminRes_ad_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="StockIn" EntitySet="StockIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockInDetails_dbo_Stock_sto_id" Association="Self.FK_dbo_StockInDetails_dbo_Stock_sto_id">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StockInDetails" EntitySet="StockInDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockInDetails_dbo_StockIn_si_id" Association="Self.FK_dbo_StockInDetails_dbo_StockIn_si_id">
+            <End Role="StockIn" EntitySet="StockIn" />
+            <End Role="StockInDetails" EntitySet="StockInDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOut_dbo_AdminRes_ad_id" Association="Self.FK_dbo_StockOut_dbo_AdminRes_ad_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOutDetails_dbo_Stock_stock_id" Association="Self.FK_dbo_StockOutDetails_dbo_Stock_stock_id">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StockOutDetails" EntitySet="StockOutDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOutDetails_dbo_StockOut_stockout_id" Association="Self.FK_dbo_StockOutDetails_dbo_StockOut_stockout_id">
+            <End Role="StockOut" EntitySet="StockOut" />
+            <End Role="StockOutDetails" EntitySet="StockOutDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_WorkingHistory_dbo_Employee_emp_id" Association="Self.FK_dbo_WorkingHistory_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="WorkingHistory" EntitySet="WorkingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary" Association="Self.FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary">
+            <End Role="SalaryNote" EntitySet="SalaryNote" />
+            <End Role="WorkingHistory" EntitySet="WorkingHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBCafochaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminRe">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ad_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_dbo_Employee_dbo_AdminRes_manager" FromRole="AdminRes" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="APWareHouse">
+          <Key>
+            <PropertyRef Name="apwarehouse_id" />
+          </Key>
+          <Property Name="apwarehouse_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contain" Type="Double" />
+          <Property Name="std_contain" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id" FromRole="APWareHouse" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="cus_id" />
+          </Key>
+          <Property Name="cus_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderNotes" Relationship="Self.FK_dbo_OrderNote_dbo_Customer_cus_id" FromRole="Customer" ToRole="OrderNote" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="manager" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="startday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hour_wage" Type="Int32" Nullable="false" />
+          <Property Name="addr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="emp_role" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdminRe" Relationship="Self.FK_dbo_Employee_dbo_AdminRes_manager" FromRole="Employee" ToRole="AdminRes" />
+          <NavigationProperty Name="OrderNotes" Relationship="Self.FK_dbo_OrderNote_dbo_Employee_emp_id" FromRole="Employee" ToRole="OrderNote" />
+          <NavigationProperty Name="SalaryNotes" Relationship="Self.FK_dbo_SalaryNote_dbo_Employee_emp_id" FromRole="Employee" ToRole="SalaryNote" />
+          <NavigationProperty Name="StockIns" Relationship="Self.FK_dbo_StockIn_dbo_AdminRes_ad_id" FromRole="Employee" ToRole="StockIn" />
+          <NavigationProperty Name="StockOuts" Relationship="Self.FK_dbo_StockOut_dbo_AdminRes_ad_id" FromRole="Employee" ToRole="StockOut" />
+          <NavigationProperty Name="WorkingHistories" Relationship="Self.FK_dbo_WorkingHistory_dbo_Employee_emp_id" FromRole="Employee" ToRole="WorkingHistory" />
+        </EntityType>
+        <EntityType Name="OrderNote">
+          <Key>
+            <PropertyRef Name="ordernote_id" />
+          </Key>
+          <Property Name="ordernote_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pay_method" Type="Int32" Nullable="false" />
+          <Property Name="sale_value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="total_price_non_disc" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="cus_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="order_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="customer_pay" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="pay_back" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_OrderNote_dbo_Customer_cus_id" FromRole="OrderNote" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_OrderNote_dbo_Employee_emp_id" FromRole="OrderNote" ToRole="Employee" />
+          <NavigationProperty Name="OrderNoteDetails" Relationship="Self.FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id" FromRole="OrderNote" ToRole="OrderNoteDetails" />
+        </EntityType>
+        <EntityType Name="OrderNoteDetail">
+          <Key>
+            <PropertyRef Name="ordernote_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="ordernote_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="quan" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderNote" Relationship="Self.FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id" FromRole="OrderNoteDetails" ToRole="OrderNote" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_OrderNoteDetails_dbo_Product_product_id" FromRole="OrderNoteDetails" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="info" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <Property Name="image_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderNoteDetails" Relationship="Self.FK_dbo_OrderNoteDetails_dbo_Product_product_id" FromRole="Product" ToRole="OrderNoteDetails" />
+        </EntityType>
+        <EntityType Name="SalaryNote">
+          <Key>
+            <PropertyRef Name="sn_id" />
+          </Key>
+          <Property Name="sn_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date_pay" Type="DateTime" Precision="3" />
+          <Property Name="salary_value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="work_hour" Type="Double" Nullable="false" />
+          <Property Name="for_month" Type="Int32" Nullable="false" />
+          <Property Name="for_year" Type="Int32" Nullable="false" />
+          <Property Name="is_paid" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_SalaryNote_dbo_Employee_emp_id" FromRole="SalaryNote" ToRole="Employee" />
+          <NavigationProperty Name="WorkingHistories" Relationship="Self.FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary" FromRole="SalaryNote" ToRole="WorkingHistory" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="sto_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apwarehouse_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="st_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="unit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="standard_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="info" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="supplier" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="APWareHouse" Relationship="Self.FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id" FromRole="Stock" ToRole="APWareHouse" />
+          <NavigationProperty Name="StockType" Relationship="Self.FK_dbo_Stock_dbo_StockType_st_id" FromRole="Stock" ToRole="StockType" />
+          <NavigationProperty Name="StockInDetails" Relationship="Self.FK_dbo_StockInDetails_dbo_Stock_sto_id" FromRole="Stock" ToRole="StockInDetails" />
+          <NavigationProperty Name="StockOutDetails" Relationship="Self.FK_dbo_StockOutDetails_dbo_Stock_stock_id" FromRole="Stock" ToRole="StockOutDetails" />
+        </EntityType>
+        <EntityType Name="StockIn">
+          <Key>
+            <PropertyRef Name="stockin_id" />
+          </Key>
+          <Property Name="stockin_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="in_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total_amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_StockIn_dbo_AdminRes_ad_id" FromRole="StockIn" ToRole="Employee" />
+          <NavigationProperty Name="StockInDetails" Relationship="Self.FK_dbo_StockInDetails_dbo_StockIn_si_id" FromRole="StockIn" ToRole="StockInDetails" />
+        </EntityType>
+        <EntityType Name="StockInDetail">
+          <Key>
+            <PropertyRef Name="stockin_id" />
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="stockin_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sto_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quan" Type="Double" Nullable="false" />
+          <Property Name="item_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_StockInDetails_dbo_Stock_sto_id" FromRole="StockInDetails" ToRole="Stock" />
+          <NavigationProperty Name="StockIn" Relationship="Self.FK_dbo_StockInDetails_dbo_StockIn_si_id" FromRole="StockInDetails" ToRole="StockIn" />
+        </EntityType>
+        <EntityType Name="StockOut">
+          <Key>
+            <PropertyRef Name="stockout_id" />
+          </Key>
+          <Property Name="stockout_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="out_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total_amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_StockOut_dbo_AdminRes_ad_id" FromRole="StockOut" ToRole="Employee" />
+          <NavigationProperty Name="StockOutDetails" Relationship="Self.FK_dbo_StockOutDetails_dbo_StockOut_stockout_id" FromRole="StockOut" ToRole="StockOutDetails" />
+        </EntityType>
+        <EntityType Name="StockOutDetail">
+          <Key>
+            <PropertyRef Name="stockout_id" />
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="stockout_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sto_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quan" Type="Int32" Nullable="false" />
+          <Property Name="item_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_StockOutDetails_dbo_Stock_stock_id" FromRole="StockOutDetails" ToRole="Stock" />
+          <NavigationProperty Name="StockOut" Relationship="Self.FK_dbo_StockOutDetails_dbo_StockOut_stockout_id" FromRole="StockOutDetails" ToRole="StockOut" />
+        </EntityType>
+        <EntityType Name="StockType">
+          <Key>
+            <PropertyRef Name="st_id" />
+          </Key>
+          <Property Name="st_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_dbo_Stock_dbo_StockType_st_id" FromRole="StockType" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="WorkingHistory">
+          <Key>
+            <PropertyRef Name="wh_id" />
+          </Key>
+          <Property Name="wh_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="result_salary" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="emp_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="startTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_paid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_WorkingHistory_dbo_Employee_emp_id" FromRole="WorkingHistory" ToRole="Employee" />
+          <NavigationProperty Name="SalaryNote" Relationship="Self.FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary" FromRole="WorkingHistory" ToRole="SalaryNote" />
+        </EntityType>
+        <Association Name="FK_dbo_Employee_dbo_AdminRes_manager">
+          <End Role="AdminRes" Type="Self.AdminRe" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdminRes">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id">
+          <End Role="APWareHouse" Type="Self.APWareHouse" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="APWareHouse">
+              <PropertyRef Name="apwarehouse_id" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="apwarehouse_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNote_dbo_Customer_cus_id">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="cus_id" />
+            </Principal>
+            <Dependent Role="OrderNote">
+              <PropertyRef Name="cus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNote_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="OrderNote">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SalaryNote_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="SalaryNote" Type="Self.SalaryNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="SalaryNote">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockIn_dbo_AdminRes_ad_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="StockIn" Type="Self.StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOut_dbo_AdminRes_ad_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="StockOut" Type="Self.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_WorkingHistory_dbo_Employee_emp_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="WorkingHistory" Type="Self.WorkingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="WorkingHistory">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id">
+          <End Role="OrderNote" Type="Self.OrderNote" Multiplicity="1" />
+          <End Role="OrderNoteDetails" Type="Self.OrderNoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderNote">
+              <PropertyRef Name="ordernote_id" />
+            </Principal>
+            <Dependent Role="OrderNoteDetails">
+              <PropertyRef Name="ordernote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderNoteDetails_dbo_Product_product_id">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderNoteDetails" Type="Self.OrderNoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="OrderNoteDetails">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary">
+          <End Role="SalaryNote" Type="Self.SalaryNote" Multiplicity="1" />
+          <End Role="WorkingHistory" Type="Self.WorkingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryNote">
+              <PropertyRef Name="sn_id" />
+            </Principal>
+            <Dependent Role="WorkingHistory">
+              <PropertyRef Name="result_salary" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Stock_dbo_StockType_st_id">
+          <End Role="StockType" Type="Self.StockType" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockType">
+              <PropertyRef Name="st_id" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="st_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockInDetails_dbo_Stock_sto_id">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockInDetails" Type="Self.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="StockInDetails">
+              <PropertyRef Name="sto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOutDetails_dbo_Stock_stock_id">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockOutDetails" Type="Self.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="StockOutDetails">
+              <PropertyRef Name="sto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockInDetails_dbo_StockIn_si_id">
+          <End Role="StockIn" Type="Self.StockIn" Multiplicity="1" />
+          <End Role="StockInDetails" Type="Self.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockIn">
+              <PropertyRef Name="stockin_id" />
+            </Principal>
+            <Dependent Role="StockInDetails">
+              <PropertyRef Name="stockin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockOutDetails_dbo_StockOut_stockout_id">
+          <End Role="StockOut" Type="Self.StockOut" Multiplicity="1" />
+          <End Role="StockOutDetails" Type="Self.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="stockout_id" />
+            </Principal>
+            <Dependent Role="StockOutDetails">
+              <PropertyRef Name="stockout_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminRes" EntityType="Self.AdminRe" />
+          <EntitySet Name="APWareHouses" EntityType="Self.APWareHouse" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="OrderNotes" EntityType="Self.OrderNote" />
+          <EntitySet Name="OrderNoteDetails" EntityType="Self.OrderNoteDetail" />
+          <EntitySet Name="Parameters" EntityType="Self.Parameter" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="SalaryNotes" EntityType="Self.SalaryNote" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="StockIns" EntityType="Self.StockIn" />
+          <EntitySet Name="StockInDetails" EntityType="Self.StockInDetail" />
+          <EntitySet Name="StockOuts" EntityType="Self.StockOut" />
+          <EntitySet Name="StockOutDetails" EntityType="Self.StockOutDetail" />
+          <EntitySet Name="StockTypes" EntityType="Self.StockType" />
+          <EntitySet Name="WorkingHistories" EntityType="Self.WorkingHistory" />
+          <AssociationSet Name="FK_dbo_Employee_dbo_AdminRes_manager" Association="Self.FK_dbo_Employee_dbo_AdminRes_manager">
+            <End Role="AdminRes" EntitySet="AdminRes" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id" Association="Self.FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id">
+            <End Role="APWareHouse" EntitySet="APWareHouses" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNote_dbo_Customer_cus_id" Association="Self.FK_dbo_OrderNote_dbo_Customer_cus_id">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="OrderNote" EntitySet="OrderNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNote_dbo_Employee_emp_id" Association="Self.FK_dbo_OrderNote_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="OrderNote" EntitySet="OrderNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SalaryNote_dbo_Employee_emp_id" Association="Self.FK_dbo_SalaryNote_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="SalaryNote" EntitySet="SalaryNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockIn_dbo_AdminRes_ad_id" Association="Self.FK_dbo_StockIn_dbo_AdminRes_ad_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="StockIn" EntitySet="StockIns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOut_dbo_AdminRes_ad_id" Association="Self.FK_dbo_StockOut_dbo_AdminRes_ad_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="StockOut" EntitySet="StockOuts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_WorkingHistory_dbo_Employee_emp_id" Association="Self.FK_dbo_WorkingHistory_dbo_Employee_emp_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="WorkingHistory" EntitySet="WorkingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id" Association="Self.FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id">
+            <End Role="OrderNote" EntitySet="OrderNotes" />
+            <End Role="OrderNoteDetails" EntitySet="OrderNoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderNoteDetails_dbo_Product_product_id" Association="Self.FK_dbo_OrderNoteDetails_dbo_Product_product_id">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderNoteDetails" EntitySet="OrderNoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary" Association="Self.FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary">
+            <End Role="SalaryNote" EntitySet="SalaryNotes" />
+            <End Role="WorkingHistory" EntitySet="WorkingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Stock_dbo_StockType_st_id" Association="Self.FK_dbo_Stock_dbo_StockType_st_id">
+            <End Role="StockType" EntitySet="StockTypes" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockInDetails_dbo_Stock_sto_id" Association="Self.FK_dbo_StockInDetails_dbo_Stock_sto_id">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="StockInDetails" EntitySet="StockInDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOutDetails_dbo_Stock_stock_id" Association="Self.FK_dbo_StockOutDetails_dbo_Stock_stock_id">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="StockOutDetails" EntitySet="StockOutDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockInDetails_dbo_StockIn_si_id" Association="Self.FK_dbo_StockInDetails_dbo_StockIn_si_id">
+            <End Role="StockIn" EntitySet="StockIns" />
+            <End Role="StockInDetails" EntitySet="StockInDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockOutDetails_dbo_StockOut_stockout_id" Association="Self.FK_dbo_StockOutDetails_dbo_StockOut_stockout_id">
+            <End Role="StockOut" EntitySet="StockOuts" />
+            <End Role="StockOutDetails" EntitySet="StockOutDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBCafochaModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AdminRes">
+            <EntityTypeMapping TypeName="DBCafochaModel.AdminRe">
+              <MappingFragment StoreEntitySet="AdminRes">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ad_role" ColumnName="ad_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APWareHouses">
+            <EntityTypeMapping TypeName="DBCafochaModel.APWareHouse">
+              <MappingFragment StoreEntitySet="APWareHouse">
+                <ScalarProperty Name="apwarehouse_id" ColumnName="apwarehouse_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="contain" ColumnName="contain" />
+                <ScalarProperty Name="std_contain" ColumnName="std_contain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DBCafochaModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="cus_id" ColumnName="cus_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DBCafochaModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="emp_code" ColumnName="emp_code" />
+                <ScalarProperty Name="manager" ColumnName="manager" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="birth" ColumnName="birth" />
+                <ScalarProperty Name="startday" ColumnName="startday" />
+                <ScalarProperty Name="hour_wage" ColumnName="hour_wage" />
+                <ScalarProperty Name="addr" ColumnName="addr" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="emp_role" ColumnName="emp_role" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderNotes">
+            <EntityTypeMapping TypeName="DBCafochaModel.OrderNote">
+              <MappingFragment StoreEntitySet="OrderNote">
+                <ScalarProperty Name="ordernote_id" ColumnName="ordernote_id" />
+                <ScalarProperty Name="pay_method" ColumnName="pay_method" />
+                <ScalarProperty Name="sale_value" ColumnName="sale_value" />
+                <ScalarProperty Name="total_price_non_disc" ColumnName="total_price_non_disc" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="cus_id" ColumnName="cus_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="order_time" ColumnName="order_time" />
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+                <ScalarProperty Name="customer_pay" ColumnName="customer_pay" />
+                <ScalarProperty Name="pay_back" ColumnName="pay_back" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderNoteDetails">
+            <EntityTypeMapping TypeName="DBCafochaModel.OrderNoteDetail">
+              <MappingFragment StoreEntitySet="OrderNoteDetails">
+                <ScalarProperty Name="ordernote_id" ColumnName="ordernote_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="quan" ColumnName="quan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameters">
+            <EntityTypeMapping TypeName="DBCafochaModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBCafochaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="image_link" ColumnName="image_link" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalaryNotes">
+            <EntityTypeMapping TypeName="DBCafochaModel.SalaryNote">
+              <MappingFragment StoreEntitySet="SalaryNote">
+                <ScalarProperty Name="sn_id" ColumnName="sn_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="date_pay" ColumnName="date_pay" />
+                <ScalarProperty Name="salary_value" ColumnName="salary_value" />
+                <ScalarProperty Name="work_hour" ColumnName="work_hour" />
+                <ScalarProperty Name="for_month" ColumnName="for_month" />
+                <ScalarProperty Name="for_year" ColumnName="for_year" />
+                <ScalarProperty Name="is_paid" ColumnName="is_paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="DBCafochaModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="sto_id" ColumnName="sto_id" />
+                <ScalarProperty Name="apwarehouse_id" ColumnName="apwarehouse_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="st_id" ColumnName="st_id" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="standard_price" ColumnName="standard_price" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockIns">
+            <EntityTypeMapping TypeName="DBCafochaModel.StockIn">
+              <MappingFragment StoreEntitySet="StockIn">
+                <ScalarProperty Name="stockin_id" ColumnName="stockin_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="in_time" ColumnName="in_time" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInDetails">
+            <EntityTypeMapping TypeName="DBCafochaModel.StockInDetail">
+              <MappingFragment StoreEntitySet="StockInDetails">
+                <ScalarProperty Name="stockin_id" ColumnName="stockin_id" />
+                <ScalarProperty Name="sto_id" ColumnName="sto_id" />
+                <ScalarProperty Name="quan" ColumnName="quan" />
+                <ScalarProperty Name="item_price" ColumnName="item_price" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockOuts">
+            <EntityTypeMapping TypeName="DBCafochaModel.StockOut">
+              <MappingFragment StoreEntitySet="StockOut">
+                <ScalarProperty Name="stockout_id" ColumnName="stockout_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="out_time" ColumnName="out_time" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockOutDetails">
+            <EntityTypeMapping TypeName="DBCafochaModel.StockOutDetail">
+              <MappingFragment StoreEntitySet="StockOutDetails">
+                <ScalarProperty Name="stockout_id" ColumnName="stockout_id" />
+                <ScalarProperty Name="sto_id" ColumnName="sto_id" />
+                <ScalarProperty Name="quan" ColumnName="quan" />
+                <ScalarProperty Name="item_price" ColumnName="item_price" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTypes">
+            <EntityTypeMapping TypeName="DBCafochaModel.StockType">
+              <MappingFragment StoreEntitySet="StockType">
+                <ScalarProperty Name="st_id" ColumnName="st_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkingHistories">
+            <EntityTypeMapping TypeName="DBCafochaModel.WorkingHistory">
+              <MappingFragment StoreEntitySet="WorkingHistory">
+                <ScalarProperty Name="wh_id" ColumnName="wh_id" />
+                <ScalarProperty Name="result_salary" ColumnName="result_salary" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="is_paid" ColumnName="is_paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

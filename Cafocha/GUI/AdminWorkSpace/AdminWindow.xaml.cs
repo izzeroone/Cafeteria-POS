@@ -24,7 +24,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         private readonly CustomerPage ctmP;
         private readonly AdminRe curAdmin;
         private readonly EmployeeListPage empListPage;
-        private readonly StatisticsFoodPage FoodPage;
+        private readonly StatisticsDrinkPage _drinkPage;
         private readonly HomePage homePage;
         private LiveChartReceiptPage liveChartReceipt;
         internal LoginWindow LoginWindow;
@@ -60,7 +60,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 ctmP = new CustomerPage(_businessModuleLocator);
                 ordernotepage = new OrderNotePage(_businessModuleLocator, curAdmin);
 //                receiptnotepage = new ReceiptNotePage(_businessModuleLocator, curAdmin);
-                FoodPage = new StatisticsFoodPage(_businessModuleLocator);
+                _drinkPage = new StatisticsDrinkPage(_businessModuleLocator);
                 statisticsWorkingHourPage = new StatisticsWorkingHourPage(_businessModuleLocator);
                 homePage = new HomePage(_businessModuleLocator);
                 productCreator = new ProductCreatorDialog(_businessModuleLocator);
@@ -152,7 +152,7 @@ namespace Cafocha.GUI.AdminWorkSpace
 
         private void View_Statistics_Quantity_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            myframe.Navigate(FoodPage);
+            myframe.Navigate(_drinkPage);
         }
 
         private void ViewstaticWH_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

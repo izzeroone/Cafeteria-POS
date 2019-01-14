@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cafocha.BusinessContext.BusinessModuleLocator" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>4RAAAIEAAAEAAAAAQACAgAAAAAAAAAAoBCAgAAAAAQA=</HashCode>
+      <FileName>BusinessContext\BusinessModuleLocator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.EmployeeWorkspace.TakingOrderModule" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAQBAAAIAIAAAAAAAEAABAAAQAAAAABAAAAQQAAAA=</HashCode>
+      <FileName>BusinessContext\EmployeeWorkspace\TakingOrderModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.EmployeeWorkspace.ProductModule" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAIAAAABAQAAAAAAQAAACAAAAAAgAIAAAAAg=</HashCode>
+      <FileName>BusinessContext\User\ProductModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.DoPrintHelper" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAIKAAJAAAAAAAAAEAEABRAEAAAAAAgAAIAAg=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\DoPrintHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.EndOfDayPrintHelper" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AhAAAABAgAAAAAAAAEAAAAEAAAAKCAAABAAAAAAAAAE=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\EndOfDayPrintHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.MyPairValue" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\EndOfDayPrintHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.ReceiptPrintHelper" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AhEAAADAAAAAAAAIIAAAABAABAAiAEAAAAAAAACAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\ReceiptPrintHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Owner" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAABACAAAAIAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\ReceiptPrintHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.StockInPrinter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAADAAAAAAAAAIAAAABAABAAiAEAAAAAAIACAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\StockInPrinter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.StockOutPrinter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAADAAAAAAAAAIAAAABAABABiAEAAAAAAAACAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\StockOutPrinter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.OrderDetailsForPrint" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAQEAAAAAAAAAAAgAAAAAAAAAAAAABAAAEIAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderDetailsForPrint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.OrderEntityForReport" Collapsed="true">
+    <Position X="2.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAAAAAAAQAACAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderEntityForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.OrderForPrint" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAgAECAAAABABAgBAAgECAQQAABAAAAAAAAAAE=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderForPrint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.OrderNoteDetailsForReport" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAEAAAAAAAAAEAAACAAAAAAQAAAAABAAAAIAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.OrderNoteForReport" Collapsed="true">
+    <Position X="12" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAEAgBCAEAAAAQAAAAAAAAAAACAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\OrderNoteForReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.StockInDetailForPrint" Collapsed="true">
+    <Position X="12" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAQAAAAABAAAEAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\StockInDetailForPrint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.StockInForPrint" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAgAAAAAAQAAAAAAAAgCCAAQAABAAAAAAAAAAI=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\StockInForPrinter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.StockOutDetailForPrint" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAQAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\StockOutDetailForPrint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Model.StockOutForPrint" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAABAAAQAAAAAAAAgCCAAQAABAAAAAAAAAAI=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Model\StockOutForPrinter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Report.AppPath" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Report\AppPath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Helper.PrintHelper.Report.OrderNoteReport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAQgAAAAAAAAIAAgAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Report\OrderNoteReport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Security.AESGCM" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAQAAAgIAAQQABAAgACAAEAAAAAE=</HashCode>
+      <FileName>BusinessContext\Security\AESGCM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.Security.AESThenHMAC" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAABAAAAAQAAAgIAAQQABAAgAAAAEAAAAAE=</HashCode>
+      <FileName>BusinessContext\Security\AESThenHMAC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.User.AdminModule" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAIAAAAAAAAAAAAAAACAAAAAAAAABAAAAEAA=</HashCode>
+      <FileName>BusinessContext\User\AdminModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.User.CustomerModule" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAEBACAAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\User\CustomerModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.User.EmployeeModule" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAIgAAAAIJIAgQAAAAAIAAAIAEAAwAIAAEEw=</HashCode>
+      <FileName>BusinessContext\User\EmployeeModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.User.EmpLoginList" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAEAAAAAAwAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\User\EmployeeModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.WarehouseWorkspace.OrderModule" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQA=</HashCode>
+      <FileName>BusinessContext\WarehouseWorkspace\OrderModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cafocha.BusinessContext.WarehouseWorkspace.WarehouseModule" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QgICAgAAAAAAQIAECAABEAAEAAAAgCAAACIAgIAAQAA=</HashCode>
+      <FileName>BusinessContext\WarehouseWorkspace\WarehouseModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Cafocha.BusinessContext.Helper.PrintHelper.IPrintHelper" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\IPrintHelper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Cafocha.BusinessContext.Helper.PrintHelper.Report.IListPdfReport" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAQgAAAAAAAAIAAgAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessContext\Helper\PrintHelper\Report\IListPdfReport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

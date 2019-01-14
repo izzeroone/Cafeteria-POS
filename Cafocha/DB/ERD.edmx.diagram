@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="72ac74c46afd4a97b93a23f9973897e8" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="DBCafochaModel.AdminRe" Width="1.5" PointX="1.25" PointY="1.75" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.APWareHouse" Width="1.5" PointX="9.625" PointY="5.875" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.Customer" Width="1.5" PointX="2.625" PointY="1.125" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.Employee" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.OrderNote" Width="1.5" PointX="4.75" PointY="1.125" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.OrderNoteDetail" Width="2.25" PointX="7.25" PointY="1.125" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.Parameter" Width="1.5" PointX="9.625" PointY="2.75" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.Product" Width="1.5" PointX="10.125" PointY="1.125" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.SalaryNote" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.Stock" Width="1.5" PointX="6.875" PointY="5.875" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.StockIn" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.StockInDetail" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.StockOut" Width="1.5" PointX="5.25" PointY="5" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.StockOutDetail" Width="1.5" PointX="7.5" PointY="5" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.StockType" Width="1.5" PointX="4.25" PointY="5.875" IsExpanded="false" FillColor="White" />
+        <EntityTypeShape EntityType="DBCafochaModel.WorkingHistory" Width="1.5" PointX="7.5" PointY="2.75" IsExpanded="false" FillColor="White" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_Employee_dbo_AdminRes_manager" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_Stock_dbo_APWareHouse_apwarehouse_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_OrderNote_dbo_Customer_cus_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_OrderNote_dbo_Employee_emp_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_SalaryNote_dbo_Employee_emp_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockIn_dbo_AdminRes_ad_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockOut_dbo_AdminRes_ad_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_WorkingHistory_dbo_Employee_emp_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_OrderNoteDetails_dbo_OrderNote_ordernote_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_OrderNoteDetails_dbo_Product_product_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_WorkingHistory_dbo_SalaryNote_result_salary" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_Stock_dbo_StockType_st_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockInDetails_dbo_Stock_sto_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockOutDetails_dbo_Stock_stock_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockInDetails_dbo_StockIn_si_id" ManuallyRouted="false" />
+        <AssociationConnector Association="DBCafochaModel.FK_dbo_StockOutDetails_dbo_StockOut_stockout_id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

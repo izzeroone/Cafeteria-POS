@@ -155,6 +155,72 @@
     <Compile Include="BusinessContext\User\EmployeeModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\OrderModule.cs" />
     <Compile Include="BusinessContext\WarehouseWorkspace\WarehouseModule.cs" />
+    <Compile Include="DB\AdminRe.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\APWareHouse.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Customer.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Employee.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ERD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERD.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ERD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ERD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\OrderNote.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\OrderNoteDetail.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Parameter.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Product.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ProductDetail.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SalaryNote.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Stock.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\StockIn.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\StockInDetail.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\StockOut.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\StockOutDetail.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\StockType.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\WorkingHistory.cs">
+      <DependentUpon>ERD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\CustomEntities\OrderDetailTemp.cs" />
     <Compile Include="Entities\CustomEntities\StockGroup.cs" />
     <Compile Include="Entities\CustomEntities\StockOutDetail.cs" />
@@ -225,8 +291,8 @@
     <Compile Include="GUI\AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\StatisticsFoodPage.xaml.cs">
-      <DependentUpon>StatisticsFoodPage.xaml</DependentUpon>
+    <Compile Include="GUI\AdminWorkSpace\StatisticsDrinkPage.xaml.cs">
+      <DependentUpon>StatisticsDrinkPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
       <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
@@ -413,7 +479,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\StatisticsFoodPage.xaml">
+    <Page Include="GUI\AdminWorkSpace\StatisticsDrinkPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -545,7 +611,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
+    <EntityDeploy Include="DB\ERD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ERD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EntityClassDiagram.cd" />
+    <None Include="DB\ERD.edmx.diagram">
+      <DependentUpon>ERD.edmx</DependentUpon>
+    </None>
+    <None Include="GUIClassDiagram.cd" />
+    <None Include="BUSClassDiagram.cd" />
     <None Include="Entities\EF.Reverse.POCO.Core.ttinclude" />
     <None Include="Entities\EF.Reverse.POCO.ttinclude" />
     <None Include="packages.config" />
@@ -574,6 +649,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="dbconfig.txt" />
+    <Content Include="DB\ERD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERD.edmx</DependentUpon>
+      <LastGenOutput>ERD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\ERD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERD.edmx</DependentUpon>
+      <LastGenOutput>ERD.cs</LastGenOutput>
+    </Content>
     <Content Include="Entities\CafochaEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CafochaEntities.cs</LastGenOutput>
