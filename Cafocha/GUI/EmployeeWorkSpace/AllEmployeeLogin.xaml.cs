@@ -125,56 +125,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             }
         }
 
-        private void BtnCodeLogin_Click(object sender, RoutedEventArgs e)
-        {
-            var dep = (DependencyObject) e.OriginalSource;
-            while (dep != null && !(dep is ListViewItem)) dep = VisualTreeHelper.GetParent(dep);
-
-            if (dep == null)
-            {
-                if (Width == 500)
-                {
-                    IsShow = false;
-                    LoadForm.Start();
-                }
-
-                spLoginAnother.Visibility = Visibility.Visible;
-                loginNormal.Visibility = Visibility.Collapsed;
-                loginCode.Visibility = Visibility.Visible;
-                lvLoginList.UnselectAll();
-                txbLabel.Text = "Đăng nhập mới";
-                setControl(true);
-            }
-            else
-            {
-                if (_typeshow == 1) return;
-
-                var index = lvLoginList.ItemContainerGenerator.IndexFromContainer(dep);
-
-                var emp = _businessModuleLocator.EmployeeModule.Emploglist[index];
-                if (emp == null)
-                {
-                    MessageBox.Show(NO_EMPLOYEE);
-                    return;
-                }
-
-                if (Width <= 500)
-                {
-                    IsShow = false;
-                    LoadForm.Start();
-                }
-
-                _emplog = emp;
-
-                spLoginAnother.Visibility = Visibility.Visible;
-                loginNormal.Visibility = Visibility.Collapsed;
-                loginCode.Visibility = Visibility.Visible;
-                lvLoginList.UnselectAll();
-                txbLabel.Text = "Đăng nhập mới";
-                setControl(true);
-            }
-        }
-
 
         private void btnLoginNew_Click(object sender, RoutedEventArgs e)
         {
@@ -187,6 +137,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
+            btnLoginNew.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Đăng nhập mới";
             setControl(true);
@@ -194,18 +145,21 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            _emplog = lvLoginList.SelectedItem as EmpLoginList;
-            if (_emplog == null)
+            var t = lvLoginList.SelectedItem as EmpLoginList;
+            if (t == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
 
-            if (_emplog.IsStartWorking)
+            if (t.IsStartWorking)
             {
                 MessageBox.Show("Bạn đang trong phiên làm việc. Không thể bắt đầu làm việc");
                 return;
             }
+
+            _emplog = t;
+
 
             if (Width <= 500)
             {
@@ -216,6 +170,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
+            btnStart.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Bắt đầu làm việc";
             setControl(false);
@@ -224,18 +179,20 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
-            _emplog = lvLoginList.SelectedItem as EmpLoginList;
-            if (_emplog == null)
+            var t = lvLoginList.SelectedItem as EmpLoginList;
+            if (t == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
 
-            if (_emplog.IsStartWorking == false)
+            if (t.IsStartWorking == false)
             {
                 MessageBox.Show("Bạn chưa bắt đầu làm việc!");
                 return;
             }
+
+            _emplog = t;
             if (Width <= 500)
             {
                 IsShow = false;
@@ -245,6 +202,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
+            btnEnd.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Kết thúc làm việc";
             setControl(false);
@@ -253,13 +211,13 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            _emplog = lvLoginList.SelectedItem as EmpLoginList;
+            var t = lvLoginList.SelectedItem as EmpLoginList;
             if (_emplog == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
-
+            _emplog = t;
             if (Width <= 500)
             {
                 IsShow = false;
@@ -269,6 +227,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
+            btnLogout.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Đăng xuất";
             setControl(false);
@@ -277,12 +236,14 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            _emplog = lvLoginList.SelectedItem as EmpLoginList;
+            var t = lvLoginList.SelectedItem as EmpLoginList;
             if (_emplog == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
+
+            t = _emplog;
 
             if (Width <= 500)
             {
@@ -293,6 +254,7 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
+            btnView.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Xem chi tiết";
             setControl(false);
@@ -340,10 +302,10 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             {
                 btnAcceptLogin.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
-                var t = await _businessModuleLocator.EmployeeModule.login(username, pass, "");
+                var t = await Task.Run(async() => await _businessModuleLocator.EmployeeModule.login(username, pass, ""));
                 if (t == false)
                 {
-                    MessageBox.Show(INVAILD_PASS_PHASE);
+//                    MessageBox.Show(INVAILD_PASS_PHASE);
                 }
                 btnAcceptLogin.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
