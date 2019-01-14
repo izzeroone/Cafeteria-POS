@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
-namespace Cafocha.GUI.Helper.PrintHelper
+namespace Cafocha.BusinessContext.Helper.PrintHelper
 {
     public class EndOfDayPrintHelper : IPrintHelper
     {

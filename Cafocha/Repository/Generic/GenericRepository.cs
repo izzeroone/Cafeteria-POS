@@ -4,8 +4,8 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Linq;
 using System.Linq.Expressions;
+using Cafocha.BusinessContext.Security;
 using Cafocha.Entities;
-using Cafocha.Security;
 
 namespace Cafocha.Repository.Generic
 {

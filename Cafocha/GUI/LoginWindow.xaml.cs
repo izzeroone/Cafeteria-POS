@@ -8,7 +8,6 @@ using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
 using Cafocha.GUI.AdminWorkSpace;
-using Cafocha.GUI.BusinessModel;
 using Cafocha.GUI.CafowareWorkSpace;
 using Cafocha.GUI.EmployeeWorkSpace;
 using log4net;
@@ -27,7 +26,7 @@ namespace Cafocha.GUI
         private readonly DispatcherTimer LoadCodeLogin;
         public LoginWindow()
         {
-            var config = ReadWriteData.ReadDBConfig();
+//            var config = ReadWriteData.ReadDBConfig();
 
 //            try
 //            {
@@ -187,15 +186,6 @@ namespace Cafocha.GUI
             {
                 Console.WriteLine(ex.Message);
             }
-        }
-
-
-        private void btnDatabase_Click(object sender, RoutedEventArgs e)
-        {
-            var dbConfig = new DatabaseConfigWindow();
-            dbConfig.ShowDialog();
-            var connectString = (string) Application.Current.Properties["ConnectionString"];
-            if (!string.IsNullOrWhiteSpace(connectString)) _businessModuleLocator.ConnectionString = connectString;
         }
 
         private void Closing_LoginWindos(object sender, EventArgs args)

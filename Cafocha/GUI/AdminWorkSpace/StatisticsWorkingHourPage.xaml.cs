@@ -16,7 +16,6 @@ namespace Cafocha.GUI.AdminWorkSpace
     public partial class StatisticsWorkingHourPage : Page
     {
         private readonly BusinessModuleLocator _businessModuleLocator;
-        private readonly AdminRe curAdmin;
         private readonly ChartValues<double> Values;
         public Dictionary<string, double> WHList;
 
@@ -25,9 +24,6 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             _businessModuleLocator = businessModuleLocator;
             InitializeComponent();
-
-            curAdmin = Application.Current.Properties["AdLogin"] as AdminRe;
-
             Values = new ChartValues<double>();
 
 
@@ -65,7 +61,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
             double count = 0;
             foreach (var item in _businessModuleLocator.RepositoryLocator.EmployeeRepository.Get(x =>
-                x.Deleted == 0 && x.Manager.Equals(curAdmin.AdId)))
+                x.Deleted == 0))
             {
                 foreach (var item2 in SalaryDetailsWithTime.Where(o => o.EmpId.Equals(item.EmpId)))
                     count = item2.WorkHour;

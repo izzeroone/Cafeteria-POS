@@ -7,8 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cafocha.BusinessContext;
+using Cafocha.BusinessContext.Helper.PrintHelper.Report;
 using Cafocha.Entities;
-using Cafocha.GUI.Helper.PrintHelper.Report;
 
 namespace Cafocha.GUI.AdminWorkSpace
 {
@@ -216,12 +216,6 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             // builds the converted string.
             return Encoding.Unicode.GetString(encodedBytes);
-        }
-
-        private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
-        {
-            var optionDialog = new ReportSalaryOptionDialog(new SalaryNoteReport(), _businessModuleLocator);
-            optionDialog.Show();
         }
 
         private void BntPay_Click(object sender, RoutedEventArgs e)

@@ -7,9 +7,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Cafocha.BusinessContext;
 using Cafocha.BusinessContext.EmployeeWorkspace;
+using Cafocha.BusinessContext.Helper.PrintHelper;
 using Cafocha.BusinessContext.User;
 using Cafocha.Entities;
-using Cafocha.GUI.Helper.PrintHelper;
 
 namespace Cafocha.GUI.EmployeeWorkSpace
 {

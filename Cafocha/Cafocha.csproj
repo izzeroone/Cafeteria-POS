@@ -142,6 +142,12 @@
     </ApplicationDefinition>
     <Compile Include="BusinessContext\BusinessModuleLocator.cs" />
     <Compile Include="BusinessContext\EmployeeWorkspace\TakingOrderModule.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\OrderEntityForReport.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\OrderNoteForReport.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\ReceiptEntityForReport.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Report\IListPdfReport.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Report\OrderNoteReport.cs" />
     <Compile Include="BusinessContext\User\ProductModule.cs" />
     <Compile Include="BusinessContext\MigrationConfiguration.cs" />
     <Compile Include="BusinessContext\User\AdminModule.cs" />
@@ -161,12 +167,12 @@
     <Compile Include="GUI\Converter\ProductTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockTypeConverter.cs" />
     <Compile Include="GUI\Converter\StockGroupConverter.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\StockInDetailForPrint.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\StockOutForPrinter.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\StockInForPrinter.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\StockOutPrinter.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\StockInPrinter.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\StockOutDetailForPrint.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\StockInDetailForPrint.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\StockOutForPrinter.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\StockInForPrinter.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\StockOutPrinter.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\StockInPrinter.cs" />
     <Compile Include="GUI\LoginWindow.xaml.cs" />
     <Compile Include="GUI\AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
@@ -216,14 +222,11 @@
     <Compile Include="GUI\AdminWorkSpace\ReportOptionDialog.xaml.cs">
       <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\ReportSalaryOptionDialog.xaml.cs">
-      <DependentUpon>ReportSalaryOptionDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AdminWorkSpace\statisticsFoodPage.xaml.cs">
-      <DependentUpon>statisticsFoodPage.xaml</DependentUpon>
+    <Compile Include="GUI\AdminWorkSpace\StatisticsFoodPage.xaml.cs">
+      <DependentUpon>StatisticsFoodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
       <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
@@ -237,7 +240,6 @@
     <Compile Include="GUI\CafowareWorkSpace\CreateStockPage.xaml.cs">
       <DependentUpon>CreateStockPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CafowareWorkSpace\Helper\UnitBuyTrans.cs" />
     <Compile Include="GUI\CafowareWorkSpace\StockInPage.xaml.cs">
       <DependentUpon>StockInPage.xaml</DependentUpon>
     </Compile>
@@ -251,9 +253,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\BusinessModel\ReadWriteData.cs" />
-    <Compile Include="GUI\DatabaseConfigWindow.xaml.cs">
-      <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
@@ -287,27 +286,13 @@
     <Compile Include="GUI\EmployeeWorkSpace\UcOder.xaml.cs">
       <DependentUpon>UcOder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Helper\PrintHelper\DoPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\EndOfDayPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\IPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\OrderEntityForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\OrderForPrint.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\OrderNoteForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\ReceiptEntityForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\SalaryEntityForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Model\SalaryNoteForReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\ReceiptPrintHelper.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Report\AppPath.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Report\IListPdfReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Report\OrderNoteReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\Report\SalaryNoteReport.cs" />
-    <Compile Include="GUI\Helper\PrintHelper\ShiftPrintHelper.cs" />
-    <Compile Include="GUI\StartupWindows.xaml.cs">
-      <DependentUpon>StartupWindows.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="BusinessContext\Helper\PrintHelper\DoPrintHelper.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\EndOfDayPrintHelper.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\IPrintHelper.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Model\OrderForPrint.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\ReceiptPrintHelper.cs" />
+    <Compile Include="BusinessContext\Helper\PrintHelper\Report\AppPath.cs" />
     <Compile Include="GUI\Support\FloatKeyboardControl.xaml.cs">
       <DependentUpon>FloatKeyboardControl.xaml</DependentUpon>
     </Compile>
@@ -345,8 +330,8 @@
     </Compile>
     <Compile Include="Repository\DAL\RepositoryLocator.cs" />
     <Compile Include="Repository\Generic\GenericRepository.cs" />
-    <Compile Include="Security\AESGCM.cs" />
-    <Compile Include="Security\AESThenHMAC.cs" />
+    <Compile Include="BusinessContext\Security\AESGCM.cs" />
+    <Compile Include="BusinessContext\Security\AESThenHMAC.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -356,10 +341,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CafochaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Config\CafochaConfig.cs" />
-    <Compile Include="Context\Logging\CafochaInterceptorLogging.cs" />
-    <Compile Include="Context\Logging\ILogger.cs" />
-    <Compile Include="Context\Logging\Logger.cs" />
     <Compile Include="Entities\CustomEntities\AdminRe.cs" />
     <Compile Include="Entities\CustomEntities\Employee.cs" />
     <Compile Include="Entities\CustomEntities\OrderNote.cs" />
@@ -431,15 +412,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\ReportSalaryOptionDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="GUI\AdminWorkSpace\SalaryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\AdminWorkSpace\statisticsFoodPage.xaml">
+    <Page Include="GUI\AdminWorkSpace\StatisticsFoodPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -480,10 +457,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\DatabaseConfigWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -532,10 +505,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\LoginWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\StartupWindows.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1142,8 +1111,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI\Helper\ComHelper\" />
-    <Folder Include="GUI\Helper\Security\" />
+    <Folder Include="BusinessContext\Helper\ComHelper\" />
+    <Folder Include="BusinessContext\Helper\Security\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

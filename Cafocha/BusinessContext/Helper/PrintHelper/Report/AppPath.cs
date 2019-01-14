@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Web;
 
-namespace Cafocha.GUI.Helper.PrintHelper.Report
+namespace Cafocha.BusinessContext.Helper.PrintHelper.Report
 {
     public class AppPath
     {

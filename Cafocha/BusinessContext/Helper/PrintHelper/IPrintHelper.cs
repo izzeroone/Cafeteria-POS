@@ -1,6 +1,6 @@
 ﻿using System.Windows.Documents;
 
-namespace Cafocha.GUI.Helper.PrintHelper
+namespace Cafocha.BusinessContext.Helper.PrintHelper
 {
     public interface IPrintHelper
     {

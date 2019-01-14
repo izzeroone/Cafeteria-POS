@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cafocha.GUI.Helper.PrintHelper.Model
+﻿namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
 {
     public class StockOutDetailForPrint
     {

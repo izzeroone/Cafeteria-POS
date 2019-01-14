@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Cafocha.BusinessContext.Helper.PrintHelper.Report;
 using Cafocha.Entities;
 using Cafocha.GUI.Helper.PrintHelper.Model;
 using Cafocha.Repository.DAL;
@@ -12,9 +13,9 @@ using PdfRpt.FluentInterface;
 namespace Cafocha.GUI.Helper.PrintHelper.Report
 {
     /// <summary>
-    ///     Create Report about SalaryNote(outcome) in specific time
+    ///     Create Report about Order(income) in specific time
     /// </summary>
-    public class SalaryNoteReport : IListPdfReport
+    public class OrderNoteReport : IListPdfReport
     {
         public IPdfReportData CreatePdfReport(RepositoryLocator unitofwork, DateTime startTime, DateTime endTime,
             string folderName)
@@ -27,7 +28,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.DocumentMetadata(new DocumentMetadata
                     {
                         Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
-                        Subject = "Report", Title = "Salary Report"
+                        Subject = "Report", Title = "Order Report"
                     });
                     doc.Compression(new CompressionSettings
                     {
@@ -54,7 +55,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     {
                         defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                         defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                        defaultHeader.Message("SALARY REPORT (" + startTime.ToShortDateString() + " - " +
+                        defaultHeader.Message("ORDER REPORT (" + startTime.ToShortDateString() + " - " +
                                               endTime.ToShortDateString() + ")");
                     });
                 })
@@ -66,37 +67,29 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var queryWithYear =
-                        unitofwork.SalaryNoteRepository.Get(x =>
-                            x.ForYear >= startTime.Year && x.ForYear <= endTime.Year).ToList();
+                    endTime = endTime.AddDays(1);
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
+                        x.OrderTime.CompareTo(startTime) >= 0 && x.OrderTime.CompareTo(endTime) <= 0);
 
-                    var queryWithStartTimeMonth =
-                        queryWithYear.Where(x => x.ForMonth >= startTime.Month && x.ForYear == startTime.Year
-                                                 || x.ForYear > startTime.Year).ToList();
 
-                    var queryWithEndTimeMonth =
-                        queryWithStartTimeMonth.Where(x => x.ForMonth <= endTime.Month && x.ForYear == endTime.Year
-                                                           || x.ForYear < endTime.Year).ToList();
-
-                    var salaryReportList = new List<SalaryNoteForReport>();
-                    foreach (var salary in queryWithEndTimeMonth)
+                    var orderReportList = new List<OrderNoteForReport>();
+                    foreach (var order in orderWithTimeList)
                     {
-                        var salaryRpt = new SalaryNoteForReport
+                        var orderRpt = new OrderNoteForReport
                         {
-                            SnId = salary.SnId,
-                            EmpId = salary.EmpId,
-                            EmpName = salary.Employee.Name,
-                            DatePay = salary.DatePay == null ? "" : salary.DatePay.ToString(),
-                            SalaryValue = salary.SalaryValue,
-                            WorkHour = salary.WorkHour,
-                            ForMonth = salary.ForMonth,
-                            ForYear = salary.ForYear,
-                            IsPaid = salary.IsPaid == 1 ? "Yes" : "No"
+                            OrdernoteId = order.OrdernoteId,
+                            CusId = order.CusId,
+                            EmpId = order.EmpId,
+                            OrderTime = order.OrderTime,
+                            TotalPrice = order.TotalPrice,
+                            CustomerPay = order.CustomerPay,
+                            PayBack = order.PayBack,
+                            payMethod = ((PaymentMethod) order.paymentMethod).ToString()
                         };
-                        salaryReportList.Add(salaryRpt);
+                        orderReportList.Add(orderRpt);
                     }
 
-                    dataSource.StronglyTypedList(salaryReportList);
+                    dataSource.StronglyTypedList(orderReportList);
                 })
                 .MainTableSummarySettings(summarySettings =>
                 {
@@ -119,7 +112,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SnId);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrdernoteId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(1);
@@ -128,84 +121,109 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                         column.Font(font =>
                         {
                             font.Size(10);
-                            font.Color(Color.Blue);
+                            font.Color(Color.Brown);
                         });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpId);
+                        column.PropertyName<OrderNoteForReport>(x => x.CusId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(2);
-                        column.Width(3);
-                        column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
-                        column.Font(font =>
-                        {
-                            font.Size(10);
-                            font.Color(Color.Crimson);
-                        });
+                        column.Width(2);
+                        column.HeaderCell("Customer");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpName);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.EmpId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Left);
                         column.IsVisible(true);
                         column.Order(3);
-                        column.Width(2);
-                        column.HeaderCell("Emp Name");
+                        column.Width(3);
+                        column.HeaderCell("Emp");
+                        column.PaddingLeft(25);
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.DatePay);
+                        column.PropertyName<OrderNoteForReport>(x => x.Ordertable);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(4);
                         column.Width(2);
-                        column.HeaderCell("Date Pay");
+                        column.HeaderCell("Table");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.IsPaid);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
                         column.Width(2);
-                        column.HeaderCell("Is Paid");
+                        column.HeaderCell("Time");
                     });
-
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForMonth);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.TotalPrice);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(6);
                         column.Width(2);
-                        column.HeaderCell("For Month");
+                        column.HeaderCell("Total Amount (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForYear);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.CustomerPay);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(7);
                         column.Width(2);
-                        column.HeaderCell("For Year");
+                        column.HeaderCell("Customer Pay (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.WorkHour);
+                        column.PropertyName<OrderNoteForReport>(x => x.PayBack);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(8);
                         column.Width(2);
-                        column.HeaderCell("Hour (h)");
+                        column.HeaderCell("Change (kVND)");
                         column.ColumnItemsTemplate(template =>
                         {
                             template.TextBlock();
@@ -225,27 +243,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SalaryValue);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.PropertyName<OrderNoteForReport>(x => x.payMethod);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(9);
                         column.Width(2);
-                        column.HeaderCell("Salary Value (kVND)");
-                        column.ColumnItemsTemplate(template =>
-                        {
-                            template.TextBlock();
-                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                ? string.Empty
-                                : string.Format("{0:n0}", obj));
-                        });
-                        column.AggregateFunction(aggregateFunction =>
-                        {
-                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                            aggregateFunction.DisplayFormatFormula(obj =>
-                                obj == null || string.IsNullOrEmpty(obj.ToString())
-                                    ? string.Empty
-                                    : string.Format("{0:n0}", obj));
-                        });
+                        column.HeaderCell("Payment");
                     });
                 })
                 .MainTableEvents(events => { events.DataSourceIsEmpty("There is no data available to display."); })
@@ -256,8 +259,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     export.ToXml();
                 })
                 .Generate(data =>
-                    data.AsPdfFile(
-                        string.Format("{0}\\Salary-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+                    data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName,
+                        Guid.NewGuid().ToString("N"))));
         }
 
 
@@ -272,7 +275,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.DocumentMetadata(new DocumentMetadata
                     {
                         Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
-                        Subject = "Report", Title = "Salary Detail Report"
+                        Subject = "Report", Title = "Order Detail Report"
                     });
                     doc.Compression(new CompressionSettings
                     {
@@ -299,7 +302,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     {
                         defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                         defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                        defaultHeader.Message("Salary DETAILS REPORT (" + startTime.ToShortDateString() + " - " +
+                        defaultHeader.Message("ORDER DETAILS REPORT (" + startTime.ToShortDateString() + " - " +
                                               endTime.ToShortDateString() + ")");
                     });
                 })
@@ -311,21 +314,30 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var queryWithYear =
-                        unitofwork.WorkingHistoryRepository.Get(x =>
-                            x.SalaryNote.ForYear >= startTime.Year && x.SalaryNote.ForYear <= endTime.Year).ToList();
+                    endTime = endTime.AddDays(1);
+                    var orderDetailsWithTimeList = unitofwork.OrderDetailsRepository.Get(x =>
+                        x.OrderNote.OrderTime.CompareTo(startTime) >= 0 &&
+                        x.OrderNote.OrderTime.CompareTo(endTime) <= 0);
 
-                    var queryWithStartTimeMonth =
-                        queryWithYear.Where(x =>
-                            x.SalaryNote.ForMonth >= startTime.Month && x.SalaryNote.ForYear == startTime.Year
-                            || x.SalaryNote.ForYear > startTime.Year).ToList();
 
-                    var queryWithEndTimeMonth =
-                        queryWithStartTimeMonth.Where(x =>
-                            x.SalaryNote.ForMonth <= endTime.Month && x.SalaryNote.ForYear == endTime.Year
-                            || x.SalaryNote.ForYear < endTime.Year).ToList();
+                    var orderDetailsReportList = new List<OrderNoteDetailsForReport>();
+                    foreach (var details in orderDetailsWithTimeList)
+                    {
+                        var detailsRpt = new OrderNoteDetailsForReport
+                        {
+                            OrdernoteId = details.OrdernoteId,
+                            ProductId = details.ProductId,
+                            ProductName = details.Product.Name,
+                            EmpId = details.OrderNote.EmpId,
+                            OrderTime = details.OrderNote.OrderTime,
+                            Quan = details.Quan,
+                            PayMethod = ((PaymentMethod) details.OrderNote.paymentMethod).ToString()
+                        };
 
-                    dataSource.StronglyTypedList(queryWithEndTimeMonth);
+                        orderDetailsReportList.Add(detailsRpt);
+                    }
+
+                    dataSource.StronglyTypedList(orderDetailsReportList);
                 })
                 .MainTableSummarySettings(summarySettings =>
                 {
@@ -348,12 +360,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<WorkingHistory>(x => x.WhId);
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.OrdernoteId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(1);
                         column.Width(3);
-                        column.HeaderCell("WorkHistory ID", horizontalAlignment: HorizontalAlignment.Left);
+                        column.HeaderCell("Order ID", horizontalAlignment: HorizontalAlignment.Left);
                         column.Font(font =>
                         {
                             font.Size(10);
@@ -363,12 +375,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<WorkingHistory>(x => x.ResultSalary);
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.ProductId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(2);
                         column.Width(3);
-                        column.HeaderCell("Salary ID", horizontalAlignment: HorizontalAlignment.Left);
+                        column.HeaderCell("Prod ID", horizontalAlignment: HorizontalAlignment.Left);
                         column.Font(font =>
                         {
                             font.Size(10);
@@ -378,47 +390,52 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<WorkingHistory>(x => x.EmpId);
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.ProductName);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(3);
                         column.Width(3);
-                        column.HeaderCell("Emp ID", horizontalAlignment: HorizontalAlignment.Left);
-                        column.Font(font =>
-                        {
-                            font.Size(10);
-                            font.Color(Color.Crimson);
-                        });
+                        column.HeaderCell("Prod Name");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<WorkingHistory>(x => x.Employee.Name);
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.EmpId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Left);
                         column.IsVisible(true);
                         column.Order(4);
                         column.Width(3);
-                        column.HeaderCell("Emp Name");
+                        column.HeaderCell("Emp ID");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<WorkingHistory>(x => x.StartTime);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
-                        column.IsVisible(true);
-                        column.Order(5);
-                        column.Width(2);
-                        column.HeaderCell("Start Time");
-                    });
-
-                    columns.AddColumn(column =>
-                    {
-                        column.PropertyName<WorkingHistory>(x => x.EndTime);
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(6);
                         column.Width(2);
-                        column.HeaderCell("End Time");
+                        column.HeaderCell("Time");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.Quan);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(7);
+                        column.Width(2);
+                        column.HeaderCell("Qty");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteDetailsForReport>(x => x.PayMethod);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(9);
+                        column.Width(2);
+                        column.HeaderCell("Payment");
                     });
                 })
                 .MainTableEvents(events => { events.DataSourceIsEmpty("There is no data available to display."); })
@@ -428,7 +445,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     export.ToCsv();
                     export.ToXml();
                 })
-                .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-DetailsReport-{1}.pdf", folderName,
+                .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-DetailsReport-{1}.pdf", folderName,
                     Guid.NewGuid().ToString("N"))));
         }
 
@@ -444,7 +461,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.DocumentMetadata(new DocumentMetadata
                     {
                         Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
-                        Subject = "Report", Title = "Salary Entities Report"
+                        Subject = "Report", Title = "Order Entities Report"
                     });
                     doc.Compression(new CompressionSettings
                     {
@@ -471,7 +488,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     {
                         defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                         defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                        defaultHeader.Message("SALARY ENTITIES REPORT (" + startTime.ToShortDateString() + " - " +
+                        defaultHeader.Message("ORDER ENTITIES REPORT (" + startTime.ToShortDateString() + " - " +
                                               endTime.ToShortDateString() + ")");
                     });
                 })
@@ -479,48 +496,44 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 .MainTablePreferences(table =>
                 {
                     table.ColumnsWidthsType(TableColumnWidthType.Relative);
-                    //table.NumberOfDataRowsPerPage(5);
+                    //table.NumberOfDataRowsPerPage(20);
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var queryWithYear =
-                        unitofwork.SalaryNoteRepository.Get(x =>
-                            x.ForYear >= startTime.Year && x.ForYear <= endTime.Year).ToList();
+                    endTime = endTime.AddDays(1);
+                    var orderDetailsWithTimeList = unitofwork.OrderDetailsRepository.Get(x =>
+                        x.OrderNote.OrderTime.CompareTo(startTime) >= 0 &&
+                        x.OrderNote.OrderTime.CompareTo(endTime) <= 0);
 
-                    var queryWithStartTimeMonth =
-                        queryWithYear.Where(x => x.ForMonth >= startTime.Month && x.ForYear == startTime.Year
-                                                 || x.ForYear > startTime.Year).ToList();
 
-                    var queryWithEndTimeMonth =
-                        queryWithStartTimeMonth.Where(x => x.ForMonth <= endTime.Month && x.ForYear == endTime.Year
-                                                           || x.ForYear < endTime.Year).ToList();
-
-                    var salaryEntityReportList = new List<SalaryEntityForReport>();
-                    foreach (var emp in unitofwork.EmployeeRepository.Get().ToList())
+                    var orderEntityReportList = new List<OrderEntityForReport>();
+                    foreach (var product in unitofwork.ProductRepository.Get().ToList())
                     {
-                        var queryWithEmployee = queryWithEndTimeMonth.Where(x => x.EmpId.Equals(emp.EmpId));
+                        var queryWithProduct =
+                            orderDetailsWithTimeList.Where(x => x.ProductId.Equals(product.ProductId));
 
-                        double totalWorkHour = 0;
-                        decimal totalSalary = 0;
-                        foreach (var salNote in queryWithEmployee)
+                        var billCount = queryWithProduct.Count();
+                        var quan = 0;
+                        decimal totalAmount = 0;
+                        foreach (var orderDetails in queryWithProduct)
                         {
-                            totalWorkHour += salNote.WorkHour;
-                            totalSalary += salNote.SalaryValue;
+                            quan += orderDetails.Quan;
+                            totalAmount += orderDetails.Quan * product.Price;
                         }
 
-                        var salaryEntity = new SalaryEntityForReport
+                        var orderEntity = new OrderEntityForReport
                         {
-                            Id = emp.EmpId,
-                            Name = emp.Name,
-                            WorkHour = totalWorkHour,
-                            Salary = totalSalary
+                            Id = product.ProductId,
+                            Name = product.Name,
+                            Quan = quan,
+                            BillCount = billCount,
+                            TotalAmount = totalAmount
                         };
 
-
-                        salaryEntityReportList.Add(salaryEntity);
+                        orderEntityReportList.Add(orderEntity);
                     }
 
-                    dataSource.StronglyTypedList(salaryEntityReportList);
+                    dataSource.StronglyTypedList(orderEntityReportList);
                 })
                 .MainTableSummarySettings(summarySettings =>
                 {
@@ -543,7 +556,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryEntityForReport>(x => x.Id);
+                        column.PropertyName<OrderEntityForReport>(x => x.Id);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(1);
@@ -558,7 +571,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryEntityForReport>(x => x.Name);
+                        column.PropertyName<OrderEntityForReport>(x => x.Name);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(2);
@@ -573,35 +586,32 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryEntityForReport>(x => x.WorkHour);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.PropertyName<OrderEntityForReport>(x => x.Quan);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
-                        column.Order(8);
-                        column.Width(2);
-                        column.HeaderCell("Work Hour(h)");
-                        column.ColumnItemsTemplate(template =>
-                        {
-                            template.TextBlock();
-                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                ? string.Empty
-                                : string.Format("{0:n0}", obj));
-                        });
-                        //column.AggregateFunction(aggregateFunction =>
-                        //{
-                        //    aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                        //    aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                        //        ? string.Empty : string.Format("{0:n0}", obj));
-                        //});
+                        column.Order(3);
+                        column.Width(3);
+                        column.HeaderCell("Qty");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryEntityForReport>(x => x.Salary);
+                        column.PropertyName<OrderEntityForReport>(x => x.BillCount);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Left);
+                        column.IsVisible(true);
+                        column.Order(4);
+                        column.Width(3);
+                        column.HeaderCell("Bill Count");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderEntityForReport>(x => x.TotalAmount);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
-                        column.Order(9);
+                        column.Order(5);
                         column.Width(2);
-                        column.HeaderCell("Salary (kVND)");
+                        column.HeaderCell("Total Amount (kVND)");
                         column.ColumnItemsTemplate(template =>
                         {
                             template.TextBlock();
@@ -626,8 +636,9 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     export.ToCsv();
                     export.ToXml();
                 })
-                .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-EntityReport-{1}.pdf", folderName,
-                    Guid.NewGuid().ToString("N"))));
+                .Generate(data =>
+                    data.AsPdfFile(string.Format("{0}\\Order-EntityReport-{1}.pdf", folderName,
+                        Guid.NewGuid().ToString("N"))));
         }
 
 
@@ -641,7 +652,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.DocumentMetadata(new DocumentMetadata
                     {
                         Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
-                        Subject = "Report", Title = "Salary Report"
+                        Subject = "Report", Title = "Order Report"
                     });
                     doc.Compression(new CompressionSettings
                     {
@@ -668,7 +679,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     {
                         defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                         defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                        defaultHeader.Message("SALARY REPORT (" + DateTime.Now.Month + "/" + DateTime.Now.Year + ")");
+                        defaultHeader.Message("ORDER REPORT (" + DateTime.Now.Month + "/" + DateTime.Now.Year + ")");
                     });
                 })
                 .MainTableTemplate(template => { template.BasicTemplate(BasicTemplate.BlackAndBlue1Template); })
@@ -679,29 +690,28 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var monthQuery =
-                        unitofwork.SalaryNoteRepository.Get(x =>
-                            x.ForMonth == DateTime.Now.Month && x.ForYear == DateTime.Now.Year).ToList();
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
+                        x.OrderTime.Month == DateTime.Now.Month && x.OrderTime.Year == DateTime.Now.Year);
 
-                    var salaryReportList = new List<SalaryNoteForReport>();
-                    foreach (var salary in monthQuery)
+
+                    var orderReportList = new List<OrderNoteForReport>();
+                    foreach (var order in orderWithTimeList)
                     {
-                        var salaryRpt = new SalaryNoteForReport
+                        var orderRpt = new OrderNoteForReport
                         {
-                            SnId = salary.SnId,
-                            EmpId = salary.EmpId,
-                            EmpName = salary.Employee.Name,
-                            DatePay = salary.DatePay == null ? "" : salary.DatePay.ToString(),
-                            SalaryValue = salary.SalaryValue,
-                            WorkHour = salary.WorkHour,
-                            ForMonth = salary.ForMonth,
-                            ForYear = salary.ForYear,
-                            IsPaid = salary.IsPaid == 1 ? "Yes" : "No"
+                            OrdernoteId = order.OrdernoteId,
+                            CusId = order.CusId,
+                            EmpId = order.EmpId,
+                            OrderTime = order.OrderTime,
+                            TotalPrice = order.TotalPrice,
+                            CustomerPay = order.CustomerPay,
+                            PayBack = order.PayBack,
+                            payMethod = ((PaymentMethod) order.paymentMethod).ToString()
                         };
-                        salaryReportList.Add(salaryRpt);
+                        orderReportList.Add(orderRpt);
                     }
 
-                    dataSource.StronglyTypedList(salaryReportList);
+                    dataSource.StronglyTypedList(orderReportList);
                 })
                 .MainTableSummarySettings(summarySettings =>
                 {
@@ -724,7 +734,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SnId);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrdernoteId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(1);
@@ -733,84 +743,109 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                         column.Font(font =>
                         {
                             font.Size(10);
-                            font.Color(Color.Blue);
+                            font.Color(Color.Brown);
                         });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpId);
+                        column.PropertyName<OrderNoteForReport>(x => x.CusId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(2);
-                        column.Width(3);
-                        column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
-                        column.Font(font =>
-                        {
-                            font.Size(10);
-                            font.Color(Color.Crimson);
-                        });
+                        column.Width(2);
+                        column.HeaderCell("Customer");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpName);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.EmpId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Left);
                         column.IsVisible(true);
                         column.Order(3);
-                        column.Width(2);
-                        column.HeaderCell("Emp Name");
+                        column.Width(3);
+                        column.HeaderCell("Emp");
+                        column.PaddingLeft(25);
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.DatePay);
+                        column.PropertyName<OrderNoteForReport>(x => x.Ordertable);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(4);
                         column.Width(2);
-                        column.HeaderCell("Date Pay");
+                        column.HeaderCell("Table");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.IsPaid);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
                         column.Width(2);
-                        column.HeaderCell("Is Paid");
+                        column.HeaderCell("Time");
                     });
-
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForMonth);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.TotalPrice);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(6);
                         column.Width(2);
-                        column.HeaderCell("For Month");
+                        column.HeaderCell("Total Amount (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForYear);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.CustomerPay);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(7);
                         column.Width(2);
-                        column.HeaderCell("For Year");
+                        column.HeaderCell("Customer Pay (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.WorkHour);
+                        column.PropertyName<OrderNoteForReport>(x => x.PayBack);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(8);
                         column.Width(2);
-                        column.HeaderCell("Hour (h)");
+                        column.HeaderCell("Change (kVND)");
                         column.ColumnItemsTemplate(template =>
                         {
                             template.TextBlock();
@@ -830,27 +865,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SalaryValue);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.PropertyName<OrderNoteForReport>(x => x.payMethod);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(9);
                         column.Width(2);
-                        column.HeaderCell("Salary Value (kVND)");
-                        column.ColumnItemsTemplate(template =>
-                        {
-                            template.TextBlock();
-                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                ? string.Empty
-                                : string.Format("{0:n0}", obj));
-                        });
-                        column.AggregateFunction(aggregateFunction =>
-                        {
-                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                            aggregateFunction.DisplayFormatFormula(obj =>
-                                obj == null || string.IsNullOrEmpty(obj.ToString())
-                                    ? string.Empty
-                                    : string.Format("{0:n0}", obj));
-                        });
+                        column.HeaderCell("Payment");
                     });
                 })
                 .MainTableEvents(events => { events.DataSourceIsEmpty("There is no data available to display."); })
@@ -861,14 +881,255 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     export.ToXml();
                 })
                 .Generate(data =>
-                    data.AsPdfFile(
-                        string.Format("{0}\\Salary-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+                    data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName,
+                        Guid.NewGuid().ToString("N"))));
         }
 
 
         public IPdfReportData CreateDayPdfReport(RepositoryLocator unitofwork, string folderName)
         {
-            throw new NotImplementedException();
+            return new PdfReport().DocumentPreferences(doc =>
+                {
+                    doc.RunDirection(PdfRunDirection.LeftToRight);
+                    doc.Orientation(PageOrientation.Landscape);
+                    doc.PageSize(PdfPageSize.A4);
+                    doc.DocumentMetadata(new DocumentMetadata
+                    {
+                        Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
+                        Subject = "Report", Title = "Order Report"
+                    });
+                    doc.Compression(new CompressionSettings
+                    {
+                        EnableCompression = true,
+                        EnableFullCompression = true
+                    });
+                    doc.PrintingPreferences(new PrintingPreferences
+                    {
+                        ShowPrintDialogAutomatically = true
+                    });
+                })
+                .DefaultFonts(fonts =>
+                {
+                    fonts.Path(Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\arial.ttf"),
+                        Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\verdana.ttf"));
+                    fonts.Size(9);
+                    fonts.Color(Color.Black);
+                })
+                .PagesFooter(footer => { footer.DefaultFooter(DateTime.Now.ToString("MM/dd/yyyy")); })
+                .PagesHeader(header =>
+                {
+                    header.CacheHeader(true); // It's a default setting to improve the performance.
+                    header.DefaultHeader(defaultHeader =>
+                    {
+                        defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
+                        defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
+                        defaultHeader.Message("ORDER REPORT (" + DateTime.Now.Day + "/" + DateTime.Now.Month + "/" +
+                                              DateTime.Now.Year + ")");
+                    });
+                })
+                .MainTableTemplate(template => { template.BasicTemplate(BasicTemplate.BlackAndBlue1Template); })
+                .MainTablePreferences(table =>
+                {
+                    table.ColumnsWidthsType(TableColumnWidthType.Relative);
+                    //table.NumberOfDataRowsPerPage(5);
+                })
+                .MainTableDataSource(dataSource =>
+                {
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.OrderTime.Day == DateTime.Now.Day &&
+                                                                                x.OrderTime.Month ==
+                                                                                DateTime.Now.Month &&
+                                                                                x.OrderTime.Year == DateTime.Now.Year);
+
+
+                    var orderReportList = new List<OrderNoteForReport>();
+                    foreach (var order in orderWithTimeList)
+                    {
+                        var orderRpt = new OrderNoteForReport
+                        {
+                            OrdernoteId = order.OrdernoteId,
+                            CusId = order.CusId,
+                            EmpId = order.EmpId,
+                            OrderTime = order.OrderTime,
+                            TotalPrice = order.TotalPrice,
+                            CustomerPay = order.CustomerPay,
+                            PayBack = order.PayBack,
+                            payMethod = ((PaymentMethod) order.paymentMethod).ToString()
+                        };
+                        orderReportList.Add(orderRpt);
+                    }
+
+                    dataSource.StronglyTypedList(orderReportList);
+                })
+                .MainTableSummarySettings(summarySettings =>
+                {
+                    summarySettings.OverallSummarySettings("Summary");
+                    summarySettings.PreviousPageSummarySettings("Previous Page Summary");
+                    summarySettings.PageSummarySettings("Page Summary");
+                })
+                .MainTableColumns(columns =>
+                {
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName("rowNo");
+                        column.IsRowNumber(true);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(0);
+                        column.Width(1);
+                        column.HeaderCell("#");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.OrdernoteId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(1);
+                        column.Width(3);
+                        column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
+                        column.Font(font =>
+                        {
+                            font.Size(10);
+                            font.Color(Color.Brown);
+                        });
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.CusId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(2);
+                        column.Width(2);
+                        column.HeaderCell("Customer");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.EmpId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Left);
+                        column.IsVisible(true);
+                        column.Order(3);
+                        column.Width(3);
+                        column.HeaderCell("Emp");
+                        column.PaddingLeft(25);
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.Ordertable);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(4);
+                        column.Width(2);
+                        column.HeaderCell("Table");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(5);
+                        column.Width(2);
+                        column.HeaderCell("Time");
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.TotalPrice);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.IsVisible(true);
+                        column.Order(6);
+                        column.Width(2);
+                        column.HeaderCell("Total Amount (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.CustomerPay);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.IsVisible(true);
+                        column.Order(7);
+                        column.Width(2);
+                        column.HeaderCell("Customer Pay (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.PayBack);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.IsVisible(true);
+                        column.Order(8);
+                        column.Width(2);
+                        column.HeaderCell("Change (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
+                    });
+
+                    columns.AddColumn(column =>
+                    {
+                        column.PropertyName<OrderNoteForReport>(x => x.payMethod);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.IsVisible(true);
+                        column.Order(9);
+                        column.Width(2);
+                        column.HeaderCell("Payment");
+                    });
+                })
+                .MainTableEvents(events => { events.DataSourceIsEmpty("There is no data available to display."); })
+                .Export(export =>
+                {
+                    export.ToExcel();
+                    export.ToCsv();
+                    export.ToXml();
+                })
+                .Generate(data =>
+                    data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName,
+                        Guid.NewGuid().ToString("N"))));
         }
 
 
@@ -882,7 +1143,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     doc.DocumentMetadata(new DocumentMetadata
                     {
                         Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.",
-                        Subject = "Report", Title = "Salary Report"
+                        Subject = "Report", Title = "Order Report"
                     });
                     doc.Compression(new CompressionSettings
                     {
@@ -909,7 +1170,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     {
                         defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                         defaultHeader.ImagePath(Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                        defaultHeader.Message("SALARY REPORT (" + DateTime.Now.Year + ")");
+                        defaultHeader.Message("ORDER REPORT (" + DateTime.Now.Year + ")");
                     });
                 })
                 .MainTableTemplate(template => { template.BasicTemplate(BasicTemplate.BlackAndBlue1Template); })
@@ -920,28 +1181,27 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                 })
                 .MainTableDataSource(dataSource =>
                 {
-                    var monthQuery =
-                        unitofwork.SalaryNoteRepository.Get(x => x.ForYear == DateTime.Now.Year).ToList();
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x => x.OrderTime.Year == DateTime.Now.Year);
 
-                    var salaryReportList = new List<SalaryNoteForReport>();
-                    foreach (var salary in monthQuery)
+
+                    var orderReportList = new List<OrderNoteForReport>();
+                    foreach (var order in orderWithTimeList)
                     {
-                        var salaryRpt = new SalaryNoteForReport
+                        var orderRpt = new OrderNoteForReport
                         {
-                            SnId = salary.SnId,
-                            EmpId = salary.EmpId,
-                            EmpName = salary.Employee.Name,
-                            DatePay = salary.DatePay == null ? "" : salary.DatePay.ToString(),
-                            SalaryValue = salary.SalaryValue,
-                            WorkHour = salary.WorkHour,
-                            ForMonth = salary.ForMonth,
-                            ForYear = salary.ForYear,
-                            IsPaid = salary.IsPaid == 1 ? "Yes" : "No"
+                            OrdernoteId = order.OrdernoteId,
+                            CusId = order.CusId,
+                            EmpId = order.EmpId,
+                            OrderTime = order.OrderTime,
+                            TotalPrice = order.TotalPrice,
+                            CustomerPay = order.CustomerPay,
+                            PayBack = order.PayBack,
+                            payMethod = ((PaymentMethod) order.paymentMethod).ToString()
                         };
-                        salaryReportList.Add(salaryRpt);
+                        orderReportList.Add(orderRpt);
                     }
 
-                    dataSource.StronglyTypedList(salaryReportList);
+                    dataSource.StronglyTypedList(orderReportList);
                 })
                 .MainTableSummarySettings(summarySettings =>
                 {
@@ -964,7 +1224,7 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SnId);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrdernoteId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(1);
@@ -973,84 +1233,109 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                         column.Font(font =>
                         {
                             font.Size(10);
-                            font.Color(Color.Blue);
+                            font.Color(Color.Brown);
                         });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpId);
+                        column.PropertyName<OrderNoteForReport>(x => x.CusId);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(2);
-                        column.Width(3);
-                        column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
-                        column.Font(font =>
-                        {
-                            font.Size(10);
-                            font.Color(Color.Crimson);
-                        });
+                        column.Width(2);
+                        column.HeaderCell("Customer");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.EmpName);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.EmpId);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Left);
                         column.IsVisible(true);
                         column.Order(3);
-                        column.Width(2);
-                        column.HeaderCell("Emp Name");
+                        column.Width(3);
+                        column.HeaderCell("Emp");
+                        column.PaddingLeft(25);
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.DatePay);
+                        column.PropertyName<OrderNoteForReport>(x => x.Ordertable);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(4);
                         column.Width(2);
-                        column.HeaderCell("Date Pay");
+                        column.HeaderCell("Table");
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.IsPaid);
+                        column.PropertyName<OrderNoteForReport>(x => x.OrderTime);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(5);
                         column.Width(2);
-                        column.HeaderCell("Is Paid");
+                        column.HeaderCell("Time");
                     });
-
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForMonth);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.TotalPrice);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(6);
                         column.Width(2);
-                        column.HeaderCell("For Month");
+                        column.HeaderCell("Total Amount (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.ForYear);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                        column.PropertyName<OrderNoteForReport>(x => x.CustomerPay);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(7);
                         column.Width(2);
-                        column.HeaderCell("For Year");
+                        column.HeaderCell("Customer Pay (kVND)");
+                        column.ColumnItemsTemplate(template =>
+                        {
+                            template.TextBlock();
+                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                ? string.Empty
+                                : string.Format("{0:n0}", obj));
+                        });
+                        column.AggregateFunction(aggregateFunction =>
+                        {
+                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                            aggregateFunction.DisplayFormatFormula(obj =>
+                                obj == null || string.IsNullOrEmpty(obj.ToString())
+                                    ? string.Empty
+                                    : string.Format("{0:n0}", obj));
+                        });
                     });
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.WorkHour);
+                        column.PropertyName<OrderNoteForReport>(x => x.PayBack);
                         column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                         column.IsVisible(true);
                         column.Order(8);
                         column.Width(2);
-                        column.HeaderCell("Hour (h)");
+                        column.HeaderCell("Change (kVND)");
                         column.ColumnItemsTemplate(template =>
                         {
                             template.TextBlock();
@@ -1070,27 +1355,12 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
 
                     columns.AddColumn(column =>
                     {
-                        column.PropertyName<SalaryNoteForReport>(x => x.SalaryValue);
-                        column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                        column.PropertyName<OrderNoteForReport>(x => x.payMethod);
+                        column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                         column.IsVisible(true);
                         column.Order(9);
                         column.Width(2);
-                        column.HeaderCell("Salary Value (kVND)");
-                        column.ColumnItemsTemplate(template =>
-                        {
-                            template.TextBlock();
-                            template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                ? string.Empty
-                                : string.Format("{0:n0}", obj));
-                        });
-                        column.AggregateFunction(aggregateFunction =>
-                        {
-                            aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                            aggregateFunction.DisplayFormatFormula(obj =>
-                                obj == null || string.IsNullOrEmpty(obj.ToString())
-                                    ? string.Empty
-                                    : string.Format("{0:n0}", obj));
-                        });
+                        column.HeaderCell("Payment");
                     });
                 })
                 .MainTableEvents(events => { events.DataSourceIsEmpty("There is no data available to display."); })
@@ -1101,8 +1371,8 @@ namespace Cafocha.GUI.Helper.PrintHelper.Report
                     export.ToXml();
                 })
                 .Generate(data =>
-                    data.AsPdfFile(
-                        string.Format("{0}\\Salary-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+                    data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName,
+                        Guid.NewGuid().ToString("N"))));
         }
     }
 }

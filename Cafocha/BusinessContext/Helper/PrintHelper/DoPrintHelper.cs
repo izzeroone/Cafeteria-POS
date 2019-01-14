@@ -1,17 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.IO.Packaging;
-using System.Printing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
+using Cafocha.BusinessContext.Helper.PrintHelper.Model;
 using Cafocha.Entities;
-using Cafocha.GUI.BusinessModel;
-using Cafocha.GUI.Helper.PrintHelper.Model;
 using Cafocha.Repository.DAL;
 
-namespace Cafocha.GUI.Helper.PrintHelper
+namespace Cafocha.BusinessContext.Helper.PrintHelper
 {
     public class DoPrintHelper
     {

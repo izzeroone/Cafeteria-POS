@@ -4,7 +4,7 @@ using System.Linq;
 using Cafocha.Entities;
 using Cafocha.Repository.DAL;
 
-namespace Cafocha.GUI.Helper.PrintHelper.Model
+namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
 {
     public class StockOutForPrint
     {
