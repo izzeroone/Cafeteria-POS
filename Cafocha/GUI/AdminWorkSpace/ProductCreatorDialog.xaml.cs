@@ -63,11 +63,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.Items.Add(ProductType.Dessert);
             cboType.Items.Add(ProductType.Other);
 
-            cboStatus.Items.Add("Thức uống");
-            cboStatus.Items.Add("Starter");
-            cboStatus.Items.Add("Main");
-            cboStatus.Items.Add("Dessert");
-            cboStatus.SelectedItem = "Drink";
             iscboRaise = false;
         }
 
@@ -146,23 +141,26 @@ namespace Cafocha.GUI.AdminWorkSpace
                 }
 
                 //check discount
-                //
+                int discount = 0;
+                if (string.IsNullOrEmpty(txtDiscount.Text.Trim()))
+                {
+                    MessageBox.Show("Thêm giá cho sản phẩm");
+                    txtDiscount.Focus();
+                    return;
+                }
+                else
+                {
+                    discount = int.Parse(txtDiscount.Text.Trim());
+                }
 
-                //check standard status
-                var stdstt = cboStatus.SelectedItem.ToString();
 
                 //check price
                 decimal price = 0;
                 if (string.IsNullOrEmpty(txtPrice.Text.Trim()))
                 {
-                    if (string.IsNullOrEmpty(txtSusggestPrice.Text.Trim()))
-                    {
-                        MessageBox.Show("Thêm giá cho sản phẩm");
-                        txtPrice.Focus();
-                        return;
-                    }
-
-                    price = decimal.Parse(txtSusggestPrice.Text.Trim());
+                    MessageBox.Show("Thêm giá cho sản phẩm");
+                    txtPrice.Focus();
+                    return;
                 }
                 else
                 {
@@ -174,7 +172,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _currentProduct.Info = info;
                 _currentProduct.Type = type;
                 _currentProduct.ImageLink = imgname;
-                _currentProduct.Discount = 0;
+                _currentProduct.Discount = discount;
                 _currentProduct.Price = price;
 
                 //C:\Program Files\ITComma\Asowel POS\Project POS\POS\POS
@@ -205,6 +203,22 @@ namespace Cafocha.GUI.AdminWorkSpace
                         }
                     }
 
+                    //if (Path.GetExtension(destinationFile) != ".jpg")
+                    //{
+                    //    var mess = MessageBox.Show("Chỉ được sử dụng hình JPG, vui lòng chọn lại.",
+                    //        "Cảnh báo!", MessageBoxButton.YesNo);
+                    //    if (mess == MessageBoxResult.Yes)
+                    //    {
+                    //        File.Delete(destinationFile);
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show(
+                    //            "Hãy chọn tấm hình khác và thử lại!");
+                    //        return;
+                    //    }
+                    //}
+
                     File.Copy(browseImagePath, destinationFile);
                 }
                 catch (Exception ex)
@@ -231,7 +245,7 @@ namespace Cafocha.GUI.AdminWorkSpace
             var browseFile = new OpenFileDialog();
             browseFile.DefaultExt = ".";
             browseFile.Filter =
-                "All Image Files (*.png, *.jpg, *.jpeg)|*.png; *.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg | PNG Files (*.png)|*.png | JPG Files (*.jpg)|*.jpg";
+                "All Image Files (*.jpg, *.jpeg)|*.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg |  JPG Files (*.jpg)|*.jpg";
             var result = browseFile.ShowDialog();
 
             if (result == true)
@@ -254,8 +268,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.SelectedIndex = 0;
             txtImageName.Text = "";
             txtDiscount.Text = "";
-            cboStatus.SelectedItem = "Drink";
-            txtSusggestPrice.Text = "";
             txtPrice.Text = "";
 
             _pdtList.Clear();
@@ -266,8 +278,6 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             decimal sugprice = 0;
             foreach (var pd in _pdtList) sugprice += (decimal) (pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice;
-
-            txtSusggestPrice.Text = sugprice + "";
         }
 
         private void LvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)

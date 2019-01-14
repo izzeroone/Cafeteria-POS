@@ -118,7 +118,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="30">
-                        Thông tin nhập kho
+                        Thông Tin Xuất/Nhập Kho
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
@@ -146,7 +146,7 @@
                         <GridViewColumn Header="Tổng tiền"
                                         Width="200"
                                         DisplayMemberBinding="{Binding TotalAmount,StringFormat=0.000}" />
-                        <GridViewColumn Header="Loại"
+                        <GridViewColumn Header="Nhập(+) / Xuất(-)"
                                         Width="200"
                                         DisplayMemberBinding="{Binding IsStockIn, Converter={StaticResource StockTypeConverter}}" />
                         
@@ -172,7 +172,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="32">
-                        Chi Tiết Nhập Kho
+                        Chi Tiết Xuất/Nhập Kho
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>

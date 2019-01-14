@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="600"
-             d:DesignWidth="600"
+             d:DesignWidth="700"
              FontFamily="Segoe UI Black">
     <Grid>
         <materialDesign:ColorZone Mode="PrimaryDark"
@@ -88,7 +88,7 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="120"
+                                <DockPanel Width="140"
                                            Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"

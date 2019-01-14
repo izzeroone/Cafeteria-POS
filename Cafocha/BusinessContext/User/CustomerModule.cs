@@ -42,7 +42,7 @@ namespace Cafocha.BusinessContext.User
         public void deleteCustomer(Customer customer)
         {
             customer.Deleted = 1;
-            _unitofwork.CustomerRepository.Update(customer);
+            _unitofwork.CustomerRepository.Delete(customer);
             _unitofwork.Save();
         }
     }

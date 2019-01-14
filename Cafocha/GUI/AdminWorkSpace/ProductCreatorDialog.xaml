@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="ProductPage"
-      Height="660"
+      Height="600"
       Width="600">
 
     <Grid>
@@ -115,30 +115,6 @@
                                  FontSize="18"
                                  Foreground="White"
                                  Width="215"
-                                 Margin="0,0,100,0"
-                                 IsEnabled="False" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                    <TextBlock Text="Standard Status: "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <ComboBox x:Name="cboStatus"
-                                  FontSize="18"
-                                  Foreground="White"
-                                  Width="215"
-                                  Margin="0,0,100,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
-                    <TextBlock Text="Mức giá đề nghị(kVND): "
-                                   Margin="0,0,20,0"
-                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBox x:Name="txtSusggestPrice"
-                                 IsEnabled="False"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="215"
                                  Margin="0,0,100,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -154,7 +130,7 @@
                                  PreviewTextInput="NumberOnly_PreviewTextInput" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
-                                Margin="0,50,0,0"
+                                Margin="0,80,0,0"
                                 HorizontalAlignment="Center">
                     <Button x:Name="btnAdd"
                                 Content="Thêm"

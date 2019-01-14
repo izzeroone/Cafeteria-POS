@@ -59,7 +59,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.SelectedItem = _currentProduct.Type;
             txtImageName.Text = _currentProduct.ImageLink;
             txtDiscount.Text = _currentProduct.Discount.ToString();
-            txtSusggestPrice.Text = string.Format("{0:0.000}", 0);
             txtPrice.Text = string.Format("{0:0.000}", _currentProduct.Price);
 
             var ing = _businessModuleLocator.WarehouseModule.IngredientList;
@@ -169,12 +168,17 @@ namespace Cafocha.GUI.AdminWorkSpace
 
                 //check discount
                 //
+                int discount = 0;
+                if (string.IsNullOrEmpty(txtDiscount.Text.Trim())) ;
+
+                else
+                    discount = int.Parse(txtDiscount.Text.Trim());
 
 
                 //check price
                 decimal price = 0;
-                if (string.IsNullOrEmpty(txtPrice.Text.Trim()))
-                    price = decimal.Parse(txtSusggestPrice.Text.Trim());
+                if (string.IsNullOrEmpty(txtPrice.Text.Trim())) ;
+
                 else
                     price = decimal.Parse(txtPrice.Text.Trim());
 
@@ -182,7 +186,7 @@ namespace Cafocha.GUI.AdminWorkSpace
                 _currentProduct.Info = info;
                 _currentProduct.Type = type;
                 _currentProduct.ImageLink = imgname;
-                _currentProduct.Discount = 0;
+                _currentProduct.Discount = discount;
                 _currentProduct.Price = price;
 
                 var destinationFile = startupProjectPath + "\\Images\\Products" + txtImageName.Text.Trim();
@@ -216,8 +220,7 @@ namespace Cafocha.GUI.AdminWorkSpace
         {
             var browseFile = new OpenFileDialog();
             browseFile.DefaultExt = ".";
-            browseFile.Filter =
-                "All Image Files (*.png, *.jpg, *.jpeg)|*.png; *.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg | PNG Files (*.png)|*.png | JPG Files (*.jpg)|*.jpg";
+            browseFile.Filter = "All Image Files (*.jpg, *.jpeg)|*.jpg; *.jpeg"; // " | JPEG Files (*.jpeg)|*.jpeg |  JPG Files (*.jpg)|*.jpg";
             var result = browseFile.ShowDialog();
 
             if (result == true)
@@ -240,7 +243,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             cboType.SelectedIndex = 0;
             txtImageName.Text = "";
             txtDiscount.Text = "";
-            txtSusggestPrice.Text = "";
             txtPrice.Text = "";
 
             _pdtList.Clear();
@@ -252,7 +254,6 @@ namespace Cafocha.GUI.AdminWorkSpace
             decimal sugprice = 0;
             foreach (var pd in _pdtList) sugprice += (decimal) (pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice;
 
-            txtSusggestPrice.Text = string.Format("{0:0.000}", sugprice);
         }
     }
 }

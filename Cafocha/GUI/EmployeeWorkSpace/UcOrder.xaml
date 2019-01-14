@@ -7,7 +7,7 @@
              Background="DarkGray"
              mc:Ignorable="d"
              d:DesignHeight="600"
-             d:DesignWidth="450">
+             d:DesignWidth="500">
     <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid"
               FontWeight="Bold">
         <GroupBox.Header>
@@ -182,7 +182,7 @@
 
                 </ListView>
             </Grid>
-            <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="0,0.2,0,-0.4" Width="432">
+            <Grid Grid.Row="2" HorizontalAlignment="Left" Width="482">
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
                     <Button x:Name="bntPay"

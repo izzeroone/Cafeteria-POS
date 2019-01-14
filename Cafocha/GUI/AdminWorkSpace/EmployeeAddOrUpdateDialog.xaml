@@ -262,6 +262,7 @@
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <PasswordBox x:Name="txtCode"
                              Width="215"
+                             Foreground="White"
                              PreviewTextInput="NumberOnly_PreviewTextInput"
                              PasswordChanged="TxtCode_OnPasswordChanged"
                              Style="{StaticResource {x:Type PasswordBox}}" />

@@ -8,18 +8,18 @@
       mc:Ignorable="d"
       Background="{DynamicResource MaterialDesignPaper}"
       Height="610"
-      Width="1024"
+      Width="1200"
       Title="Entry">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4.1*" />
-            <ColumnDefinition Width="2.9*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <employeeWorkSpace:UcMenu x:Name="ucMenu" HorizontalAlignment="Left"
                                       VerticalAlignment="Top"
-                                      Width="600"
+                                      Width="700"
                                       Height="600"
                                       Margin="0,0,10,0" />
         </Grid>
@@ -27,7 +27,7 @@
             <employeeWorkSpace:UcOrder x:Name="ucOrder"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Top"
-                                      Width="450"
+                                      Width="500"
                                       Height="600" />
         </Grid>
     </Grid>

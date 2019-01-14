@@ -133,8 +133,8 @@
                             <GridViewColumn Header="Loại"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Type, Converter={StaticResource ProductTypeConverter}}" />
-                            <GridViewColumn Header="Giảm giá"
-                                            Width="100"
+                            <GridViewColumn Header="Giảm giá (%)"
+                                            Width="130"
                                             DisplayMemberBinding="{Binding Discount}" />
 
                         </GridView>

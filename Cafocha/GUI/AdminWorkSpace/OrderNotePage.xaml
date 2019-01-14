@@ -107,7 +107,7 @@
                                FontWeight="Bold"
                                FontSize="18"
                                Height="30">
-                        Order Note
+                        Đơn đặt hàng
                     </TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>

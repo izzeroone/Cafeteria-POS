@@ -45,10 +45,13 @@ namespace Cafocha.GUI.CafowareWorkSpace
             cboStockGroup.ItemsSource = WarehouseModule.StockTypes; 
             cboStockGroup.SelectedIndex = 0;
 
-            cboUnit.Items.Add("pcs");
-            cboUnit.Items.Add("bot");
-            cboUnit.Items.Add("can");
+            cboUnit.Items.Add("cái");
+            cboUnit.Items.Add("chai");
             cboUnit.Items.Add("ml");
+            cboUnit.Items.Add("l");
+            cboUnit.Items.Add("g");
+            cboUnit.Items.Add("kg");
+
             cboUnit.SelectedIndex = 0;
         }
 
