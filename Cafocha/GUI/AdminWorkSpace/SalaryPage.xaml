@@ -47,7 +47,6 @@
                             <TextBox Foreground="Black"
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
-                                     KeyDown="SearchBox_KeyDown"
                                      materialDesign:HintAssist.Hint="Tìm kiếm"
                                      x:Name="SearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"

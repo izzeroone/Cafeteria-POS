@@ -237,13 +237,12 @@ namespace Cafocha.GUI.EmployeeWorkSpace
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
             var t = lvLoginList.SelectedItem as EmpLoginList;
+            _emplog = t;
             if (_emplog == null)
             {
                 MessageBox.Show(NO_EMPLOYEE);
                 return;
             }
-
-            t = _emplog;
 
             if (Width <= 500)
             {
@@ -254,7 +253,6 @@ namespace Cafocha.GUI.EmployeeWorkSpace
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Visible;
             loginCode.Visibility = Visibility.Collapsed;
-            btnView.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Xem chi tiết";
             setControl(false);
@@ -483,6 +481,16 @@ namespace Cafocha.GUI.EmployeeWorkSpace
                     ;
             }
 
+        }
+
+        private void LvLoginList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var t = lvLoginList.SelectedItem as EmpLoginList;
+            if (t != null && t.Emp != null && !string.IsNullOrEmpty(t.Emp.Username.Trim()) )
+            {
+                txtUsername.Text = t.Emp.Username.Trim();
+            }
+            
         }
     }
 

@@ -176,7 +176,8 @@ namespace Cafocha.GUI.AdminWorkSpace
         private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var pick = sender as DatePicker;
-            if (pick.SelectedDate == null) return;
+            if (pick.SelectedDate == null)
+                return;
 
             if (cboProduct.SelectedValue.Equals("--"))
             {
