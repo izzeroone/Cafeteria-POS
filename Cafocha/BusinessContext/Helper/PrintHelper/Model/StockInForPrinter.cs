@@ -27,12 +27,10 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
         /// <param name="table">target table that contain order</param>
         public StockInForPrint getAndConvertStockInForPrint(StockIn stockIn)
         {
-
             No = stockIn.StockinId;
             Employee = stockIn.EmpId;
             Date = DateTime.Now;
             TotalPrice = stockIn.TotalAmount;
-
 
             return this;
         }
@@ -72,7 +70,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper.Model
             {
                 "Tên",
                 "Số lượng",
-                "Đơn giá",
+                "Đơn giá ",
                 "Thành tiền",
                 "Ghi chú"
             };

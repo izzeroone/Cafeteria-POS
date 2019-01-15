@@ -170,7 +170,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                         ImgName = "logo.png",
                         Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
                         Phone = "038.123.456",
-                        PageName = "Hóa đơn"
+                        PageName = "Phiếu Nhập Kho"
                     },
 
                     StockIn = stockIn
@@ -190,7 +190,7 @@ namespace Cafocha.BusinessContext.Helper.PrintHelper
                         ImgName = "logo.png",
                         Address = "Khu phố 6, phường Linh Trung, quận Thủ Đức, thành phố Hồ Chí Minh",
                         Phone = "038.123.456",
-                        PageName = "Hóa đơn"
+                        PageName = "Phiếu Xuất Kho"
                     },
 
                     StockOut = stockOut
