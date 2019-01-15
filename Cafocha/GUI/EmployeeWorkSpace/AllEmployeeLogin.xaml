@@ -46,7 +46,9 @@
                   Width="500"
                   Margin="0,49,0,0"
                   HorizontalAlignment="Left"
-                  VerticalAlignment="Top">
+                  VerticalAlignment="Top"
+                  SelectionChanged="LvLoginList_OnSelectionChanged"
+                  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="120"

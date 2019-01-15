@@ -63,8 +63,7 @@
                             <TextBox Foreground="Black"
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
-                                     KeyDown="txtSearchBox_KeyDown"
-                                     materialDesign:HintAssist.Hint="Tìm kiếm theo tên"
+                                     materialDesign:HintAssist.Hint="Tìm kiếm"
                                      x:Name="txtSearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      BorderThickness="0"
@@ -86,7 +85,7 @@
                                       Margin="0,0,20,0"
                                       ToolTip="Filter by Product"
                                       SelectionChanged="cboProduct_SelectionChanged" />
-                            <DatePicker x:Name="pickOrderDate"
+                            <DatePicker x:Name="pickDate"
                                         ToolTip="Filter by Order Date"
                                         SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
                         </StackPanel>
@@ -95,6 +94,7 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Right"
                             Width="76"
+                            Visibility="Collapsed"
                             Click="BtnOverViewReport_OnClick"
                             Margin="0,7"
                             ToolTip="Generate Report">

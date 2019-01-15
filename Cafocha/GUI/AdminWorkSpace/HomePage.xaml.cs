@@ -311,5 +311,10 @@ namespace Cafocha.GUI.AdminWorkSpace
             ChartDataFilling();
             ColumnChartDatafilling();
         }
+
+        private void HomePage_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            RefreshHome();
+        }
     }
 }

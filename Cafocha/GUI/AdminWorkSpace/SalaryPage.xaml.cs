@@ -78,35 +78,38 @@ namespace Cafocha.GUI.AdminWorkSpace
             lvWokingHistory.ItemsSource = WhList.Where(c => c.ResultSalary.Equals(sln.SnId));
             lvWokingHistory.Items.Refresh();
         }
-
-        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            var filter = SearchBox.Text.Trim();
-
-            if (filter.Length != 0)
-            {
-                SalList = SalList.Where(x => Regex.IsMatch(x.Employee.Name, filter, RegexOptions.IgnoreCase));
-                lvSalary.ItemsSource = SalList;
-            }
-            else
-            {
-                SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository
-                    .Get(includeProperties: "Employee,WorkingHistories");
-                lvSalary.ItemsSource = SalList;
-            }
-        }
+        
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SearchBox_KeyDown(sender, null);
+            filter();
+            
         }
 
         private void cboMonth_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var filter = SearchBox.Text.Trim();
-            if (filter.Length != 0) SalList = SalList.Where(x => x.Employee.Name.Contains(filter));
+            filter();
+        }
 
-            var cboM = sender as ComboBox;
+        private void filter()
+        {
+            SalList = _businessModuleLocator.RepositoryLocator.SalaryNoteRepository
+                .Get(includeProperties: "Employee,WorkingHistories");
+
+
+            // search filter
+            var filterSearch = SearchBox.Text.Trim();
+            if (!string.IsNullOrEmpty(filterSearch))
+            {
+                SalList = SalList.Where(x => Regex.IsMatch(x.SnId, filterSearch, RegexOptions.IgnoreCase)
+                                                        || Regex.IsMatch(x.EmpId.ToString(), filterSearch, RegexOptions.IgnoreCase)
+                                                        || Regex.IsMatch(x.Employee.Name.ToString(), filterSearch, RegexOptions.IgnoreCase)
+                                                     ).ToList();
+                
+            }
+
+            // Combox month
+            var cboM = cboMonth;
 
             if (cboM.Items.Count == 0 || cboYear.Items.Count == 0 || cboM.SelectedItem == null ||
                 cboYear.SelectedItem == null) return;
@@ -116,8 +119,8 @@ namespace Cafocha.GUI.AdminWorkSpace
 
             try
             {
-                month = (int) cboM.SelectedItem;
-                year = (int) cboYear.SelectedItem;
+                month = (int)cboM.SelectedItem;
+                year = (int)cboYear.SelectedItem;
             }
             catch (Exception ex)
             {
@@ -129,38 +132,27 @@ namespace Cafocha.GUI.AdminWorkSpace
                         return;
                     }
 
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int) cboYear.SelectedItem));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboYear.SelectedItem));
                     return;
                 }
 
                 if (cboYear.SelectedItem.Equals("--"))
                 {
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int) cboM.SelectedItem));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboM.SelectedItem));
                     return;
                 }
             }
 
-            lvSalary.ItemsSource = SalList.Where(x =>
-                x.ForMonth.Equals((int) cboM.SelectedItem) && x.ForYear.Equals((int) cboYear.SelectedItem));
-        }
-
-        private void cboYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var filter = SearchBox.Text.Trim();
-            if (filter.Length != 0) SalList = SalList.Where(x => x.Employee.Name.Contains(filter));
-
-            var cboY = sender as ComboBox;
+            // combox year
+            var cboY = cboYear;
 
             if (cboY.Items.Count == 0 || cboMonth.Items.Count == 0 || cboY.SelectedItem == null ||
                 cboMonth.SelectedItem == null) return;
 
-            var month = 0;
-            var year = 0;
-
             try
             {
-                year = (int) cboY.SelectedItem;
-                month = (int) cboMonth.SelectedItem;
+                year = (int)cboY.SelectedItem;
+                month = (int)cboMonth.SelectedItem;
             }
             catch (Exception ex)
             {
@@ -172,27 +164,27 @@ namespace Cafocha.GUI.AdminWorkSpace
                         return;
                     }
 
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int) cboMonth.SelectedItem));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboMonth.SelectedItem));
                     return;
                 }
 
                 if (cboMonth.SelectedItem.Equals("--"))
                 {
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int) cboY.SelectedItem));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboY.SelectedItem));
                     return;
                 }
             }
 
+
+
             lvSalary.ItemsSource = SalList.Where(x =>
-                x.ForMonth.Equals((int) cboMonth.SelectedItem) && x.ForYear.Equals((int) cboY.SelectedItem));
+                x.ForMonth.Equals((int)cboM.SelectedItem) && x.ForYear.Equals((int)cboYear.SelectedItem));
         }
 
-        //public string ConvertFrom(string str)
-        //{
-        //    byte[] utf8Bytes = Encoding.UTF8.GetBytes(str);
-        //    str = Encoding.UTF8.GetString(utf8Bytes);
-        //    return str;
-        //}
+        private void cboYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filter();
+        }
 
         private string DecodeFromUtf8(string utf8String)
         {
@@ -236,6 +228,57 @@ namespace Cafocha.GUI.AdminWorkSpace
                 .Get(includeProperties: "Employee,WorkingHistories");
             WhList = _businessModuleLocator.RepositoryLocator.WorkingHistoryRepository
                 .Get(includeProperties: "Employee");
+            lvSalary.ItemsSource = SalList;
+            lvSalary.Items.Refresh();
+        }
+
+
+
+        private void Refresh()
+        {
+
+            SalList = new List<SalaryNote>(_businessModuleLocator.RepositoryLocator.SalaryNoteRepository
+                .Get(includeProperties: "Employee,WorkingHistories"));
+            WhList = new List<WorkingHistory>(_businessModuleLocator.RepositoryLocator.WorkingHistoryRepository
+                .Get(includeProperties: "Employee"));
+
+
+            // search filter
+            var filterSearch = SearchBox.Text.Trim();
+            if (!string.IsNullOrEmpty(filterSearch))
+            {
+                SalList = SalList.Where(x => Regex.IsMatch(x.SnId, filterSearch, RegexOptions.IgnoreCase)
+                                                        || Regex.IsMatch(x.EmpId.ToString(), filterSearch, RegexOptions.IgnoreCase)
+                                                        || Regex.IsMatch(x.Employee.Name.ToString(), filterSearch, RegexOptions.IgnoreCase)
+                                                     ).ToList();
+            }
+
+//            // combox type fiter
+//            switch (cboProduct.SelectedIndex)
+//            {
+//                case 1:
+//                    stockOutList.Clear();
+//                    break;
+//                case 2:
+//                    stockInList.Clear();
+//                    break;
+//            }
+//
+//            // combox type fiter
+//            if (pickDate.SelectedDate != null)
+//            {
+//                var time = pickDate.SelectedDate.Value;
+//
+//                stockInList = stockInList.Where(x => x.InTime.Day == time.Day && x.InTime.Month == time.Month && x.InTime.Year == time.Year
+//                                                     ).ToList();
+//
+//                stockOutList = stockOutList.Where(x => x.OutTime.Day == time.Day && x.OutTime.Month == time.Month && x.OutTime.Year == time.Year
+//                                                     ).ToList();
+//            }
+
+
+            // bind data
+
             lvSalary.ItemsSource = SalList;
             lvSalary.Items.Refresh();
         }
