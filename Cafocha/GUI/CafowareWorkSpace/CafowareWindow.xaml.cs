@@ -54,7 +54,6 @@ namespace Cafocha.GUI.CafowareWorkSpace
                 _stockOutPage = new StockOutPage(_businessModuleLocator,
                     _businessModuleLocator.WarehouseModule.StockList);
                 _stockHistoryPage = new StockHistoryPage(_businessModuleLocator);
-
                 var RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
                 RefreshTimer.Interval = new TimeSpan(0, 1, 0);
@@ -111,6 +110,16 @@ namespace Cafocha.GUI.CafowareWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                _businessModuleLocator.EmployeeModule.endWorkingRecord(
+                    _businessModuleLocator.EmployeeModule.Emploglist[0]);
+            }
+            catch (Exception exception)
+            {
+//                Console.WriteLine(exception);
+//                throw;
+            }
             _businessModuleLocator.EmployeeModule.Emploglist.Clear();
             _loginWindow = new LoginWindow();
             Close();
