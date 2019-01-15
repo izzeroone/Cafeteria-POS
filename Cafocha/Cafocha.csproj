@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -654,7 +654,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Products\BlackJet.jpg" />
     <Resource Include="dbconfig.txt" />
+    <Content Include="DB\DBCafocha.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DB\DBCafocha_log.ldf">
+      <DependentUpon>DBCafocha.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DB\ERD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ERD.edmx</DependentUpon>
@@ -668,13 +676,6 @@
     <Content Include="Entities\CafochaEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CafochaEntities.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\DBCafocha.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DB\DBCafocha_log.ldf">
-      <DependentUpon>DBCafocha.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="printerSetting.txt" />
     <Resource Include="SerializedData\dbconfig.txt" />
@@ -768,14 +769,12 @@
     <Resource Include="Images\Products\condensescoffee.jpeg" />
     <Resource Include="Images\Products\comma_icon.jpg" />
     <Resource Include="Images\Products\coke.jpg" />
-    <Resource Include="Images\Products\CoffeeLatte.png" />
     <Resource Include="Images\Products\Coffee.jpg" />
     <Resource Include="Images\Products\coconutcoffee.jpg" />
     <Resource Include="Images\Products\coconut.jpg" />
     <Resource Include="Images\Products\CinamonToast.jpg" />
     <Resource Include="Images\Products\ChorizoSausageRolls.jpg" />
     <Resource Include="Images\Products\ChocoLatte.jpg" />
-    <Resource Include="Images\Products\ChocoCoffee.jpg" />
     <Resource Include="Images\Products\ChickenMelt.jpg" />
     <Resource Include="Images\Products\ChickenCaesarSalad.jpg" />
     <Resource Include="Images\Products\CheeseMeltOnToast.png" />
@@ -795,7 +794,6 @@
     <Resource Include="Images\Products\bananachoco.jpg" />
     <Resource Include="Images\Products\BananaBread.jpg" />
     <Resource Include="Images\Products\BakeEggsWithChorizoandSpinach.jpg" />
-    <Resource Include="Images\Products\aqua.jpg" />
     <Resource Include="Images\Products\apple.jpg" />
     <Resource Include="Images\Products\americano.png" />
     <Resource Include="Images\Products\Americano.jpg" />
@@ -1095,12 +1093,7 @@
     <Resource Include="GUI\Images\Products\CheeseMeltOnToast.png" />
     <Resource Include="GUI\Images\Products\ChickenCaesarSalad.jpg" />
     <Resource Include="GUI\Images\Products\ChickenMelt.jpg" />
-    <Resource Include="GUI\Images\Products\ChocoCoffee.jpg" />
-    <Resource Include="GUI\Images\Products\ChocoLatte.jpg" />
     <Resource Include="GUI\Images\Products\ChorizoSausageRolls.jpg" />
-    <Resource Include="GUI\Images\Products\CinamonToast.jpg" />
-    <Resource Include="GUI\Images\Products\coconut.jpg" />
-    <Resource Include="GUI\Images\Products\coconutcoffee.jpg" />
     <Resource Include="GUI\Images\Products\Coffee.jpg" />
     <Resource Include="GUI\Images\Products\CoffeeLatte.png" />
     <Resource Include="GUI\Images\Products\coke.jpg" />

@@ -196,9 +196,10 @@
                                                DockPanel.Dock="Bottom"
                                                TextTrimming="CharacterEllipsis"
                                                HorizontalAlignment="Center" />
-                                    <Image Source="{Binding ImageData}"
+                                    <Image Source="{Binding Path=ImageData}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
+                                           
                                            Width="100"
                                            Height="100" />
                                 </DockPanel>

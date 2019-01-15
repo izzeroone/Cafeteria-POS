@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Cafocha.Entities;
@@ -42,6 +43,7 @@ namespace Cafocha.BusinessContext.EmployeeWorkspace
         {
             var t = _unitofwork.ProductRepository.Get(filter, orderBy, includeProperties);
             t = t.Where(x => x.Deleted == 0);
+
             return t;
 
         }
