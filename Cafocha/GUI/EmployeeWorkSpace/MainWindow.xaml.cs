@@ -209,8 +209,11 @@ namespace Cafocha.GUI.EmployeeWorkSpace
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;
-            logout();
+            if (_businessModuleLocator.EmployeeModule.Emploglist.Count != 0)
+            {
+                e.Cancel = true;
+                logout();
+            }
         }
     }
 }

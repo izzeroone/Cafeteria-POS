@@ -96,6 +96,7 @@ namespace Cafocha.GUI
                     {
                         if (_businessModuleLocator.EmployeeModule.Emploglist[0].Emp.EmpRole == (int)EmployeeRole.Stock)
                         {
+                            _businessModuleLocator.EmployeeModule.startWorkingRecord(_businessModuleLocator.EmployeeModule.Emploglist[0]);
                             var main = new CafowareWindow();
                             main.Show();
                         }
