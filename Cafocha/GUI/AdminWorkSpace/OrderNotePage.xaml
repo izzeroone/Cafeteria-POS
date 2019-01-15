@@ -76,17 +76,17 @@
                                         SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
                         </StackPanel>
                     </Border>
-                    <Button x:Name="BtnOverViewReport"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Right"
-                            Width="76"
-                            Click="BtnOverViewReport_OnClick"
-                            Margin="0,7"
-                            ToolTip="Generate Report">
-                        <Image Source="../Icon/Report Card_32px.png"
-                               Width="27"
-                               Height="32" />
-                    </Button>
+                    <!-- <Button x:Name="BtnOverViewReport" -->
+                    <!--         VerticalAlignment="Stretch" -->
+                    <!--         HorizontalAlignment="Right" -->
+                    <!--         Width="76" -->
+                    <!--         Click="BtnOverViewReport_OnClick" -->
+                    <!--         Margin="0,7" -->
+                    <!--         ToolTip="Generate Report"> -->
+                    <!--     <Image Source="../Icon/Report Card_32px.png" -->
+                    <!--            Width="27" -->
+                    <!--            Height="32" /> -->
+                    <!-- </Button> -->
                 </StackPanel>
             </materialDesign:ColorZone>
         </Grid>

@@ -75,7 +75,7 @@
                                       Margin="0,0,50,0"
                                       VerticalAlignment="Bottom" />
                             <Button x:Name="bntPay"
-                                    Content="Pay"
+                                    Content="Trả tiền"
                                     Height="auto"
                                     Width="100"
                                     Margin="0,0,20,0"
